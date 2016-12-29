@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Config
-PROJECT_DIR=/home/dienerli/public_html/piox
+PROJECT_DIR=/home/dienerli/public_html/pioxapp
 CONFIG_FILE=/home/dienerli/_config.piox.php
 # HTACCESS_FILE=/home/dienerli/.htaccess_piox
 
