@@ -8,4 +8,19 @@
 
 <ion-content padding>
   Notifications
+
+  <ion-card *ngFor="let notification of notifications">
+
+    <ion-card-header (click)="onSelect(notification)">
+      <span [ngClass]="{'bold': notification.read == false }">{{notification.message | slice:0:10}}</span>
+    </ion-card-header>
+
+    <ion-card-content (click)="onSelect(notification)">
+      {{notification.message}}
+    </ion-card-content>
+
+  </ion-card>
+<!--
+  <notification-detail [notification]="selectedNotification"></notification-detail>
+  -->
 </ion-content>

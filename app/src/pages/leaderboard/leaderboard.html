@@ -11,9 +11,7 @@
     <ion-item *ngFor="let team of teams">
       <ion-icon name='flask' item-left></ion-icon>
       {{team.name}}
-      <ion-note item-right>
-      {{team.points}}
-      </ion-note>
+      <ion-badge item-right>{{team.points}}</ion-badge>
     </ion-item>
   </ion-list>
 </ion-content>
