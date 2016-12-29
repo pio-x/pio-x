@@ -4,7 +4,7 @@ use \Psr\Http\Message\ResponseInterface as Response;
 
 
 require 'vendor/autoload.php';
-require 'conf.local.php';
+require 'conf.php';
 
 use Doctrine\DBAL\DriverManager;
 
