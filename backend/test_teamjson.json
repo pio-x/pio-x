@@ -1,0 +1,75 @@
+[
+	{
+		"id": 1,
+		"name": "Ravioli",
+		"score": 1532,
+		"color": "#EE4477",
+		"stations": [
+			{
+				"id": 1,
+				"name": "Rosenberg",
+				"lat": 48.1234,
+				"long": 6.777
+			},
+			{
+				"id": 2,
+				"name": "Hauptbahnhof",
+				"lat": 48.1234,
+				"long": 6.777
+			}],
+		"mrX": [ 
+			{
+				"id": 3,
+				"name": "mrY"
+			}, 
+			{
+				"id": 5,
+				"name": "mrZ"
+			}],
+		"riddles": [],
+		"teampositions": [
+			{
+				"id": 234,
+				"team_lat": 47.123,
+				"team_long": 6.123,
+				"player": "Boris",
+				"timestamp": 19283579
+			},
+			{
+				"id": 234,
+				"team_lat": 47.123,
+				"team_long": 6.123,
+				"player": "Boris",
+				"timestamp": 19283579
+			},
+			{
+				"id": 234,
+				"team_lat": 47.123,
+				"team_long": 6.123,
+				"player": "Boris",
+				"timestamp": 19283579
+			},
+			{
+				"id": 234,
+				"team_lat": 47.123,
+				"team_long": 6.123,
+				"player": "Boris",
+				"timestamp": 19283579
+			},
+			{
+				"id": 234,
+				"team_lat": 47.123,
+				"team_long": 6.123,
+				"player": "Boris",
+				"timestamp": 19283579
+			},
+			{
+				"id": 234,
+				"team_lat": 47.123,
+				"team_long": 6.123,
+				"player": "Boris",
+				"timestamp": 19283579
+			}
+		]
+	}
+]

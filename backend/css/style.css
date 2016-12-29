@@ -1,0 +1,44 @@
+.content {
+	width: 100%;
+	padding: 0 30px;
+}
+
+.actual-content {
+
+}
+
+header {
+	text-align: center !important;
+}
+
+footer {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	height: 40px;
+	background: gray;
+	width: 100%;
+	text-align: center;
+}
+
+
+#map {
+	height: 600px;
+	width: 100%;
+}
+
+/* TEAMS */
+#teamliste table {
+	width: 100%;
+	border: 1px solid gray;
+}
+
+#teamliste table td {
+	padding-left: 10px;
+	padding-right: 10px;
+	width: 50%;
+}
+
+#teamliste .team {
+	margin-bottom: 15px !important;
+}

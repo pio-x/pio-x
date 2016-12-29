@@ -1,0 +1,99 @@
+<!DOCTYPE HTML>
+
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>PIO-X Backend</title>
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="css/style.css">
+	<script src="js/map.js"></script>
+</head>
+
+<body>
+	<header>
+		<div class="well well-lg">PIO-X Admin</div>
+	</header>
+	
+	<div class="content">
+		<ul class="nav nav-tabs" role="tablist">
+			<li role="presentation" class="active"><a href="#karte" aria-controls="karte" role="tab" data-toggle="tab">Karte</a></li>
+			<li role="presentation"><a href="#teams" aria-controls="teams" role="tab" data-toggle="tab">Teams</a></li>
+			<li role="presentation"><a href="#stationen "aria-controls="stationen" role="tab" data-toggle="tab">Stationen</a></li>
+			<li role="presentation"><a href="#bilder" aria-controls="bilder" role="tab" data-toggle="tab">Bilder</a></li>
+			<li role="presentation"><a href="#notifications" aria-controls="notifications" role="tab" data-toggle="tab">Notifications</a></li>
+			<li role="presentation"><a href="#passcodes" aria-controls="passcodes" role="tab" data-toggle="tab">Passcodes</a></li>
+			<li role="presentation"><a href="#raetsel" aria-controls="raetsel" role="tab" data-toggle="tab">Rätsel</a></li>
+		</ul>
+		<div class="tab-content actual-content">
+			<div role="tabpanel" class="tab-pane active" id="karte">
+				<div id="map"></div>
+				<div class="submenu">
+					<!-- test buttons, real buttons will be inserted for each team -->
+					<div class="btn btn-default">Team Ravioli</div>
+					<div class="btn btn-default">Team Pesto</div>
+					<div class="btn btn-default">Team Gnocchi</div>
+					<div class="btn btn-default">Team Nudeluflauf</div>
+				</div>
+				<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjEW54VdlWZT07n90oTjvaLIl3q27ZL4Y&callback=initMap" async defer></script>
+			</div>
+			<div role="tabpanel" class="tab-pane" id="teams">
+				<div id="teamliste">
+					<div class="team col-xs-4">
+						<table>
+							<tr><td>ID</td><td>1</td></tr>
+							<tr><td>Name</td><td>Ravioli</td></tr>
+							<tr><td>Score</td><td>1532</td></tr>
+							<tr><td>Farbe</td><td style="background: #EE4477"></td></tr>
+						</table>
+					</div>
+					<div class="team col-xs-4">
+						<table>
+							<tr><td>ID</td><td>2</td></tr>
+							<tr><td>Name</td><td>Pesto</td></tr>
+							<tr><td>Score</td><td>530</td></tr>
+							<tr><td>Farbe</td><td style="background: #4477EE"></td></tr>
+						</table>
+					</div>
+					<div class="team col-xs-4">
+						<table>
+							<tr><td>ID</td><td>3</td></tr>
+							<tr><td>Name</td><td>Gnocchi</td></tr>
+							<tr><td>Score</td><td>2410</td></tr>
+							<tr><td>Farbe</td><td style="background: #77EE44"></td></tr>
+						</table>
+					</div>
+					<div class="team col-xs-4">
+						<table>
+							<tr><td>ID</td><td>4</td></tr>
+							<tr><td>Name</td><td>Nudeluflauf</td></tr>
+							<tr><td>Score</td><td>940</td></tr>
+							<tr><td>Farbe</td><td style="background: #225577"></td></tr>
+						</table>
+					</div>
+				</div>
+				<div id="newteam" class="col-xs-12">
+					<h3>Neues Team erfassen</h3>
+					<input id="newTeamName" type="text" placeholder="Teamname">
+					<input id="newTeamColor" type="color" placeholder="Teamfarbe" value="#ff0000">
+					<div class="btn btn-default">Fertig</div>
+				</div>
+			</div>
+			<div role="tabpanel" class="tab-pane" id="stationen">stationen ici</div>
+			<div role="tabpanel" class="tab-pane" id="bilder">BIlder auflisten</div>
+			<div role="tabpanel" class="tab-pane" id="notifications">Notifications erstellen</div>
+			<div role="tabpanel" class="tab-pane" id="passcodes">Passcodes erstellen</div>
+			<div role="tabpanel" class="tab-pane" id="raetsel">Rätselübersicht</div>
+		</div>
+	</div>
+
+
+	<footer>
+		<p>Copyright 2016 SuperScoutDevs</p>
+	</footer>
+
+</body>
+
+</html>
