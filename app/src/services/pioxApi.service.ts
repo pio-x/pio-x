@@ -10,7 +10,7 @@ export class PioxApiService {
 
   private headers = new Headers({'Content-Type': 'application/json'});
   private options = new RequestOptions({ headers: this.headers });
-  private baseurl:string = 'http://localhost:8100';
+  private baseurl:string = '';
 
   constructor(private http: Http) {
   }
