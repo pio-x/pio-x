@@ -37,8 +37,9 @@ git submodule update --recursive
 # Composer Install
 cd $PROJECT_DIR/
 cd api
+export HOME=$PROJECT_DIR/api
 curl -sS https://getcomposer.org/installer | php
-bash -c 'php composer.phar install''
+php composer.phar install
 
 
 echo -e "\n ======= Installation Done ========\n"
