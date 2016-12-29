@@ -3,7 +3,7 @@ $(function(){
 })
 
 function getTeamData(){
-  var url = 'http://localhost/pio-x/test_teamjson.json';
+  var url = './test_teamjson.json';
   $.ajax({
     url: url,
     dataType: 'json',
