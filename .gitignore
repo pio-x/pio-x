@@ -5,6 +5,9 @@
 npm-debug.log
 node_modules
 
+api/vendor
+
+
 #testdata
 team.json
 
