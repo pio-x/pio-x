@@ -18,8 +18,9 @@ export class NotificationService {
 
   constructor(private pioxApi: PioxApiService, storage: Storage) {
     this.storage = storage;
-    this.storage.get('notifcations').then(notifications => {
+    this.storage.get('notifications').then(notifications => {
        if (notifications != null) {
+         console.log(notifications);
           this.update(JSON.parse(notifications))
        }
      })
@@ -36,8 +37,7 @@ export class NotificationService {
   }
 
   toStorage(): void {
-    console.log(JSON.stringify(this.notifications));
-    this.storage.set('notifcations', JSON.stringify(this.notifications));
+    this.storage.set('notifications', JSON.stringify(this.notifications));
   }
 
   update(notifications: Notification[]): Notification[] {
