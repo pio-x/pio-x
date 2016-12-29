@@ -3,6 +3,8 @@ import {Component, ViewChild, ElementRef} from '@angular/core';
 import {NavController} from 'ionic-angular';
 import {StationService} from "../../services/station.service";
 import {Station} from "../../interfaces/station";
+import {LatLngLocation} from "../../interfaces/LatLngLocation";
+import {LocationService} from "../../services/location.service";
 
 
 declare var google;
@@ -19,17 +21,10 @@ export class MapPage {
     stations: Station[] = [];
     markers: any = [];
     infoWindow: any;
-    userLocation: any;
+    userLocation: LatLngLocation;
     userMarker: any;
 
-    locationWatch: any;
-    locationWatchOptions: {
-        enableHighAccuracy: true,
-        timeout: 5000,
-        maximumAge: 0
-    };
-
-    constructor(public navCtrl: NavController, private stationService: StationService) {
+    constructor(public navCtrl: NavController, private stationService: StationService, private locationService: LocationService) {
         this.updateStations();
     }
 
@@ -91,10 +86,7 @@ export class MapPage {
 
     userLocationUpdated(position) {
         console.log(position);
-        this.userLocation = new google.maps.LatLng({
-            lat: position.coords.latitude,
-            lng: position.coords.longitude
-        });
+        this.userLocation = position;
         this.updateUserMarker();
     }
 
@@ -112,17 +104,8 @@ export class MapPage {
             content: 'Laden ...'
         });
 
-        // Try HTML5 geolocation
-        if (navigator.geolocation) {
-            this.locationWatch = navigator.geolocation.watchPosition(
-                (pos) => { this.userLocationUpdated(pos)} ,
-                (err) => { console.log('ERROR getting user location', err) },
-                this.locationWatchOptions
-            );
-        } else {
-            // Browser doesn't support Geolocation
-            alert('Keine GPS Position gefunden!');
-        }
-
+        this.locationService.subscribe((pos: LatLngLocation) => {
+            this.userLocationUpdated(pos);
+        });
     }
 }
