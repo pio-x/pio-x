@@ -5,4 +5,5 @@ export interface Station {
   lat: number;
   long: number;
   team: number;
+  color: string;
 }
