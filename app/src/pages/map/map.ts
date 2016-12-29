@@ -89,6 +89,7 @@ export class MapPage {
                 anchor: new google.maps.Point(7, 7),
                 scaledSize: new google.maps.Size(14, 14)
             },
+            clickable: false,
             optimized: false,
             zIndex: 99999999999
         });
