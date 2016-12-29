@@ -4,22 +4,22 @@ import { Headers, Http } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
 
-import { Team } from '../interfaces/team';
+import { Station } from '../interfaces/station';
 
 import { PioxApiService } from './pioxApi.service';
 
 @Injectable()
-export class TeamService {
+export class StationService {
 
-  private teams:Team[] = [];
+  private stations:Station[] = [];
 
   constructor(private pioxApi: PioxApiService) {
-    this.getTeams().then(response => this.teams = response)
+    this.getStations().then(response => this.stations = response)
                   .catch(this.handleError);
   }
 
-  getTeams(): Promise<Team[]> {
-    return this.pioxApi.get('/teams.json');
+  getStations(): Promise<Station[]> {
+    return this.pioxApi.get('/stations.json');
   }
 
   private handleError(error: any): Promise<any> {

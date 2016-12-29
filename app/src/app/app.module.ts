@@ -10,6 +10,7 @@ import {RulesPage} from "../pages/rules/rules";
 
 import {PioxApiService} from "../services/pioxApi.service";
 import {TeamService} from "../services/team.service";
+import {StationService} from "../services/station.service";
 
 @NgModule({
   declarations: [
@@ -34,6 +35,6 @@ import {TeamService} from "../services/team.service";
     RulesPage,
     TabsPage
   ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, TeamService, PioxApiService]
+  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, TeamService, StationService, PioxApiService]
 })
 export class AppModule {}
