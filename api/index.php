@@ -12,6 +12,9 @@ $DB = DriverManager::getConnection($SQL_CREDENTIALS, new \Doctrine\DBAL\Configur
 
 $app = new \Slim\App(['settings' => ['displayErrorDetails' => true]]);
 
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
+
 // STATION
 $app->get('/station',function (Request $request, Response $response) use (&$DB) {
     $stations = $DB->fetchAll("SELECT * FROM station");
