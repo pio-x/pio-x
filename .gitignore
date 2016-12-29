@@ -4,3 +4,6 @@
 # NPM
 npm-debug.log
 node_modules
+
+#testdata
+team.json
