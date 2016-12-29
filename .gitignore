@@ -5,12 +5,13 @@
 npm-debug.log
 node_modules
 
+# API
 api/vendor
 api/conf.php
 
-
-#testdata
-team.json
-
-# composer
+# Composer
 composer.phar
+.composer/
+
+# PHP
+error_log

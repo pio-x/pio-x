@@ -27,6 +27,7 @@ plugins/
 plugins/android.json
 plugins/ios.json
 #www/
+www/build/main.js.map
 $RECYCLE.BIN/
 team.json
 
