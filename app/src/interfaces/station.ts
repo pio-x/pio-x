@@ -1,6 +1,8 @@
-export class Station {
+export interface Station {
   id: number;
   name: string;
+  description: string;
   lat: number;
-  lng: number;
+  long: number;
+  team: number;
 }
