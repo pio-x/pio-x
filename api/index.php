@@ -15,10 +15,8 @@ $app = new \Slim\App(['settings' => ['displayErrorDetails' => true]]);
 
 // STATION
 $app->get('/station',function (Request $request, Response $response) use (&$DB) {
-  $stations = $DB->fetchAll("SELECT * FROM station");
-  $response->getBody()->write(json_encode($stations));
-
-  return $response;
+    $stations = $DB->fetchAll("SELECT * FROM station");
+    return $response->withJson($stations);
 });
 
 //request: { "id": 5}
@@ -55,12 +53,8 @@ $app->put('/station',function (Request $request, Response $response) use (&$DB) 
 
 // TEAM
 $app->get('/team', function (Request $request, Response $response) use (&$DB) {
-    $ids = $DB->fetchAll("SELECT * FROM team");
-    $teams = json_encode($ids);
-
-    $response->getBody()->write($teams);
-
-    return $response;
+    $teams = $DB->fetchAll("SELECT * FROM team");
+    return $response->withJson($teams);
 });
 
 $app->get('/team/{id}', function (Request $request, Response $response, $args) use (&$DB) {
