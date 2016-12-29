@@ -8,6 +8,9 @@ import {NotificationsPage} from "../pages/notifications/notifications";
 import {RiddlesPage} from "../pages/riddles/riddles";
 import {RulesPage} from "../pages/rules/rules";
 
+import {PioxApiService} from "../services/pioxApi.service";
+import {TeamService} from "../services/team.service";
+
 @NgModule({
   declarations: [
     MyApp,
@@ -31,6 +34,6 @@ import {RulesPage} from "../pages/rules/rules";
     RulesPage,
     TabsPage
   ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
+  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, TeamService, PioxApiService]
 })
 export class AppModule {}
