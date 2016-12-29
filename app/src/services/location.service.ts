@@ -20,7 +20,6 @@ export class LocationService {
     constructor() {
         // Try HTML5 geolocation
         if (navigator.geolocation) {
-            console.log('location watch started..');
             this.locationWatch = navigator.geolocation.watchPosition(
                 (pos) => { this.userLocationUpdated(pos)} ,
                 (err) => { console.log('ERROR getting user location', err) },
@@ -33,7 +32,7 @@ export class LocationService {
     }
 
     userLocationUpdated(position) {
-        console.log('location updated', position);
+        //console.log('location updated', position);
         this.userLocation = {
             lat: position.coords.latitude,
             lng: position.coords.longitude

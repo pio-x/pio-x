@@ -52,6 +52,8 @@ export class MapPage {
                 strokeWeight: 3,
                 scale: 10
             },
+            optimized: false,
+            zIndex: google.maps.Marker.MAX_ZINDEX + 1,
             position: new google.maps.LatLng(station.lat, station.long),
             station: station
         });
@@ -80,12 +82,19 @@ export class MapPage {
         this.userMarker = new google.maps.Marker({
             position: this.userLocation,
             map: this.map,
-            icon: '/assets/bluecircle.png'
+            icon: {
+                url: '/assets/bluecircle.png',
+                size: new google.maps.Size(14, 14),
+                origin: new google.maps.Point(0, 0),
+                anchor: new google.maps.Point(7, 7),
+                scaledSize: new google.maps.Size(14, 14)
+            },
+            optimized: false,
+            zIndex: 99999999999
         });
     }
 
     userLocationUpdated(position) {
-        console.log(position);
         this.userLocation = position;
         this.updateUserMarker();
     }
