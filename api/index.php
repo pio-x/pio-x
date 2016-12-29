@@ -12,7 +12,6 @@ $DB = DriverManager::getConnection($SQL_CREDENTIALS, new \Doctrine\DBAL\Configur
 
 $app = new \Slim\App(['settings' => ['displayErrorDetails' => true]]);
 
-
 // STATION
 $app->get('/station',function (Request $request, Response $response) use (&$DB) {
     $stations = $DB->fetchAll("SELECT * FROM station");
@@ -30,7 +29,7 @@ $app->post('/station/{id}/capture',function (Request $request, Response $respons
 
   $DB->insert('r_team_station', $data);
 
-  $response->getBody()->write("success");
+  return $response->withJson("success");
 });
 
 
@@ -48,7 +47,7 @@ $app->put('/station',function (Request $request, Response $response) use (&$DB) 
 
   $DB->insert('station', $data);
 
-  $response->getBody()->write("success");
+  return $response->withJson("success");
 });
 
 // TEAM
@@ -62,23 +61,17 @@ $app->get('/team/{id}', function (Request $request, Response $response, $args) u
     $team = $DB->fetchAll("SELECT * FROM team WHERE t_ID = ?", array($teamId));
 
     if(sizeof($team) > 0) {
-      $response->getBody()->write(json_encode($team));
+        return $response->withJson($team);
     } else {
-			$response->getBody()->write("nothing found for $teamId");
-		}
-
-    return $response;
+        throw new \Slim\Exception\NotFoundException($request, $response);
+    }
 });
 
 
 // TOM RIDDLE
 $app->get('/riddle', function (Request $request, Response $response) use (&$DB) {
-    $ids = $DB->fetchAll("SELECT * FROM riddle");
-    $riddles = json_encode($ids);
-
-    $response->getBody()->write($riddles);
-
-    return $response;
+    $riddles = $DB->fetchAll("SELECT * FROM riddle");
+    return $response->withJson($riddles);
 });
 
 $app->get('/riddle/{id}', function (Request $request, Response $response, $args) use (&$DB) {
@@ -86,12 +79,10 @@ $app->get('/riddle/{id}', function (Request $request, Response $response, $args)
     $riddle = $DB->fetchAll("SELECT * FROM riddle WHERE r_ID = ?", array($riddleId));
 
     if(sizeof($riddle) > 0) {
-      $response->getBody()->write(json_encode($riddle));
+      return $response->withJson($riddle);
     } else {
-			$response->getBody()->write("nothing found for $riddleId");
-		}
-
-    return $response;
+        throw new \Slim\Exception\NotFoundException($request, $response);
+    }
 });
 
 $app->put('/riddle',function (Request $request, Response $response) use (&$DB) {
@@ -114,7 +105,7 @@ $app->put('/riddle',function (Request $request, Response $response) use (&$DB) {
 
   $DB->insert('riddle', $data);
 
-  $response->getBody()->write("success");
+  return $response->withJson("success");
 });
 
 $app->post('/riddle/{id}',function (Request $request, Response $response, $args) use (&$DB) {
@@ -123,7 +114,7 @@ $app->post('/riddle/{id}',function (Request $request, Response $response, $args)
 
   $DB->update('riddle', $body, array('r_ID' => $riddleId));
 
-  $response->getBody()->write("success");
+  return $response->withJson("success");
 });
 
 
@@ -135,13 +126,12 @@ $app->post('/riddle/{id}/unlock',function (Request $request, Response $response,
   $sql = 'UPDATE r_team_riddle SET state = "UNLOCKED" WHERE r_ID = $riddleId AND t_ID => $teamId';
 
 //TODO
-  $response->getBody()->write("success");
+  return $response->withJson("success");
 });
 
 
 $app->get('/', function (Request $request, Response $response) {
     echo "PIO-X";
-
 });
+
 $app->run();
-?>
