@@ -12,11 +12,11 @@
   <ion-card *ngFor="let notification of notifications">
 
     <ion-card-header (click)="onSelect(notification)">
-      <span [ngClass]="{'bold': notification.read == false }">{{notification.message | slice:0:10}}</span>
+      <span [ngClass]="{'bold': notification.read == false }">{{notification.text | slice:0:10}}</span>
     </ion-card-header>
 
     <ion-card-content (click)="onSelect(notification)">
-      {{notification.message}}
+      {{notification.text}}
     </ion-card-content>
 
   </ion-card>

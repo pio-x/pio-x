@@ -19,7 +19,7 @@ export class StationService {
   }
 
   getStations(): Promise<Station[]> {
-    return this.pioxApi.get('/stations.json');
+    return this.pioxApi.get('/station');
   }
 
   private handleError(error: any): Promise<any> {

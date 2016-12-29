@@ -1,5 +1,0 @@
-[
-  {"id": 1, "name": "Test1", "points": 3, "color": "red"},
-  {"id": 2, "name": "Test2", "points": 4, "color": "blue"},
-  {"id": 3, "name": "Test3", "points": 7, "color": "#ffeeaa"}
-]

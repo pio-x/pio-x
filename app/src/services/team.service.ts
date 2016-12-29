@@ -19,7 +19,7 @@ export class TeamService {
   }
 
   getTeams(): Promise<Team[]> {
-    return this.pioxApi.get('/teams.json');
+    return this.pioxApi.get('/team');
   }
 
   private handleError(error: any): Promise<any> {

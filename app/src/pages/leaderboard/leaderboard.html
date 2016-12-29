@@ -1,7 +1,7 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Leaderboard
+      Rangliste
     </ion-title>
   </ion-navbar>
 </ion-header>
@@ -11,7 +11,7 @@
     <ion-item *ngFor="let team of teams">
       <ion-icon name='flask' item-left></ion-icon>
       {{team.name}}
-      <ion-badge item-right>{{team.points}}</ion-badge>
+      <ion-badge item-right>{{team.score}}</ion-badge>
     </ion-item>
   </ion-list>
 </ion-content>

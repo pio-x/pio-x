@@ -130,6 +130,12 @@ $app->post('/riddle/{id}/unlock',function (Request $request, Response $response,
 });
 
 
+// NOTIFICATIONS
+$app->get('/notification', function (Request $request, Response $response) use (&$DB) {
+    $notifications = $DB->fetchAll("SELECT * FROM notification ORDER BY timestamp DESC");
+    return $response->withJson($notifications);
+});
+
 $app->get('/', function (Request $request, Response $response) {
     echo "PIO-X";
 });

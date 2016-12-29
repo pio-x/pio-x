@@ -1,0 +1,30 @@
+[
+  {
+    "t_ID": "1",
+    "name": "team1",
+    "hash": "111",
+    "score": "10",
+    "color": "red"
+  },
+  {
+    "t_ID": "2",
+    "name": "team2",
+    "hash": "222",
+    "score": "33",
+    "color": "green"
+  },
+  {
+    "t_ID": "3",
+    "name": "team3",
+    "hash": "333",
+    "score": "7",
+    "color": "blue"
+  },
+  {
+    "t_ID": "4",
+    "name": "team4",
+    "hash": "444",
+    "score": "24",
+    "color": "yellow"
+  }
+]

@@ -29,7 +29,7 @@ export class NotificationService {
   read(id: number): void {
     //TODO: use a find method
     for (let idx in this.notifications) {
-      if ((this.notifications[idx].id == id)) {
+      if ((this.notifications[idx].n_ID == id)) {
         this.notifications[idx].read = true;
         this.toStorage();
       }
@@ -52,7 +52,7 @@ export class NotificationService {
   }
 
   get(): Promise<Notification[]> {
-    return this.pioxApi.get('/notifications.json').then(response => this.update(response))
+    return this.pioxApi.get('/notification').then(response => this.update(response))
               .catch(this.handleError);
   }
 

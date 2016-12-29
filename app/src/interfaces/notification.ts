@@ -1,7 +1,7 @@
 export class Notification {
-  id: number;
+  n_ID: number;
   timestamp: number;
   title: string;
-  message: string;
+  text: string;
   read: boolean;
 }

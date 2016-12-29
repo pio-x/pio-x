@@ -18,7 +18,7 @@ export class NotificationsPage {
   }
 
   onSelect(notification: Notification): void {
-    this.notificationService.read(notification.id);
+    this.notificationService.read(notification.n_ID);
     this.updateNotifications();
     this.selectedNotification = notification;
   }

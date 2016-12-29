@@ -10,7 +10,16 @@ export class PioxApiService {
 
   private headers = new Headers({'Content-Type': 'application/json'});
   private options = new RequestOptions({ headers: this.headers });
-  private baseurl:string = '';
+
+  private get baseurl() {
+      if (window.location.hostname == 'app.pio-x.ch') {
+          // on live, use real api url
+          return 'https://api.pio-x.ch';
+      } else {
+          // on dev, use static files on localhost
+          return '/api_dummy';
+      }
+  }
 
   constructor(private http: Http) {
   }

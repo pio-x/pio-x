@@ -1,4 +1,3 @@
-import * as console from 'console';
 import { Team } from '../../interfaces/team';
 
 import { TeamService } from '../../services/team.service';
@@ -11,7 +10,7 @@ import { NavController } from 'ionic-angular';
   templateUrl: 'leaderboard.html'
 })
 export class LeaderboardPage {
-  teams:Team[] = []
+  teams:Team[] = [];
 
   constructor(public navCtrl: NavController, private teamService:TeamService) {
     this.updateLeaderboard();
@@ -19,7 +18,7 @@ export class LeaderboardPage {
 
   sort(teams): Team[] {
     //sort descending
-    return teams.sort((e1,e2) => e2.points - e1.points);
+    return teams.sort((e1,e2) => e2.score - e1.score);
   }
 
   updateLeaderboard(): void {

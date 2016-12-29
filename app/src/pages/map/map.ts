@@ -54,7 +54,7 @@ export class MapPage {
             },
             optimized: false,
             zIndex: google.maps.Marker.MAX_ZINDEX + 1,
-            position: new google.maps.LatLng(station.lat, station.long),
+            position: new google.maps.LatLng(station.pos_lat, station.pos_long),
             station: station
         });
 

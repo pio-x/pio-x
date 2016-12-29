@@ -1,5 +1,6 @@
 export interface Team {
-  id: number;
+  t_ID: number;
   name: string;
-  points: number;
+  score: number;
+  color: string;
 }

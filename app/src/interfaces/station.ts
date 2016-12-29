@@ -1,9 +1,9 @@
 export interface Station {
-  id: number;
+  s_ID: number;
   name: string;
   description: string;
-  lat: number;
-  long: number;
+  pos_lat: number;
+  pos_long: number;
   team: number;
   color: string;
 }

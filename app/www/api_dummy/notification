@@ -1,0 +1,16 @@
+[
+  {
+    "n_ID": "1",
+    "title": "Achtung, fertig, los!",
+    "text": "Das Spiel beginnt um 14:00 Uhr!",
+    "timestamp": "2016-12-29 15:02:06",
+    "t_ID": null
+  },
+  {
+    "n_ID": "2",
+    "title": "Mr.X gesichtet!",
+    "text": "Mister X wurde gesehen",
+    "timestamp": "2016-12-29 15:02:06",
+    "t_ID": "1"
+  }
+]
