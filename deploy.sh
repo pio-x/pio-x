@@ -23,16 +23,9 @@ else
     git submodule update --recursive
 fi
 
-
-# Update Source Code
-git status
-git pull
-git submodule update --recursive
-
-
 # Install Config
-# cp $CONFIG_FILE $PROJECT_DIR/api/_conf.php
-# cp $HTACCESS_FILE $PROJECT_DIR/.htaccess
+cp $CONFIG_FILE $PROJECT_DIR/api/conf.php
+#cp $HTACCESS_FILE $PROJECT_DIR/.htaccess
 
 # Composer Install
 cd $PROJECT_DIR/
