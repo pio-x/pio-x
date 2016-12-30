@@ -18,10 +18,10 @@ $app = new \Slim\App(['settings' => ['displayErrorDetails' => true]]);
 
 
 // 3. log team location
-$app->add(new LogPosition($DB));
+//$app->add(new LogPosition($DB));
 
 // 2. check if is authenticated, at all routes
-$app->add(new IsAuthenticated($DB));
+//$app->add(new IsAuthenticated($DB));
 
 // 1. always add CORS headers
 $app->add(new AddHeaders());
