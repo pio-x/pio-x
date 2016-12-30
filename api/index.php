@@ -6,15 +6,25 @@ use \Psr\Http\Message\ResponseInterface as Response;
 require 'vendor/autoload.php';
 require 'conf.php';
 
+require 'middleware/AddHeaders.php';
+require 'middleware/IsAuthenticated.php';
+require 'middleware/LogPosition.php';
+
 use Doctrine\DBAL\DriverManager;
 
 $DB = DriverManager::getConnection($SQL_CREDENTIALS, new \Doctrine\DBAL\Configuration());
 
 $app = new \Slim\App(['settings' => ['displayErrorDetails' => true]]);
 
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type, X-Piox-Team, X-Piox-Hash, X-Piox-Location");
+
+// 3. log team location
+//$app->add(new LogPosition($DB));
+
+// 2. check if is authenticated, at all routes
+//$app->add(new IsAuthenticated($DB));
+
+// 1. always add CORS headers
+$app->add(new AddHeaders());
 
 // STATION
 $app->get('/station',function (Request $request, Response $response) use (&$DB) {
