@@ -13,6 +13,8 @@
   <a href="login.html?team=2&hash=222">Login mit Team 2</a><br>
   <a href="login.html?team=3&hash=333">Login mit Team 3</a><br>
   <a href="login.html?team=4&hash=444">Login mit Team 4</a><br>
+  <br>
+  <a href="login.html?logout=true">Logout</a><br>
 </p>
 
 <script type="text/javascript">
@@ -25,6 +27,12 @@
           console.log('Eingeloggt mit ' + team + ':' + hash);
           window.location.href = "/";
       } else {
+          if ($.urlParam('logout')) {
+            localStorage.removeItem('team');
+            localStorage.removeItem('hash');
+            console.log('Ausgeloggt');
+            window.location.href = "/";
+          }
           console.log('Falsche parameter zum einloggen!');
       }
   });
