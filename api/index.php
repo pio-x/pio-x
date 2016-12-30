@@ -14,7 +14,7 @@ $app = new \Slim\App(['settings' => ['displayErrorDetails' => true]]);
 
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
-header("Access-Control-Allow-Headers: X-Piox-Team, X-Piox-Hash, X-Piox-Location");
+header("Access-Control-Allow-Headers: Content-Type, X-Piox-Team, X-Piox-Hash, X-Piox-Location");
 
 // STATION
 $app->get('/station',function (Request $request, Response $response) use (&$DB) {
