@@ -88,13 +88,13 @@
 			<div role="tabpanel" class="tab-pane" id="notifications">Notifications erstellen</div>
 			<div role="tabpanel" class="tab-pane" id="passcodes">Passcodes erstellen</div>
 			<div role="tabpanel" class="tab-pane" id="raetsel">Rätselübersicht</div>
-			<div role="tabpanel" class="tab-pane" id="qrcodes">
+			<div role="tabpanel" class="tab-pane" id="qrcodes" ng-controller="QRCtrl">
 				<h1>QR codes</h1>
 				<p>Welchen Code möchtest du anzeigen?
 				<input type="text" ng-model="search"> <span ng-show="search">[> {{search}} <]</span></p>
-				<h3>{{search ? 'Gefundene' : 'Alle'}} Teams</h3>
+				<h3>{{search ? 'Gefundene' : 'Alle'}} QR Codes</h3>
 				<ul>
-					<li ng-repeat="team in teams">{{ team }}</li>
+					<li ng-repeat="code in qrCodes">{{ code.t_ID }}: {{ code.name }}, Hash: [{{ code.hash }}]</li>
 				</ul>
 			</div>
 		</div>
@@ -104,6 +104,7 @@
 	<footer>
 		<p>Copyright 2016 SuperScoutDevs</p>
 	</footer>
+	<script src="js/app.js"></script>
 </body>
 
 </html>
