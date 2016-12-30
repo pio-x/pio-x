@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 
-<html>
+<html ng-app="backendApp">
 
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -13,6 +13,7 @@
 </head>
 
 <body>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
 	<header>
 		<div class="well well-lg">PIO-X Admin</div>
 	</header>
@@ -89,11 +90,12 @@
 			<div role="tabpanel" class="tab-pane" id="raetsel">Rätselübersicht</div>
 			<div role="tabpanel" class="tab-pane" id="qrcodes">
 				<h1>QR codes</h1>
-				<p>Welchen Code möchtest du anzeigen?</p>
-				<select name="qrcodes" multiple="multiple">
-					<option value="Team 1">Team 1</option>
-					<option value="Team 2">Team 2</option>
-				</select>
+				<p>Welchen Code möchtest du anzeigen?
+				<input type="text" ng-model="search"> <span ng-show="search">[> {{search}} <]</span></p>
+				<h3>{{search ? 'Gefundene' : 'Alle'}} Teams</h3>
+				<ul>
+					<li ng-repeat="team in teams">{{ team }}</li>
+				</ul>
 			</div>
 		</div>
 	</div>
