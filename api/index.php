@@ -18,7 +18,13 @@ header("Access-Control-Allow-Headers: Content-Type, X-Piox-Team, X-Piox-Hash, X-
 
 // STATION
 $app->get('/station',function (Request $request, Response $response) use (&$DB) {
-    $stations = $DB->fetchAll("SELECT * FROM station");
+	$sql = "SELECT station.*, captures.captured_timestamp, captures.t_ID as team, captures.color FROM station 
+		LEFT JOIN (
+			SELECT ts.s_ID, ts.t_ID, max(timestamp) as captured_timestamp, team.color FROM r_team_station ts 
+			LEFT JOIN team ON team.t_ID = ts.t_ID
+			GROUP BY s_ID
+		) as captures ON captures.s_ID = station.s_ID";
+    $stations = $DB->fetchAll($sql);
     return $response->withJson($stations);
 });
 
