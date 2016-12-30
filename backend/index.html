@@ -101,7 +101,7 @@
 						</ul>
 					</td>
 					<td>
-						QR
+						<qrcode version="4" error-correction-level="M" size="200" data="{{ qrUrl }}" href="{{ qrUrl }}"></qrcode>
 					</td></tr>
 				</table>
 			</div>
@@ -113,6 +113,8 @@
 		<p>Copyright 2016 SuperScoutDevs</p>
 	</footer>
 	<script src="js/app.js"></script>
+	<script src="js/vendor/qrcode.js"></script>
+	<script src="js/vendor/angular-qrcode.js"></script>
 </body>
 
 </html>
