@@ -92,9 +92,10 @@
 				<h1>QR codes</h1>
 				<p>Welchen Code möchtest du anzeigen?
 				<input type="text" ng-model="search"> <span ng-show="search">[> {{search}} <]</span></p>
-				<h3>{{search ? 'Gefundene' : 'Alle'}} QR Codes</h3>
+				<h3>{{search ? 'Gefilterte' : 'Alle'}} QR Codes</h3>
 				<ul>
-					<li ng-repeat="code in qrCodes">{{ code.t_ID }}: {{ code.name }}, Hash: [{{ code.hash }}]</li>
+					<li ng-repeat="group in groups">G{{ group.t_ID }}: {{ group.name }}, Hash: [ {{ group.hash }} ]</li>
+					<li ng-repeat="riddle in riddles">R{{ riddle.r_ID }}: {{ riddle.question }}, Antwort: [ {{ riddle.answer }} ]</li>
 				</ul>
 			</div>
 		</div>
