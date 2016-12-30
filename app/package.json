@@ -1,7 +1,7 @@
 {
-  "name": "ionic-hello-world",
-  "author": "Ionic Framework",
-  "homepage": "http://ionicframework.com/",
+  "name": "piox-app",
+  "author": "Pio X Team",
+  "homepage": "http://pio-x.ch",
   "private": true,
   "scripts": {
     "clean": "ionic-app-scripts clean",
@@ -46,5 +46,5 @@
       "locator": "ios"
     }
   ],
-  "description": "app: An Ionic project"
+  "description": "A mister X game"
 }
