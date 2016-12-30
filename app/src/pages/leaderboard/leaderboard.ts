@@ -11,9 +11,11 @@ import { NavController } from 'ionic-angular';
 })
 export class LeaderboardPage {
   teams:Team[] = [];
+  myteam:number = 0;
 
   constructor(public navCtrl: NavController, private teamService:TeamService) {
     this.updateLeaderboard();
+    this.myteam = parseInt(localStorage.getItem('team'));
   }
 
   sort(teams): Team[] {
