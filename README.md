@@ -3,9 +3,9 @@ Der Pio X Source Code
 
 # Installation
 
-Abhängigkeiten installieren:
+App Abhängigkeiten installieren:
 
- * Install (Node.js)[https://nodejs.org/en/]
+ * Install [Node.js](https://nodejs.org/en/)
  * Update NPM: `npm install npm@latest -g`
  * Install Ionic & Cordova: `npm install -g cordova ionic`
  * Ins App Verzeichnis wechseln: `cd app`
@@ -17,8 +17,14 @@ App Plattformen hinzufügen (optional):
  * `ionic platform add ios`
  * `ionic platform add android`
 
+API Abhängigkeiten installieren:
 
-#Allgemeine Regeln:
+ * Ins API Verzeichnis wechseln: `cd api`
+ * composer.phar herunterladen: `curl -sS https://getcomposer.org/installer | php`
+ * Composer ausführen: `php composer.phar install`
+
+
+# Allgemeine Regeln:
 
 Stationen:
  * Einnehmen gibt keine Punkte
