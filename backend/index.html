@@ -96,11 +96,15 @@
 					<td>
 						<h3>{{search ? 'Gefilterte' : 'Alle'}} QR Codes</h3>
 						<ul>
-							<li ng-repeat="group in groups">G{{ group.t_ID }}: {{ group.name }}, Hash: [ {{ group.hash }} ]</li>
+							<li ng-repeat="group in groups">
+								<a href="#" ng-click="scope.qrUrl = 'https://app.pio-x.ch/login.html?team=1&hash={{ group.hash }}'">
+										G{{ group.t_ID }}: {{ group.name }}, Hash: [ {{ group.hash }} ]</a>
+							</li>
 							<li ng-repeat="riddle in riddles">R{{ riddle.r_ID }}: {{ riddle.question }}, Antwort: [ {{ riddle.answer }} ]</li>
 						</ul>
 					</td>
 					<td>
+						<a href="{{ qrUrl }}">{{ qrUrl }}</a> <br/>
 						<qrcode version="4" error-correction-level="M" size="200" data="{{ qrUrl }}" href="{{ qrUrl }}"></qrcode>
 					</td></tr>
 				</table>
