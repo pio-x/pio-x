@@ -18,7 +18,11 @@ export class TabsPage {
   tab4Root: any = RiddlesPage;
   tab5Root: any = NotificationsPage;
 
-  constructor() {
+  isLoggedIn: boolean = false;
 
+  constructor() {
+    if (localStorage.getItem('team') && localStorage.getItem('hash')) {
+        this.isLoggedIn = true;
+    }
   }
 }
