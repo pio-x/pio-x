@@ -1,44 +1,52 @@
 [
-  {
-    "s_ID": "1",
-    "pos_lat": "47.499",
-    "pos_long": "8.72853",
-    "name": "Chileplatz",
-    "description": "Platz vor Stadtkirche"
-  },
-  {
-    "s_ID": "2",
-    "pos_lat": "47.4987",
-    "pos_long": "8.73057",
-    "name": "Holzmaa",
-    "description": "Er war mal hier"
-  },
-  {
-    "s_ID": "3",
-    "pos_lat": "47.5009",
-    "pos_long": "8.72596",
-    "name": "Ufos",
-    "description": "Aliens auf dem Merkurplatz"
-  },
-  {
-    "s_ID": "4",
-    "pos_lat": "47.5182",
-    "pos_long": "8.71927",
-    "name": "Warzenbunker",
-    "description": "Auch zum Einkaufen geeignet"
-  },
-  {
-    "s_ID": "5",
-    "pos_lat": "47.4946",
-    "pos_long": "8.71274",
-    "name": "Diviko WG",
-    "description": "Betreutes Wohnen für altgediente Divikonianer"
-  },
-  {
-    "s_ID": "6",
-    "pos_lat": "47.494796",
-    "pos_long": "8.717049",
-    "name": "Technopark",
-    "description": "Hier sind wir"
-  }
+{
+"s_ID": "1",
+"pos_lat": "47.499",
+"pos_long": "8.72853",
+"name": "Chileplatz",
+"description": "Platz vor Stadtkirche",
+"captured_timestamp": "2016-12-30 13:12:07",
+"team": "2",
+"color": "green"
+},
+{
+"s_ID": "2",
+"pos_lat": "47.4987",
+"pos_long": "8.73057",
+"name": "Holzmaa",
+"description": "Er war mal hier",
+"captured_timestamp": "2016-12-30 15:25:02",
+"team": "3",
+"color": "blue"
+},
+{
+"s_ID": "3",
+"pos_lat": "47.5009",
+"pos_long": "8.72596",
+"name": "Ufos",
+"description": "Aliens auf dem Merkurplatz",
+"captured_timestamp": null,
+"team": null,
+"color": null
+},
+{
+"s_ID": "4",
+"pos_lat": "47.5182",
+"pos_long": "8.71927",
+"name": "Warzenbunker",
+"description": "Auch zum Einkaufen geeignet",
+"captured_timestamp": null,
+"team": null,
+"color": null
+},
+{
+"s_ID": "5",
+"pos_lat": "47.4946",
+"pos_long": "8.71274",
+"name": "Diviko WG",
+"description": "Betreutes Wohnen für altgediente Divikonianer",
+"captured_timestamp": null,
+"team": null,
+"color": null
+}
 ]

@@ -44,14 +44,33 @@ export class MapPage {
     }
 
     addMarker(station: Station) {
+        let icon;
+        if (station.team) {
+            // captured stations
+            icon = {
+                path: google.maps.SymbolPath.CIRCLE,
+                strokeColor: station.color || 'black',
+                strokeWeight: 4,
+                scale: 10
+            };
+
+            // highlight own teams stations
+            if (station.team == parseInt(localStorage.getItem('team'))) {
+                icon.fillColor = '#e00202';
+                icon.fillOpacity = 0.8;
+            }
+        } else {
+            // uncaptured stations
+            icon = {
+                path: google.maps.SymbolPath.CIRCLE,
+                strokeColor: '#888',
+                strokeWeight: 3,
+                scale: 8
+            };
+        }
         let marker = new google.maps.Marker({
             map: this.map,
-            icon: {
-                path: google.maps.SymbolPath.CIRCLE,
-                strokeColor: station.color,
-                strokeWeight: 3,
-                scale: 10
-            },
+            icon: icon,
             optimized: false,
             zIndex: google.maps.Marker.MAX_ZINDEX + 1,
             position: new google.maps.LatLng(station.pos_lat, station.pos_long),

@@ -5,5 +5,6 @@ export interface Station {
   pos_lat: number;
   pos_long: number;
   team: number;
+  captured_timestamp: string;
   color: string;
 }
