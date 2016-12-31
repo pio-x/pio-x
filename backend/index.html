@@ -100,7 +100,10 @@
 								<a href="#" ng-click="$parent.qrUrl = 'https://app.pio-x.ch/login.html?team=1&hash=' + group.hash">
 										G{{ group.t_ID }}: {{ group.name }}, Hash: [ {{ group.hash }} ]</a>
 							</li>
-							<li ng-repeat="riddle in riddles">R{{ riddle.r_ID }}: {{ riddle.question }}, Antwort: [ {{ riddle.answer }} ]</li>
+							<li ng-repeat="riddle in riddles">
+								<a href="#" ng-click="$parent.qrUrl = 'https://app.pio-x.ch/riddle.html?riddle=1&answer=' + riddle.answer">
+									R{{ riddle.r_ID }}: {{ riddle.question }}, Antwort: [ {{ riddle.answer }} ]</a>
+							</li>
 						</ul>
 					</td>
 					<td>
