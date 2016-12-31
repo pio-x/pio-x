@@ -6,5 +6,8 @@ angular.module('backendApp', ['monospaced.qrcode'])
         $http.get('https://api.pio-x.ch/index.php/riddle').then(function(articlesResponse) {
             $scope.riddles = articlesResponse.data;
         });
+        $http.get('https://api.pio-x.ch/index.php/station').then(function(articlesResponse) {
+            $scope.stations = articlesResponse.data;
+        });
         $scope.qrUrl = "https://app.pio-x.ch/login.html?team=1&hash=111";
 });
