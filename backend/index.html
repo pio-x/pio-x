@@ -97,8 +97,7 @@
 						<h3>{{search ? 'Gefilterte' : 'Alle'}} QR Codes</h3>
 						<ul>
 							<li ng-repeat="group in groups">
-								<!-- TODO: Keine Ahnung warum er beim Klick den Strink nicht in die Variable schreibt -->
-								<a href="#" ng-click="qrUrl = 'https://app.pio-x.ch/login.html?team=1&hash={{ group.hash }}'">
+								<a href="#" ng-click="$parent.qrUrl = 'https://app.pio-x.ch/login.html?team=1&hash=' + group.hash">
 										G{{ group.t_ID }}: {{ group.name }}, Hash: [ {{ group.hash }} ]</a>
 							</li>
 							<li ng-repeat="riddle in riddles">R{{ riddle.r_ID }}: {{ riddle.question }}, Antwort: [ {{ riddle.answer }} ]</li>
