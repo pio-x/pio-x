@@ -20,6 +20,7 @@ class LogPosition
 	{
 		// check if location info is present in headers
 		$location = $request->getHeaderLine('X-Piox-Location');
+		$player = $request->getHeaderLine('X-Piox-Player');
 		if ($location) {
 			$location = json_decode($location, true);
 			if (isset($location['lat']) && $request->getAttribute('team_id')) {
@@ -27,7 +28,7 @@ class LogPosition
 					't_ID' => $request->getAttribute('team_id'),
 					'team_lat' => $location['lat'],
 					'team_long' => $location['lng'],
-					'player' => '' // TODO
+					'player' => urldecode($player)
 				];
 				$this->DB->insert('teamposition', $data);
 			}

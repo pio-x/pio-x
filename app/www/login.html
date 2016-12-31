@@ -1,37 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Pio X Login</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
   <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
 </head>
 <body>
-<h1>Pio X Login</h1>
+<div class="container-fluid">
 
-<p>
-  <a href="login.html?team=1&hash=111">Login mit Team 1</a><br>
-  <a href="login.html?team=2&hash=222">Login mit Team 2</a><br>
-  <a href="login.html?team=3&hash=333">Login mit Team 3</a><br>
-  <a href="login.html?team=4&hash=444">Login mit Team 4</a><br>
-  <br>
-  <a href="login.html?logout=true">Logout</a><br>
-</p>
+  <div id="loginlinks" style="display:none;">
+    <h1>Pio X Login</h1>
+    <a href="login.html?team=1&hash=111">Login mit Team 1</a><br>
+    <a href="login.html?team=2&hash=222">Login mit Team 2</a><br>
+    <a href="login.html?team=3&hash=333">Login mit Team 3</a><br>
+    <a href="login.html?team=4&hash=444">Login mit Team 4</a><br>
+    <br>
+    <a href="login.html?logout=true">Logout</a><br>
+  </div>
+
+  <div id="loginform" style="display: none;">
+    <h1>Pio X Login</h1>
+    <form action="?" method="GET">
+      <input type="hidden" name="hash" id="input_hash">
+      <input type="hidden" name="team" id="input_team">
+      <div class="form-group">
+        <label for="input_player">Wie ist dein Name?</label>
+        <input type="text" class="form-control" name="player" id="input_player" placeholder="Pfadiname" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Los geht's!</button>
+    </form>
+  </div>
+</div>
 
 <script type="text/javascript">
   $( document ).ready(function() {
       var team = $.urlParam('team');
       var hash = $.urlParam('hash');
-      if (team && hash) {
+      var player = $.urlParam('player');
+      if (team && hash && player) {
           localStorage.setItem('team', team);
           localStorage.setItem('hash', hash);
-          console.log('Eingeloggt mit ' + team + ':' + hash);
+          localStorage.setItem('player', player);
+          console.log('Eingeloggt mit ' + team + ':' + hash + ' als ' + player);
           window.location.href = "/";
+      } else if (team && hash) {
+          $('#loginlinks').hide();
+          $('#loginform').show();
+          $('#input_team').val(team);
+          $('#input_hash').val(hash);
       } else {
           if ($.urlParam('logout')) {
             localStorage.removeItem('team');
             localStorage.removeItem('hash');
             console.log('Ausgeloggt');
             window.location.href = "/";
+          } else {
+              $('#loginlinks').show();
           }
           console.log('Falsche parameter zum einloggen!');
       }
