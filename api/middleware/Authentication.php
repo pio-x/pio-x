@@ -22,8 +22,8 @@ class Authentication
 		$hash = $request->getHeaderLine('X-Piox-Hash');
 		if (!$hash) {
 			// 2. COOKIE: check if hash is present in cookie
-			if (isset($_SESSION['piox_hash'])) {
-				$hash = $_SESSION['piox_hash'];
+			if (isset($_COOKIE['piox_hash'])) {
+				$hash = $_COOKIE['piox_hash'];
 			} else {
 				// 3. QUERY PARAM: check if hash is passed with query params (e.g: /team?hash=xxx)
 				$params = $request->getQueryParams();
