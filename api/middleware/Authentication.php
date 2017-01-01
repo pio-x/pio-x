@@ -22,6 +22,7 @@ class Authentication
 		$hash = $request->getHeaderLine('X-Piox-Hash');
 		if (!$hash) {
 			// 2. COOKIE: check if hash is present in cookie
+			// document.cookie = "piox_hash=111; path=/; domain=.pio-x.ch";
 			if (isset($_COOKIE['piox_hash'])) {
 				$hash = $_COOKIE['piox_hash'];
 			} else {
