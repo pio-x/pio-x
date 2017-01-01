@@ -14,8 +14,8 @@ export class TabsPage {
   // should be each tab's root Page
   tab1Root: any = MapPage;
   tab2Root: any = LeaderboardPage;
-  tab3Root: any = RulesPage;
-  tab4Root: any = RiddlesPage;
+  tab3Root: any = RiddlesPage;
+  tab4Root: any = RulesPage;
   tab5Root: any = NotificationsPage;
 
   isLoggedIn: boolean = false;

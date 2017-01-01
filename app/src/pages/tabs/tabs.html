@@ -1,9 +1,9 @@
 <ion-tabs *ngIf="isLoggedIn">
   <ion-tab [root]="tab1Root" tabTitle="Map" tabIcon="map"></ion-tab>
   <ion-tab [root]="tab2Root" tabTitle="Rangliste" tabIcon="trophy"></ion-tab>
-  <ion-tab [root]="tab3Root" tabTitle="Regeln" tabIcon="help"></ion-tab>
-  <ion-tab [root]="tab4Root" tabTitle="Rätsel" tabIcon="key"></ion-tab>
-  <ion-tab [root]="tab5Root" tabTitle="Nachrichten" tabIcon="information"></ion-tab>
+  <ion-tab [root]="tab3Root" tabTitle="Rätsel" tabIcon="key"></ion-tab>
+  <ion-tab [root]="tab4Root" tabTitle="Regeln" tabIcon="book"></ion-tab>
+  <ion-tab [root]="tab5Root" tabTitle="Nachrichten" tabIcon="megaphone"></ion-tab>
 </ion-tabs>
 <ion-content *ngIf="!isLoggedIn">
   <ion-card>
