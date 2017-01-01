@@ -7,7 +7,7 @@ require 'vendor/autoload.php';
 require 'conf.php';
 
 require 'middleware/AddHeaders.php';
-require 'middleware/IsAuthenticated.php';
+require 'middleware/Authentication.php';
 require 'middleware/LogPosition.php';
 
 use Doctrine\DBAL\DriverManager;
@@ -18,146 +18,184 @@ $app = new \Slim\App(['settings' => ['displayErrorDetails' => true]]);
 
 
 // 3. log team location
-//$app->add(new LogPosition($DB));
+$app->add(new LogPosition($DB));
 
-// 2. check if is authenticated, at all routes
-//$app->add(new IsAuthenticated($DB));
+// 2. check if is authenticated (all routes) and add arguments
+$app->add(new Authentication($DB));
 
 // 1. always add CORS headers
 $app->add(new AddHeaders());
 
 // STATION
 $app->get('/station',function (Request $request, Response $response) use (&$DB) {
+	// stations with last capture info
 	$sql = "SELECT station.*, captures.captured_timestamp, captures.t_ID as team, captures.color FROM station 
 		LEFT JOIN (
 			SELECT ts.s_ID, ts.t_ID, max(timestamp) as captured_timestamp, team.color FROM r_team_station ts 
 			LEFT JOIN team ON team.t_ID = ts.t_ID
 			GROUP BY s_ID
 		) as captures ON captures.s_ID = station.s_ID";
-    $stations = $DB->fetchAll($sql);
-    return $response->withJson($stations);
+	$stations = $DB->fetchAll($sql);
+	return $response->withJson($stations);
 });
 
-//request: { "id": 5}
 $app->post('/station/{id}/capture',function (Request $request, Response $response, $args) use (&$DB) {
-  $stationId = $args['id'];
-  $body = json_decode($request->getBody(), true);
-  $teamId = $body['id'];
+	if ($request->getAttribute('is_team') == false) {
+		return $response->withStatus(403)->withJson("Error: not sent by a team");
+	}
 
-  $data = array('s_ID' => $stationId,
-                't_ID' => $teamId);
+	// TODO: location check
 
-  $DB->insert('r_team_station', $data);
+	$stationId = $args['id'];
+	$teamId = $request->getAttribute('team_id');
 
-  return $response->withJson("success");
+	$data = array(
+		's_ID' => $stationId,
+		't_ID' => $teamId,
+		'img_ID' => 0
+	);
+
+	$DB->insert('r_team_station', $data);
+
+	return $response->withJson("success");
 });
 
 
 $app->put('/station',function (Request $request, Response $response) use (&$DB) {
-  $body = json_decode($request->getBody(), true);
-  $lat = $body['pos_lat'];
-  $long = $body['pos_long'];
-  $name = $body['name'];
-  $description = $body['description'];
+	$body = json_decode($request->getBody(), true);
+	$lat = $body['pos_lat'];
+	$long = $body['pos_long'];
+	$name = $body['name'];
+	$description = $body['description'];
 
-  $data = array('pos_lat' => $lat,
-                'pos_long' => $long,
-                'name' => $name,
-                'description' => $description);
+	$data = array('pos_lat' => $lat,
+				'pos_long' => $long,
+				'name' => $name,
+				'description' => $description);
 
-  $DB->insert('station', $data);
+	$DB->insert('station', $data);
 
-  return $response->withJson("success");
+	return $response->withJson("success");
 });
 
 // TEAM
 $app->get('/team', function (Request $request, Response $response) use (&$DB) {
-    $teams = $DB->fetchAll("SELECT * FROM team");
-    return $response->withJson($teams);
+	$teams = $DB->fetchAll("SELECT * FROM team");
+	return $response->withJson($teams);
 });
 
 $app->get('/team/{id}', function (Request $request, Response $response, $args) use (&$DB) {
-    $teamId = $args['id'];
-    $team = $DB->fetchAll("SELECT * FROM team WHERE t_ID = ?", array($teamId));
+	$teamId = $args['id'];
+	$team = $DB->fetchAll("SELECT * FROM team WHERE t_ID = ?", array($teamId));
 
-    if(sizeof($team) > 0) {
-        return $response->withJson($team);
-    } else {
-        throw new \Slim\Exception\NotFoundException($request, $response);
-    }
+	if(sizeof($team) > 0) {
+		return $response->withJson($team);
+	} else {
+		return $response->withStatus(404)->withJson("team not found");
+	}
+});
+
+// MISTER X
+$app->get('/mrx', function (Request $request, Response $response) use (&$DB) {
+	if ($request->getAttribute('is_admin') == true) {
+		$mrxs = $DB->fetchAll("SELECT * FROM mrx");
+	} else {
+		$mrxs = $DB->fetchAll("SELECT x_ID, name FROM mrx");
+	}
+	$data = [];
+	foreach ($mrxs as $mrx) {
+		// TODO: positionen bei teams nur mitschicken wenn sie sie sehen dürfen
+		$locations = $DB->fetchAll("SELECT * FROM mrx_position WHERE mrx_ID = ? ORDER BY timestamp desc", array($mrx['x_ID']));
+		$mrx['locations'] = $locations;
+		$data[] = $mrx;
+	}
+	return $response->withJson($data);
 });
 
 
 // TOM RIDDLE
 $app->get('/riddle', function (Request $request, Response $response) use (&$DB) {
-    $riddles = $DB->fetchAll("SELECT * FROM riddle");
-    return $response->withJson($riddles);
+	$riddles = $DB->fetchAll("SELECT * FROM riddle");
+	return $response->withJson($riddles);
 });
 
 $app->get('/riddle/{id}', function (Request $request, Response $response, $args) use (&$DB) {
-    $riddleId = $args['id'];
-    $riddle = $DB->fetchAll("SELECT * FROM riddle WHERE r_ID = ?", array($riddleId));
+	$riddleId = $args['id'];
+	$riddle = $DB->fetchAll("SELECT * FROM riddle WHERE r_ID = ?", array($riddleId));
 
-    if(sizeof($riddle) > 0) {
-      return $response->withJson($riddle);
-    } else {
-        throw new \Slim\Exception\NotFoundException($request, $response);
-    }
+	if(sizeof($riddle) > 0) {
+		return $response->withJson($riddle);
+	} else {
+		return $response->withStatus(404)->withJson("riddle not found");
+	}
 });
 
 $app->put('/riddle',function (Request $request, Response $response) use (&$DB) {
-  $body = json_decode($request->getBody(), true);
-  $lat = $body['pos_lat'];
-  $long = $body['pos_long'];
-  $question = $body['question'];
-  $answer = $body['answer'];
-  $type = $body['type'];
-  $points = $body['points'];
-  $dep = $body['dep_ID'];
+	$body = json_decode($request->getBody(), true);
+	$lat = $body['pos_lat'];
+	$long = $body['pos_long'];
+	$question = $body['question'];
+	$answer = $body['answer'];
+	$type = $body['type'];
+	$points = $body['points'];
+	$dep = $body['dep_ID'];
 
-  $data = array('pos_lat' => $lat,
-                'pos_long' => $long,
-                'question' => $question,
-                'answer' => $answer,
-                'type' => $type,
-                'points' => $points,
-                'dep_ID' => $dep);
+	$data = array('pos_lat' => $lat,
+				'pos_long' => $long,
+				'question' => $question,
+				'answer' => $answer,
+				'type' => $type,
+				'points' => $points,
+				'dep_ID' => $dep);
 
-  $DB->insert('riddle', $data);
+	$DB->insert('riddle', $data);
 
-  return $response->withJson("success");
+	return $response->withJson("success");
 });
 
 $app->post('/riddle/{id}',function (Request $request, Response $response, $args) use (&$DB) {
-  $riddleId = $args['id'];
-  $body = json_decode($request->getBody(), true);
+	$riddleId = $args['id'];
+	$body = json_decode($request->getBody(), true);
 
-  $DB->update('riddle', $body, array('r_ID' => $riddleId));
+	$DB->update('riddle', $body, array('r_ID' => $riddleId));
 
-  return $response->withJson("success");
+	return $response->withJson("success");
 });
 
 
 $app->post('/riddle/{id}/unlock',function (Request $request, Response $response, $args) use (&$DB) {
-  $riddleId = $args['id'];
-  $body = json_decode($request->getBody(), true);
-  $teamId = $body['teamId'];
+	if ($request->getAttribute('is_team') == false) {
+		return $response->withStatus(403)->withJson("Error: not sent by a team");
+	}
 
-  $sql = 'UPDATE r_team_riddle SET state = "UNLOCKED" WHERE r_ID = $riddleId AND t_ID => $teamId';
+	// TODO: check if unlock is possible at the current location
 
-//TODO
-  return $response->withJson("success");
+	$riddleId = $args['id'];
+	$teamId = $request->getAttribute('team_id');
+	$data = array(
+		'state' => 'UNLOCKED',
+		'r_ID' => $riddleId,
+		't_ID'=> $teamId,
+		'img_ID' => 0
+	);
+
+	try {
+		$DB->insert('r_team_riddle', $data);
+		return $response->withJson("success");
+	} catch (Doctrine\DBAL\Exception\UniqueConstraintViolationException $e) {
+		return $response->withStatus(403)->withJson("Already unlocked");
+	}
 });
 
 
 // NOTIFICATIONS
 $app->get('/notification', function (Request $request, Response $response) use (&$DB) {
-    $notifications = $DB->fetchAll("SELECT * FROM notification ORDER BY timestamp DESC");
-    return $response->withJson($notifications);
+	$notifications = $DB->fetchAll("SELECT * FROM notification ORDER BY timestamp DESC");
+	return $response->withJson($notifications);
 });
 
 $app->get('/', function (Request $request, Response $response) {
-    echo "PIO-X";
+	echo "PIO-X";
 });
 
 $app->run();
