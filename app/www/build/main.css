@@ -22109,11 +22109,7 @@ sub {
   }
 }
 
-page-map .scroll-content {
-  height: 100%;
-}
-
-page-map #map {
+page-map .sebm-google-map-container {
   width: 100%;
   height: 100%;
 }

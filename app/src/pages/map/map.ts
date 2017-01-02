@@ -1,140 +1,58 @@
-import {Component, ViewChild, ElementRef} from '@angular/core';
+import {Component} from '@angular/core';
 
 import {NavController} from 'ionic-angular';
 import {StationService} from "../../services/station.service";
 import {Station} from "../../interfaces/station";
 import {LatLngLocation} from "../../interfaces/LatLngLocation";
 import {LocationService} from "../../services/location.service";
+import {TeamService} from "../../services/team.service";
+import {Team} from "../../interfaces/team";
 
-
-declare var google;
 
 @Component({
     selector: 'page-map',
     templateUrl: 'map.html'
 })
 export class MapPage {
+    default_lat: number = 47.499002;
+    default_lng: number = 8.728729;
+    default_zoom: number = 13;
 
-    @ViewChild('map') mapElement: ElementRef;
-    map: any;
+    myTeam: number = 0;
 
     stations: Station[] = [];
-    markers: any = [];
-    infoWindow: any;
-    userLocation: LatLngLocation;
-    userMarker: any;
+    teams: { [id: number]: Team; } = { };
 
-    constructor(public navCtrl: NavController, private stationService: StationService, private locationService: LocationService) {
+    userLocation: LatLngLocation;
+
+    constructor(public navCtrl: NavController, private stationService: StationService, private teamService: TeamService, private locationService: LocationService) {
         this.updateStations();
+        this.updateTeams();
+
+        this.myTeam = parseInt(localStorage.getItem('team'));
+
+        this.locationService.subscribe((pos: LatLngLocation) => {
+            this.userLocationUpdated(pos);
+        });
     }
 
-    ionViewDidLoad() {
-        this.loadMap();
+    userLocationUpdated(position) {
+        this.userLocation = position;
     }
 
     updateStations(): void {
         this.stationService.getStations()
             .then((stations) => {
                 this.stations = stations;
-                this.clearMarkers();
-                this.stations.forEach((station: Station) => {
-                    this.addMarker(station)
-                })
             });
     }
 
-    addMarker(station: Station) {
-        let icon;
-        if (station.team) {
-            // captured stations
-            icon = {
-                path: google.maps.SymbolPath.CIRCLE,
-                strokeColor: station.color || 'black',
-                strokeWeight: 4,
-                scale: 10
-            };
-
-            // highlight own teams stations
-            if (station.team == parseInt(localStorage.getItem('team'))) {
-                icon.fillColor = '#e00202';
-                icon.fillOpacity = 0.8;
-            }
-        } else {
-            // uncaptured stations
-            icon = {
-                path: google.maps.SymbolPath.CIRCLE,
-                strokeColor: '#888',
-                strokeWeight: 3,
-                scale: 8
-            };
-        }
-        let marker = new google.maps.Marker({
-            map: this.map,
-            icon: icon,
-            optimized: false,
-            zIndex: google.maps.Marker.MAX_ZINDEX + 1,
-            position: new google.maps.LatLng(station.pos_lat, station.pos_long),
-            station: station
-        });
-
-        this.markers.push(marker);
-
-        let _this = this;
-        google.maps.event.addListener(marker, 'click', function () {
-            let content = '<h2>'+this.station.name+'</h2>';
-            content += this.station.description;
-            _this.infoWindow.setContent(content);
-            _this.infoWindow.open(_this.map, this);
-        });
-    }
-
-    clearMarkers() {
-        for (let i = 0; i < this.markers.length; i++) {
-            this.markers[i].setMap(null);
-        }
-    }
-
-    updateUserMarker() {
-        if (this.userMarker != null) {
-            this.userMarker.setMap(null);
-        }
-        this.userMarker = new google.maps.Marker({
-            position: this.userLocation,
-            map: this.map,
-            icon: {
-                url: '/assets/bluecircle.png',
-                size: new google.maps.Size(14, 14),
-                origin: new google.maps.Point(0, 0),
-                anchor: new google.maps.Point(7, 7),
-                scaledSize: new google.maps.Size(14, 14)
-            },
-            clickable: false,
-            optimized: false,
-            zIndex: 99999999999
-        });
-    }
-
-    userLocationUpdated(position) {
-        this.userLocation = position;
-        this.updateUserMarker();
-    }
-
-    loadMap() {
-
-        let latLng = new google.maps.LatLng(47.499002, 8.728729);
-        let mapOptions = {
-            center: latLng,
-            zoom: 13,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
-        };
-        this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-
-        this.infoWindow = new google.maps.InfoWindow({
-            content: 'Laden ...'
-        });
-
-        this.locationService.subscribe((pos: LatLngLocation) => {
-            this.userLocationUpdated(pos);
-        });
+    updateTeams(): void {
+        this.teamService.getTeams()
+            .then((teams) => {
+                for (let team of teams) {
+                    this.teams[team.t_ID] = team;
+                }
+            });
     }
 }

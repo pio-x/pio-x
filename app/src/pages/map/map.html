@@ -10,5 +10,67 @@
 </ion-header>
 
 <ion-content>
-  <div #map id="map"></div>
+  <sebm-google-map
+          [latitude]="default_lat"
+          [longitude]="default_lng"
+          [zoom]="default_zoom"
+          [streetViewControl]="false"
+          [mapTypeControl]="true"
+  >
+
+    <!-- Station Radius -->
+    <sebm-google-map-circle
+            *ngFor="let station of stations"
+            [latitude]="station.pos_lat"
+            [longitude]="station.pos_long"
+            [radius]="100"
+            [fillColor]="station.color"
+            [fillOpacity]="0.1"
+            [circleDraggable]="false"
+            [editable]="false"
+            [clickable]="false"
+    >
+    </sebm-google-map-circle>
+
+    <!-- Station Icons -->
+    <sebm-google-map-marker
+            *ngFor="let station of stations"
+            [latitude]="station.pos_lat"
+            [longitude]="station.pos_long"
+            [iconUrl]="{
+                path: 0,
+                fillColor: station.color,
+                fillOpacity: (station.team == myTeam ? 1 : 0),
+                strokeColor: (station.team == myTeam ? 'white' : station.color),
+                strokeWeight: 3,
+                scale: 8
+            }"
+    >
+      <sebm-google-map-info-window [disableAutoPan]="true">
+        <div><b>{{station.name}}</b></div>
+        <span *ngIf="teams[station.team]">
+          <span *ngIf="station.team == myTeam"><i>Diese Station gehört deinem Team.</i></span>
+          <span *ngIf="station.team != myTeam">
+            Diese Station gehört {{teams[station.team].name}}<br>
+          </span>
+        </span>
+        <span *ngIf="!teams[station.team]">
+          Diese Station gehört noch keinem Team.
+        </span>
+      </sebm-google-map-info-window>
+    </sebm-google-map-marker>
+
+    <!-- User Location Icon -->
+    <sebm-google-map-marker
+            *ngIf="userLocation"
+            [latitude]="userLocation.lat"
+            [longitude]="userLocation.lng"
+            [iconUrl]="{
+                url: '/assets/bluecircle.png',
+                anchor: {x: 7, y: 7}
+            }"
+    >
+    </sebm-google-map-marker>
+
+  </sebm-google-map>
 </ion-content>

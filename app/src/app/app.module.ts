@@ -16,6 +16,8 @@ import {StationService} from "../services/station.service";
 import {NotificationService} from "../services/notification.service";
 import {LocationService} from "../services/location.service";
 
+import { AgmCoreModule } from 'angular2-google-maps/core';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -28,7 +30,10 @@ import {LocationService} from "../services/location.service";
     NotificationDetailComponent
   ],
   imports: [
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyBYAjZ-QKEPlDFLPsLcxR5fFRM2LckyZ6o'
+    })
   ],
   bootstrap: [IonicApp],
   entryComponents: [
