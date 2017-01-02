@@ -36,7 +36,7 @@ $app->get('/station',function (Request $request, Response $response) use (&$DB) 
 			GROUP BY s_ID
 		) as captures ON captures.s_ID = station.s_ID";
 	$stations = $DB->fetchAll($sql);
-	return $response->withJson($stations);
+	return $response->withJson($stations, 200, JSON_NUMERIC_CHECK);
 });
 
 $app->post('/station/{id}/capture',function (Request $request, Response $response, $args) use (&$DB) {
@@ -81,7 +81,7 @@ $app->put('/station',function (Request $request, Response $response) use (&$DB) 
 // TEAM
 $app->get('/team', function (Request $request, Response $response) use (&$DB) {
 	$teams = $DB->fetchAll("SELECT * FROM team");
-	return $response->withJson($teams);
+	return $response->withJson($teams, 200, JSON_NUMERIC_CHECK);
 });
 
 $app->get('/team/{id}', function (Request $request, Response $response, $args) use (&$DB) {
@@ -89,7 +89,7 @@ $app->get('/team/{id}', function (Request $request, Response $response, $args) u
 	$team = $DB->fetchAll("SELECT * FROM team WHERE t_ID = ?", array($teamId));
 
 	if(sizeof($team) > 0) {
-		return $response->withJson($team);
+		return $response->withJson($team, 200, JSON_NUMERIC_CHECK);
 	} else {
 		return $response->withStatus(404)->withJson("team not found");
 	}
@@ -109,14 +109,14 @@ $app->get('/mrx', function (Request $request, Response $response) use (&$DB) {
 		$mrx['locations'] = $locations;
 		$data[] = $mrx;
 	}
-	return $response->withJson($data);
+	return $response->withJson($data, 200, JSON_NUMERIC_CHECK);
 });
 
 
 // TOM RIDDLE
 $app->get('/riddle', function (Request $request, Response $response) use (&$DB) {
 	$riddles = $DB->fetchAll("SELECT * FROM riddle");
-	return $response->withJson($riddles);
+	return $response->withJson($riddles, 200, JSON_NUMERIC_CHECK);
 });
 
 $app->get('/riddle/{id}', function (Request $request, Response $response, $args) use (&$DB) {
@@ -124,7 +124,7 @@ $app->get('/riddle/{id}', function (Request $request, Response $response, $args)
 	$riddle = $DB->fetchAll("SELECT * FROM riddle WHERE r_ID = ?", array($riddleId));
 
 	if(sizeof($riddle) > 0) {
-		return $response->withJson($riddle);
+		return $response->withJson($riddle, 200, JSON_NUMERIC_CHECK);
 	} else {
 		return $response->withStatus(404)->withJson("riddle not found");
 	}
@@ -191,7 +191,7 @@ $app->post('/riddle/{id}/unlock',function (Request $request, Response $response,
 // NOTIFICATIONS
 $app->get('/notification', function (Request $request, Response $response) use (&$DB) {
 	$notifications = $DB->fetchAll("SELECT * FROM notification ORDER BY timestamp DESC");
-	return $response->withJson($notifications);
+	return $response->withJson($notifications, 200, JSON_NUMERIC_CHECK);
 });
 
 $app->get('/', function (Request $request, Response $response) {
