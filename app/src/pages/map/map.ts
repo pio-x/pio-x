@@ -1,12 +1,14 @@
 import {Component} from '@angular/core';
 
-import {NavController} from 'ionic-angular';
+import {NavController, ModalController} from 'ionic-angular';
+
 import {StationService} from "../../services/station.service";
 import {Station} from "../../interfaces/station";
 import {LatLngLocation} from "../../interfaces/LatLngLocation";
 import {LocationService} from "../../services/location.service";
 import {TeamService} from "../../services/team.service";
 import {Team} from "../../interfaces/team";
+import {CaptureModal} from "../capture/capture";
 
 
 @Component({
@@ -25,7 +27,12 @@ export class MapPage {
 
     userLocation: LatLngLocation;
 
-    constructor(public navCtrl: NavController, private stationService: StationService, private teamService: TeamService, private locationService: LocationService) {
+    constructor(
+        private stationService: StationService,
+        private teamService: TeamService,
+        private locationService: LocationService,
+        public modalCtrl: ModalController
+    ) {
         this.updateStations();
         this.updateTeams();
 
@@ -54,5 +61,13 @@ export class MapPage {
                     this.teams[team.t_ID] = team;
                 }
             });
+    }
+
+    openCaptureModal(station: Station) {
+        let modal = this.modalCtrl.create(CaptureModal, { station: station });
+        modal.onDidDismiss(data => {
+            this.updateStations();
+        });
+        modal.present();
     }
 }

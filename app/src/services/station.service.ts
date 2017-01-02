@@ -22,6 +22,10 @@ export class StationService {
     return this.pioxApi.get('/station');
   }
 
+  captureStation(stationId: number): Promise<any> {
+      return this.pioxApi.post('/station/' + stationId + '/capture', {})
+  }
+
   private handleError(error: any): Promise<any> {
 
     console.error('An error occurred', error); // for demo purposes only

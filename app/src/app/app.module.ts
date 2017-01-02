@@ -9,6 +9,7 @@ import {NotificationsPage} from "../pages/notifications/notifications";
 import {NotificationDetailComponent} from "../pages/notifications/notification-detail.component";
 import {RiddlesPage} from "../pages/riddles/riddles";
 import {RulesPage} from "../pages/rules/rules";
+import {CaptureModal} from "../pages/capture/capture";
 
 import {PioxApiService} from "../services/pioxApi.service";
 import {TeamService} from "../services/team.service";
@@ -27,7 +28,8 @@ import { AgmCoreModule } from 'angular2-google-maps/core';
     RiddlesPage,
     RulesPage,
     TabsPage,
-    NotificationDetailComponent
+    NotificationDetailComponent,
+    CaptureModal
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -43,7 +45,8 @@ import { AgmCoreModule } from 'angular2-google-maps/core';
     NotificationsPage,
     RiddlesPage,
     RulesPage,
-    TabsPage
+    TabsPage,
+    CaptureModal
   ],
   providers: [
     {provide: ErrorHandler, useClass: IonicErrorHandler}, 

@@ -47,16 +47,24 @@
             }"
     >
       <sebm-google-map-info-window [disableAutoPan]="true">
-        <div><b>{{station.name}}</b></div>
-        <span *ngIf="teams[station.team]">
+        <h3>{{station.name}}</h3>
+        <div *ngIf="teams[station.team]">
           <span *ngIf="station.team == myTeam"><i>Diese Station gehört deinem Team.</i></span>
           <span *ngIf="station.team != myTeam">
             Diese Station gehört {{teams[station.team].name}}<br>
           </span>
-        </span>
-        <span *ngIf="!teams[station.team]">
+        </div>
+        <div *ngIf="!teams[station.team]">
           Diese Station gehört noch keinem Team.
-        </span>
+        </div>
+        <br>
+        <div *ngIf="userLocation && station.team != myTeam">
+          <button ion-button full (click)="openCaptureModal(station)">Einnehmen</button>
+        </div>
+        <div *ngIf="!userLocation">
+          <b>Kein Standort gefunden</b><br>
+          Station kann nicht eingenommen werden.
+        </div>
       </sebm-google-map-info-window>
     </sebm-google-map-marker>
 

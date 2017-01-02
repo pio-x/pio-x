@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      "{{station.name}}" einnehmen
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <h3>Foto hochladen</h3>
+  <input type="file" accept="image/*">
+  <br>
+  <br>
+  Distanz: {{distance()}}m
+  <br>
+  <p>
+    <button *ngIf="distance() <= 100" ion-button full color="secondary" (click)="captureStation()">Einnehmen</button>
+    <button *ngIf="distance() > 100" ion-button full outline color="secondary">Zu weit weg</button>
+    <button ion-button full color="danger" (click)="dismiss()">Abbrechen</button>
+  </p>
+</ion-content>
