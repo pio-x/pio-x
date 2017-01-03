@@ -61,7 +61,7 @@ $app->post('/station/{id}/capture',function (Request $request, Response $respons
 });
 
 
-$app->put('/station',function (Request $request, Response $response) use (&$DB) {
+$app->post('/station',function (Request $request, Response $response) use (&$DB) {
 	$body = json_decode($request->getBody(), true);
 	$lat = $body['pos_lat'];
 	$long = $body['pos_long'];
