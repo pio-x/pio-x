@@ -8,6 +8,8 @@ node_modules
 # API
 api/vendor
 api/conf.php
+api/uploaded_images/*
+!api/uploaded_images/.gitkeep
 
 # Composer
 composer.phar

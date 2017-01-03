@@ -10,7 +10,9 @@ import {LocationService} from "../../services/location.service";
   templateUrl: 'capture.html'
 })
 export class CaptureModal {
+
     station: Station;
+    imageData: any = null;
 
     constructor(
         params: NavParams,
@@ -39,7 +41,7 @@ export class CaptureModal {
             content: 'Station einnehmen ...'
         });
         loading.present();
-        this.stationService.captureStation(this.station.s_ID)
+        this.stationService.captureStation(this.station.s_ID, this.imageData)
             .then(() => {
                 this.dismiss();
                 loading.dismiss();
@@ -48,11 +50,10 @@ export class CaptureModal {
 
     imageChanged(event: any) {
         let reader = new FileReader();
-        let image = this.element.nativeElement.querySelector('.uploaded-image');
+        //let image = this.element.nativeElement.querySelector('.uploaded-image');
 
-        reader.onload = function(e: any) {
-            let src = e.target.result;
-            image.src = src;
+        reader.onload = (e: any) => {
+            this.imageData = e.target.result;
         };
 
         reader.readAsDataURL(event.target.files[0]);

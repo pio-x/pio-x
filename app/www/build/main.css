@@ -22110,8 +22110,25 @@ sub {
 }
 
 modal-capture .uploaded-image-holder {
-  width: 100%;
-  min-height: 100px;
+  max-width: 100%;
+  height: 50%;
+  text-align: center;
+  padding-top: 30px;
+}
+
+modal-capture .uploaded-image-holder .uploaded-image {
+  max-height: 100%;
+  border: 10px solid white;
+  border-radius: 3px;
+  box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.3);
+  margin-top: 5px;
+  -webkit-transform: rotate(7deg);
+  transform: rotate(7deg);
+}
+
+modal-capture .uploaded-image-holder .uploaded-image-placeholder {
+  color: #bbb;
+  font-size: 50vw;
 }
 
 page-map .sebm-google-map-container {

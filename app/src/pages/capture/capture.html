@@ -10,15 +10,19 @@
   <h3>Foto hochladen</h3>
   <input type="file" accept="image/*" (change)="imageChanged($event)" #imgupload>
   <br>
-  <div class="uploaded-image-holder">
-    <img class="uploaded-image" />
+  <div class="uploaded-image-holder" (click)="imgupload.click()">
+    <img class="uploaded-image" [src]="imageData" *ngIf="imageData"/>
+    <div class="uploaded-image-placeholder" *ngIf="!imageData">
+      <ion-icon name="camera"></ion-icon>
+    </div>
   </div>
   <br>
-  Distanz: {{distance()}}m
   <br>
   <p>
-    <button *ngIf="distance() <= 100" ion-button full color="secondary" (click)="captureStation()">Einnehmen</button>
-    <button *ngIf="distance() > 100" ion-button full outline color="secondary">Zu weit weg</button>
+    <button *ngIf="distance() <= 100" ion-button full color="secondary" (click)="captureStation()" [disabled]="!imageData">Einnehmen</button>
+    <button *ngIf="distance() > 100" ion-button full color="secondary" disabled>Zu weit weg</button>
+    <br>
     <button ion-button full color="danger" (click)="dismiss()">Abbrechen</button>
   </p>
+  <small>Distanz zur Station: {{distance()}}m</small>
 </ion-content>

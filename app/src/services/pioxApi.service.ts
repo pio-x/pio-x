@@ -14,7 +14,7 @@ export class PioxApiService {
           return 'https://api.pio-x.ch';
       } else {
           // on dev, use static files on localhost
-          // return 'http://localhost/projects/demianh/pio-x/api';
+          //return 'http://localhost/projects/demianh/pio-x/api';
           return '/api_dummy';
       }
   }

@@ -44,6 +44,12 @@ $app->post('/station/{id}/capture',function (Request $request, Response $respons
 		return $response->withStatus(403)->withJson("Error: not sent by a team");
 	}
 
+	// TODO: save image
+	//$encodedData = str_replace(' ','+',$request->getBody());
+	//$decocedData = base64_decode($encodedData);
+	//$image = imagecreatefromstring($decocedData);
+	//file_put_contents('uploaded_images/'.microtime().'.png', imagepng($image));
+
 	// TODO: location check
 
 	$stationId = $args['id'];
