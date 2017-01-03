@@ -22,7 +22,12 @@ export class LocationService {
         if (navigator.geolocation) {
             this.locationWatch = navigator.geolocation.watchPosition(
                 (pos) => { this.userLocationUpdated(pos)} ,
-                (err) => { console.log('ERROR getting user location', err) },
+                (error) => {
+                    if (error.code == error.PERMISSION_DENIED) {
+                          alert("Du musst dieser App erlauben auf deinen Standort zuzugreifen.");
+                    }
+                    console.log('ERROR getting user location', error)
+                },
                 this.locationWatchOptions
             );
         } else {
