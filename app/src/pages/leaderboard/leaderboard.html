@@ -3,6 +3,11 @@
     <ion-title>
       Rangliste
     </ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="presentActionSheet()">
+        <ion-icon name="more"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
@@ -15,4 +20,9 @@
       <ion-badge item-right>{{team.score}}</ion-badge>
     </ion-item>
   </ion-list>
+
+  <div padding>
+    <ion-icon name="person"></ion-icon> Angemeldet als {{myname}}
+  </div>
+
 </ion-content>
