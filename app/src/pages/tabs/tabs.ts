@@ -20,6 +20,8 @@ export class TabsPage {
 
   isLoggedIn: boolean = false;
 
+  notificationCount: number = 0;
+
   constructor() {
     if (localStorage.getItem('team') && localStorage.getItem('hash')) {
         this.isLoggedIn = true;

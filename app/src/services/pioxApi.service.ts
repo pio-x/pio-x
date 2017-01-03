@@ -1,6 +1,6 @@
 import { Injectable }    from '@angular/core';
-import { Headers, Http, RequestOptions, Response } from '@angular/http';
-import {Observable} from 'rxjs/Rx';
+import { Headers, Http, RequestOptions } from '@angular/http';
+
 import {LocationService} from "./location.service";
 
 import 'rxjs/add/operator/toPromise';

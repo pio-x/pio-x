@@ -1,7 +1,4 @@
-import { NotificationsPage } from '../pages/notifications/notifications';
-import { Console } from '@angular/compiler/src/private_import_core';
 import { Injectable }    from '@angular/core';
-import { Headers, Http } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
 

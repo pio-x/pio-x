@@ -15,9 +15,13 @@ export class LeaderboardPage {
   myname: string = '';
 
   constructor(public navCtrl: NavController, private teamService:TeamService, public actionSheetCtrl: ActionSheetController) {
-    this.updateLeaderboard();
     this.myteam = parseInt(localStorage.getItem('team'));
-    this.myname = decodeURIComponent(localStorage.getItem('player'));
+    this.myname = decodeURIComponent(localStorage.getItem('player')).replace( /\+/g, ' ');
+
+    this.updateLeaderboard();
+    teamService.teams.subscribe((teams: Array<Team>) => {
+        this.teams = this.sort(teams);
+    });
   }
 
   sort(teams): Team[] {
@@ -26,8 +30,7 @@ export class LeaderboardPage {
   }
 
   updateLeaderboard(): void {
-    this.teamService.getTeams()
-      .then(teams => this.teams = this.sort(teams));
+    this.teamService.updateTeams();
   }
 
   presentActionSheet() {

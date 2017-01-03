@@ -1,25 +1,37 @@
-import { Console } from '@angular/compiler/src/private_import_core';
-import { Injectable }    from '@angular/core';
-import { Headers, Http } from '@angular/http';
 
+import { Injectable }    from '@angular/core';
+
+import { BehaviorSubject, Observable} from "rxjs";
+import { IntervalObservable} from "rxjs/observable/IntervalObservable";
 import 'rxjs/add/operator/toPromise';
 
 import { Team } from '../interfaces/team';
-
 import { PioxApiService } from './pioxApi.service';
 
 @Injectable()
 export class TeamService {
 
-  private teams:Team[] = [];
+  private _teams: BehaviorSubject<Array<Team>> = new BehaviorSubject([]);
 
   constructor(private pioxApi: PioxApiService) {
-    this.getTeams().then(response => this.teams = response)
-                  .catch(this.handleError);
+    this.updateTeams();
+
+    // autoupdate every 60sec
+    IntervalObservable.create(60000).subscribe((n) => {
+        this.updateTeams();
+    });
   }
 
-  getTeams(): Promise<Team[]> {
-    return this.pioxApi.get('/team');
+  get teams(): Observable<Array<Team>> {
+        return this._teams.asObservable();
+    }
+
+  public updateTeams(): void {
+    this.pioxApi.get('/team')
+        .then((response) => {
+            this._teams.next(response)
+        })
+        .catch(this.handleError);
   }
 
   private handleError(error: any): Promise<any> {

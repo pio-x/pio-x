@@ -33,41 +33,47 @@ export class MapPage {
         private locationService: LocationService,
         public modalCtrl: ModalController
     ) {
-        this.updateStations();
-        this.updateTeams();
+        this.updateMap();
 
         this.myTeam = parseInt(localStorage.getItem('team'));
 
-        this.locationService.subscribe((pos: LatLngLocation) => {
+        this.stationService.stations.subscribe((stations: Array<Station>) => {
+            this.stationsUpdated(stations);
+        });
+        this.teamService.teams.subscribe((teams: Array<Team>) => {
+            this.teamsUpdated(teams);
+        });
+        this.locationService.userLocation.subscribe((pos: LatLngLocation) => {
             this.userLocationUpdated(pos);
         });
+    }
+
+    openCaptureModal(station: Station) {
+        let modal = this.modalCtrl.create(CaptureModal, { station: station });
+        modal.onDidDismiss(data => {
+            this.updateMap();
+        });
+        modal.present();
+    }
+
+    updateMap() {
+        this.stationService.updateStations();
+        this.teamService.updateTeams();
     }
 
     userLocationUpdated(position) {
         this.userLocation = position;
     }
 
-    updateStations(): void {
-        this.stationService.getStations()
-            .then((stations) => {
-                this.stations = stations;
-            });
+    teamsUpdated(teams: Array<Team>): void {
+        this.teams = {};
+        for (let team of teams) {
+            this.teams[team.t_ID] = team;
+        }
     }
 
-    updateTeams(): void {
-        this.teamService.getTeams()
-            .then((teams) => {
-                for (let team of teams) {
-                    this.teams[team.t_ID] = team;
-                }
-            });
+    stationsUpdated(stations: Array<Station>): void {
+        this.stations = stations;
     }
 
-    openCaptureModal(station: Station) {
-        let modal = this.modalCtrl.create(CaptureModal, { station: station });
-        modal.onDidDismiss(data => {
-            this.updateStations();
-        });
-        modal.present();
-    }
 }

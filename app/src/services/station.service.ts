@@ -1,25 +1,37 @@
-import { Console } from '@angular/compiler/src/private_import_core';
 import { Injectable }    from '@angular/core';
-import { Headers, Http } from '@angular/http';
+
+import { BehaviorSubject, Observable} from "rxjs";
+import { IntervalObservable} from "rxjs/observable/IntervalObservable";
 
 import 'rxjs/add/operator/toPromise';
 
 import { Station } from '../interfaces/station';
-
 import { PioxApiService } from './pioxApi.service';
 
 @Injectable()
 export class StationService {
 
-  private stations:Station[] = [];
+  private _stations: BehaviorSubject<Array<Station>> = new BehaviorSubject([]);
 
   constructor(private pioxApi: PioxApiService) {
-    this.getStations().then(response => this.stations = response)
-                  .catch(this.handleError);
+    this.updateStations();
+
+    // autoupdate every 15sec
+    IntervalObservable.create(15000).subscribe((n) => {
+        this.updateStations();
+    });
   }
 
-  getStations(): Promise<Station[]> {
-    return this.pioxApi.get('/station');
+  get stations(): Observable<Array<Station>> {
+        return this._stations.asObservable();
+  }
+
+  public updateStations(): void {
+    this.pioxApi.get('/station')
+        .then((response) => {
+            this._stations.next(response);
+        })
+        .catch(this.handleError);
   }
 
   captureStation(stationId: number): Promise<any> {
