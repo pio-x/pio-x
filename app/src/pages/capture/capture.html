@@ -8,8 +8,11 @@
 
 <ion-content padding>
   <h3>Foto hochladen</h3>
-  <input type="file" accept="image/*">
+  <input type="file" accept="image/*" (change)="imageChanged($event)" #imgupload>
   <br>
+  <div class="uploaded-image-holder">
+    <img class="uploaded-image" />
+  </div>
   <br>
   Distanz: {{distance()}}m
   <br>

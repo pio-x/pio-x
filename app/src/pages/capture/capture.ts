@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 
 import {ViewController, NavParams, LoadingController} from 'ionic-angular';
 import {Station} from "../../interfaces/station";
@@ -14,6 +14,7 @@ export class CaptureModal {
 
     constructor(
         params: NavParams,
+        private element: ElementRef,
         public viewCtrl: ViewController,
         public loadingCtrl: LoadingController,
         private stationService: StationService,
@@ -27,12 +28,9 @@ export class CaptureModal {
     }
 
     distance() {
-        let currentLocation = this.locationService.getLocation();
-        return this.locationService.getDistanceBetween(
+        return this.locationService.getDistanceToUser(
             this.station.pos_lat,
-            this.station.pos_long,
-            currentLocation.lat,
-            currentLocation.lng
+            this.station.pos_long
         )
     }
 
@@ -46,5 +44,17 @@ export class CaptureModal {
                 this.dismiss();
                 loading.dismiss();
             });
+    }
+
+    imageChanged(event: any) {
+        let reader = new FileReader();
+        let image = this.element.nativeElement.querySelector('.uploaded-image');
+
+        reader.onload = function(e: any) {
+            let src = e.target.result;
+            image.src = src;
+        };
+
+        reader.readAsDataURL(event.target.files[0]);
     }
 }
