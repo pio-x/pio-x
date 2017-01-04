@@ -12,6 +12,8 @@ require 'middleware/LogPosition.php';
 
 use Doctrine\DBAL\DriverManager;
 
+define('UPLOADED_IMAGE_FOLDER', 'uploaded_images/');
+
 $DB = DriverManager::getConnection($SQL_CREDENTIALS, new \Doctrine\DBAL\Configuration());
 
 $app = new \Slim\App(['settings' => ['displayErrorDetails' => true]]);
@@ -39,26 +41,36 @@ $app->get('/station',function (Request $request, Response $response) use (&$DB) 
 	return $response->withJson($stations, 200, JSON_NUMERIC_CHECK);
 });
 
+// images must be sent as body in data url format
 $app->post('/station/{id}/capture',function (Request $request, Response $response, $args) use (&$DB) {
 	if ($request->getAttribute('is_team') == false) {
 		return $response->withStatus(403)->withJson("Error: not sent by a team");
 	}
 
-	// TODO: save image
-	//$encodedData = str_replace(' ','+',$request->getBody());
-	//$decocedData = base64_decode($encodedData);
-	//$image = imagecreatefromstring($decocedData);
-	//file_put_contents('uploaded_images/'.microtime().'.png', imagepng($image));
-
-	// TODO: location check
+	$body = (string) $request->getBody();
+	if (substr($body,0,10) != 'data:image') {
+		return $response->withStatus(403)->withJson("Error: no valid image data sent");
+	}
 
 	$stationId = $args['id'];
 	$teamId = $request->getAttribute('team_id');
 
+	// save image
+	$file = file_get_contents($body);
+	$image = imagecreatefromstring($file);
+	$imageId = 'capture_s' . $stationId . '_t' . $teamId . '_' . round(microtime(true) * 1000);
+	$filename = UPLOADED_IMAGE_FOLDER.$imageId.'.jpg';
+	imagejpeg($image, $filename, 75);
+	chmod($filename, 0766);
+
+	// TODO: location check
+
+
+
 	$data = array(
 		's_ID' => $stationId,
 		't_ID' => $teamId,
-		'img_ID' => 0
+		'img_ID' => $imageId
 	);
 
 	$DB->insert('r_team_station', $data);
@@ -198,6 +210,18 @@ $app->post('/riddle/{id}/unlock',function (Request $request, Response $response,
 $app->get('/notification', function (Request $request, Response $response) use (&$DB) {
 	$notifications = $DB->fetchAll("SELECT * FROM notification ORDER BY timestamp DESC");
 	return $response->withJson($notifications, 200, JSON_NUMERIC_CHECK);
+});
+
+// IMAGES
+$app->get('/image/{filename}.jpg', function (Request $request, Response $response, $args) use (&$DB) {
+	$filename = preg_replace("/[^0-9a-zA-Z_]+/", "", $args['filename']);
+	$path = UPLOADED_IMAGE_FOLDER . $filename . '.jpg';
+	if (file_exists($path)) {
+		$response->write(file_get_contents($path));
+		return $response->withHeader('Content-Type', 'image/jpeg');
+	} else {
+		return $response->withStatus(404)->withJson("No image with this name");
+	}
 });
 
 $app->get('/', function (Request $request, Response $response) {
