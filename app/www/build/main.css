@@ -22109,6 +22109,10 @@ sub {
   }
 }
 
+[hidden] {
+  display: none !important;
+}
+
 modal-capture .uploaded-image-holder {
   max-width: 100%;
   height: 50%;
@@ -22128,7 +22132,7 @@ modal-capture .uploaded-image-holder .uploaded-image {
 
 modal-capture .uploaded-image-holder .uploaded-image-placeholder {
   color: #bbb;
-  font-size: 50vw;
+  font-size: 50vmin;
 }
 
 page-map .sebm-google-map-container {

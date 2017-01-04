@@ -11,7 +11,7 @@
   <input type="file" accept="image/*" (change)="imageChanged($event)" #imgupload>
   <br>
   <div class="uploaded-image-holder" (click)="imgupload.click()">
-    <img class="uploaded-image" [src]="imageData" *ngIf="imageData"/>
+    <img class="uploaded-image" [hidden]="!imageData"/>
     <div class="uploaded-image-placeholder" *ngIf="!imageData">
       <ion-icon name="camera"></ion-icon>
     </div>

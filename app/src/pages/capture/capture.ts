@@ -50,10 +50,11 @@ export class CaptureModal {
 
     imageChanged(event: any) {
         let reader = new FileReader();
-        //let image = this.element.nativeElement.querySelector('.uploaded-image');
+        let image = this.element.nativeElement.querySelector('.uploaded-image');
 
         reader.onload = (e: any) => {
             this.imageData = e.target.result;
+            image.src = e.target.result;
         };
 
         reader.readAsDataURL(event.target.files[0]);
