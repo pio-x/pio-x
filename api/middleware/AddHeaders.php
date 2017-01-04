@@ -12,11 +12,11 @@ class AddHeaders
 	 */
 	public function __invoke($request, $response, $next)
 	{
-		header("Access-Control-Allow-Origin: *");
+		$response = $response->withHeader('Access-Control-Allow-Origin', '*');
 
 		if ($request->getMethod() == 'OPTIONS') {
-			header("Access-Control-Allow-Headers: Content-Type, X-Piox-Team, X-Piox-Player, X-Piox-Hash, X-Piox-Location");
-			header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
+			$response = $response->withHeader('Access-Control-Allow-Headers', 'Content-Type, X-Piox-Team, X-Piox-Player, X-Piox-Hash, X-Piox-Location');
+			$response = $response->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
 			return $response;
 		}
 
