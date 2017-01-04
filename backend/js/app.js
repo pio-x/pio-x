@@ -3,6 +3,9 @@ angular.module('backendApp', ['monospaced.qrcode'])
         $http.get('https://api.pio-x.ch/index.php/team?hash=admin').then(function(articlesResponse) {
             $scope.groups = articlesResponse.data;
         });
+        $http.get('https://api.pio-x.ch/index.php/mrx?hash=admin').then(function(articlesResponse) {
+            $scope.mrxs = articlesResponse.data;
+        });
         $http.get('https://api.pio-x.ch/index.php/riddle?hash=admin').then(function(articlesResponse) {
             $scope.riddles = articlesResponse.data;
         });
