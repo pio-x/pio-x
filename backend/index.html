@@ -108,14 +108,6 @@
 									<a href="#" ng-click="$parent.qrUrl = 'https://app.pio-x.ch/login.html?mrx=' + mrx.x_ID +'&hash=' + mrx.x_hash">
 											G{{ mrx.x_ID }}: {{ mrx.name }}, Hash: [ {{ mrx.x_hash }} ]</a>
 								</li>
-								<li ng-repeat="riddle in riddles">
-									<a href="#" ng-click="$parent.qrUrl = 'https://app.pio-x.ch/riddle.html?riddle=1&answer=' + riddle.answer">
-										R{{ riddle.r_ID }}: {{ riddle.question }}, Antwort: [ {{ riddle.answer }} ]</a>
-								</li>
-								<li ng-repeat="station in stations">
-									<a href="#" ng-click="$parent.qrUrl = 'https://app.pio-x.ch/station.html?s_ID=' + station.s_ID">
-										S{{ station.r_ID }}: {{ station.name }}, Beschreibung: [ {{ station.description }} ]</a>
-								</li>
 							</ul>
 						</td>
 						<td>
