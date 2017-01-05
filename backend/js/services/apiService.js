@@ -1,17 +1,32 @@
-backendApp.factory('apiService', ['$http', function($http) {
+backendApp.factory('apiService', ['$http', '$rootScope', function($http, $rootScope) {
     var baseURL = 'https://api.pio-x.ch';
     if(window.location.host == "localhost") {
         baseURL = 'http://localhost' + window.location.pathname + '../api';
     }
     return {
         get:function(url) {
-            return $http.get(baseURL + url );
+            var config = {
+                headers:  {
+                    "X-Piox-Hash" : $rootScope.rHash
+                }
+            };
+            return $http.get(baseURL + url, config );
         },
         post:function(url, data) {
-            return $http.post(baseURL + url, data );
+            var config = {
+                headers:  {
+                    "X-Piox-Hash" : $rootScope.rHash
+                }
+            };
+            return $http.post(baseURL + url, data, config );
         },
         put:function(url, data) {
-            return $http.put(baseURL + url, data );
+            var config = {
+                headers:  {
+                    "X-Piox-Hash" : $rootScope.rHash
+                }
+            };
+            return $http.put(baseURL + url, data, config );
         }
     }
 }]);
