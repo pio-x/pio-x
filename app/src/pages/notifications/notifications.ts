@@ -1,3 +1,4 @@
+
 import { Notification } from '../../interfaces/notification';
 import { NotificationService } from '../../services/notification.service';
 
@@ -10,21 +11,16 @@ import { NavController } from 'ionic-angular';
   templateUrl: 'notifications.html'
 })
 export class NotificationsPage {
-  notifications:Notification[];
-  selectedNotification: Notification;
+  notifications:Notification[] = [];
 
   constructor(public navCtrl: NavController, private notificationService:NotificationService) {
     this.updateNotifications();
-  }
-
-  onSelect(notification: Notification): void {
-    this.notificationService.read(notification.n_ID);
-    this.updateNotifications();
-    this.selectedNotification = notification;
+    notificationService.notifications.subscribe((notifications: Array<Notification>) => {
+        this.notifications = notifications;
+    });
   }
 
   updateNotifications(): void {
-    this.notificationService.get()
-      .then(notifications => this.notifications = notifications);
+    this.notificationService.updateNotifications();
   }
 }
