@@ -23,4 +23,8 @@ export class NotificationsPage {
   updateNotifications(): void {
     this.notificationService.updateNotifications();
   }
+
+  ionViewWillLeave() {
+    this.notificationService.notificationsRead();
+  }
 }

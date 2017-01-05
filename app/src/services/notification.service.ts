@@ -12,6 +12,8 @@ import { PioxApiService } from './pioxApi.service';
 export class NotificationService {
 
   private _notifications: BehaviorSubject<Array<Notification>> = new BehaviorSubject([]);
+  private _notificationsReadUntil: Date;
+  private _unread: BehaviorSubject<number> = new BehaviorSubject(0);
 
   constructor(private pioxApi: PioxApiService) {
     this.updateNotifications();
@@ -20,18 +22,45 @@ export class NotificationService {
     IntervalObservable.create(60000).subscribe((n) => {
         this.updateNotifications();
     });
+
+    //subscribe to count unread notifications
+    this._notificationsReadUntil = new Date(0);
+    this.notifications.subscribe((notifications: Array<Notification>) => {
+        this.countUnread();
+    });
   }
 
   get notifications(): Observable<Array<Notification>> {
         return this._notifications.asObservable();
     }
 
+  get notificationsUnread(): Observable<number> {
+        return this._unread.asObservable();
+    }
+
   public updateNotifications(): void {
     this.pioxApi.get('/notification')
         .then((response) => {
-            this._notifications.next(response)
+            this._notifications.next(response);
         })
         .catch(this.handleError);
+  }
+
+  public notificationsRead(): void {
+    this._notificationsReadUntil = new Date();
+    this.countUnread();
+  }
+
+  private countUnread(): void {
+    let count = 0;
+    let date = new Date();
+    for (let n of this._notifications.getValue()) {
+      let timestamp = new Date(n.timestamp).getTime();
+      if (timestamp - this._notificationsReadUntil.getTime() > 0) {
+        count += 1;
+      }
+    }
+    this._unread.next(count);
   }
 
   private handleError(error: any): Promise<any> {

@@ -6,6 +6,9 @@ import {RulesPage} from "../rules/rules";
 import {RiddlesPage} from "../riddles/riddles";
 import {NotificationsPage} from "../notifications/notifications";
 
+import { Notification } from '../../interfaces/notification';
+import { NotificationService } from '../../services/notification.service';
+
 @Component({
   templateUrl: 'tabs.html'
 })
@@ -22,7 +25,12 @@ export class TabsPage {
 
   notificationCount: number = 0;
 
-  constructor() {
+  constructor(private notificationService:NotificationService) {
+
+    notificationService.notificationsUnread.subscribe((notificationsUnread: number) => { 
+        this.notificationCount = notificationsUnread;
+    });
+
     if (localStorage.getItem('team') && localStorage.getItem('hash')) {
         this.isLoggedIn = true;
     }
