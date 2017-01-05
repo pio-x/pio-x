@@ -98,7 +98,12 @@ $app->post('/station',function (Request $request, Response $response) use (&$DB)
 
 // TEAM
 $app->get('/team', function (Request $request, Response $response) use (&$DB) {
-	$teams = $DB->fetchAll("SELECT * FROM team");
+	if ($request->getAttribute('is_admin') == true) {
+		$teams = $DB->fetchAll("SELECT * FROM team");
+	} else {
+		// do not send hashes to teams
+		$teams = $DB->fetchAll("SELECT t_ID, name, score, color FROM team");
+	}
 	return $response->withJson($teams, 200, JSON_NUMERIC_CHECK);
 });
 
@@ -118,6 +123,7 @@ $app->get('/mrx', function (Request $request, Response $response) use (&$DB) {
 	if ($request->getAttribute('is_admin') == true) {
 		$mrxs = $DB->fetchAll("SELECT * FROM mrx");
 	} else {
+		// do not send hashes to teams
 		$mrxs = $DB->fetchAll("SELECT x_ID, name FROM mrx");
 	}
 	$data = [];
