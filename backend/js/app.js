@@ -13,6 +13,11 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode'])
             $scope.groups = articlesResponse.data;
         });
     })
+    .controller('stationCtrl', function($scope, apiService){
+        apiService.get('/station').then(function(articlesResponse) {
+            $scope.stations = articlesResponse.data;
+        });
+    })
     .controller('mainCtrl', function($scope, $rootScope, apiService){
         $scope.loggedIn = false;
         $scope.showLogin = false;

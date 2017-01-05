@@ -42,3 +42,19 @@ footer {
 #teamliste .team {
 	margin-bottom: 15px !important;
 }
+
+/* STATIONS */
+#stationlist table {
+	width: 100%;
+	border: 1px solid gray;
+}
+
+#stationlist table td {
+	padding-left: 10px;
+	padding-right: 10px;
+	width: 50%;
+}
+
+#stationlist .team {
+	margin-bottom: 15px !important;
+}

@@ -64,7 +64,26 @@
 						<div class="btn btn-default">Fertig</div>
 					</div>
 				</div>
-				<div role="tabpanel" class="tab-pane" id="stationen">stationen ici</div>
+				<div role="tabpanel" class="tab-pane" id="stationen" ng-controller="stationCtrl">
+					<div id="stationlist" ng-repeat="station in stations">
+						<div class="team col-xs-4">
+							<table>
+								<tr><td>ID: </td><td>{{ station.s_ID }}</td></tr>
+								<tr><td>Name: </td><td>{{ station.name }}</td></tr>
+								<tr><td>Beschreibung: </td><td>{{ station.description }}</td></tr>
+								<tr><td>Letzte Einnahme: </td><td>{{ station.captured_timestamp | date: 'HH:mm dd.MM.yyyy' }}</td></tr>
+								<tr><td>Besitz Team: </td><td>{{ station.team }}</td></tr>
+								<tr><td>Farbe</td><td style="background: {{ station.color }}"></td></tr>
+							</table>
+						</div>
+					</div>
+					<div id="newstation" class="col-xs-12">
+						<h3>Neue station erfassen</h3>
+						<input id="newStationName" type="text" placeholder="Stationsname">
+						<input id="newStationColor" type="color" placeholder="Stationsfarbe" value="#ff0000">
+						<div class="btn btn-default">Fertig</div>
+					</div>
+				</div>
 				<div role="tabpanel" class="tab-pane" id="bilder">Bilder auflisten</div>
 				<div role="tabpanel" class="tab-pane" id="notifications">Notifications erstellen</div>
 				<div role="tabpanel" class="tab-pane" id="passcodes">Passcodes erstellen</div>
