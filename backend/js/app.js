@@ -16,8 +16,7 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode'])
     .controller('mainCtrl', function($scope, $rootScope, apiService){
         $scope.loggedIn = false;
         $scope.showLogin = false;
-        $scope.hash = 'admin';
-        $rootScope.rHash = 'admin';
+        $scope.hash = 'admin'; //TODO empty string on production
         $scope.checkLogin = function(){
             apiService.get('/team').then(function(success) {
                 $scope.loggedIn = true;
