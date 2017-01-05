@@ -13,120 +13,125 @@
 </head>
 
 <body>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
-	<header>
-		<div class="well well-lg">PIO-X Admin</div>
-	</header>
-	
-	<div class="content">
-		<ul class="nav nav-tabs" role="tablist">
-			<li role="presentation" class="active"><a href="#karte" aria-controls="karte" role="tab" data-toggle="tab">Karte</a></li>
-			<li role="presentation"><a href="#teams" aria-controls="teams" role="tab" data-toggle="tab">Teams</a></li>
-			<li role="presentation"><a href="#stationen "aria-controls="stationen" role="tab" data-toggle="tab">Stationen</a></li>
-			<li role="presentation"><a href="#bilder" aria-controls="bilder" role="tab" data-toggle="tab">Bilder</a></li>
-			<li role="presentation"><a href="#notifications" aria-controls="notifications" role="tab" data-toggle="tab">Notifications</a></li>
-			<li role="presentation"><a href="#passcodes" aria-controls="passcodes" role="tab" data-toggle="tab">Passcodes</a></li>
-			<li role="presentation"><a href="#raetsel" aria-controls="raetsel" role="tab" data-toggle="tab">Rätsel</a></li>
-			<li role="presentation"><a href="#qrcodes" aria-controls="qrcodes" role="tab" data-toggle="tab">QR codes</a></li>
-		</ul>
-		<div class="tab-content actual-content">
-			<div role="tabpanel" class="tab-pane active" id="karte">
-				<div id="map"></div>
-				<div class="submenu">
-					<!-- test buttons, real buttons will be inserted for each team -->
-					<div class="btn btn-default">Team Ravioli</div>
-					<div class="btn btn-default">Team Pesto</div>
-					<div class="btn btn-default">Team Gnocchi</div>
-					<div class="btn btn-default">Team Nudeluflauf</div>
+	<div ng-controller="mainCtrl">
+		<header>
+			<div class="well well-lg">PIO-X Admin</div>
+		</header>
+		<div class="content" ng-if="loggedIn == false && showLogin == true">
+				<input type="text" ng-model="hash" />
+				<button ng-click="login(hash)">Login</button> {{ hash }}
+		</div>
+		<div class="content" ng-if="loggedIn == true">
+			<ul class="nav nav-tabs" role="tablist">
+				<li role="presentation" class="active"><a href="#karte" aria-controls="karte" role="tab" data-toggle="tab">Karte</a></li>
+				<li role="presentation"><a href="#teams" aria-controls="teams" role="tab" data-toggle="tab">Teams</a></li>
+				<li role="presentation"><a href="#stationen "aria-controls="stationen" role="tab" data-toggle="tab">Stationen</a></li>
+				<li role="presentation"><a href="#bilder" aria-controls="bilder" role="tab" data-toggle="tab">Bilder</a></li>
+				<li role="presentation"><a href="#notifications" aria-controls="notifications" role="tab" data-toggle="tab">Notifications</a></li>
+				<li role="presentation"><a href="#passcodes" aria-controls="passcodes" role="tab" data-toggle="tab">Passcodes</a></li>
+				<li role="presentation"><a href="#raetsel" aria-controls="raetsel" role="tab" data-toggle="tab">Rätsel</a></li>
+				<li role="presentation"><a href="#qrcodes" aria-controls="qrcodes" role="tab" data-toggle="tab">QR codes</a></li>
+			</ul>
+			<div class="tab-content actual-content">
+				<div role="tabpanel" class="tab-pane active" id="karte">
+					<div id="map"></div>
+					<div class="submenu">
+						<!-- test buttons, real buttons will be inserted for each team -->
+						<div class="btn btn-default">Team Ravioli</div>
+						<div class="btn btn-default">Team Pesto</div>
+						<div class="btn btn-default">Team Gnocchi</div>
+						<div class="btn btn-default">Team Nudeluflauf</div>
+					</div>
+					<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjEW54VdlWZT07n90oTjvaLIl3q27ZL4Y&callback=initMap" async defer></script>
 				</div>
-				<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjEW54VdlWZT07n90oTjvaLIl3q27ZL4Y&callback=initMap" async defer></script>
-			</div>
-			<div role="tabpanel" class="tab-pane" id="teams">
-				<div id="teamliste">
-					<div class="team col-xs-4">
-						<table>
-							<tr><td>ID</td><td>1</td></tr>
-							<tr><td>Name</td><td>Ravioli</td></tr>
-							<tr><td>Score</td><td>1532</td></tr>
-							<tr><td>Farbe</td><td style="background: #EE4477"></td></tr>
-						</table>
+				<div role="tabpanel" class="tab-pane" id="teams">
+					<div id="teamliste">
+						<div class="team col-xs-4">
+							<table>
+								<tr><td>ID</td><td>1</td></tr>
+								<tr><td>Name</td><td>Ravioli</td></tr>
+								<tr><td>Score</td><td>1532</td></tr>
+								<tr><td>Farbe</td><td style="background: #EE4477"></td></tr>
+							</table>
+						</div>
+						<div class="team col-xs-4">
+							<table>
+								<tr><td>ID</td><td>2</td></tr>
+								<tr><td>Name</td><td>Pesto</td></tr>
+								<tr><td>Score</td><td>530</td></tr>
+								<tr><td>Farbe</td><td style="background: #4477EE"></td></tr>
+							</table>
+						</div>
+						<div class="team col-xs-4">
+							<table>
+								<tr><td>ID</td><td>3</td></tr>
+								<tr><td>Name</td><td>Gnocchi</td></tr>
+								<tr><td>Score</td><td>2410</td></tr>
+								<tr><td>Farbe</td><td style="background: #77EE44"></td></tr>
+							</table>
+						</div>
+						<div class="team col-xs-4">
+							<table>
+								<tr><td>ID</td><td>4</td></tr>
+								<tr><td>Name</td><td>Nudeluflauf</td></tr>
+								<tr><td>Score</td><td>940</td></tr>
+								<tr><td>Farbe</td><td style="background: #225577"></td></tr>
+							</table>
+						</div>
 					</div>
-					<div class="team col-xs-4">
-						<table>
-							<tr><td>ID</td><td>2</td></tr>
-							<tr><td>Name</td><td>Pesto</td></tr>
-							<tr><td>Score</td><td>530</td></tr>
-							<tr><td>Farbe</td><td style="background: #4477EE"></td></tr>
-						</table>
-					</div>
-					<div class="team col-xs-4">
-						<table>
-							<tr><td>ID</td><td>3</td></tr>
-							<tr><td>Name</td><td>Gnocchi</td></tr>
-							<tr><td>Score</td><td>2410</td></tr>
-							<tr><td>Farbe</td><td style="background: #77EE44"></td></tr>
-						</table>
-					</div>
-					<div class="team col-xs-4">
-						<table>
-							<tr><td>ID</td><td>4</td></tr>
-							<tr><td>Name</td><td>Nudeluflauf</td></tr>
-							<tr><td>Score</td><td>940</td></tr>
-							<tr><td>Farbe</td><td style="background: #225577"></td></tr>
-						</table>
+					<div id="newteam" class="col-xs-12">
+						<h3>Neues Team erfassen</h3>
+						<input id="newTeamName" type="text" placeholder="Teamname">
+						<input id="newTeamColor" type="color" placeholder="Teamfarbe" value="#ff0000">
+						<div class="btn btn-default">Fertig</div>
 					</div>
 				</div>
-				<div id="newteam" class="col-xs-12">
-					<h3>Neues Team erfassen</h3>
-					<input id="newTeamName" type="text" placeholder="Teamname">
-					<input id="newTeamColor" type="color" placeholder="Teamfarbe" value="#ff0000">
-					<div class="btn btn-default">Fertig</div>
+				<div role="tabpanel" class="tab-pane" id="stationen">stationen ici</div>
+				<div role="tabpanel" class="tab-pane" id="bilder">Bilder auflisten</div>
+				<div role="tabpanel" class="tab-pane" id="notifications">Notifications erstellen</div>
+				<div role="tabpanel" class="tab-pane" id="passcodes">Passcodes erstellen</div>
+				<div role="tabpanel" class="tab-pane" id="raetsel">Rätselübersicht</div>
+				<div role="tabpanel" class="tab-pane" id="qrcodes" ng-controller="QRCtrl">
+					<h1>QR codes</h1>
+					<p>Welchen Code möchtest du anzeigen?
+					<input type="text" ng-model="search"> <span ng-show="search">[> {{search}} <]</span></p>
+					<table><tr>
+						<td>
+							<h3>{{search ? 'Gefilterte' : 'Alle'}} QR Codes</h3>
+							<ul>
+								<li ng-repeat="group in groups">
+									<a href="#" ng-click="$parent.qrUrl = 'https://app.pio-x.ch/login.html?team=1&hash=' + group.hash">
+											G{{ group.t_ID }}: {{ group.name }}, Hash: [ {{ group.hash }} ]</a>
+								</li>
+								<li ng-repeat="mrx in mrxs">
+									<a href="#" ng-click="$parent.qrUrl = 'https://app.pio-x.ch/login.html?mrx=' + mrx.x_ID +'&hash=' + mrx.x_hash">
+											G{{ mrx.x_ID }}: {{ mrx.name }}, Hash: [ {{ mrx.x_hash }} ]</a>
+								</li>
+								<li ng-repeat="riddle in riddles">
+									<a href="#" ng-click="$parent.qrUrl = 'https://app.pio-x.ch/riddle.html?riddle=1&answer=' + riddle.answer">
+										R{{ riddle.r_ID }}: {{ riddle.question }}, Antwort: [ {{ riddle.answer }} ]</a>
+								</li>
+								<li ng-repeat="station in stations">
+									<a href="#" ng-click="$parent.qrUrl = 'https://app.pio-x.ch/station.html?s_ID=' + station.s_ID">
+										S{{ station.r_ID }}: {{ station.name }}, Beschreibung: [ {{ station.description }} ]</a>
+								</li>
+							</ul>
+						</td>
+						<td>
+							<a href="{{ qrUrl }}">{{ qrUrl }}</a> <br/>
+							<qrcode version="4" error-correction-level="M" size="200" data="{{ qrUrl }}" href="{{ qrUrl }}"></qrcode>
+						</td></tr>
+					</table>
 				</div>
-			</div>
-			<div role="tabpanel" class="tab-pane" id="stationen">stationen ici</div>
-			<div role="tabpanel" class="tab-pane" id="bilder">Bilder auflisten</div>
-			<div role="tabpanel" class="tab-pane" id="notifications">Notifications erstellen</div>
-			<div role="tabpanel" class="tab-pane" id="passcodes">Passcodes erstellen</div>
-			<div role="tabpanel" class="tab-pane" id="raetsel">Rätselübersicht</div>
-			<div role="tabpanel" class="tab-pane" id="qrcodes" ng-controller="QRCtrl">
-				<h1>QR codes</h1>
-				<p>Welchen Code möchtest du anzeigen?
-				<input type="text" ng-model="search"> <span ng-show="search">[> {{search}} <]</span></p>
-				<table><tr>
-					<td>
-						<h3>{{search ? 'Gefilterte' : 'Alle'}} QR Codes</h3>
-						<ul>
-							<li ng-repeat="group in groups">
-								<a href="#" ng-click="$parent.qrUrl = 'https://app.pio-x.ch/login.html?team=1&hash=' + group.hash">
-										G{{ group.t_ID }}: {{ group.name }}, Hash: [ {{ group.hash }} ]</a>
-							</li>
-							<li ng-repeat="mrx in mrxs">
-								<a href="#" ng-click="$parent.qrUrl = 'https://app.pio-x.ch/login.html?mrx=' + mrx.x_ID +'&hash=' + mrx.x_hash">
-										G{{ mrx.x_ID }}: {{ mrx.name }}, Hash: [ {{ mrx.x_hash }} ]</a>
-							</li>
-							<li ng-repeat="riddle in riddles">
-								<a href="#" ng-click="$parent.qrUrl = 'https://app.pio-x.ch/riddle.html?riddle=1&answer=' + riddle.answer">
-									R{{ riddle.r_ID }}: {{ riddle.question }}, Antwort: [ {{ riddle.answer }} ]</a>
-							</li>
-							<li ng-repeat="station in stations">
-								<a href="#" ng-click="$parent.qrUrl = 'https://app.pio-x.ch/station.html?s_ID=' + station.s_ID">
-									S{{ station.r_ID }}: {{ station.name }}, Beschreibung: [ {{ station.description }} ]</a>
-							</li>
-						</ul>
-					</td>
-					<td>
-						<a href="{{ qrUrl }}">{{ qrUrl }}</a> <br/>
-						<qrcode version="4" error-correction-level="M" size="200" data="{{ qrUrl }}" href="{{ qrUrl }}"></qrcode>
-					</td></tr>
-				</table>
 			</div>
 		</div>
+
+
+		<footer>
+			<p>Copyright 2016 SuperScoutDevs</p>
+		</footer>
 	</div>
-
-
-	<footer>
-		<p>Copyright 2016 SuperScoutDevs</p>
-	</footer>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
 	<script src="js/app.js"></script>
 	<script src="js/services/apiService.js"></script>
 	<script src="js/vendor/qrcode.js"></script>

@@ -13,4 +13,27 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode'])
             $scope.stations = articlesResponse.data;
         });
         $scope.qrUrl = "https://app.pio-x.ch/login.html?team=1&hash=111";
-});
+    })
+    .controller('mainCtrl', function($scope, apiService){
+            $scope.loggedIn = false;
+            $scope.showLogin = false;
+            $scope.hash = '';
+            $scope.checkLogin = function(){
+                apiService.get('/team').then(function(success) {
+                    $scope.loggedIn = true;
+                })
+                .catch(function(error) {
+                    $scope.showLogin = true;
+                });
+            };
+            $scope.checkLogin();
+            $scope.login = function(hash) {
+                var domain = '.pio-x.ch';
+                if(window.location.host == "localhost") {
+                    domain = 'localhost';
+                }
+                document.cookie = "piox_hash=" + hash + "; path=/; domain=" + domain;
+                $scope.checkLogin();
+                console.log("." + hash);
+            };
+    });
