@@ -45,38 +45,15 @@
 					</div>
 					<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjEW54VdlWZT07n90oTjvaLIl3q27ZL4Y&callback=initMap" async defer></script>
 				</div>
-				<div role="tabpanel" class="tab-pane" id="teams">
-					<div id="teamliste">
+				<div role="tabpanel" class="tab-pane" id="teams" ng-controller="teamCtrl">
+					<div id="teamliste" ng-repeat="group in groups">
 						<div class="team col-xs-4">
 							<table>
-								<tr><td>ID</td><td>1</td></tr>
-								<tr><td>Name</td><td>Ravioli</td></tr>
-								<tr><td>Score</td><td>1532</td></tr>
-								<tr><td>Farbe</td><td style="background: #EE4477"></td></tr>
-							</table>
-						</div>
-						<div class="team col-xs-4">
-							<table>
-								<tr><td>ID</td><td>2</td></tr>
-								<tr><td>Name</td><td>Pesto</td></tr>
-								<tr><td>Score</td><td>530</td></tr>
-								<tr><td>Farbe</td><td style="background: #4477EE"></td></tr>
-							</table>
-						</div>
-						<div class="team col-xs-4">
-							<table>
-								<tr><td>ID</td><td>3</td></tr>
-								<tr><td>Name</td><td>Gnocchi</td></tr>
-								<tr><td>Score</td><td>2410</td></tr>
-								<tr><td>Farbe</td><td style="background: #77EE44"></td></tr>
-							</table>
-						</div>
-						<div class="team col-xs-4">
-							<table>
-								<tr><td>ID</td><td>4</td></tr>
-								<tr><td>Name</td><td>Nudeluflauf</td></tr>
-								<tr><td>Score</td><td>940</td></tr>
-								<tr><td>Farbe</td><td style="background: #225577"></td></tr>
+								<tr><td>ID</td><td>{{ group.t_ID }}</td></tr>
+								<tr><td>Name</td><td>{{ group.name }}</td></tr>
+								<tr><td>Score</td><td>{{ group.score }}</td></tr>
+								<tr><td>Hash</td><td>{{ group.hash }}</td></tr>
+								<tr><td>Farbe</td><td style="background: {{ group.color }}"></td></tr>
 							</table>
 						</div>
 					</div>
