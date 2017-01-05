@@ -18,6 +18,11 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode'])
             $scope.stations = articlesResponse.data;
         });
     })
+    .controller('passcodeCtrl', function($scope, apiService){
+        apiService.get('/passcode').then(function(articlesResponse) {
+            $scope.passcodes = articlesResponse.data;
+        });
+    })
     .controller('mainCtrl', function($scope, $rootScope, apiService){
         $scope.loggedIn = false;
         $scope.showLogin = false;

@@ -86,7 +86,26 @@
 				</div>
 				<div role="tabpanel" class="tab-pane" id="bilder">Bilder auflisten</div>
 				<div role="tabpanel" class="tab-pane" id="notifications">Notifications erstellen</div>
-				<div role="tabpanel" class="tab-pane" id="passcodes">Passcodes erstellen</div>
+				<div role="tabpanel" class="tab-pane" id="passcodes" ng-controller="passcodeCtrl">
+					<div id="passcodelist">
+						<table>
+							<tr>
+								<td>ID</td>
+								<td>Passcode</td>
+								<td>Punkte</td>
+								<td>Gebraucht</td>
+								<td>Mr ?</td>
+							</tr>
+							<tr ng-repeat="code in passcodes">
+								<td>{{ code.p_ID }}</td>
+								<td>{{ code.code }}</td>
+								<td>{{ code.points }}</td>
+								<td>{{ code.user }}</td>
+								<td>{{ code.mrx_ID }}</td>
+							</tr>
+						</table>
+					</div>
+				</div>
 				<div role="tabpanel" class="tab-pane" id="raetsel">Rätselübersicht</div>
 				<div role="tabpanel" class="tab-pane" id="qrcodes" ng-controller="QRCtrl">
 					<h1>QR codes</h1>
