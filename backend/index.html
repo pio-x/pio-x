@@ -16,10 +16,11 @@
 	<div ng-controller="mainCtrl">
 		<header>
 			<div class="well well-lg">PIO-X Admin</div>
+			<button ng-click="logout()" ng-if="loggedIn">Logout</button>
 		</header>
 		<div class="content" ng-if="loggedIn == false && showLogin == true">
-				<input type="text" ng-model="hash" />
-				<button ng-click="login(hash)">Login</button> {{ hash }}
+				<input type="text" ng-model="hash" ng-keyup="$event.keyCode == 13 && login(hash)"/>
+				<button ng-click="login(hash)">Login</button>
 		</div>
 		<div class="content" ng-if="loggedIn == true">
 			<ul class="nav nav-tabs" role="tablist">

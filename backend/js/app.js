@@ -17,13 +17,14 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode'])
     .controller('mainCtrl', function($scope, apiService){
             $scope.loggedIn = false;
             $scope.showLogin = false;
-            $scope.hash = '';
+            $scope.hash = 'admin';
             $scope.checkLogin = function(){
                 apiService.get('/team').then(function(success) {
                     $scope.loggedIn = true;
                 })
                 .catch(function(error) {
                     $scope.showLogin = true;
+                    $scope.loggedIn = false;
                 });
             };
             $scope.checkLogin();
@@ -34,6 +35,13 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode'])
                 }
                 document.cookie = "piox_hash=" + hash + "; path=/; domain=" + domain;
                 $scope.checkLogin();
-                console.log("." + hash);
+            };
+            $scope.logout = function() {
+                var domain = '.pio-x.ch';
+                if(window.location.host == "localhost") {
+                    domain = 'localhost';
+                }
+                document.cookie = "piox_hash=; path=/; domain=" + domain;
+                $scope.checkLogin();
             };
     });
