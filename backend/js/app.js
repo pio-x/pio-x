@@ -6,7 +6,7 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode'])
         apiService.get('/mrx').then(function(articlesResponse) {
             $scope.mrxs = articlesResponse.data;
         });
-        $scope.qrUrl = "https://app.pio-x.ch/login.html?team=1&hash=111";
+        $scope.qrUrl = "";
     })
     .controller('teamCtrl', function($scope, apiService){
         apiService.get('/team').then(function(articlesResponse) {

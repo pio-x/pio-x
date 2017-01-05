@@ -125,7 +125,7 @@
 								</li>
 							</ul>
 						</td>
-						<td>
+						<td ng-if="qrUrl">
 							<a href="{{ qrUrl }}">{{ qrUrl }}</a> <br/>
 							<qrcode version="4" error-correction-level="M" size="200" data="{{ qrUrl }}" href="{{ qrUrl }}"></qrcode>
 						</td></tr>
@@ -136,7 +136,7 @@
 
 
 		<footer>
-			<p>Copyright 2016 SuperScoutDevs</p>
+			<p>Mit Herzblut programmiert von Fäger, Giga, Folleta, Chäfer und Punkt</p>
 		</footer>
 	</div>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
