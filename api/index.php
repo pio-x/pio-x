@@ -31,9 +31,9 @@ $app->add(new AddHeaders());
 // STATION
 $app->get('/station',function (Request $request, Response $response) use (&$DB) {
 	// stations with last capture info
-	$sql = "SELECT station.*, captures.captured_timestamp, captures.t_ID as team, captures.color FROM station 
+	$sql = "SELECT station.*, captures.captured_timestamp, captures.t_ID as team, captures.color FROM station
 		LEFT JOIN (
-			SELECT ts.s_ID, ts.t_ID, max(timestamp) as captured_timestamp, team.color FROM r_team_station ts 
+			SELECT ts.s_ID, ts.t_ID, max(timestamp) as captured_timestamp, team.color FROM r_team_station ts
 			LEFT JOIN team ON team.t_ID = ts.t_ID
 			GROUP BY s_ID
 		) as captures ON captures.s_ID = station.s_ID";
@@ -223,6 +223,38 @@ $app->get('/image/{filename}.jpg', function (Request $request, Response $respons
 		return $response->withStatus(404)->withJson("No image with this name");
 	}
 });
+
+// Passcodes
+$app->get('/passcode', function (Request $request, Response $response) use (&$DB) {
+	if ($request->getAttribute('is_admin') == false) {
+		return $response->withStatus(403)->withJson("Error: not sent by admin");
+	}
+
+	$notifications = $DB->fetchAll("SELECT * FROM passcode");
+	return $response->withJson($notifications, 200, JSON_NUMERIC_CHECK);
+});
+
+$app->post('/passcode', function (Request $request, Response $response, $args) use (&$DB) {
+	if ($request->getAttribute('is_admin') == false) {
+		return $response->withStatus(403)->withJson("Error: not sent by admin");
+	}
+
+	$body = json_decode($request->getBody(), true);
+	$code = $body['code'];
+	$points = $body['points'];
+	$mrx = $body['mrx_ID'];
+
+	$data = array('code' => $code,
+				'points' => $points,
+				'used' => false,
+				'mrx_ID' => $mrx);
+
+	$DB->insert('passcode', $data);
+
+	return $response->withJson("success");
+});
+
+
 
 $app->get('/', function (Request $request, Response $response) {
 	echo "PIO-X";
