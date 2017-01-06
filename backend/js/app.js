@@ -23,7 +23,7 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode'])
             $scope.passcodes = articlesResponse.data;
         });
     })
-    .controller('mainCtrl', function($scope, $rootScope, apiService){
+    .controller('mainCtrl', function($scope, apiService){
         $scope.loggedIn = false;
         $scope.showLogin = false;
         $scope.hash = 'admin'; //TODO empty string on production
@@ -38,11 +38,11 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode'])
         };
         $scope.checkLogin();
         $scope.login = function(hash) {
-            $rootScope.rHash = hash;
+            localStorage.setItem('hash', hash);
             $scope.checkLogin();
         };
         $scope.logout = function() {
-            $rootScope.rHash = '';
+            localStorage.setItem('hash', '');
             $scope.checkLogin();
         };
     });

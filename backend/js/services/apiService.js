@@ -7,7 +7,7 @@ backendApp.factory('apiService', ['$http', '$rootScope', function($http, $rootSc
         get:function(url) {
             var config = {
                 headers:  {
-                    "X-Piox-Hash" : $rootScope.rHash
+                    "X-Piox-Hash" : localStorage.getItem('hash')
                 }
             };
             return $http.get(baseURL + url, config );
@@ -15,7 +15,7 @@ backendApp.factory('apiService', ['$http', '$rootScope', function($http, $rootSc
         post:function(url, data) {
             var config = {
                 headers:  {
-                    "X-Piox-Hash" : $rootScope.rHash
+                    "X-Piox-Hash" : localStorage.getItem('hash')
                 }
             };
             return $http.post(baseURL + url, data, config );
@@ -23,7 +23,7 @@ backendApp.factory('apiService', ['$http', '$rootScope', function($http, $rootSc
         put:function(url, data) {
             var config = {
                 headers:  {
-                    "X-Piox-Hash" : $rootScope.rHash
+                    "X-Piox-Hash" :localStorage.getItem('hash')
                 }
             };
             return $http.put(baseURL + url, data, config );
