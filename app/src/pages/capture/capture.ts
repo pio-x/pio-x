@@ -63,6 +63,9 @@ export class CaptureModal {
 
         if (event.target.files.length > 0) {
             reader.readAsDataURL(event.target.files[0]);
+        } else {
+            image.src = "";
+            this.imageData = null;
         }
     }
 
