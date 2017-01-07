@@ -63,15 +63,3 @@ footer {
 	margin-bottom: 15px !important;
 }
 
-/* PASSCODES */
-
-#passcodelist table td {
-	padding-left: 10px;
-	padding-right: 10px;
-	width: 50%;
-	border: 1px solid gray;
-}
-
-#passcodelist .team {
-	margin-bottom: 15px !important;
-}
