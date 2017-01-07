@@ -34,8 +34,8 @@ export class StationService {
         .catch(this.handleError);
   }
 
-  captureStation(stationId: number, imageData: any): Promise<any> {
-      return this.pioxApi.post('/station/' + stationId + '/capture', imageData)
+  captureStation(stationId: number, imageData: any, tags: any): Promise<any> {
+      return this.pioxApi.post('/station/' + stationId + '/capture?tags=' + JSON.stringify(tags), imageData)
   }
 
   private handleError(error: any): Promise<any> {

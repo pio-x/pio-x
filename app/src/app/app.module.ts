@@ -19,6 +19,8 @@ import {LocationService} from "../services/location.service";
 
 import { AgmCoreModule } from 'angular2-google-maps/core';
 
+import { ImageUploadModule } from 'ng2-imageupload';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -35,7 +37,8 @@ import { AgmCoreModule } from 'angular2-google-maps/core';
     IonicModule.forRoot(MyApp),
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyBYAjZ-QKEPlDFLPsLcxR5fFRM2LckyZ6o'
-    })
+    }),
+    ImageUploadModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

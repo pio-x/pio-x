@@ -5,6 +5,8 @@ import {Station} from "../../interfaces/station";
 import {StationService} from "../../services/station.service";
 import {LocationService} from "../../services/location.service";
 
+import { ImageResult, ResizeOptions } from 'ng2-imageupload';
+
 import EXIF from "exif-js"
 
 @Component({
@@ -14,8 +16,15 @@ import EXIF from "exif-js"
 export class CaptureModal {
 
     station: Station;
-    imageData: Blob = null;
-    imageOrientation: number = 1;
+    imageData: string = null;
+    imageDataResized: string = null;
+    imageOrientation: number = 0;
+    tags = {};
+
+    resizeOptions: ResizeOptions = {
+        resizeMaxHeight: 1024,
+        resizeMaxWidth: 1024
+    };
 
     constructor(
         params: NavParams,
@@ -44,7 +53,7 @@ export class CaptureModal {
             content: 'Station einnehmen ...'
         });
         loading.present();
-        this.stationService.captureStation(this.station.s_ID, this.imageData)
+        this.stationService.captureStation(this.station.s_ID, this.imageDataResized, this.tags)
             .then(() => {
                 this.dismiss();
                 loading.dismiss();
@@ -52,32 +61,36 @@ export class CaptureModal {
     }
 
     imageChanged(event: any) {
-        let reader = new FileReader();
-        let image = this.element.nativeElement.querySelector('.uploaded-image');
-
-        reader.onload = (e: any) => {
-            this.imageData = e.target.result;
-            image.src = e.target.result;
-            this.readOrientation(e.target.result);
-        };
-
-        if (event.target.files.length > 0) {
-            reader.readAsDataURL(event.target.files[0]);
-        } else {
+        // reset image if none was selected
+        if (event.target.files.length == 0) {
+            let image = this.element.nativeElement.querySelector('.uploaded-image');
             image.src = "";
             this.imageData = null;
+            this.imageDataResized = null;
         }
     }
 
-    readOrientation(data) {
+    imageSelected(imageResult: ImageResult) {
+        let image = this.element.nativeElement.querySelector('.uploaded-image');
+
+        this.imageDataResized = imageResult.resized
+            && imageResult.resized.dataURL
+            || imageResult.dataURL;
+
+        image.src = imageResult.dataURL;
+        this.imageData = imageResult.dataURL;
+        this.readOrientation();
+    }
+
+    readOrientation() {
         let img: any = document.getElementById("uploaded-image");
+        // clear exif cache
         delete img.exifdata;
+
         let self = this;
         EXIF.getData(img, function() {
-            let orientation = EXIF.getTag(this, "Orientation");
-            let model = EXIF.getTag(this, "Model");
-            self.imageOrientation = orientation;
-            console.log(`orientation: ${orientation} ${model}`);
+            self.tags = EXIF.getAllTags(this);
+            self.imageOrientation = EXIF.getTag(this, "Orientation");
         });
     }
 }

@@ -53,11 +53,44 @@ $app->post('/station/{id}/capture',function (Request $request, Response $respons
 	}
 
 	$stationId = $args['id'];
+	$qsa = $request->getQueryParams();
+	if (isset($qsa['tags'])) {
+		$tags = json_decode($qsa['tags'], true);
+	} else {
+		$tags = [];
+	}
 	$teamId = $request->getAttribute('team_id');
 
-	// save image
+	// process image
 	$file = file_get_contents($body);
 	$image = imagecreatefromstring($file);
+	if (isset($tags['Orientation'])) {
+		$or = $tags['Orientation'];
+		switch ($or) {
+			case 1:
+				break;
+			case 2:
+				imageflip($image, IMG_FLIP_HORIZONTAL);
+				break;
+			case 3:
+				break;
+			case 4:
+				imageflip($image, IMG_FLIP_HORIZONTAL);
+				break;
+			case 5:
+				imageflip($image, IMG_FLIP_HORIZONTAL);
+				break;
+			case 6:
+				break;
+			case 7:
+				imageflip($image, IMG_FLIP_HORIZONTAL);
+				break;
+			case 8:
+				break;
+		}
+	}
+
+	// save image
 	$imageId = 'capture_s' . $stationId . '_t' . $teamId . '_' . round(microtime(true) * 1000);
 	$filename = UPLOADED_IMAGE_FOLDER.$imageId.'.jpg';
 	imagejpeg($image, $filename, 75);
@@ -75,7 +108,7 @@ $app->post('/station/{id}/capture',function (Request $request, Response $respons
 
 	$DB->insert('r_team_station', $data);
 
-	return $response->withJson("success");
+	return $response->withJson($tags);
 });
 
 
