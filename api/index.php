@@ -53,13 +53,14 @@ $app->post('/station/{id}/capture',function (Request $request, Response $respons
 	}
 
 	$stationId = $args['id'];
+	$teamId = $request->getAttribute('team_id');
+
 	$qsa = $request->getQueryParams();
 	if (isset($qsa['tags'])) {
 		$tags = json_decode($qsa['tags'], true);
 	} else {
 		$tags = [];
 	}
-	$teamId = $request->getAttribute('team_id');
 
 	// process image
 	$file = file_get_contents($body);
@@ -73,19 +74,25 @@ $app->post('/station/{id}/capture',function (Request $request, Response $respons
 				imageflip($image, IMG_FLIP_HORIZONTAL);
 				break;
 			case 3:
+				$image = imagerotate($image, 180, 0);
 				break;
 			case 4:
 				imageflip($image, IMG_FLIP_HORIZONTAL);
+				$image = imagerotate($image, 180, 0);
 				break;
 			case 5:
 				imageflip($image, IMG_FLIP_HORIZONTAL);
+				$image = imagerotate($image, 90, 0);
 				break;
 			case 6:
+				$image = imagerotate($image, 90, 0);
 				break;
 			case 7:
 				imageflip($image, IMG_FLIP_HORIZONTAL);
+				$image = imagerotate($image, 270, 0);
 				break;
 			case 8:
+				$image = imagerotate($image, 270, 0);
 				break;
 		}
 	}
