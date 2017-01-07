@@ -125,7 +125,32 @@
 						</table>
 					</div>
 				</div>
-				<div role="tabpanel" class="tab-pane" id="raetsel">Rätselübersicht</div>
+				<div role="tabpanel" class="tab-pane" id="raetsel" ng-controller="riddleCtrl">
+					<div id="riddlelist">
+						<table class="table table-striped">
+							<tr>
+								<td>ID</td>
+								<td>Latitude</td>
+								<td>Longitude</td>
+								<td>Frage</td>
+								<td>Abhängigkeit</td>
+								<td>Antwort</td>
+								<td>Typ</td>
+								<td>Punkte</td>
+							</tr>
+							<tr ng-repeat="riddle in riddles">
+								<td>{{ riddle.r_ID }}</td>
+								<td>{{ riddle.pos_lat }}</td>
+								<td>{{ riddle.pos_long }}</td>
+								<td>{{ riddle.question }}</td>
+								<td>{{ riddle.dep_ID }}</td>
+								<td>{{ riddle.answer }}</td>
+								<td>{{ riddle.type }}</td>
+								<td>{{ riddle.points }}</td>
+							</tr>
+						</table>
+					</div>
+				</div>
 				<div role="tabpanel" class="tab-pane" id="qrcodes" ng-controller="QRCtrl">
 					<h1>QR codes</h1>
 					<p>Welchen Code möchtest du anzeigen?
