@@ -85,7 +85,26 @@
 					</div>
 				</div>
 				<div role="tabpanel" class="tab-pane" id="bilder">Bilder auflisten</div>
-				<div role="tabpanel" class="tab-pane" id="notifications">Notifications erstellen</div>
+				<div role="tabpanel" class="tab-pane" id="notifications" ng-controller="notificationCtrl">
+					<div id="notificationlist">
+						<table class="table table-striped">
+							<tr>
+								<td>ID</td>
+								<td>Titel</td>
+								<td>Nachricht</td>
+								<td>Zeit</td>
+								<td>Team ID</td>
+							</tr>
+							<tr ng-repeat="msg in notifications">
+								<td>{{ msg.n_ID }}</td>
+								<td>{{ msg.title }}</td>
+								<td>{{ msg.text }}</td>
+								<td>{{ msg.timestamp | date: 'yyyy' }}</td>
+								<td>{{ msg.t_ID }}</td>
+							</tr>
+						</table>
+					</div>
+				</div>
 				<div role="tabpanel" class="tab-pane" id="passcodes" ng-controller="passcodeCtrl">
 					<div id="passcodelist">
 						<table class="table table-striped">

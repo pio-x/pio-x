@@ -23,6 +23,11 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode'])
             $scope.passcodes = articlesResponse.data;
         });
     })
+    .controller('notificationCtrl', function($scope, apiService){
+        apiService.get('/notification').then(function(articlesResponse) {
+            $scope.notifications = articlesResponse.data;
+        });
+    })
     .controller('mainCtrl', function($scope, apiService){
         $scope.loggedIn = false;
         $scope.showLogin = false;
