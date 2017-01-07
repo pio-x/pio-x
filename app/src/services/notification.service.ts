@@ -53,7 +53,6 @@ export class NotificationService {
 
   private countUnread(): void {
     let count = 0;
-    let date = new Date();
     for (let n of this._notifications.getValue()) {
       let timestamp = new Date(n.timestamp).getTime();
       if (timestamp - this._notificationsReadUntil.getTime() > 0) {

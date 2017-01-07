@@ -5,6 +5,8 @@ import {Station} from "../../interfaces/station";
 import {StationService} from "../../services/station.service";
 import {LocationService} from "../../services/location.service";
 
+import EXIF from "exif-js"
+
 @Component({
   selector: 'modal-capture',
   templateUrl: 'capture.html'
@@ -12,7 +14,8 @@ import {LocationService} from "../../services/location.service";
 export class CaptureModal {
 
     station: Station;
-    imageData: any = null;
+    imageData: Blob = null;
+    imageOrientation: number = 1;
 
     constructor(
         params: NavParams,
@@ -55,8 +58,23 @@ export class CaptureModal {
         reader.onload = (e: any) => {
             this.imageData = e.target.result;
             image.src = e.target.result;
+            this.readOrientation(e.target.result);
         };
 
-        reader.readAsDataURL(event.target.files[0]);
+        if (event.target.files.length > 0) {
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    }
+
+    readOrientation(data) {
+        let img: any = document.getElementById("uploaded-image");
+        delete img.exifdata;
+        let self = this;
+        EXIF.getData(img, function() {
+            let orientation = EXIF.getTag(this, "Orientation");
+            let model = EXIF.getTag(this, "Model");
+            self.imageOrientation = orientation;
+            console.log(`orientation: ${orientation} ${model}`);
+        });
     }
 }

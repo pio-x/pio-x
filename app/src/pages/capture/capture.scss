@@ -1,4 +1,7 @@
 modal-capture {
+
+  $rotation: 7;
+
   .uploaded-image-holder {
     max-width: 100%;
     height: 50%;
@@ -7,11 +10,44 @@ modal-capture {
 
     .uploaded-image {
       max-height: 100%;
+      max-width: 80%;
       border: 10px solid white;
       border-radius: 3px;
       box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.3);
       margin-top: 5px;
-      transform: rotate(7deg);
+
+      // more about orientation: http://sylvana.net/jpegcrop/exif_orientation.html
+      &[data-orientation="1"] {
+        transform: rotate(#{$rotation}deg);
+      }
+
+      &[data-orientation="2"] {
+        transform: scaleX(-1) rotate(#{-$rotation}deg);
+      }
+
+      &[data-orientation="3"] {
+        transform: rotate(#{180 + $rotation}deg);
+      }
+
+      &[data-orientation="4"] {
+        transform: scaleX(-1) rotate(#{180 + (-$rotation)}deg);
+      }
+
+      &[data-orientation="5"] {
+        transform: scaleX(-1) rotate(#{90 + (-$rotation)}deg);
+      }
+
+      &[data-orientation="6"] {
+        transform: rotate(#{90 + $rotation}deg);
+      }
+
+      &[data-orientation="7"] {
+        transform: scaleX(-1) rotate(#{270 + (-$rotation)}deg);
+      }
+
+      &[data-orientation="8"] {
+        transform: rotate(#{270 + $rotation}deg);
+      }
     }
 
     .uploaded-image-placeholder {

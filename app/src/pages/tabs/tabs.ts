@@ -6,7 +6,6 @@ import {RulesPage} from "../rules/rules";
 import {RiddlesPage} from "../riddles/riddles";
 import {NotificationsPage} from "../notifications/notifications";
 
-import { Notification } from '../../interfaces/notification';
 import { NotificationService } from '../../services/notification.service';
 
 @Component({
