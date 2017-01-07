@@ -18,18 +18,20 @@ class Authentication
 	 */
 	public function __invoke($request, $response, $next)
 	{
-		// 1. HEADERS: check if hash is present in headers
-		$hash = $request->getHeaderLine('X-Piox-Hash');
-		if (!$hash) {
-			// 2. COOKIE: check if hash is present in cookie
-			// document.cookie = "piox_hash=111; path=/; domain=.pio-x.ch";
-			if (isset($_COOKIE['piox_hash'])) {
-				$hash = $_COOKIE['piox_hash'];
-			} else {
-				// 3. QUERY PARAM: check if hash is passed with query params (e.g: /team?hash=xxx)
-				$params = $request->getQueryParams();
-				if (isset($params['hash'])) {
-					$hash = $params['hash'];
+		$hash = null;
+
+		// 1. QUERY PARAM: check if hash is passed with query params (e.g: /team?hash=xxx)
+		$params = $request->getQueryParams();
+		if (isset($params['hash'])) {
+			$hash = $params['hash'];
+		} else {
+			// 2. HEADERS: check if hash is present in headers
+			$hash = $request->getHeaderLine('X-Piox-Hash');
+			if (!$hash) {
+				// 3. COOKIE: check if hash is present in cookie
+				// document.cookie = "piox_hash=111; path=/; domain=.pio-x.ch";
+				if (isset($_COOKIE['piox_hash'])) {
+					$hash = $_COOKIE['piox_hash'];
 				}
 			}
 		}
