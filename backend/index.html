@@ -119,8 +119,20 @@
 								<td>{{ code.p_ID }}</td>
 								<td>{{ code.code }}</td>
 								<td>{{ code.points }}</td>
-								<td>{{ code.user }}</td>
+								<td>{{ code.used }}</td>
 								<td>{{ code.mrx_ID }}</td>
+							</tr>
+							<tr >
+								<td>NEU</td>
+								<td><input type="text" ng-model="newCode.code"/></td>
+								<td><input type="text" ng-model="newCode.points"/></td>
+								<td><input type="text" ng-model="newCode.used"/></td>
+								<td><input type="text" ng-model="newCode.mrx_ID"/></td>
+							</tr>
+							<tr>
+								<td colspan="5">
+									<button ng-click="addNew()">Neuen Passcode hinzufügen</button>
+								</td>
 							</tr>
 						</table>
 					</div>
