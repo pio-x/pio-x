@@ -16,11 +16,11 @@
 	<div ng-controller="mainCtrl" ng-cloak>
 		<header>
 			<div class="well well-lg">PIO-X Admin</div>
-			<button ng-click="logout()" ng-if="loggedIn">Logout</button>
+			<button ng-click="logout()" ng-if="loggedIn" class="btn btn-default">Logout</button>
 		</header>
 		<div class="content" ng-if="loggedIn == false && showLogin == true">
 				<input type="text" ng-model="hash" ng-keyup="$event.keyCode == 13 && login(hash)"/>
-				<button ng-click="login(hash)">Login</button>
+				<button ng-click="login(hash)" class="btn btn-default">Login</button>
 		</div>
 		<div class="content" ng-if="loggedIn == true">
 			<ul class="nav nav-tabs" role="tablist">
@@ -59,7 +59,7 @@
 					</div>
 					<div id="newteam" class="col-xs-12">
 						<h3>Neues Team erfassen</h3>
-						<input id="newTeamName" type="text" placeholder="Teamname">
+						<input id="newTeamName" type="text" placeholder="Teamname" class="form-control">
 						<input id="newTeamColor" type="color" placeholder="Teamfarbe" value="#ff0000">
 						<div class="btn btn-default">Fertig</div>
 					</div>
@@ -79,7 +79,7 @@
 					</div>
 					<div id="newstation" class="col-xs-12">
 						<h3>Neue station erfassen</h3>
-						<input id="newStationName" type="text" placeholder="Stationsname">
+						<input id="newStationName" type="text" placeholder="Stationsname" class="form-control">
 						<input id="newStationColor" type="color" placeholder="Stationsfarbe" value="#ff0000">
 						<div class="btn btn-default">Fertig</div>
 					</div>
@@ -124,14 +124,14 @@
 							</tr>
 							<tr >
 								<td>NEU</td>
-								<td><input type="text" ng-model="newCode.code"/></td>
-								<td><input type="text" ng-model="newCode.points"/></td>
-								<td><input type="text" ng-model="newCode.used"/></td>
-								<td><input type="text" ng-model="newCode.mrx_ID"/></td>
+								<td><input type="text" ng-model="newCode.code" class="form-control"/></td>
+								<td><input type="text" ng-model="newCode.points" class="form-control"/></td>
+								<td><input type="text" ng-model="newCode.used" class="form-control"/></td>
+								<td><input type="text" ng-model="newCode.mrx_ID" class="form-control"/></td>
 							</tr>
 							<tr>
 								<td colspan="5">
-									<button ng-click="addNew()">Neuen Passcode hinzufügen</button>
+									<button ng-click="addNew()" class="btn btn-default">Neuen Passcode hinzufügen</button>
 								</td>
 							</tr>
 						</table>
@@ -162,21 +162,21 @@
 							</tr>
 							<tr >
 								<td>NEU</td>
-								<td><input type="text" ng-model="newRiddle.pos_lat"/></td>
-								<td><input type="text" ng-model="newRiddle.pos_long"/></td>
-								<td><input type="text" ng-model="newRiddle.question"/></td>
-								<td><input type="text" ng-model="newRiddle.dep_ID"/></td>
-								<td><input type="text" ng-model="newRiddle.answer"/></td>
-								<td><select ng-model="newRiddle.type">
+								<td><input type="text" ng-model="newRiddle.pos_lat" class="form-control"/></td>
+								<td><input type="text" ng-model="newRiddle.pos_long" class="form-control"/></td>
+								<td><input type="text" ng-model="newRiddle.question" class="form-control"/></td>
+								<td><input type="text" ng-model="newRiddle.dep_ID" class="form-control"/></td>
+								<td><input type="text" ng-model="newRiddle.answer" class="form-control"/></td>
+								<td><select ng-model="newRiddle.type" class="form-control">
 										<option>MULTI</option>
 										<option>SINGLE</option>
 									</select>
 								</td>
-								<td><input type="text" ng-model="newRiddle.points"/></td>
+								<td><input type="text" ng-model="newRiddle.points" class="form-control"/></td>
 							</tr>
 							<tr>
 								<td colspan="8">
-									<button ng-click="addNew()">Neues Rätsel hinzufügen</button>
+									<button ng-click="addNew()" class="btn btn-default">Neues Rätsel hinzufügen</button>
 								</td>
 							</tr>
 						</table>
