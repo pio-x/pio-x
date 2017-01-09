@@ -33,11 +33,11 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode'])
             $scope.riddles = articlesResponse.data;
         });
         $scope.newRiddle = {
-            pos_lat: "47.5030739",
-            pos_long: "8.7374543",
-            question: "Wer wohnt hier?",
+            pos_lat: "",
+            pos_long: "",
+            question: "?",
             dep_ID: "",
-            answer: "Punkt",
+            answer: "",
             type: "MULTI",
             points: 1
         };
