@@ -148,6 +148,25 @@
 								<td>{{ riddle.type }}</td>
 								<td>{{ riddle.points }}</td>
 							</tr>
+							<tr >
+								<td>NEU</td>
+								<td><input type="text" ng-model="newRiddle.pos_lat"/></td>
+								<td><input type="text" ng-model="newRiddle.pos_long"/></td>
+								<td><input type="text" ng-model="newRiddle.question"/></td>
+								<td><input type="text" ng-model="newRiddle.dep_ID"/></td>
+								<td><input type="text" ng-model="newRiddle.answer"/></td>
+								<td><select ng-model="newRiddle.type">
+										<option>MULTI</option>
+										<option>SINGLE</option>
+									</select>
+								</td>
+								<td><input type="text" ng-model="newRiddle.points"/></td>
+							</tr>
+							<tr>
+								<td colspan="8">
+									<button ng-click="addNew()">Neues Rätsel hinzufügen</button>
+								</td>
+							</tr>
 						</table>
 					</div>
 				</div>

@@ -32,6 +32,18 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode'])
         apiService.get('/riddle').then(function(articlesResponse) {
             $scope.riddles = articlesResponse.data;
         });
+        $scope.newRiddle = {
+            pos_lat: "47.5030739",
+            pos_long: "8.7374543",
+            question: "Wer wohnt hier?",
+            dep_ID: "",
+            answer: "Punkt",
+            type: "MULTI",
+            points: 1
+        };
+        $scope.addNew = function() {
+            apiService.post('/riddle', $scope.newRiddle);
+        };
     })
     .controller('mainCtrl', function($scope, apiService){
         $scope.loggedIn = false;
