@@ -22,6 +22,15 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode'])
         apiService.get('/passcode').then(function(articlesResponse) {
             $scope.passcodes = articlesResponse.data;
         });
+        $scope.newCode = {
+            code: "",
+            points: "",
+            used: "",
+            mrx_ID: ""
+        };
+        $scope.addNew = function() {
+            apiService.post('/passcode', $scope.newCode);
+        };
     })
     .controller('notificationCtrl', function($scope, apiService){
         apiService.get('/notification').then(function(articlesResponse) {
@@ -35,7 +44,7 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode'])
         $scope.newRiddle = {
             pos_lat: "",
             pos_long: "",
-            question: "?",
+            question: "",
             dep_ID: "",
             answer: "",
             type: "MULTI",
