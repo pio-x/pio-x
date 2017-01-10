@@ -34,14 +34,10 @@
 				<li role="presentation"><a href="#qrcodes" aria-controls="qrcodes" role="tab" data-toggle="tab">QR codes</a></li>
 			</ul>
 			<div class="tab-content actual-content">
-				<div role="tabpanel" class="tab-pane active" id="karte">
+				<div role="tabpanel" class="tab-pane active" id="karte" ng-controller="mapCtrl">
 					<div id="map"></div>
-					<div class="submenu">
-						<!-- test buttons, real buttons will be inserted for each team -->
-						<div class="btn btn-default">Team Ravioli</div>
-						<div class="btn btn-default">Team Pesto</div>
-						<div class="btn btn-default">Team Gnocchi</div>
-						<div class="btn btn-default">Team Nudeluflauf</div>
+					<div class="submenu" ng-repeat="group in groups">
+						<div class="btn btn-default" ng-click="showTeamOnMap(group.t_ID)">{{ group.name }}</div>
 					</div>
 					<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjEW54VdlWZT07n90oTjvaLIl3q27ZL4Y&callback=initMap" async defer></script>
 				</div>

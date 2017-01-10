@@ -20,6 +20,14 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode'])
             $scope.groups = articlesResponse.data;
         });
     })
+    .controller('mapCtrl', function($scope, apiService){
+        apiService.get('/team').then(function(articlesResponse) {
+            $scope.groups = articlesResponse.data;
+        });
+        $scope.showTeamOnMap = function(id) {
+            //TODO zeige Team auf Karte an
+        };
+    })
     .controller('stationCtrl', function($scope, apiService){
         apiService.get('/station').then(function(articlesResponse) {
             $scope.stations = articlesResponse.data;
