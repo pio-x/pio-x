@@ -23,8 +23,8 @@ export class TeamService {
   }
 
   get teams(): Observable<Array<Team>> {
-        return this._teams.asObservable();
-    }
+    return this._teams.asObservable();
+  }
 
   public updateTeams(): void {
     this.pioxApi.get('/team')

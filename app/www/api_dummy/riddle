@@ -1,0 +1,32 @@
+[
+  {
+    "r_ID": 1,
+    "pos_lat": 47.49987411499,
+    "pos_long": 8.7321529388428,
+    "question": "",
+    "dep_ID": null,
+    "type": "MULTI",
+    "points": 20,
+    "state": null
+  },
+  {
+    "r_ID": 3,
+    "pos_lat": null,
+    "pos_long": null,
+    "question": "Mache einen Handstand mit einem Elefanten auf dem Rücken.",
+    "dep_ID": null,
+    "type": "SINGLE",
+    "points": 7,
+    "state": null
+  },
+  {
+    "r_ID": 4,
+    "pos_lat": 47.505332946777,
+    "pos_long": 8.7271242141724,
+    "question": "Wieviele Räder hat das Gefährt?",
+    "dep_ID": null,
+    "type": "MULTI",
+    "points": 20,
+    "state": "UNLOCKED"
+  }
+]

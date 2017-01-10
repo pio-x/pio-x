@@ -13,6 +13,7 @@ import {CaptureModal} from "../pages/capture/capture";
 
 import {PioxApiService} from "../services/pioxApi.service";
 import {TeamService} from "../services/team.service";
+import {RiddleService} from "../services/riddle.service";
 import {StationService} from "../services/station.service";
 import {NotificationService} from "../services/notification.service";
 import {LocationService} from "../services/location.service";
@@ -54,10 +55,11 @@ import { ImageUploadModule } from 'ng2-imageupload';
   providers: [
     {provide: ErrorHandler, useClass: IonicErrorHandler}, 
     Storage,
-    TeamService, 
+    TeamService,
+    RiddleService,
     StationService,
     LocationService,
-    NotificationService, 
+    NotificationService,
     PioxApiService]
 })
 export class AppModule {}

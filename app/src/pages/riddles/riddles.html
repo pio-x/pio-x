@@ -1,11 +1,33 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Riddles
+      Rätsel
     </ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="updateRiddles()">
+        <ion-icon name="refresh"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  riddles
+
+  <ion-card *ngFor="let riddle of riddles">
+
+    <ion-card-header>
+      <span *ngIf="riddle.question">
+        {{riddle.question}}
+      </span>
+      <span *ngIf="!riddle.question">
+        <i>Frage versteckt</i>
+      </span>
+    </ion-card-header>
+
+    <ion-card-content>
+      {{riddle.points}} Punkte
+    </ion-card-content>
+
+  </ion-card>
+
 </ion-content>

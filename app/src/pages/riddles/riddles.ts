@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 
 import { NavController } from 'ionic-angular';
+import {Riddle} from "../../interfaces/riddle";
+import {RiddleService} from "../../services/riddle.service";
 
 @Component({
   selector: 'page-riddles',
@@ -8,8 +10,18 @@ import { NavController } from 'ionic-angular';
 })
 export class RiddlesPage {
 
-  constructor(public navCtrl: NavController) {
+    riddles: Riddle[] = [];
 
-  }
+    constructor(private riddleService:RiddleService) {
+
+        this.updateRiddles();
+        riddleService.riddles.subscribe((riddles: Array<Riddle>) => {
+            this.riddles = riddles;
+        });
+    }
+
+    updateRiddles(): void {
+        this.riddleService.updateRiddles();
+    }
 
 }
