@@ -194,7 +194,7 @@ $app->get('/riddle/{id}', function (Request $request, Response $response, $args)
 	}
 });
 
-$app->put('/riddle',function (Request $request, Response $response) use (&$DB) {
+$app->post('/riddle',function (Request $request, Response $response) use (&$DB) {
 	$body = json_decode($request->getBody(), true);
 	$lat = $body['pos_lat'];
 	$long = $body['pos_long'];
@@ -217,7 +217,7 @@ $app->put('/riddle',function (Request $request, Response $response) use (&$DB) {
 	return $response->withJson("success");
 });
 
-$app->post('/riddle/{id}',function (Request $request, Response $response, $args) use (&$DB) {
+$app->put('/riddle/{id}',function (Request $request, Response $response, $args) use (&$DB) {
 	$riddleId = $args['id'];
 	$body = json_decode($request->getBody(), true);
 

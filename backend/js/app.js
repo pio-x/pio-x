@@ -51,7 +51,7 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode'])
             points: 1
         };
         $scope.addNew = function() {
-            apiService.put('/riddle', $scope.newRiddle);
+            apiService.post('/riddle', $scope.newRiddle);
         };
     })
     .controller('mainCtrl', function($scope, apiService){
