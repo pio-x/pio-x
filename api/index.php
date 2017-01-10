@@ -215,13 +215,47 @@ $app->get('/mrx', function (Request $request, Response $response) use (&$DB) {
 
 // TOM RIDDLE
 $app->get('/riddle', function (Request $request, Response $response) use (&$DB) {
-	$riddles = $DB->fetchAll("SELECT * FROM riddle");
-	if ($request->getAttribute('is_admin') == false) {
-		// TODO: only send unlocked/dependency solved riddles to teams
-		// do not send answers to teams/mrx
-		$riddles = APIHelper::removeAttribute($riddles, 'answer');
+	if ($request->getAttribute('is_admin') == true) {
+		$riddles = $DB->fetchAll("SELECT * FROM riddle");
+		return $response->withJson($riddles, 200, JSON_NUMERIC_CHECK);
+	} else {
+		if ($request->getAttribute('is_team') == true) {
+			$riddles = $DB->fetchAll("SELECT r.*, tr.state FROM riddle r LEFT JOIN r_team_riddle tr ON r.r_ID = tr.r_ID AND tr.t_ID = ?", array($request->getAttribute('team_id')));
+
+			// do not send answers to teams
+			$riddles = APIHelper::removeAttribute($riddles, 'answer');
+
+			// get a list of solved riddles for dependency conditions
+			$solved = [];
+			foreach ($riddles as $riddle) {
+				if ($riddle['state'] == 'SOLVED') {
+					$solved[] = $riddle['r_ID'];
+				}
+			}
+
+			$filtered = [];
+			foreach ($riddles as $riddle) {
+				// only send dependent riddles if precursor was solved
+				if ($riddle['dep_ID'] !== null && !in_array($riddle['dep_ID'], $solved)) {
+					continue;
+				}
+
+				// only send unlocked position based riddles to teams
+				if ($riddle['pos_lat']) {
+					if ($riddle['state'] != 'SOLVED' && $riddle['state'] != 'UNLOCKED') {
+						$riddle['question'] = '';
+					}
+				}
+				$filtered[] = $riddle;
+			}
+
+
+			return $response->withJson($filtered, 200, JSON_NUMERIC_CHECK);
+		} else {
+			// no riddles for mrx
+			return $response->withJson([], 200, JSON_NUMERIC_CHECK);
+		}
 	}
-	return $response->withJson($riddles, 200, JSON_NUMERIC_CHECK);
 });
 
 $app->post('/riddle',function (Request $request, Response $response) use (&$DB) {
