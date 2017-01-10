@@ -235,12 +235,13 @@ $app->get('/riddle', function (Request $request, Response $response) use (&$DB) 
 
 			$filtered = [];
 			foreach ($riddles as $riddle) {
+
 				// only send dependent riddles if precursor was solved
 				if ($riddle['dep_ID'] !== null && !in_array($riddle['dep_ID'], $solved)) {
 					continue;
 				}
 
-				// only send unlocked position based riddles to teams
+				// only send questions of unlocked position based riddles to teams
 				if ($riddle['pos_lat']) {
 					if ($riddle['state'] != 'SOLVED' && $riddle['state'] != 'UNLOCKED') {
 						$riddle['question'] = '';
@@ -248,7 +249,6 @@ $app->get('/riddle', function (Request $request, Response $response) use (&$DB) 
 				}
 				$filtered[] = $riddle;
 			}
-
 
 			return $response->withJson($filtered, 200, JSON_NUMERIC_CHECK);
 		} else {
@@ -264,21 +264,13 @@ $app->post('/riddle',function (Request $request, Response $response) use (&$DB) 
 	}
 
 	$body = json_decode($request->getBody(), true);
-	$lat = $body['pos_lat'];
-	$long = $body['pos_long'];
-	$question = $body['question'];
-	$answer = $body['answer'];
-	$type = $body['type'];
-	$points = $body['points'];
-	$dep = $body['dep_ID'];
-
-	$data = array('pos_lat' => $lat,
-				'pos_long' => $long,
-				'question' => $question,
-				'answer' => $answer,
-				'type' => $type,
-				'points' => $points,
-				'dep_ID' => $dep);
+	$data = array('pos_lat' => $body['pos_lat'],
+				'pos_long' => $body['pos_long'],
+				'question' => $body['question'],
+				'answer' => $body['answer'],
+				'type' => $body['type'],
+				'points' => $body['points'],
+				'dep_ID' => $body['dep_ID']);
 
 	$DB->insert('riddle', $data);
 
@@ -292,8 +284,15 @@ $app->put('/riddle/{id}',function (Request $request, Response $response, $args) 
 
 	$riddleId = $args['id'];
 	$body = json_decode($request->getBody(), true);
+	$data = array('pos_lat' => $body['pos_lat'],
+				'pos_long' => $body['pos_long'],
+				'question' => $body['question'],
+				'answer' => $body['answer'],
+				'type' => $body['type'],
+				'points' => $body['points'],
+				'dep_ID' => $body['dep_ID']);
 
-	$DB->update('riddle', $body, array('r_ID' => $riddleId));
+	$DB->update('riddle', $data, array('r_ID' => $riddleId));
 
 	return $response->withJson("success");
 });
