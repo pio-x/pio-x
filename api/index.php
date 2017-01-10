@@ -6,6 +6,8 @@ use \Psr\Http\Message\ResponseInterface as Response;
 require 'vendor/autoload.php';
 require 'conf.php';
 
+require 'helpers/APIHelper.php';
+
 require 'middleware/AddHeaders.php';
 require 'middleware/Authentication.php';
 require 'middleware/LogPosition.php';
@@ -120,6 +122,10 @@ $app->post('/station/{id}/capture',function (Request $request, Response $respons
 
 
 $app->post('/station',function (Request $request, Response $response) use (&$DB) {
+	if ($request->getAttribute('is_admin') == false) {
+		return $response->withStatus(403)->withJson("Error: not sent by an admin");
+	}
+
 	$body = json_decode($request->getBody(), true);
 	$lat = $body['pos_lat'];
 	$long = $body['pos_long'];
@@ -138,21 +144,25 @@ $app->post('/station',function (Request $request, Response $response) use (&$DB)
 
 // TEAM
 $app->get('/team', function (Request $request, Response $response) use (&$DB) {
-	if ($request->getAttribute('is_admin') == true) {
-		$teams = $DB->fetchAll("SELECT * FROM team");
-	} else {
-		// do not send hashes to teams
-		$teams = $DB->fetchAll("SELECT t_ID, name, score, color FROM team");
+	$teams = $DB->fetchAll("SELECT * FROM team");
+	if ($request->getAttribute('is_admin') == false) {
+		// do not send hashes to teams/mrx
+		$teams = APIHelper::removeAttribute($teams, 'hash');
 	}
+
 	return $response->withJson($teams, 200, JSON_NUMERIC_CHECK);
 });
 
 $app->get('/team/{id}', function (Request $request, Response $response, $args) use (&$DB) {
 	$teamId = $args['id'];
 	$team = $DB->fetchAll("SELECT * FROM team WHERE t_ID = ?", array($teamId));
+	if ($request->getAttribute('is_admin') == false) {
+		// do not send hashes to teams/mrx
+		$team = APIHelper::removeAttribute($team, 'hash');
+	}
 
 	if(sizeof($team) > 0) {
-		return $response->withJson($team, 200, JSON_NUMERIC_CHECK);
+		return $response->withJson($team[0], 200, JSON_NUMERIC_CHECK);
 	} else {
 		return $response->withStatus(404)->withJson("team not found");
 	}
@@ -160,11 +170,10 @@ $app->get('/team/{id}', function (Request $request, Response $response, $args) u
 
 // MISTER X
 $app->get('/mrx', function (Request $request, Response $response) use (&$DB) {
-	if ($request->getAttribute('is_admin') == true) {
-		$mrxs = $DB->fetchAll("SELECT * FROM mrx");
-	} else {
-		// do not send hashes to teams
-		$mrxs = $DB->fetchAll("SELECT x_ID, name FROM mrx");
+	$mrxs = $DB->fetchAll("SELECT * FROM mrx");
+	if ($request->getAttribute('is_admin') == false) {
+		// do not send hashes to teams/mrx
+		$mrxs = APIHelper::removeAttribute($mrxs, 'x_hash');
 	}
 	$data = [];
 	foreach ($mrxs as $mrx) {
@@ -180,6 +189,11 @@ $app->get('/mrx', function (Request $request, Response $response) use (&$DB) {
 // TOM RIDDLE
 $app->get('/riddle', function (Request $request, Response $response) use (&$DB) {
 	$riddles = $DB->fetchAll("SELECT * FROM riddle");
+	if ($request->getAttribute('is_admin') == false) {
+		// TODO: only send unlocked/dependency solved riddles to teams
+		// do not send answers to teams/mrx
+		$riddles = APIHelper::removeAttribute($riddles, 'answer');
+	}
 	return $response->withJson($riddles, 200, JSON_NUMERIC_CHECK);
 });
 
@@ -187,14 +201,24 @@ $app->get('/riddle/{id}', function (Request $request, Response $response, $args)
 	$riddleId = $args['id'];
 	$riddle = $DB->fetchAll("SELECT * FROM riddle WHERE r_ID = ?", array($riddleId));
 
+	if ($request->getAttribute('is_admin') == false) {
+		// TODO: only send unlocked/dependency solved riddles to teams
+		// do not send answers to teams/mrx
+		$riddle = APIHelper::removeAttribute($riddle, 'answer');
+	}
+
 	if(sizeof($riddle) > 0) {
-		return $response->withJson($riddle, 200, JSON_NUMERIC_CHECK);
+		return $response->withJson($riddle[0], 200, JSON_NUMERIC_CHECK);
 	} else {
 		return $response->withStatus(404)->withJson("riddle not found");
 	}
 });
 
 $app->post('/riddle',function (Request $request, Response $response) use (&$DB) {
+	if ($request->getAttribute('is_admin') == false) {
+		return $response->withStatus(403)->withJson("Error: not sent by an admin");
+	}
+
 	$body = json_decode($request->getBody(), true);
 	$lat = $body['pos_lat'];
 	$long = $body['pos_long'];
@@ -218,6 +242,10 @@ $app->post('/riddle',function (Request $request, Response $response) use (&$DB) 
 });
 
 $app->put('/riddle/{id}',function (Request $request, Response $response, $args) use (&$DB) {
+	if ($request->getAttribute('is_admin') == false) {
+		return $response->withStatus(403)->withJson("Error: not sent by an admin");
+	}
+
 	$riddleId = $args['id'];
 	$body = json_decode($request->getBody(), true);
 
