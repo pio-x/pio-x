@@ -38,7 +38,7 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode'])
             used: "",
             mrx_ID: ""
         };
-        $scope.addNew = function() {
+        $scope.addNewCode = function() {
             apiService.post('/passcode', $scope.newCode)
                 .then($scope.getCodes());
         };
@@ -68,7 +68,7 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode'])
             type: "MULTI",
             points: 1
         };
-        $scope.addNew = function() {
+        $scope.addNewRiddle = function() {
             apiService.post('/riddle', $scope.newRiddle)
                 .then($scope.getRiddles());
         };
