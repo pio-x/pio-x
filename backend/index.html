@@ -149,6 +149,7 @@
 								<td>Antwort</td>
 								<td>Typ</td>
 								<td>Punkte</td>
+								<td></td>
 							</tr>
 							<tr ng-repeat="riddle in riddles">
 								<td>{{ riddle.r_ID }}</td>
@@ -159,6 +160,7 @@
 								<td>{{ riddle.answer }}</td>
 								<td>{{ riddle.type }}</td>
 								<td>{{ riddle.points }}</td>
+								<td><button ng-click="deleteRiddle(riddle.r_ID)" class="btn btn-default">X</button></td>
 							</tr>
 							<tr >
 								<td>NEU</td>
@@ -173,9 +175,10 @@
 									</select>
 								</td>
 								<td><input type="text" ng-model="newRiddle.points" class="form-control"/></td>
+								<td></td>
 							</tr>
 							<tr>
-								<td colspan="8">
+								<td colspan="9">
 									<button ng-click="addNew()" class="btn btn-default">Neues Rätsel hinzufügen</button>
 								</td>
 							</tr>
