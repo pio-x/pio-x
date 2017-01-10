@@ -107,8 +107,6 @@ $app->post('/station/{id}/capture',function (Request $request, Response $respons
 
 	// TODO: location check
 
-
-
 	$data = array(
 		's_ID' => $stationId,
 		't_ID' => $teamId,
@@ -120,27 +118,55 @@ $app->post('/station/{id}/capture',function (Request $request, Response $respons
 	return $response->withJson($tags);
 });
 
-
 $app->post('/station',function (Request $request, Response $response) use (&$DB) {
 	if ($request->getAttribute('is_admin') == false) {
 		return $response->withStatus(403)->withJson("Error: not sent by an admin");
 	}
 
 	$body = json_decode($request->getBody(), true);
-	$lat = $body['pos_lat'];
-	$long = $body['pos_long'];
-	$name = $body['name'];
-	$description = $body['description'];
 
-	$data = array('pos_lat' => $lat,
-				'pos_long' => $long,
-				'name' => $name,
-				'description' => $description);
+	$data = array('pos_lat' => $body['pos_lat'],
+				'pos_long' => $body['pos_long'],
+				'name' => $body['name'],
+				'description' => $body['description']);
 
 	$DB->insert('station', $data);
 
 	return $response->withJson("success");
 });
+
+$app->put('/station/{id}',function (Request $request, Response $response, $args) use (&$DB) {
+	if ($request->getAttribute('is_admin') == false) {
+		return $response->withStatus(403)->withJson("Error: not sent by an admin");
+	}
+
+	$stationId = $args['id'];
+	$body = json_decode($request->getBody(), true);
+
+	$data = array('pos_lat' => $body['pos_lat'],
+			'pos_long' => $body['pos_long'],
+			'name' => $body['name'],
+			'description' => $body['description']);
+
+	$DB->update('station', $data, array('s_ID' => $stationId));
+
+	return $response->withJson("success");
+});
+
+$app->delete('/station/{id}',function (Request $request, Response $response, $args) use (&$DB) {
+	if ($request->getAttribute('is_admin') == false) {
+		return $response->withStatus(403)->withJson("Error: not sent by an admin");
+	}
+
+	$deleted = $DB->delete('station', array('s_ID' => $args['id']));
+
+	if ($deleted) {
+		return $response->withJson("success");
+	} else {
+		return $response->withStatus(404);
+	}
+});
+
 
 // TEAM
 $app->get('/team', function (Request $request, Response $response) use (&$DB) {
@@ -167,6 +193,7 @@ $app->get('/team/{id}', function (Request $request, Response $response, $args) u
 		return $response->withStatus(404)->withJson("team not found");
 	}
 });
+
 
 // MISTER X
 $app->get('/mrx', function (Request $request, Response $response) use (&$DB) {
@@ -195,23 +222,6 @@ $app->get('/riddle', function (Request $request, Response $response) use (&$DB) 
 		$riddles = APIHelper::removeAttribute($riddles, 'answer');
 	}
 	return $response->withJson($riddles, 200, JSON_NUMERIC_CHECK);
-});
-
-$app->get('/riddle/{id}', function (Request $request, Response $response, $args) use (&$DB) {
-	$riddleId = $args['id'];
-	$riddle = $DB->fetchAll("SELECT * FROM riddle WHERE r_ID = ?", array($riddleId));
-
-	if ($request->getAttribute('is_admin') == false) {
-		// TODO: only send unlocked/dependency solved riddles to teams
-		// do not send answers to teams/mrx
-		$riddle = APIHelper::removeAttribute($riddle, 'answer');
-	}
-
-	if(sizeof($riddle) > 0) {
-		return $response->withJson($riddle[0], 200, JSON_NUMERIC_CHECK);
-	} else {
-		return $response->withStatus(404)->withJson("riddle not found");
-	}
 });
 
 $app->post('/riddle',function (Request $request, Response $response) use (&$DB) {
@@ -254,6 +264,19 @@ $app->put('/riddle/{id}',function (Request $request, Response $response, $args) 
 	return $response->withJson("success");
 });
 
+$app->delete('/riddle/{id}',function (Request $request, Response $response, $args) use (&$DB) {
+	if ($request->getAttribute('is_admin') == false) {
+		return $response->withStatus(403)->withJson("Error: not sent by an admin");
+	}
+
+	$deleted = $DB->delete('riddle', array('r_ID' => $args['id']));
+
+	if ($deleted) {
+		return $response->withJson("success");
+	} else {
+		return $response->withStatus(404);
+	}
+});
 
 $app->post('/riddle/{id}/unlock',function (Request $request, Response $response, $args) use (&$DB) {
 	if ($request->getAttribute('is_team') == false) {
@@ -282,9 +305,21 @@ $app->post('/riddle/{id}/unlock',function (Request $request, Response $response,
 
 // NOTIFICATIONS
 $app->get('/notification', function (Request $request, Response $response) use (&$DB) {
-	$notifications = $DB->fetchAll("SELECT * FROM notification ORDER BY timestamp DESC");
+	if ($request->getAttribute('is_admin') == true) {
+		// admin sees all notifications
+		$notifications = $DB->fetchAll("SELECT * FROM notification ORDER BY timestamp DESC");
+	} else {
+		if ($request->getAttribute('is_team') == true) {
+			// teams see their own notifications and the "all"-notifications
+			$notifications = $DB->fetchAll("SELECT * FROM notification WHERE t_ID = ? OR t_ID IS NULL ORDER BY timestamp DESC", array($request->getAttribute('team_id')));
+		} else {
+			// mrx only see the "all"-notifications
+			$notifications = $DB->fetchAll("SELECT * FROM notification WHERE t_ID IS NULL ORDER BY timestamp DESC");
+		}
+	}
 	return $response->withJson($notifications, 200, JSON_NUMERIC_CHECK);
 });
+
 
 // IMAGES
 $app->get('/image/{filename}.jpg', function (Request $request, Response $response, $args) use (&$DB) {
@@ -298,7 +333,8 @@ $app->get('/image/{filename}.jpg', function (Request $request, Response $respons
 	}
 });
 
-// Passcodes
+
+// PASSCODES
 $app->get('/passcode', function (Request $request, Response $response) use (&$DB) {
 	if ($request->getAttribute('is_admin') == false) {
 		return $response->withStatus(403)->withJson("Error: not sent by admin");
@@ -314,18 +350,46 @@ $app->post('/passcode', function (Request $request, Response $response, $args) u
 	}
 
 	$body = json_decode($request->getBody(), true);
-	$code = $body['code'];
-	$points = $body['points'];
-	$mrx = $body['mrx_ID'];
-
-	$data = array('code' => $code,
-				'points' => $points,
-				'used' => false,
-				'mrx_ID' => $mrx);
+	$data = array('code' => $body['code'],
+				'points' => $body['points'],
+				'used' => $body['used'],
+				'mrx_ID' => $body['mrx_ID']);
 
 	$DB->insert('passcode', $data);
 
 	return $response->withJson("success");
+});
+
+$app->put('/passcode/{id}', function (Request $request, Response $response, $args) use (&$DB) {
+	if ($request->getAttribute('is_admin') == false) {
+		return $response->withStatus(403)->withJson("Error: not sent by admin");
+	}
+
+	$passcodeId = $args['id'];
+	$body = json_decode($request->getBody(), true);
+	$data = array('code' => $body['code'],
+				'points' => $body['points'],
+				'used' => $body['used'],
+				'mrx_ID' => $body['mrx_ID']);
+
+	$DB->update('passcode', $data, array('p_ID' => $passcodeId));
+
+	return $response->withJson("success");
+});
+
+$app->delete('/passcode/{id}', function (Request $request, Response $response, $args) use (&$DB) {
+	if ($request->getAttribute('is_admin') == false) {
+		return $response->withStatus(403)->withJson("Error: not sent by admin");
+	}
+
+	$deleted = $DB->delete('passcode', array('p_ID' => $args['id']));
+
+	if ($deleted) {
+		return $response->withJson("success");
+	} else {
+		return $response->withStatus(404);
+	}
+
 });
 
 
