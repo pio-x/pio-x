@@ -10,13 +10,9 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode'])
             team: "",
             link: ""
         };
-        $scope.showGroupQR = function(id, name, hash) {
+        $scope.showQR = function(id, name, hash, type) {
             $scope.qrUrl.team = name;
-            $scope.qrUrl.link = 'https://app.pio-x.ch/login.html?team=' + id + '&hash=' + hash;
-        };
-        $scope.showMrxQR = function(id, name, hash) {
-            $scope.qrUrl.team = name;
-            $scope.qrUrl.link = 'https://app.pio-x.ch/login.html?mrx=' + id + '&hash=' + hash;
+            $scope.qrUrl.link = 'https://app.pio-x.ch/login.html?' + type +'=' + id + '&hash=' + hash;
         };
     })
     .controller('teamCtrl', function($scope, apiService){
@@ -30,9 +26,12 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode'])
         });
     })
     .controller('passcodeCtrl', function($scope, apiService){
-        apiService.get('/passcode').then(function(articlesResponse) {
-            $scope.passcodes = articlesResponse.data;
-        });
+        $scope.getCodes = function() {
+            apiService.get('/passcode').then(function(articlesResponse) {
+                $scope.passcodes = articlesResponse.data;
+            });
+        };
+        $scope.getCodes();
         $scope.newCode = {
             code: "",
             points: "",
@@ -40,7 +39,12 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode'])
             mrx_ID: ""
         };
         $scope.addNew = function() {
-            apiService.post('/passcode', $scope.newCode);
+            apiService.post('/passcode', $scope.newCode)
+                .then($scope.getCodes());
+        };
+        $scope.deleteCode = function(id) {
+            //TODO delete noch nicht in API vorhanden
+            //apiService.delete('/passcode', id);
         };
     })
     .controller('notificationCtrl', function($scope, apiService){
@@ -69,7 +73,8 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode'])
                 .then($scope.getRiddles());
         };
         $scope.deleteRiddle = function(id) {
-
+            //TODO delete noch nicht in API vorhanden
+            //apiService.delete('/riddle', id);
         };
     })
     .controller('mainCtrl', function($scope, apiService){
