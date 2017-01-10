@@ -188,23 +188,43 @@
 					<input type="text" ng-model="search" class="form-control"> <span ng-show="search">[> {{search}} <]</span></p>
 					<table><tr>
 						<td>
-							<h3>{{search ? 'Gefilterte' : 'Alle'}} QR Codes</h3>
-							<ul>
-								<li ng-repeat="group in groups">
-									<a href="#" ng-click="$parent.qrUrl = 'https://app.pio-x.ch/login.html?team=1&hash=' + group.hash">
-											G{{ group.t_ID }}: {{ group.name }}, Hash: [ {{ group.hash }} ]</a>
-								</li>
-								<li ng-repeat="mrx in mrxs">
-									<a href="#" ng-click="$parent.qrUrl = 'https://app.pio-x.ch/login.html?mrx=' + mrx.x_ID +'&hash=' + mrx.x_hash">
-											G{{ mrx.x_ID }}: {{ mrx.name }}, Hash: [ {{ mrx.x_hash }} ]</a>
-								</li>
-							</ul>
-						</td>
-						<td ng-if="qrUrl">
-							<a href="{{ qrUrl }}">{{ qrUrl }}</a> <br/>
-							<qrcode version="4" error-correction-level="M" size="200" data="{{ qrUrl }}" href="{{ qrUrl }}"></qrcode>
+							<h3>{{search ? 'Gefilterte' : 'Alle'}} QR Codes</h3><!-- TODO Filter auf groups und mrxs anwenden -->
+							<table class="table table-striped">
+								<tr>
+									<td>ID</td>
+									<td>Team</td>
+									<td>Hash</td>
+									<td></td>
+									<td rowspan="{{ groups.length + mrxs.length }}">
+										<p>QR Code<span ng-if="qrUrl.team"> von {{ qrUrl.team }}</span></p>
+										<div ng-if="qrUrl.team">
+											<a href="{{ qrUrl.link }}">{{ qrUrl.link }}</a> <br/>
+											<qrcode version="4" error-correction-level="M" size="200" data="{{ qrUrl-link }}" href="{{ qrUrl-link }}"></qrcode>
+										</div><!-- TODO wieso aktualisiert der Link, aber QR nicht? -->
+									</td>
+								</tr>
+								<tr ng-repeat="group in groups">
+									<td>{{ group.t_ID }}</td>
+									<td>{{ group.name }}</td>
+									<td>{{ group.hash }}</td>
+									<td>
+										<a href="#" ng-click="showGroupQR(group.t_ID, group.name, group.hash)">QR Code</a>
+									</td>
+								</tr>
+								<tr ng-repeat="mrx in mrxs">
+									<td>{{ mrx.x_ID }}</td>
+									<td>{{ mrx.name }}</td>
+									<td>{{ mrx.x_hash }}</td>
+									<td>
+										<a href="#" ng-click="showMrxQR(mrx.x_ID, mrx.name, mrx.x_hash)">QR Code</a>
+									</td>
+								</tr>
+							</table>
 						</td></tr>
 					</table>
+					Name: <input type="text" ng-model="newTeam.name" class="form-control"/>
+					Hash: <input type="text" ng-model="newTeam.hash" class="form-control"/>
+					<button ng-click="addNew()" class="btn btn-default">Neues Team hinzufügen</button>
 				</div>
 			</div>
 		</div>

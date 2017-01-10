@@ -6,7 +6,18 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode'])
         apiService.get('/mrx').then(function(articlesResponse) {
             $scope.mrxs = articlesResponse.data;
         });
-        $scope.qrUrl = "";
+        $scope.qrUrl = {
+            team: "",
+            link: ""
+        };
+        $scope.showGroupQR = function(id, name, hash) {
+            $scope.qrUrl.team = name;
+            $scope.qrUrl.link = 'https://app.pio-x.ch/login.html?team=' + id + '&hash=' + hash;
+        };
+        $scope.showMrxQR = function(id, name, hash) {
+            $scope.qrUrl.team = name;
+            $scope.qrUrl.link = 'https://app.pio-x.ch/login.html?mrx=' + id + '&hash=' + hash;
+        };
     })
     .controller('teamCtrl', function($scope, apiService){
         apiService.get('/team').then(function(articlesResponse) {
