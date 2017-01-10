@@ -19,6 +19,9 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode'])
         apiService.get('/team').then(function(articlesResponse) {
             $scope.groups = articlesResponse.data;
         });
+        $scope.updateTeam = function(arrCode) {
+            apiService.put('/team', arrCode);
+        };
     })
     .controller('mapCtrl', function($scope, apiService){
         apiService.get('/team').then(function(articlesResponse) {
@@ -32,6 +35,9 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode'])
         apiService.get('/station').then(function(articlesResponse) {
             $scope.stations = articlesResponse.data;
         });
+        $scope.updateStation = function(arrCode) {
+            apiService.put('/station', arrCode);
+        };
     })
     .controller('passcodeCtrl', function($scope, apiService){
         $scope.getCodes = function() {
@@ -54,11 +60,17 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode'])
             //TODO delete noch nicht in API vorhanden
             //apiService.delete('/passcode', id);
         };
+        $scope.updateCode = function(arrCode) {
+            apiService.put('/passcode', arrCode);
+        };
     })
     .controller('notificationCtrl', function($scope, apiService){
         apiService.get('/notification').then(function(articlesResponse) {
             $scope.notifications = articlesResponse.data;
         });
+        $scope.updateNotification = function(arrCode) {
+            apiService.put('/notification', arrCode);
+        };
     })
     .controller('riddleCtrl', function($scope, apiService){
         $scope.getRiddles = function() {
@@ -83,6 +95,9 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode'])
         $scope.deleteRiddle = function(id) {
             //TODO delete noch nicht in API vorhanden
             //apiService.delete('/riddle', id);
+        };
+        $scope.updateRiddle = function(arrCode) {
+            apiService.put('/riddle', arrCode);
         };
     })
     .controller('mainCtrl', function($scope, apiService){

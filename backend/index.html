@@ -111,14 +111,16 @@
 								<td>Gebraucht</td>
 								<td>Mr ?</td>
 								<td></td>
+								<td></td>
 							</tr>
 							<tr ng-repeat="code in passcodes">
-								<td>{{ code.p_ID }}</td>
-								<td>{{ code.code }}</td>
-								<td>{{ code.points }}</td>
-								<td>{{ code.used }}</td>
-								<td>{{ code.mrx_ID }}</td>
-								<td><button ng-click="deleteCode(code.p_ID)" class="btn btn-default">X</button></td>
+								<td><input type="text" class="form-control"/ value="{{ code.p_ID }}"></td>
+								<td><input type="text" class="form-control"/ value="{{ code.code }}"></td>
+								<td><input type="text" class="form-control"/ value="{{ code.points }}"></td>
+								<td><input type="text" class="form-control"/ value="{{ code.used }}"></td>
+								<td><input type="text" class="form-control"/ value="{{ code.mrx_ID }}"></td>
+								<td><button ng-click="updateCode(code)" class="btn btn-default">&#128190;</button></td>
+								<td><button ng-click="deleteCode(code.p_ID)" class="btn btn-default">&#9003;</button></td>
 							</tr>
 							<tr >
 								<td>NEU</td>
@@ -126,6 +128,7 @@
 								<td><input type="text" ng-model="newCode.points" class="form-control"/></td>
 								<td><input type="text" ng-model="newCode.used" class="form-control"/></td>
 								<td><input type="text" ng-model="newCode.mrx_ID" class="form-control"/></td>
+								<td></td>
 								<td></td>
 							</tr>
 							<tr>
@@ -149,6 +152,7 @@
 								<td>Typ</td>
 								<td>Punkte</td>
 								<td></td>
+								<td></td>
 							</tr>
 							<tr ng-repeat="riddle in riddles">
 								<td>{{ riddle.r_ID }}</td>
@@ -159,7 +163,8 @@
 								<td>{{ riddle.answer }}</td>
 								<td>{{ riddle.type }}</td>
 								<td>{{ riddle.points }}</td>
-								<td><button ng-click="deleteRiddle(riddle.r_ID)" class="btn btn-default">X</button></td>
+								<td><button ng-click="updateRiddle(riddle.r_ID)" class="btn btn-default">&#128190;</button></td>
+								<td><button ng-click="deleteRiddle(riddle.r_ID)" class="btn btn-default">&#9003;</button></td>
 							</tr>
 							<tr >
 								<td>NEU</td>
@@ -174,6 +179,7 @@
 									</select>
 								</td>
 								<td><input type="text" ng-model="newRiddle.points" class="form-control"/></td>
+								<td></td>
 								<td></td>
 							</tr>
 							<tr>
