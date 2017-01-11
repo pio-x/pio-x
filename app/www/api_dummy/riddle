@@ -5,7 +5,7 @@
     "pos_long": 8.7321529388428,
     "question": "",
     "dep_ID": null,
-    "type": "MULTI",
+    "type": "SINGLE",
     "points": 20,
     "state": null
   },

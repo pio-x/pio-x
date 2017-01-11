@@ -38,7 +38,8 @@
 
     <ion-row>
       <ion-col>
-
+        <ion-icon name="pin" *ngIf="riddle.pos_lat"></ion-icon>
+        <ion-icon name="fastforward" *ngIf="riddle.type == 'MULTI'"></ion-icon>
       </ion-col>
       <ion-col>
 
