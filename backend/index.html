@@ -176,7 +176,7 @@
 								<td><input type="text" ng-model="newCode.points" class="form-control"/></td>
 								<td><input type="text" ng-model="newCode.used" class="form-control"/></td>
 								<td><input type="text" ng-model="newCode.mrx_ID" class="form-control"/></td>
-								<td colspan="2"><button ng-click="addNewCode(newCode)" class="btn btn-default" ng-if="newCode.code">&#128190;</button></td>
+								<td colspan="2"><button ng-click="addNewCode(newCode)" class="btn btn-default" ng-if="newCode.code">&#128190; Erstellen</button></td>
 							</tr>
 						</table>
 					</div>
@@ -198,15 +198,15 @@
 								<td></td>
 							</tr>
 							<tr ng-repeat="riddle in riddles">
-								<td>{{ riddle.r_ID }}</td>
-								<td>{{ riddle.pos_lat }}</td>
-								<td>{{ riddle.pos_long }}</td>
-								<td>{{ riddle.question }}</td>
-								<td>{{ riddle.dep_ID }}</td>
-								<td>{{ riddle.answer }}</td>
-								<td>{{ riddle.type }}</td>
-								<td>{{ riddle.points }}</td>
-								<td><button ng-click="updateRiddle(riddle.r_ID)" class="btn btn-default">&#128190;</button></td>
+								<td><input type="text" class="form-control"/ value="{{ riddle.r_ID }}" ng-model="riddle.r_ID"></td>
+								<td><input type="text" class="form-control"/ value="{{ riddle.pos_lat }}" ng-model="riddle.pos_lat"></td>
+								<td><input type="text" class="form-control"/ value="{{ riddle.pos_long }}" ng-model="riddle.pos_long"></td>
+								<td><input type="text" class="form-control"/ value="{{ riddle.question }}" ng-model="riddle.question"></td>
+								<td><input type="text" class="form-control"/ value="{{ riddle.dep_ID }}" ng-model="riddle.dep_ID"></td>
+								<td><input type="text" class="form-control"/ value="{{ riddle.answer }}" ng-model="riddle.answer"></td>
+								<td><input type="text" class="form-control"/ value="{{ riddle.type }}" ng-model="riddle.type"></td>
+								<td><input type="text" class="form-control"/ value="{{ riddle.points }}" ng-model="riddle.points"></td>
+								<td><button ng-click="updateRiddle(riddle.r_ID, riddle)" class="btn btn-default">&#128190;</button></td>
 								<td><button ng-click="deleteRiddle(riddle.r_ID)" class="btn btn-default" ng-confirm-click="ACHTUNG: Willst du das Rätsel wirklich löschen?">&#9003;</button></td>
 							</tr>
 							<tr >

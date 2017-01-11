@@ -175,19 +175,24 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode'])
             });
         };
         $scope.getRiddles();
-        $scope.newRiddle = {
-            pos_lat: "",
-            pos_long: "",
-            question: "",
-            dep_ID: "",
-            answer: "",
-            type: "MULTI",
-            points: 1
+        $scope.newRiddle = {};
+        $scope.emptyNewRiddle = function() {
+            $scope.newRiddle = {
+                pos_lat: "",
+                pos_long: "",
+                question: "",
+                dep_ID: "",
+                answer: "",
+                type: "MULTI",
+                points: 1
+            };
         };
+        $scope.emptyNewRiddle();
         $scope.addNewRiddle = function() {
             apiService.post('/riddle', $scope.newRiddle)
                 .then(function(){
                     $scope.getRiddles();
+                    $scope.emptyNewRiddle();
                 });
         };
         $scope.deleteRiddle = function(id) {
@@ -196,8 +201,8 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode'])
                     $scope.getRiddles();
                 });
         };
-        $scope.updateRiddle = function(arrCode) {
-            apiService.put('/riddle', arrCode)
+        $scope.updateRiddle = function(id, data) {
+            apiService.put('/riddle/' + id, data)
                 .then(function(){
                     $scope.getRiddles();
                 });
