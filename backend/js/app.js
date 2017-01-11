@@ -29,6 +29,15 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode'])
             //TODO baue Bestätigung ein für Löschung
             //apiService.delete('/team', id);
         };
+        $scope.newTeam = {
+            name: "",
+            hash: "",
+            color: "",
+            score: ""
+        };
+        $scope.addNewTeam = function(data) {
+            //TODO Save new team
+        };
     })
     //mapCtrl
     .controller('mapCtrl', function($scope, apiService){
