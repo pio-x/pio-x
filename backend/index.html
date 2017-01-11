@@ -238,8 +238,8 @@
 										<p>QR Code<span ng-if="qrUrl.team"> von {{ qrUrl.team }}</span></p>
 										<div ng-if="qrUrl.team">
 											<a href="{{ qrUrl.link }}">{{ qrUrl.link }}</a> <br/>
-											<qrcode version="4" error-correction-level="M" size="200" data="{{ qrUrl-link }}" href="{{ qrUrl-link }}"></qrcode>
-										</div><!-- TODO wieso aktualisiert der Link, aber QR nicht? -->
+											<qrcode version="4" error-correction-level="M" size="200" data="{{ qrUrl.link }}" href="{{ qrUrl.link }}"></qrcode>
+										</div>
 									</td>
 								</tr>
 								<tr ng-repeat="group in groups">
