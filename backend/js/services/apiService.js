@@ -27,6 +27,14 @@ backendApp.factory('apiService', ['$http', '$rootScope', function($http, $rootSc
                 }
             };
             return $http.put(baseURL + url, data, config );
+        },
+        delete:function(url) {
+            var config = {
+                headers:  {
+                    "X-Piox-Hash" : localStorage.getItem('hash')
+                }
+            };
+            return $http.delete(baseURL + url, config );
         }
     }
 }]);

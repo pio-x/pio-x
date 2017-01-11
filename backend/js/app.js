@@ -127,10 +127,12 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode'])
         $scope.deleteRiddle = function(id) {
             //TODO delete noch nicht in API vorhanden
             //TODO baue Bestätigung ein für Löschung
-            //apiService.delete('/riddle', id);
+            apiService.delete('/riddle/' + id)
+                .then($scope.getRiddles());
         };
         $scope.updateRiddle = function(arrCode) {
-            apiService.put('/riddle', arrCode);
+            apiService.put('/riddle', arrCode)
+                .then($scope.getRiddles());
         };
     })
     //MAIN
