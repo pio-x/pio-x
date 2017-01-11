@@ -104,16 +104,21 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode'])
             });
         };
         $scope.getCodes();
-        $scope.newCode = {
-            code: "",
-            points: "",
-            used: "",
-            mrx_ID: ""
+        $scope.newCode = {};
+        $scope.emptyNewCode = function() {
+            $scope.newCode = {
+                code: "",
+                points: "",
+                used: "",
+                mrx_ID: ""
+            };
         };
+        $scope.emptyNewCode();
         $scope.addNewCode = function() {
             apiService.post('/passcode', $scope.newCode)
                 .then(function(){
                     $scope.getCodes();
+                    $scope.emptyNewCode();
                 });
         };
         $scope.deleteCode = function(id) {
@@ -122,8 +127,8 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode'])
                     $scope.getCodes();
                 });
         };
-        $scope.updateCode = function(data) {
-            apiService.put('/passcode', data)
+        $scope.updateCode = function(id, data) {
+            apiService.put('/passcode/'+ id, data)
                 .then(function(){
                     $scope.getCodes();
                 });

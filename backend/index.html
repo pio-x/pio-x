@@ -162,12 +162,12 @@
 								<td></td>
 							</tr>
 							<tr ng-repeat="code in passcodes">
-								<td><input type="text" class="form-control"/ value="{{ code.p_ID }}"></td>
-								<td><input type="text" class="form-control"/ value="{{ code.code }}"></td>
-								<td><input type="text" class="form-control"/ value="{{ code.points }}"></td>
-								<td><input type="text" class="form-control"/ value="{{ code.used }}"></td>
-								<td><input type="text" class="form-control"/ value="{{ code.mrx_ID }}"></td>
-								<td><button ng-click="updateCode(code)" class="btn btn-default">&#128190;</button></td>
+								<td><input type="text" class="form-control"/ value="{{ code.p_ID }}" ng-model="code.p_ID"></td>
+								<td><input type="text" class="form-control"/ value="{{ code.code }}" ng-model="code.code"></td>
+								<td><input type="text" class="form-control"/ value="{{ code.points }}" ng-model="code.points"></td>
+								<td><input type="text" class="form-control"/ value="{{ code.used }}" ng-model="code.used"></td>
+								<td><input type="text" class="form-control"/ value="{{ code.mrx_ID }}" ng-model="code.mrx_ID"></td>
+								<td><button ng-click="updateCode(code.p_ID, code)" class="btn btn-default">&#128190;</button></td>
 								<td><button ng-click="deleteCode(code.p_ID)" class="btn btn-default">&#9003;</button></td>
 							</tr>
 							<tr >
