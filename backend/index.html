@@ -194,7 +194,7 @@
 								<td>{{ riddle.type }}</td>
 								<td>{{ riddle.points }}</td>
 								<td><button ng-click="updateRiddle(riddle.r_ID)" class="btn btn-default">&#128190;</button></td>
-								<td><button ng-click="deleteRiddle(riddle.r_ID)" class="btn btn-default">&#9003;</button></td>
+								<td><button ng-click="deleteRiddle(riddle.r_ID)" class="btn btn-default" ng-confirm-click="really?">&#9003;</button></td>
 							</tr>
 							<tr >
 								<td>NEU</td>
@@ -275,6 +275,7 @@
 	<script src="js/services/apiService.js"></script>
 	<script src="js/vendor/qrcode.js"></script>
 	<script src="js/vendor/angular-qrcode.js"></script>
+	<script src="js/directives/ngConfirmClick.js"></script>
 </body>
 
 </html>

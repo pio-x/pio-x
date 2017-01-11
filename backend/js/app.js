@@ -78,7 +78,9 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode'])
         };
         $scope.addNewCode = function() {
             apiService.post('/passcode', $scope.newCode)
-                .then($scope.getCodes());
+                .then(function(){
+                    $scope.getCodes()
+                });
         };
         $scope.deleteCode = function(id) {
             //TODO delete noch nicht in API vorhanden
@@ -122,17 +124,21 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode'])
         };
         $scope.addNewRiddle = function() {
             apiService.post('/riddle', $scope.newRiddle)
-                .then($scope.getRiddles());
+                .then(function(){
+                    $scope.getRiddles()
+                });
         };
         $scope.deleteRiddle = function(id) {
-            //TODO delete noch nicht in API vorhanden
-            //TODO baue Bestätigung ein für Löschung
             apiService.delete('/riddle/' + id)
-                .then($scope.getRiddles());
+                .then(function(){
+                    $scope.getRiddles()
+                });
         };
         $scope.updateRiddle = function(arrCode) {
             apiService.put('/riddle', arrCode)
-                .then($scope.getRiddles());
+                .then(function(){
+                    $scope.getRiddles()
+                });
         };
     })
     //MAIN
