@@ -176,13 +176,7 @@
 								<td><input type="text" ng-model="newCode.points" class="form-control"/></td>
 								<td><input type="text" ng-model="newCode.used" class="form-control"/></td>
 								<td><input type="text" ng-model="newCode.mrx_ID" class="form-control"/></td>
-								<td></td>
-								<td></td>
-							</tr>
-							<tr>
-								<td colspan="5">
-									<button ng-click="addNewCode()" class="btn btn-default">Neuen Passcode hinzufügen</button>
-								</td>
+								<td colspan="2"><button ng-click="addNewCode(newCode)" class="btn btn-default" ng-if="newCode.code">&#128190;</button></td>
 							</tr>
 						</table>
 					</div>
