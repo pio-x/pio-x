@@ -65,7 +65,7 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode'])
         };
         $scope.getStations();
         $scope.newStation = {};
-        $scope.emptyNew = function() {
+        $scope.emptyNewStation = function() {
             $scope.newStation = {
                 name: "",
                 description: "",
@@ -75,7 +75,7 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode'])
                 team: ""
             }
         };
-        $scope.emptyNew();
+        $scope.emptyNewStation();
         $scope.updateStation = function(id, data) {
             apiService.put('/station/' + id, data)
                 .then(function(){
@@ -86,7 +86,7 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode'])
             apiService.post('/station', data)
                 .then(function(){
                     $scope.getStations();
-                    $scope.emptyNew();
+                    $scope.emptyNewStation();
                 });
         };
         $scope.deleteStation = function(id) {
@@ -114,8 +114,8 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode'])
             };
         };
         $scope.emptyNewCode();
-        $scope.addNewCode = function() {
-            apiService.post('/passcode', $scope.newCode)
+        $scope.addNewCode = function(data) {
+            apiService.post('/passcode', data)
                 .then(function(){
                     $scope.getCodes();
                     $scope.emptyNewCode();
