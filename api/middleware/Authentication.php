@@ -42,33 +42,36 @@ class Authentication
 		}
 
 		// TEAM: check if hash is valid
-		$teams = $this->DB->fetchAll("SELECT t_ID FROM team WHERE hash = ?", array($hash));
+		$teams = $this->DB->fetchAll("SELECT t_ID, name FROM team WHERE hash = ?", array($hash));
 		if (count($teams) > 0) {
 			// set request attributes for later use
 			$request = $request->withAttribute('is_team', true);
 			$request = $request->withAttribute('team_id', $teams[0]['t_ID']);
+			$request = $request->withAttribute('team_name', $teams[0]['name']);
 
 			// continue with request
 			return $next($request, $response);
 		}
 
 		// ADMIN: check if hash is valid
-		$users = $this->DB->fetchAll("SELECT u_ID FROM user WHERE hash = ?", array($hash));
+		$users = $this->DB->fetchAll("SELECT u_ID, username FROM user WHERE hash = ?", array($hash));
 		if (count($users) > 0) {
 			// set request attributes for later use
 			$request = $request->withAttribute('is_admin', true);
 			$request = $request->withAttribute('admin_id', $users[0]['u_ID']);
+			$request = $request->withAttribute('admin_name', $users[0]['username']);
 
 			// continue with request
 			return $next($request, $response);
 		}
 
 		// MRX: check if hash is valid
-		$mrxs = $this->DB->fetchAll("SELECT x_ID FROM mrx WHERE x_hash = ?", array($hash));
+		$mrxs = $this->DB->fetchAll("SELECT x_ID, name FROM mrx WHERE x_hash = ?", array($hash));
 		if (count($mrxs) > 0) {
 			// set request attributes for later use
-			$request = $request->withAttribute('mrx_id', $mrxs[0]['x_ID']);
 			$request = $request->withAttribute('is_mrx', true);
+			$request = $request->withAttribute('mrx_id', $mrxs[0]['x_ID']);
+			$request = $request->withAttribute('mrx_name', $mrxs[0]['name']);
 
 			// continue with request
 			return $next($request, $response);

@@ -7,6 +7,7 @@ require 'vendor/autoload.php';
 require 'conf.php';
 
 require 'helpers/APIHelper.php';
+require 'helpers/LogHelper.php';
 
 require 'middleware/AddHeaders.php';
 require 'middleware/Authentication.php';
@@ -17,6 +18,8 @@ use Doctrine\DBAL\DriverManager;
 define('UPLOADED_IMAGE_FOLDER', 'uploaded_images/');
 
 $DB = DriverManager::getConnection($SQL_CREDENTIALS, new \Doctrine\DBAL\Configuration());
+
+$log = new LogHelper($DB);
 
 $app = new \Slim\App(['settings' => ['displayErrorDetails' => true]]);
 
@@ -44,7 +47,7 @@ $app->get('/station',function (Request $request, Response $response) use (&$DB) 
 });
 
 // images must be sent as body in data url format
-$app->post('/station/{id}/capture',function (Request $request, Response $response, $args) use (&$DB) {
+$app->post('/station/{id}/capture',function (Request $request, Response $response, $args) use (&$DB, &$log) {
 	if ($request->getAttribute('is_team') == false) {
 		return $response->withStatus(403)->withJson("Error: not sent by a team");
 	}
@@ -114,6 +117,9 @@ $app->post('/station/{id}/capture',function (Request $request, Response $respons
 	);
 
 	$DB->insert('r_team_station', $data);
+
+	$station = $DB->fetchAll("SELECT name FROM station WHERE s_ID = ?", array($stationId));
+	$log->station('Team '.$request->getAttribute('team_name').' hat die Station '.$station[0]['name'].' eingenommen', $DB->lastInsertId());
 
 	return $response->withJson($tags);
 });
@@ -331,7 +337,7 @@ $app->delete('/riddle/{id}',function (Request $request, Response $response, $arg
 	}
 });
 
-$app->post('/riddle/{id}/unlock',function (Request $request, Response $response, $args) use (&$DB) {
+$app->post('/riddle/{id}/unlock',function (Request $request, Response $response, $args) use (&$DB, &$log) {
 	if ($request->getAttribute('is_team') == false) {
 		return $response->withStatus(403)->withJson("Error: not sent by a team");
 	}
@@ -349,6 +355,7 @@ $app->post('/riddle/{id}/unlock',function (Request $request, Response $response,
 
 	try {
 		$DB->insert('r_team_riddle', $data);
+		$log->riddle('Team '.$request->getAttribute('team_name').' hat ein Rätsel entsperrt', $DB->lastInsertId());
 		return $response->withJson("success");
 	} catch (Doctrine\DBAL\Exception\UniqueConstraintViolationException $e) {
 		return $response->withStatus(403)->withJson("Already unlocked");
