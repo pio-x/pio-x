@@ -18,15 +18,20 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode'])
     })
     //TEAMS
     .controller('teamCtrl', function($scope, apiService){
-        apiService.get('/team').then(function(articlesResponse) {
-            $scope.groups = articlesResponse.data;
-        });
-        $scope.updateTeam = function(arrCode) {
-            apiService.put('/team', arrCode);
+        $scope.getTeams = function() {
+            apiService.get('/team').then(function(articlesResponse) {
+                $scope.groups = articlesResponse.data;
+            });
+        };
+        $scope.getTeams();
+        $scope.updateTeam = function(data) {
+            apiService.put('/team', data)
+                .then(function(){
+                    $scope.getTeams();
+                });
         };
         $scope.deleteTeam = function(id) {
-            //TODO delete noch nicht in API vorhanden
-            //TODO baue Bestätigung ein für Löschung
+            //TODO delete noch nicht in API vorhanden, wird es vorerst auch nicht geben
             //apiService.delete('/team', id);
         };
         $scope.newTeam = {
@@ -36,7 +41,10 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode'])
             score: ""
         };
         $scope.addNewTeam = function(data) {
-            //TODO Save new team
+            apiService.post('/team', data)
+                .then(function(){
+                    $scope.getTeams();
+                });
         };
     })
     //mapCtrl
@@ -50,16 +58,23 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode'])
     })
     //STATIONS
     .controller('stationCtrl', function($scope, apiService){
-        apiService.get('/station').then(function(articlesResponse) {
-            $scope.stations = articlesResponse.data;
-        });
-        $scope.updateStation = function(arrCode) {
-            apiService.put('/station', arrCode);
+        $scope.getStations = function() {
+            apiService.get('/station').then(function(articlesResponse) {
+                $scope.stations = articlesResponse.data;
+            });
+        };
+        $scope.getStations();
+        $scope.updateStation = function(data) {
+            apiService.put('/station', data)
+                .then(function(){
+                    $scope.getStations();
+                });
         };
         $scope.deleteStation = function(id) {
-            //TODO delete noch nicht in API vorhanden
-            //TODO baue Bestätigung ein für Löschung
-            //apiService.delete('/station', id);
+            apiService.delete('/station' + id)
+                .then(function(){
+                    $scope.getStations();
+                });
         };
     })
     //PASSCODES
@@ -79,30 +94,41 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode'])
         $scope.addNewCode = function() {
             apiService.post('/passcode', $scope.newCode)
                 .then(function(){
-                    $scope.getCodes()
+                    $scope.getCodes();
                 });
         };
         $scope.deleteCode = function(id) {
-            //TODO delete noch nicht in API vorhanden
-            //TODO baue Bestätigung ein für Löschung
-            //apiService.delete('/passcode', id);
+            apiService.delete('/passcode' + id)
+                .then(function(){
+                    $scope.getCodes();
+                });
         };
-        $scope.updateCode = function(arrCode) {
-            apiService.put('/passcode', arrCode);
+        $scope.updateCode = function(data) {
+            apiService.put('/passcode', data)
+                .then(function(){
+                    $scope.getCodes();
+                });
         };
     })
     //NOTIFICATIONS
     .controller('notificationCtrl', function($scope, apiService){
-        apiService.get('/notification').then(function(articlesResponse) {
-            $scope.notifications = articlesResponse.data;
-        });
-        $scope.updateNotification = function(arrCode) {
-            apiService.put('/notification', arrCode);
+        $scope.getNotifications = function() {
+            apiService.get('/notification').then(function(articlesResponse) {
+                $scope.notifications = articlesResponse.data;
+            });
+        };
+        $scope.getNotifications();
+        $scope.updateNotification = function(data) {
+            apiService.put('/notification', data)
+                .then(function(){
+                    $scope.getNotifications();
+                });
         };
         $scope.deleteNotification = function(id) {
-            //TODO delete noch nicht in API vorhanden
-            //TODO baue Bestätigung ein für Löschung
-            //apiService.delete('/notificaiton', id);
+            apiService.delete('/notification' + id)
+                .then(function(){
+                    $scope.getNotifications();
+                });
         };
     })
     //RIDDLES
@@ -125,19 +151,19 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode'])
         $scope.addNewRiddle = function() {
             apiService.post('/riddle', $scope.newRiddle)
                 .then(function(){
-                    $scope.getRiddles()
+                    $scope.getRiddles();
                 });
         };
         $scope.deleteRiddle = function(id) {
             apiService.delete('/riddle/' + id)
                 .then(function(){
-                    $scope.getRiddles()
+                    $scope.getRiddles();
                 });
         };
         $scope.updateRiddle = function(arrCode) {
             apiService.put('/riddle', arrCode)
                 .then(function(){
-                    $scope.getRiddles()
+                    $scope.getRiddles();
                 });
         };
     })
