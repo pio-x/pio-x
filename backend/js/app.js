@@ -137,10 +137,27 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode'])
             });
         };
         $scope.getNotifications();
+        $scope.newNotification = {};
+        $scope.emptyNewNotification = function() {
+            $scope.newNotification = {
+                title: "",
+                text: "",
+                timestamp: "",
+                t_ID: ""
+            };
+        };
+        $scope.emptyNewNotification();
         $scope.updateNotification = function(data) {
             apiService.put('/notification', data)
                 .then(function(){
                     $scope.getNotifications();
+                });
+        };
+        $scope.addNewNotification = function(data) {
+            apiService.post('/notification', data)
+                .then(function(){
+                    $scope.getNotifications();
+                    $scope.emptyNewNotification();
                 });
         };
         $scope.deleteNotification = function(id) {
