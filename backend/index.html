@@ -134,8 +134,8 @@
 								<td>{{ msg.text }}</td>
 								<td>{{ msg.timestamp | date: 'yyyy' }}</td>
 								<td>{{ msg.t_ID }}</td>
-								<td><button ng-click="updateNotification(msg.s_ID, msg)" class="btn btn-default">&#128190;</button></td>
-								<td><button ng-click="deleteNotification(msg.s_ID)" class="btn btn-default" ng-confirm-click="ACHTUNG: Willst Du diese Nachricht wirklich löschen?">&#9003;</button></td>
+								<td><button ng-click="updateNotification(msg.n_ID, msg)" class="btn btn-default">&#128190;</button></td>
+								<td><button ng-click="deleteNotification(msg.n_ID)" class="btn btn-default" ng-confirm-click="ACHTUNG: Willst Du diese Nachricht wirklich löschen?">&#9003;</button></td>
 							</tr>
 						<tr>
 							<td>NEU</td>

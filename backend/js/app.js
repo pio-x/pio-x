@@ -166,7 +166,7 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode'])
                 });
         };
         $scope.deleteNotification = function(id) {
-            apiService.delete('/notification' + id)
+            apiService.delete('/notification/' + id)
                 .then(function(){
                     $scope.getNotifications();
                 });

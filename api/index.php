@@ -194,6 +194,26 @@ $app->get('/team/{id}', function (Request $request, Response $response, $args) u
 	}
 });
 
+$app->post('/team',function (Request $request, Response $response) use (&$DB) {
+	if ($request->getAttribute('is_admin') == false) {
+		return $response->withStatus(403)->withJson("Error: not sent by an admin");
+	}
+
+	$body = json_decode($request->getBody(), true);
+	$data = array('name' => $body['name'],
+				'color' => $body['color']);
+
+	if (isset($body['hash']) && $body['hash']) {
+		$data['hash'] = $body['hash'];
+	} else {
+		$data['hash'] = md5(time() . $body['name'] . 'PIOX' . rand());
+	}
+
+	$DB->insert('team', $data);
+
+	return $response->withJson("success");
+});
+
 
 // MISTER X
 $app->get('/mrx', function (Request $request, Response $response) use (&$DB) {
@@ -351,6 +371,38 @@ $app->get('/notification', function (Request $request, Response $response) use (
 		}
 	}
 	return $response->withJson($notifications, 200, JSON_NUMERIC_CHECK);
+});
+
+$app->post('/notification',function (Request $request, Response $response) use (&$DB) {
+	if ($request->getAttribute('is_admin') == false) {
+		return $response->withStatus(403)->withJson("Error: not sent by an admin");
+	}
+
+	$body = json_decode($request->getBody(), true);
+	$data = array('title' => $body['title'],
+				'text' => $body['text']);
+
+	if (isset($body['t_ID']) && $body['t_ID']) {
+		$data['t_ID'] = $body['t_ID'];
+	}
+
+	$DB->insert('notification', $data);
+
+	return $response->withJson("success");
+});
+
+$app->delete('/notification/{id}',function (Request $request, Response $response, $args) use (&$DB) {
+	if ($request->getAttribute('is_admin') == false) {
+		return $response->withStatus(403)->withJson("Error: not sent by an admin");
+	}
+
+	$deleted = $DB->delete('notification', array('n_ID' => $args['id']));
+
+	if ($deleted) {
+		return $response->withJson("success");
+	} else {
+		return $response->withStatus(404);
+	}
 });
 
 
