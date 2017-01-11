@@ -11,22 +11,44 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content>
 
   <ion-card *ngFor="let riddle of riddles">
 
     <ion-card-header>
+      Rätsel {{riddle.r_ID}}
+      <ion-note>
+        <span *ngIf="riddle.state == 'SOLVED'" color="secondary">
+          <ion-icon name="checkmark-circle"></ion-icon> Gelöst
+        </span>
+        <span *ngIf="riddle.pos_lat && (!riddle.state || riddle.state == 'LOCKED')">
+          <ion-icon name="lock"></ion-icon> Gesperrt
+        </span>
+      </ion-note>
+    </ion-card-header>
+
+    <ion-card-content>
       <span *ngIf="riddle.question">
         {{riddle.question}}
       </span>
       <span *ngIf="!riddle.question">
-        <i>Frage versteckt</i>
+        <i>Frage versteckt. Das Rätsel kann nur vor Ort entsperrt werden.</i>
       </span>
-    </ion-card-header>
-
-    <ion-card-content>
-      {{riddle.points}} Punkte
     </ion-card-content>
+
+    <ion-row>
+      <ion-col>
+
+      </ion-col>
+      <ion-col>
+
+      </ion-col>
+      <ion-col right text-right>
+        <ion-note>
+          {{riddle.points}} Punkte
+        </ion-note>
+      </ion-col>
+    </ion-row>
 
   </ion-card>
 

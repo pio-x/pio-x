@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 
-import { NavController } from 'ionic-angular';
 import {Riddle} from "../../interfaces/riddle";
 import {RiddleService} from "../../services/riddle.service";
 
