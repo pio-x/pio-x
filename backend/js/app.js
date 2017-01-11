@@ -236,4 +236,13 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode'])
             localStorage.setItem('hash', '');
             $scope.checkLogin();
         };
+    })
+    //TEAMS
+    .controller('teamPickerCtrl', function($scope, apiService){
+        $scope.getTeams = function() {
+            apiService.get('/team').then(function(articlesResponse) {
+                $scope.groups = articlesResponse.data;
+            });
+        };
+        $scope.getTeams();
     });

@@ -90,13 +90,13 @@
 						</tr>
 						<tr ng-repeat="station in stations">
 								<td>{{ station.s_ID }}</td>
-								<td><input type="text" class="form-control" value="{{ station.name }}" /></td>
-								<td><input type="text" class="form-control" value="{{ station.description }}" /></td>
-								<td><input type="text" class="form-control" value="{{ station.pos_lat }}" /></td>
-								<td><input type="text" class="form-control" value="{{ station.pos_long }}" /></td>
-								<td><input type="text" class="form-control" value="{{ station.captured_timestamp | date: 'HH:mm dd.MM.yyyy' }}" /></td>
-								<td><input type="text" class="form-control" value="{{ station.team }}" /></td>
-								<td style="background: {{ station.color }}"><input type="color" placeholder="Stationsfarbe" value="{{ group.color }}" /></td>
+								<td><input type="text" class="form-control" value="{{ station.name }}" ng-model="station.name"/></td>
+								<td><input type="text" class="form-control" value="{{ station.description }}" ng-model="station.description"/></td>
+								<td><input type="text" class="form-control" value="{{ station.pos_lat }}" ng-model="station.pos_lat"/></td>
+								<td><input type="text" class="form-control" value="{{ station.pos_long }}" ng-model="station.pos_long"/></td>
+								<td><input type="text" class="form-control" value="{{ station.captured_timestamp | date: 'HH:mm dd.MM.yyyy' }}" ng-model="station.captured_timestamp"/></td>
+								<td><input type="text" class="form-control" value="{{ station.team }}" ng-model="station.team"/></td>
+								<td style="background: {{ station.color }}"><input type="color" placeholder="Stationsfarbe" value="{{ station.color }}" ng-model="station.color"/></td>
 								<td><button ng-click="updateStation(station.s_ID, station)" class="btn btn-default">&#128190;</button></td>
 								<td><button ng-click="deleteStation(station.s_ID)" class="btn btn-default" ng-confirm-click="ACHTUNG: Willst Du diese Station wirklich löschen?">&#9003;</button></td>
 						</tr>
@@ -162,11 +162,11 @@
 								<td></td>
 							</tr>
 							<tr ng-repeat="code in passcodes">
-								<td><input type="text" class="form-control"/ value="{{ code.p_ID }}" ng-model="code.p_ID"></td>
-								<td><input type="text" class="form-control"/ value="{{ code.code }}" ng-model="code.code"></td>
-								<td><input type="text" class="form-control"/ value="{{ code.points }}" ng-model="code.points"></td>
-								<td><input type="text" class="form-control"/ value="{{ code.used }}" ng-model="code.used"></td>
-								<td><input type="text" class="form-control"/ value="{{ code.mrx_ID }}" ng-model="code.mrx_ID"></td>
+								<td><input type="text" class="form-control" value="{{ code.p_ID }}" ng-model="code.p_ID"/></td>
+								<td><input type="text" class="form-control" value="{{ code.code }}" ng-model="code.code"/></td>
+								<td><input type="text" class="form-control" value="{{ code.points }}" ng-model="code.points"/></td>
+								<td><input type="text" class="form-control" value="{{ code.used }}" ng-model="code.used"/></td>
+								<td><input type="text" class="form-control" value="{{ code.mrx_ID }}" ng-model="code.mrx_ID"/></td>
 								<td><button ng-click="updateCode(code.p_ID, code)" class="btn btn-default">&#128190;</button></td>
 								<td><button ng-click="deleteCode(code.p_ID)" class="btn btn-default">&#9003;</button></td>
 							</tr>
@@ -198,14 +198,14 @@
 								<td></td>
 							</tr>
 							<tr ng-repeat="riddle in riddles">
-								<td><input type="text" class="form-control"/ value="{{ riddle.r_ID }}" ng-model="riddle.r_ID"></td>
-								<td><input type="text" class="form-control"/ value="{{ riddle.pos_lat }}" ng-model="riddle.pos_lat"></td>
-								<td><input type="text" class="form-control"/ value="{{ riddle.pos_long }}" ng-model="riddle.pos_long"></td>
-								<td><input type="text" class="form-control"/ value="{{ riddle.question }}" ng-model="riddle.question"></td>
-								<td><input type="text" class="form-control"/ value="{{ riddle.dep_ID }}" ng-model="riddle.dep_ID"></td>
-								<td><input type="text" class="form-control"/ value="{{ riddle.answer }}" ng-model="riddle.answer"></td>
-								<td><input type="text" class="form-control"/ value="{{ riddle.type }}" ng-model="riddle.type"></td>
-								<td><input type="text" class="form-control"/ value="{{ riddle.points }}" ng-model="riddle.points"></td>
+								<td><input type="text" class="form-control" value="{{ riddle.r_ID }}" ng-model="riddle.r_ID"/></td>
+								<td><input type="text" class="form-control" value="{{ riddle.pos_lat }}" ng-model="riddle.pos_lat"/></td>
+								<td><input type="text" class="form-control" value="{{ riddle.pos_long }}" ng-model="riddle.pos_long"/></td>
+								<td><input type="text" class="form-control" value="{{ riddle.question }}" ng-model="riddle.question"/></td>
+								<td><input type="text" class="form-control" value="{{ riddle.dep_ID }}" ng-model="riddle.dep_ID"/></td>
+								<td><input type="text" class="form-control" value="{{ riddle.answer }}" ng-model="riddle.answer"/></td>
+								<td><input type="text" class="form-control" value="{{ riddle.type }}" ng-model="riddle.type"/></td>
+								<td><input type="text" class="form-control" value="{{ riddle.points }}" ng-model="riddle.points"/></td>
 								<td><button ng-click="updateRiddle(riddle.r_ID, riddle)" class="btn btn-default">&#128190;</button></td>
 								<td><button ng-click="deleteRiddle(riddle.r_ID)" class="btn btn-default" ng-confirm-click="ACHTUNG: Willst du das Rätsel wirklich löschen?">&#9003;</button></td>
 							</tr>
@@ -247,7 +247,7 @@
 							</td>
 						</tr>
 						<tr ng-repeat="group in groups | filter:search">
-							<td>{{ group.t_ID }}</td>
+							<td>&#128100; {{ group.t_ID }}</td>
 							<td>{{ group.name }}</td>
 							<td>{{ group.hash }}</td>
 							<td>
@@ -256,7 +256,7 @@
 							<td></td>
 						</tr>
 						<tr ng-repeat="mrx in mrxs | filter:search">
-							<td>{{ mrx.x_ID }}</td>
+							<td>&#128373; {{ mrx.x_ID }}</td>
 							<td>{{ mrx.name }}</td>
 							<td>{{ mrx.x_hash }}</td>
 							<td>
@@ -265,6 +265,7 @@
 							<td></td>
 						</tr>
 					</table>
+					Test Team Picker: <team-picker/>
 				</div>
 			</div>
 		</div>
@@ -280,6 +281,7 @@
 	<script src="js/vendor/qrcode.js"></script>
 	<script src="js/vendor/angular-qrcode.js"></script>
 	<script src="js/directives/ngConfirmClick.js"></script>
+	<script src="js/directives/ngTeamPicker.js"></script>
 </body>
 
 </html>
