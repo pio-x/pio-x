@@ -1,4 +1,5 @@
 var backendApp = angular.module('backendApp', ['monospaced.qrcode'])
+    //QR CODES
     .controller('QRCtrl', function($scope, apiService){
         apiService.get('/team').then(function(articlesResponse) {
             $scope.groups = articlesResponse.data;
@@ -15,6 +16,7 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode'])
             $scope.qrUrl.link = 'https://app.pio-x.ch/login.html?' + type +'=' + id + '&hash=' + hash;
         };
     })
+    //TEAMS
     .controller('teamCtrl', function($scope, apiService){
         apiService.get('/team').then(function(articlesResponse) {
             $scope.groups = articlesResponse.data;
@@ -22,7 +24,13 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode'])
         $scope.updateTeam = function(arrCode) {
             apiService.put('/team', arrCode);
         };
+        $scope.deleteTeam = function(id) {
+            //TODO delete noch nicht in API vorhanden
+            //TODO baue Bestätigung ein für Löschung
+            //apiService.delete('/team', id);
+        };
     })
+    //mapCtrl
     .controller('mapCtrl', function($scope, apiService){
         apiService.get('/team').then(function(articlesResponse) {
             $scope.groups = articlesResponse.data;
@@ -31,6 +39,7 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode'])
             //TODO zeige Team auf Karte an
         };
     })
+    //STATIONS
     .controller('stationCtrl', function($scope, apiService){
         apiService.get('/station').then(function(articlesResponse) {
             $scope.stations = articlesResponse.data;
@@ -38,7 +47,13 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode'])
         $scope.updateStation = function(arrCode) {
             apiService.put('/station', arrCode);
         };
+        $scope.deleteStation = function(id) {
+            //TODO delete noch nicht in API vorhanden
+            //TODO baue Bestätigung ein für Löschung
+            //apiService.delete('/station', id);
+        };
     })
+    //PASSCODES
     .controller('passcodeCtrl', function($scope, apiService){
         $scope.getCodes = function() {
             apiService.get('/passcode').then(function(articlesResponse) {
@@ -58,12 +73,14 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode'])
         };
         $scope.deleteCode = function(id) {
             //TODO delete noch nicht in API vorhanden
+            //TODO baue Bestätigung ein für Löschung
             //apiService.delete('/passcode', id);
         };
         $scope.updateCode = function(arrCode) {
             apiService.put('/passcode', arrCode);
         };
     })
+    //NOTIFICATIONS
     .controller('notificationCtrl', function($scope, apiService){
         apiService.get('/notification').then(function(articlesResponse) {
             $scope.notifications = articlesResponse.data;
@@ -71,7 +88,13 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode'])
         $scope.updateNotification = function(arrCode) {
             apiService.put('/notification', arrCode);
         };
+        $scope.deleteNotification = function(id) {
+            //TODO delete noch nicht in API vorhanden
+            //TODO baue Bestätigung ein für Löschung
+            //apiService.delete('/notificaiton', id);
+        };
     })
+    //RIDDLES
     .controller('riddleCtrl', function($scope, apiService){
         $scope.getRiddles = function() {
             apiService.get('/riddle').then(function(articlesResponse) {
@@ -94,12 +117,14 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode'])
         };
         $scope.deleteRiddle = function(id) {
             //TODO delete noch nicht in API vorhanden
+            //TODO baue Bestätigung ein für Löschung
             //apiService.delete('/riddle', id);
         };
         $scope.updateRiddle = function(arrCode) {
             apiService.put('/riddle', arrCode);
         };
     })
+    //MAIN
     .controller('mainCtrl', function($scope, apiService){
         $scope.loggedIn = false;
         $scope.showLogin = false;
