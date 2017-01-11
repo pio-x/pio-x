@@ -224,10 +224,10 @@
 				<div role="tabpanel" class="tab-pane" id="qrcodes" ng-controller="QRCtrl">
 					<h1>QR codes</h1>
 					<p>Welchen Code möchtest du anzeigen?
-					<input type="text" ng-model="search" class="form-control"> <span ng-show="search">[> {{search}} <]</span></p>
+					<input type="text" ng-model="search" class="form-control"></p>
 					<table><tr>
 						<td>
-							<h3>{{search ? 'Gefilterte' : 'Alle'}} QR Codes</h3><!-- TODO Filter auf groups und mrxs anwenden -->
+							<h3>{{search ? 'Gefilterte' : 'Alle'}} QR Codes</h3>
 							<table class="table table-striped">
 								<tr>
 									<td>ID</td>
@@ -242,7 +242,7 @@
 										</div>
 									</td>
 								</tr>
-								<tr ng-repeat="group in groups">
+								<tr ng-repeat="group in groups | filter:search">
 									<td>{{ group.t_ID }}</td>
 									<td>{{ group.name }}</td>
 									<td>{{ group.hash }}</td>
@@ -250,7 +250,7 @@
 										<a href="#" ng-click="showQR(group.t_ID, group.name, group.hash, 'team')">QR Code</a>
 									</td>
 								</tr>
-								<tr ng-repeat="mrx in mrxs">
+								<tr ng-repeat="mrx in mrxs | filter:search">
 									<td>{{ mrx.x_ID }}</td>
 									<td>{{ mrx.name }}</td>
 									<td>{{ mrx.x_hash }}</td>
