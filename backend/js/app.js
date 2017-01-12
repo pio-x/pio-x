@@ -34,16 +34,21 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode'])
             //TODO delete noch nicht in API vorhanden, wird es vorerst auch nicht geben
             //apiService.delete('/team', id);
         };
-        $scope.newTeam = {
-            name: "",
-            hash: "",
-            color: "",
-            score: ""
+        $scope.newTeam = {};
+        $scope.emptyNewTeam = function() {
+            $scope.newTeam = {
+                name: "",
+                hash: "",
+                color: "",
+                score: ""
+            };
         };
+        $scope.emptyNewTeam();
         $scope.addNewTeam = function(data) {
             apiService.post('/team', data)
                 .then(function(){
                     $scope.getTeams();
+                    $scope.emptyNewTeam();
                 });
         };
     })
