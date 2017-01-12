@@ -25,10 +25,11 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode'])
         };
         $scope.getTeams();
         $scope.updateTeam = function(data) {
-            apiService.put('/team', data)
+            /*apiService.put('/team', data)
                 .then(function(){
                     $scope.getTeams();
-                });
+                });*/
+            //Update in der API nicht vorhanden, gibt es ev. noch, braucht es aber vorerst nicht
         };
         $scope.deleteTeam = function(id) {
             //TODO delete noch nicht in API vorhanden, wird es vorerst auch nicht geben

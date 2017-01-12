@@ -69,7 +69,9 @@
 							<td><input type="text" class="form-control" ng-model="newTeam.score"/></td>
 							<td><input type="text" class="form-control" ng-model="newTeam.hash"/></td>
 							<td><input type="color" placeholder="Teamfarbe"  ng-model="newTeam.color"/></td>
-							<td colspan="2"><button ng-click="addNewTeam(newTeam)" class="btn btn-default" ng-if="newTeam.name">&#128190;</button></td>
+							<td colspan="2">
+								<button ng-click="addNewTeam(newTeam)" class="btn btn-default" ng-disabled="!newTeam.name">&#128190; Erstellen</button>
+							</td>
 						</tr>
 					</table>
 				</div>
@@ -109,7 +111,7 @@
 							<td><input type="text" class="form-control" ng-model="newStation.captured_timestamp"/></td>
 							<td><input type="text" class="form-control" ng-model="newStation.team"/></td>
 							<td>Neutral</td>
-							<td colspan="2"><button ng-click="addNewStation(newStation)" class="btn btn-default" ng-if="newStation.name">&#128190;</button></td>
+							<td colspan="2"><button ng-click="addNewStation(newStation)" class="btn btn-default" ng-disabled="!newStation.name">&#128190;</button></td>
 						</tr>
 					</table>
 				</div>
@@ -143,7 +145,7 @@
 							<td><input type="text" class="form-control" ng-model="newNotification.text"/></td>
 							<td><input type="text" class="form-control" ng-model="newNotification.timestamp"/></td>
 							<td><input type="text" class="form-control" ng-model="newNotification.t_ID"/></td>
-							<td colspan="2"><button ng-click="addNewNotification(newNotification)" class="btn btn-default" ng-if="newNotification.title">&#128190;</button></td>
+							<td colspan="2"><button ng-click="addNewNotification(newNotification)" class="btn btn-default" ng-disabled="!newNotification.title">&#128190;</button></td>
 						</tr>
 						</table>
 					</div>
@@ -176,7 +178,7 @@
 								<td><input type="text" ng-model="newCode.points" class="form-control"/></td>
 								<td><input type="text" ng-model="newCode.used" class="form-control"/></td>
 								<td><input type="text" ng-model="newCode.mrx_ID" class="form-control"/></td>
-								<td colspan="2"><button ng-click="addNewCode(newCode)" class="btn btn-default" ng-if="newCode.code">&#128190; Erstellen</button></td>
+								<td colspan="2"><button ng-click="addNewCode(newCode)" class="btn btn-default" ng-disabled="!newCode.code">&#128190; Erstellen</button></td>
 							</tr>
 						</table>
 					</div>
