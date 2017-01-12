@@ -60,8 +60,8 @@
 								<td><input type="text" class="form-control" value="{{ group.score }}" /></td>
 								<td><input type="text" class="form-control" value="{{ group.hash }}" /></td>
 								<td style="background: {{ group.color }}"><input type="color" placeholder="Teamfarbe" value="{{ group.color }}" /></td>
-								<td><button ng-click="updateTeam(group)" class="btn btn-default">&#128190;</button></td>
-								<td><button ng-click="deleteTeam(group.t_ID)" class="btn btn-default">&#9003;</button></td>
+								<td><button ng-click="updateTeam(group)" class="btn btn-default" disabled>&#128190;</button></td>
+								<td><button ng-click="deleteTeam(group.t_ID)" class="btn btn-default" disabled>&#9003;</button></td>
 						</tr>
 						<tr>
 							<td>NEU</td>
@@ -111,7 +111,7 @@
 							<td><input type="text" class="form-control" ng-model="newStation.captured_timestamp"/></td>
 							<td><input type="text" class="form-control" ng-model="newStation.team"/></td>
 							<td>Neutral</td>
-							<td colspan="2"><button ng-click="addNewStation(newStation)" class="btn btn-default" ng-disabled="!newStation.name">&#128190;</button></td>
+							<td colspan="2"><button ng-click="addNewStation(newStation)" class="btn btn-default" ng-disabled="!newStation.name">&#128190; Erstellen</button></td>
 						</tr>
 					</table>
 				</div>
@@ -145,7 +145,7 @@
 							<td><input type="text" class="form-control" ng-model="newNotification.text"/></td>
 							<td><input type="text" class="form-control" ng-model="newNotification.timestamp"/></td>
 							<td><input type="text" class="form-control" ng-model="newNotification.t_ID"/></td>
-							<td colspan="2"><button ng-click="addNewNotification(newNotification)" class="btn btn-default" ng-disabled="!newNotification.title">&#128190;</button></td>
+							<td colspan="2"><button ng-click="addNewNotification(newNotification)" class="btn btn-default" ng-disabled="!newNotification.title">&#128190; Erstellen</button></td>
 						</tr>
 						</table>
 					</div>
@@ -224,7 +224,7 @@
 									</select>
 								</td>
 								<td><input type="text" ng-model="newRiddle.points" class="form-control"/></td>
-								<td colspan="2"><button ng-click="addNewRiddle()" class="btn btn-default">&#128190; Erstellen</button></td>
+								<td colspan="2"><button ng-click="addNewRiddle(newRiddle)" class="btn btn-default" ng-disabled="!newRiddle.question">&#128190; Erstellen</button></td>
 							</tr>
 						</table>
 					</div>

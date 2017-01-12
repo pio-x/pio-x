@@ -199,8 +199,8 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode'])
             };
         };
         $scope.emptyNewRiddle();
-        $scope.addNewRiddle = function() {
-            apiService.post('/riddle', $scope.newRiddle)
+        $scope.addNewRiddle = function(data) {
+            apiService.post('/riddle', data)
                 .then(function(){
                     $scope.getRiddles();
                     $scope.emptyNewRiddle();
