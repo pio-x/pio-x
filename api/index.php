@@ -124,9 +124,10 @@ $app->post('/station/{id}/capture',function (Request $request, Response $respons
 	);
 
 	$DB->insert('r_team_station', $data);
+	$insertId = $DB->lastInsertId();
 
-	$station = $DB->fetchAll("SELECT name FROM station WHERE s_ID = ?", array($stationId));
-	$log->station('Team '.$request->getAttribute('team_name').' hat die Station '.$station[0]['name'].' eingenommen', $DB->lastInsertId());
+	$station = $DB->fetchAssoc("SELECT name FROM station WHERE s_ID = ?", array($stationId));
+	$log->station('Team '.$request->getAttribute('team_name').' hat die Station '.$station['name'].' eingenommen', $insertId);
 
 	return $response->withJson($tags);
 });
@@ -194,14 +195,14 @@ $app->get('/team', function (Request $request, Response $response) use (&$DB) {
 
 $app->get('/team/{id}', function (Request $request, Response $response, $args) use (&$DB) {
 	$teamId = $args['id'];
-	$team = $DB->fetchAll("SELECT * FROM team WHERE t_ID = ?", array($teamId));
+	$team = $DB->fetchAssoc("SELECT * FROM team WHERE t_ID = ?", array($teamId));
 	if ($request->getAttribute('is_admin') == false) {
 		// do not send hashes to teams/mrx
 		$team = APIHelper::removeAttribute($team, 'hash');
 	}
 
-	if(sizeof($team) > 0) {
-		return $response->withJson($team[0], 200, JSON_NUMERIC_CHECK);
+	if($team) {
+		return $response->withJson($team, 200, JSON_NUMERIC_CHECK);
 	} else {
 		return $response->withStatus(404)->withJson("team not found");
 	}
