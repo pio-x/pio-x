@@ -489,9 +489,27 @@ $app->delete('/passcode/{id}', function (Request $request, Response $response, $
 	} else {
 		return $response->withStatus(404);
 	}
-
 });
 
+// LOG
+$app->get('/log', function (Request $request, Response $response) use (&$DB) {
+	$logs = $DB->fetchAll("SELECT * FROM log ORDER BY timestamp DESC");
+
+	$logs_with_img = [];
+	foreach ($logs as $log) {
+		$img = '';
+		switch ($log['type']) {
+			case 'STATION':
+				$result = $DB->fetchAssoc("SELECT img_ID FROM r_team_station WHERE rts_ID = ?", array($log['FK_ID']));
+				$img = $result['img_ID'];
+				break;
+		}
+		$log['image'] = $img;
+		$logs_with_img[] = $log;
+	}
+
+	return $response->withJson($logs_with_img, 200, JSON_NUMERIC_CHECK);
+});
 
 
 $app->get('/', function (Request $request, Response $response) {
