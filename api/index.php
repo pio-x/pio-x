@@ -497,11 +497,13 @@ $app->get('/log', function (Request $request, Response $response) use (&$DB) {
 
 	$logs_with_img = [];
 	foreach ($logs as $log) {
-		$img = '';
+		$img = null;
 		switch ($log['type']) {
 			case 'STATION':
 				$result = $DB->fetchAssoc("SELECT img_ID FROM r_team_station WHERE rts_ID = ?", array($log['FK_ID']));
-				$img = $result['img_ID'];
+				if (isset($result['img_ID'])) {
+					$img = $result['img_ID'];
+				}
 				break;
 		}
 		$log['image'] = $img;
