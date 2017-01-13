@@ -36,12 +36,19 @@ $app->add(new AddHeaders());
 // STATION
 $app->get('/station',function (Request $request, Response $response) use (&$DB) {
 	// stations with last capture info
-	$sql = "SELECT station.*, captures.captured_timestamp, captures.t_ID as team, captures.color FROM station
-		LEFT JOIN (
-			SELECT ts.s_ID, ts.t_ID, max(timestamp) as captured_timestamp, team.color FROM r_team_station ts
-			LEFT JOIN team ON team.t_ID = ts.t_ID
-			GROUP BY s_ID
-		) as captures ON captures.s_ID = station.s_ID";
+	$sql = "
+	SELECT s.*, ts2.t_id, t.color, ts2.timestamp FROM (
+		SELECT s_ID, MAX(timestamp) as timestamp FROM r_team_station GROUP BY s_ID
+	) as ts1 
+	INNER JOIN r_team_station as ts2 
+		ON ts1.s_ID = ts2.s_ID AND ts1.timestamp = ts2.timestamp
+	RIGHT JOIN station s 
+		ON s.s_ID = ts2.s_ID
+	LEFT JOIN team t 
+		ON t.t_ID = ts2.t_ID
+	ORDER BY s.s_ID
+";
+
 	$stations = $DB->fetchAll($sql);
 	return $response->withJson($stations, 200, JSON_NUMERIC_CHECK);
 });
