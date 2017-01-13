@@ -13,9 +13,13 @@ export class PioxApiService {
           // on live, use real api url
           return 'https://api.pio-x.ch';
       } else {
-          // on dev, use static files on localhost
-          //return 'http://localhost/projects/demianh/pio-x/api';
-          return '/api_dummy';
+          // of local_config.js was loaded, use that domain config
+          if (window['pioxApiDomain']) {
+            return window['pioxApiDomain'];
+          } else {
+            // use static files on localhost
+            return '/api_dummy';
+          }
       }
   }
 

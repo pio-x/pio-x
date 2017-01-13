@@ -13,6 +13,4 @@ composer.phar
 .composer/
 # PHP
 error_log
-/docs/administration/info_event.txt
-/docs/administration/info_event_v01.docx
-/docs/administration/info_event_v01.pdf
+/docs/administration/*
