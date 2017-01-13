@@ -37,7 +37,7 @@ $app->add(new AddHeaders());
 $app->get('/station',function (Request $request, Response $response) use (&$DB) {
 	// stations with last capture info
 	$sql = "
-	SELECT s.*, ts2.t_id, t.color, ts2.timestamp FROM (
+	SELECT s.*, ts2.t_id as team, t.color, ts2.timestamp as captured_timestamp FROM (
 		SELECT s_ID, MAX(timestamp) as timestamp FROM r_team_station GROUP BY s_ID
 	) as ts1 
 	INNER JOIN r_team_station as ts2 
