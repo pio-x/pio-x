@@ -1,6 +1,7 @@
 <?php
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
+use Doctrine\DBAL\DriverManager;
 
 
 require 'vendor/autoload.php';
@@ -13,7 +14,6 @@ require 'middleware/AddHeaders.php';
 require 'middleware/Authentication.php';
 require 'middleware/LogPosition.php';
 
-use Doctrine\DBAL\DriverManager;
 
 define('UPLOADED_IMAGE_FOLDER', 'uploaded_images/');
 
