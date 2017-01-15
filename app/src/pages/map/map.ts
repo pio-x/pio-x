@@ -94,15 +94,21 @@ export class MapPage {
     }
 
     stationsUpdated(stations: Array<Station>): void {
-        this.stations = stations;
+        if (JSON.stringify(this.stations) != JSON.stringify(stations)) {
+            this.stations = stations;
+        }
     }
 
     mrxsUpdated(mrxs: Array<Mrx>): void {
-        this.mrxs = mrxs;
+        if (JSON.stringify(this.mrxs) != JSON.stringify(mrxs)) {
+            this.mrxs = mrxs;
+        }
     }
 
     riddlesUpdated(riddles: Array<Riddle>): void {
-        this.riddles = riddles;
+        if (JSON.stringify(this.riddles) != JSON.stringify(riddles)) {
+            this.riddles = riddles;
+        }
     }
 
     getRiddleStateColor(state): string {
