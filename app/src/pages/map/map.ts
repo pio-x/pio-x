@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 
 import {ModalController} from 'ionic-angular';
 
@@ -14,7 +14,11 @@ import {Mrx} from "../../interfaces/mrx";
 import {RiddleService} from "../../services/riddle.service";
 import {Riddle} from "../../interfaces/riddle";
 
-declare var fontawesome:any;
+import { SebmGoogleMap } from 'angular2-google-maps/core/directives';
+import {RiddlesSolveModalPage} from "../riddles/riddlesSolveModal";
+
+declare var fontawesome: any;
+declare var google: any;
 
 @Component({
     selector: 'page-map',
@@ -34,6 +38,8 @@ export class MapPage {
     fa: any;
 
     userLocation: LatLngLocation;
+
+    @ViewChild('gmap') map: SebmGoogleMap;
 
     constructor(
         private stationService: StationService,
@@ -75,7 +81,16 @@ export class MapPage {
         modal.present();
     }
 
+    openSolveModal(riddleId) {
+        let riddleModal = this.modalCtrl.create(RiddlesSolveModalPage, { riddleId: riddleId });
+        riddleModal.present();
+    }
+
     updateMap() {
+        if (this.map) {
+            // attempt to fix map offset that happen sometimes
+            this.map.triggerResize();
+        }
         this.stationService.updateStations();
         this.teamService.updateTeams();
         this.mrxService.updateMrxs();
