@@ -33,6 +33,14 @@ export class RiddleService {
         .catch(this.handleError);
   }
 
+  public solveRiddle(riddleId, answer): Promise<any> {
+    let promise = this.pioxApi.post('/riddle/' + riddleId + '/solve', {'answer': answer});
+    promise.then((response) => {
+        this.updateRiddles();
+    });
+    return promise
+  }
+
   private handleError(error: any): Promise<any> {
 
     console.error('An error occurred', error); // for demo purposes only

@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Rätsel lösen
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <h3>Rästel {{riddleId}} lösen</h3>
+  <p>
+    {{riddles[riddleId].question}}
+  </p>
+
+  <span *ngIf="!answered">
+    <ion-item>
+      <ion-input type="text" [(ngModel)]="answer" placeholder="Antwort"></ion-input>
+    </ion-item>
+
+    <p>
+      <button ion-button full color="secondary" (click)="solveRiddle()" [disabled]="!answer">Lösen</button>
+      <button ion-button full color="danger" (click)="dismiss()">Abbrechen</button>
+    </p>
+  </span>
+  <span *ngIf="answered">
+    <div>
+      Deine Antwort: <b>{{answer}}</b>
+    </div>
+    <div *ngIf="response.solved">
+      <div class="riddle-solved">
+        <ion-icon name="happy" color="secondary"></ion-icon>
+        <h3>Richtig!</h3>
+        Deine Antwort war richtig!
+      </div>
+
+    </div>
+    <div *ngIf="!response.solved">
+      <div class="riddle-solved">
+        <ion-icon name="sad" color="danger"></ion-icon>
+        <h3>Falsch</h3>
+        {{response.message}}
+      </div>
+    </div>
+    <br>
+    <br>
+    <button ion-button full color="danger" (click)="dismiss()">Schliessen</button>
+  </span>
+
+
+</ion-content>
