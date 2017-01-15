@@ -100,5 +100,52 @@
       </sebm-google-map-info-window>
     </sebm-google-map-marker>
 
+
+    <!-- Riddles -->
+    <span *ngFor="let riddle of riddles">
+      <span *ngIf="riddle.pos_lat">
+
+        <!-- Riddle Radius -->
+        <sebm-google-map-circle
+                [latitude]="riddle.pos_lat"
+                [longitude]="riddle.pos_long"
+                [radius]="100"
+                [fillColor]="black"
+                [fillOpacity]="0.1"
+                [circleDraggable]="false"
+                [editable]="false"
+                [clickable]="false"
+        >
+        </sebm-google-map-circle>
+
+
+        <!-- Riddle Icons -->
+        <sebm-google-map-marker
+                [latitude]="riddle.pos_lat"
+                [longitude]="riddle.pos_long"
+                [iconUrl]="{
+                    path: fa.markers.QUESTION,
+                    scale: 0.5,
+                    anchor: {x: 20, y: -30},
+                    strokeWeight: 2,
+                    strokeColor: 'white',
+                    strokeOpacity: 1,
+                    fillColor: getRiddleStateColor(riddle.state),
+                    fillOpacity: 1
+                }"
+        >
+          <sebm-google-map-info-window [disableAutoPan]="true">
+            <h3>Rätsel {{riddle.r_ID}}</h3>
+            <div *ngIf="riddle.question">
+              {{riddle.question}}
+            </div>
+            <div *ngIf="!riddle.question">
+              <i>Frage versteckt. Das Rätsel kann nur vor Ort entsperrt werden.</i>
+            </div>
+
+          </sebm-google-map-info-window>
+        </sebm-google-map-marker>
+      </span>
+    </span>
   </sebm-google-map>
 </ion-content>

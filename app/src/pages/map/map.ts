@@ -11,7 +11,10 @@ import {Team} from "../../interfaces/team";
 import {CaptureModal} from "../capture/capture";
 import {MrxService} from "../../services/mrx.service";
 import {Mrx} from "../../interfaces/mrx";
+import {RiddleService} from "../../services/riddle.service";
+import {Riddle} from "../../interfaces/riddle";
 
+declare var fontawesome:any;
 
 @Component({
     selector: 'page-map',
@@ -27,6 +30,8 @@ export class MapPage {
     stations: Station[] = [];
     teams: { [id: number]: Team; } = { };
     mrxs: Mrx[];
+    riddles: Riddle[];
+    fa: any;
 
     userLocation: LatLngLocation;
 
@@ -35,6 +40,7 @@ export class MapPage {
         private teamService: TeamService,
         private locationService: LocationService,
         private mrxService: MrxService,
+        private riddleService: RiddleService,
         public modalCtrl: ModalController
     ) {
         this.updateMap();
@@ -53,6 +59,12 @@ export class MapPage {
         this.mrxService.mrxs.subscribe((mrxs: Mrx[]) => {
             this.mrxsUpdated(mrxs);
         });
+        this.riddleService.riddles.subscribe((riddles: Riddle[]) => {
+            this.riddlesUpdated(riddles);
+        });
+
+        // bind icons into local scope
+        this.fa = fontawesome;
     }
 
     openCaptureModal(station: Station) {
@@ -66,6 +78,8 @@ export class MapPage {
     updateMap() {
         this.stationService.updateStations();
         this.teamService.updateTeams();
+        this.mrxService.updateMrxs();
+        this.riddleService.updateRiddles();
     }
 
     userLocationUpdated(position) {
@@ -85,6 +99,21 @@ export class MapPage {
 
     mrxsUpdated(mrxs: Array<Mrx>): void {
         this.mrxs = mrxs;
+    }
+
+    riddlesUpdated(riddles: Array<Riddle>): void {
+        this.riddles = riddles;
+    }
+
+    getRiddleStateColor(state): string {
+        switch(state) {
+            case 'UNLOCKED':
+                return '#f4a142';
+            case 'SOLVED':
+                return '#009107';
+            default:
+                return "#aaa";
+        }
     }
 
 }
