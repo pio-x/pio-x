@@ -375,6 +375,86 @@ $app->post('/riddle/{id}/unlock',function (Request $request, Response $response,
 	}
 });
 
+$app->post('/riddle/{id}/solve',function (Request $request, Response $response, $args) use (&$DB, &$log) {
+	if ($request->getAttribute('is_team') == false) {
+		return $response->withStatus(403)->withJson("Error: not sent by a team");
+	}
+	$riddleId = $args['id'];
+	$teamId = $request->getAttribute('team_id');
+	$body = $request->getParsedBody();
+	$team_answer = $body['answer'];
+
+	function makeComparable($answer) {
+		// Antwort auf ein möglichst einheitliches Format bringen,
+		// damit nicht wegen Tippfehlern das Rätsel nicht gelöst werden kann.
+		// 1. alles ausser Zahlen und Buchstaben entfernen (auch Umlaute)
+		$answer = preg_replace("/[^A-Za-z0-9]/", '', $answer);
+		// 2. alles zu Kleinbuchstaben konvertieren
+		$answer = strtolower($answer);
+		return $answer;
+	}
+
+	$riddle = $DB->fetchAssoc("
+		SELECT r.*, tr.state FROM riddle r
+		LEFT JOIN r_team_riddle tr
+			ON tr.r_ID = r.r_ID
+		WHERE r.r_ID = ?
+			AND tr.t_ID = ?",
+		array($riddleId, $teamId));
+
+	// riddle does not exist
+	if (!$riddle) {
+		return $response->withStatus(404, "Riddle not found");
+	}
+	// it can only be solved once
+	// TODO: check for wrong riddle state
+	if ($riddle['state'] == 'SOLVED') {
+		return $response->withJson(["solved" => false, "message" => "Rätsel bereits gelöst"]);
+	}
+	// if there is a position, it must be unlocked first
+	if ($riddle['pos_lat'] && $riddle['state'] != 'UNLOCKED') {
+		return $response->withJson(["solved" => false, "message" => "Rätsel nicht entsperrt"]);
+	}
+	// dependant riddle must be solved first
+	if ($riddle['dep_ID']) {
+		$dep_riddle = $DB->fetchAssoc("
+			SELECT r.*, tr.state FROM riddle r
+			LEFT JOIN r_team_riddle tr
+				ON tr.r_ID = r.r_ID
+			WHERE r.r_ID = 2
+				AND tr.t_ID = 1 = ?",
+			array($riddleId, $teamId));
+		// TODO: check for wrong riddle state
+		if ($dep_riddle['state'] != 'SOLVED') {
+			return $response->withJson(["solved" => false, "message" => "Vorausgesetztes Rätsel muss zuerst gelöst werden"]);
+		}
+	}
+
+	$data = array(
+		'r_ID' => $riddleId,
+		't_ID'=> $teamId,
+		'img_ID' => 0
+	);
+
+	if (makeComparable($team_answer) == makeComparable($riddle['answer'])) {
+		// answer is correct
+		$updated = $DB->update('r_team_riddle', array('state' => 'SOLVED'), array('r_ID' => $riddleId, 't_ID' => $teamId));
+		if (!$updated) {
+			$data['state'] = 'SOLVED';
+			$DB->insert('r_team_riddle', $data);
+		}
+		$log->riddle('Team '.$request->getAttribute('team_name').' hat ein Rätsel richtig gelöst', $DB->lastInsertId());
+		return $response->withJson(["solved" => true, "message" => "Richtige Antwort!"]);
+	} else {
+		// answer is wrong
+		$data['state'] = 'WRONG';
+		// TODO: insert with wrong state
+		// ...
+		$log->riddle('Team '.$request->getAttribute('team_name').' hat ein Rätsel falsch gelöst', $DB->lastInsertId());
+		return $response->withJson(["solved" => false, "message" => "Deine Antwort ist falsch."]);
+	}
+});
+
 
 // NOTIFICATIONS
 $app->get('/notification', function (Request $request, Response $response) use (&$DB) {
