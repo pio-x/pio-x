@@ -239,9 +239,14 @@ $app->get('/mrx', function (Request $request, Response $response) use (&$DB) {
 	$data = [];
 	foreach ($mrxs as $mrx) {
 		// TODO: positionen bei teams nur mitschicken wenn sie sie sehen dürfen
-		$locations = $DB->fetchAll("SELECT * FROM mrx_position WHERE mrx_ID = ? ORDER BY timestamp desc", array($mrx['x_ID']));
-		$mrx['locations'] = $locations;
-		$data[] = $mrx;
+		// TODO: nur senden wenn noch nicht gefangen
+		$location = $DB->fetchAssoc("SELECT * FROM mrx_position WHERE mrx_ID = ? ORDER BY timestamp desc LIMIT 1", array($mrx['x_ID']));
+
+		// nur senden wenn location vorhanden
+		if (is_array($location)) {
+			$mrx = array_merge($mrx, $location);
+			$data[] = $mrx;
+		}
 	}
 	return $response->withJson($data, 200, JSON_NUMERIC_CHECK);
 });

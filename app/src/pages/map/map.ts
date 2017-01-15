@@ -9,6 +9,8 @@ import {LocationService} from "../../services/location.service";
 import {TeamService} from "../../services/team.service";
 import {Team} from "../../interfaces/team";
 import {CaptureModal} from "../capture/capture";
+import {MrxService} from "../../services/mrx.service";
+import {Mrx} from "../../interfaces/mrx";
 
 
 @Component({
@@ -24,6 +26,7 @@ export class MapPage {
 
     stations: Station[] = [];
     teams: { [id: number]: Team; } = { };
+    mrxs: Mrx[];
 
     userLocation: LatLngLocation;
 
@@ -31,6 +34,7 @@ export class MapPage {
         private stationService: StationService,
         private teamService: TeamService,
         private locationService: LocationService,
+        private mrxService: MrxService,
         public modalCtrl: ModalController
     ) {
         this.updateMap();
@@ -45,6 +49,9 @@ export class MapPage {
         });
         this.locationService.userLocation.subscribe((pos: LatLngLocation) => {
             this.userLocationUpdated(pos);
+        });
+        this.mrxService.mrxs.subscribe((mrxs: Mrx[]) => {
+            this.mrxsUpdated(mrxs);
         });
     }
 
@@ -74,6 +81,10 @@ export class MapPage {
 
     stationsUpdated(stations: Array<Station>): void {
         this.stations = stations;
+    }
+
+    mrxsUpdated(mrxs: Array<Mrx>): void {
+        this.mrxs = mrxs;
     }
 
 }

@@ -3,7 +3,6 @@ import { Injectable }    from '@angular/core';
 
 import { BehaviorSubject, Observable} from "rxjs";
 import { IntervalObservable} from "rxjs/observable/IntervalObservable";
-import 'rxjs/add/operator/toPromise';
 
 import { Team } from '../interfaces/team';
 import { PioxApiService } from './pioxApi.service';

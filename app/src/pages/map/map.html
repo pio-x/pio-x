@@ -76,23 +76,28 @@
             [iconUrl]="{
                 url: '/assets/bluecircle.png',
                 anchor: {x: 8, y: 8},
-                size: {width: 33, height: 32},
+                size: {width: 16, height: 16},
                 scaledSize: {width: 16, height: 16}
             }"
     >
     </sebm-google-map-marker>
 
-    <!-- mrx example -->
+    <!-- Mrx Icons -->
     <sebm-google-map-marker
-            [latitude]="47.500387"
-            [longitude]="8.709326"
+            *ngFor="let mrx of mrxs"
+            [latitude]="mrx.xpos_lat"
+            [longitude]="mrx.xpos_long"
             [iconUrl]="{
                 url: '/assets/mrx.png',
                 anchor: {x: 13, y: 15},
-                size: {width: 80, height: 90},
+                size: {width: 27, height: 30},
                 scaledSize: {width: 27, height: 30}
             }"
     >
+      <sebm-google-map-info-window [disableAutoPan]="true">
+        <h3>{{mrx.name}}</h3>
+        {{mrx.description}}
+      </sebm-google-map-info-window>
     </sebm-google-map-marker>
 
   </sebm-google-map>

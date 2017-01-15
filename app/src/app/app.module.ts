@@ -17,6 +17,7 @@ import {RiddleService} from "../services/riddle.service";
 import {StationService} from "../services/station.service";
 import {NotificationService} from "../services/notification.service";
 import {LocationService} from "../services/location.service";
+import {MrxService} from "../services/mrx.service";
 
 import { AgmCoreModule } from 'angular2-google-maps/core';
 
@@ -60,6 +61,8 @@ import { ImageUploadModule } from 'ng2-imageupload';
     StationService,
     LocationService,
     NotificationService,
-    PioxApiService]
+    PioxApiService,
+    MrxService
+  ]
 })
 export class AppModule {}
