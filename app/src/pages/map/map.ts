@@ -86,6 +86,10 @@ export class MapPage {
         riddleModal.present();
     }
 
+    ionViewDidEnter() {
+        this.updateMap();
+    }
+
     updateMap() {
         if (this.map) {
             // attempt to fix map offset that happen sometimes
