@@ -4,6 +4,7 @@ import {ViewController, NavParams, LoadingController} from 'ionic-angular';
 import {Station} from "../../interfaces/station";
 import {StationService} from "../../services/station.service";
 import {LocationService} from "../../services/location.service";
+import {ConfigService} from "../../services/config.service";
 
 import { ImageResult, ResizeOptions } from 'ng2-imageupload';
 
@@ -31,6 +32,7 @@ export class CaptureModal {
         private element: ElementRef,
         public viewCtrl: ViewController,
         public loadingCtrl: LoadingController,
+        private configService: ConfigService,
         private stationService: StationService,
         private locationService: LocationService
     ) {

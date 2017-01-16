@@ -598,6 +598,18 @@ $app->get('/log', function (Request $request, Response $response) use (&$DB) {
 	return $response->withJson($logs_with_img, 200, JSON_NUMERIC_CHECK);
 });
 
+// CONFIG
+$app->get('/config', function (Request $request, Response $response) use (&$DB) {
+	$result = $DB->fetchAll("SELECT * FROM config ORDER BY 'key' ASC");
+
+	$config = [];
+	foreach ($result as $item) {
+		$config[$item['key']] = $item['value'];
+	}
+
+	return $response->withJson($config, 200, JSON_NUMERIC_CHECK);
+});
+
 
 $app->get('/', function (Request $request, Response $response) {
 	echo "PIO-X";

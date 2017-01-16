@@ -26,8 +26,8 @@
   <br>
   <br>
   <p>
-    <button *ngIf="distance() <= 100" ion-button full color="secondary" (click)="captureStation()" [disabled]="!imageData">Einnehmen</button>
-    <button *ngIf="distance() > 100" ion-button full color="secondary" disabled>Zu weit weg</button>
+    <button *ngIf="distance() <= configService.getConfig().station_radius" ion-button full color="secondary" (click)="captureStation()" [disabled]="!imageData">Einnehmen</button>
+    <button *ngIf="distance() > configService.getConfig().station_radius" ion-button full color="secondary" disabled>Zu weit weg</button>
     <br>
     <button ion-button full color="danger" (click)="dismiss()">Abbrechen</button>
   </p>

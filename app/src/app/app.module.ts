@@ -19,6 +19,7 @@ import {StationService} from "../services/station.service";
 import {NotificationService} from "../services/notification.service";
 import {LocationService} from "../services/location.service";
 import {MrxService} from "../services/mrx.service";
+import {ConfigService} from "../services/config.service";
 
 import { AgmCoreModule } from 'angular2-google-maps/core';
 
@@ -65,7 +66,8 @@ import { ImageUploadModule } from 'ng2-imageupload';
     LocationService,
     NotificationService,
     PioxApiService,
-    MrxService
+    MrxService,
+    ConfigService
   ]
 })
 export class AppModule {}

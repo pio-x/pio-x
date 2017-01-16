@@ -16,6 +16,8 @@ import {Riddle} from "../../interfaces/riddle";
 
 import { SebmGoogleMap } from 'angular2-google-maps/core/directives';
 import {RiddlesSolveModalPage} from "../riddles/riddlesSolveModal";
+import {ConfigService} from "../../services/config.service";
+import {Config} from "../../interfaces/config";
 
 declare var fontawesome: any;
 declare var google: any;
@@ -35,6 +37,8 @@ export class MapPage {
     teams: { [id: number]: Team; } = { };
     mrxs: Mrx[];
     riddles: Riddle[];
+    config: Config;
+
     fa: any;
 
     userLocation: LatLngLocation;
@@ -42,6 +46,7 @@ export class MapPage {
     @ViewChild('gmap') map: SebmGoogleMap;
 
     constructor(
+        private configService: ConfigService,
         private stationService: StationService,
         private teamService: TeamService,
         private locationService: LocationService,
@@ -67,6 +72,9 @@ export class MapPage {
         });
         this.riddleService.riddles.subscribe((riddles: Riddle[]) => {
             this.riddlesUpdated(riddles);
+        });
+        this.configService.config.subscribe((config: Riddle[]) => {
+            this.configUpdated(config);
         });
 
         // bind icons into local scope
@@ -127,6 +135,12 @@ export class MapPage {
     riddlesUpdated(riddles: Array<Riddle>): void {
         if (JSON.stringify(this.riddles) != JSON.stringify(riddles)) {
             this.riddles = riddles;
+        }
+    }
+
+    configUpdated(config: Config): void {
+        if (JSON.stringify(this.config) != JSON.stringify(config)) {
+            this.config = config;
         }
     }
 

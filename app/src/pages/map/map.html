@@ -24,7 +24,7 @@
             *ngFor="let station of stations"
             [latitude]="station.pos_lat"
             [longitude]="station.pos_long"
-            [radius]="100"
+            [radius]="config.station_radius"
             [fillColor]="station.color"
             [fillOpacity]="0.1"
             [circleDraggable]="false"
@@ -110,7 +110,7 @@
         <sebm-google-map-circle
                 [latitude]="riddle.pos_lat"
                 [longitude]="riddle.pos_long"
-                [radius]="100"
+                [radius]="config.riddle_radius"
                 [fillColor]="black"
                 [fillOpacity]="0.1"
                 [circleDraggable]="false"
