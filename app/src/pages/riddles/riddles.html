@@ -14,44 +14,7 @@
 <ion-content>
 
   <ion-card *ngFor="let riddle of riddles">
-
-    <ion-card-header>
-      Rätsel {{riddle.r_ID}}
-      <ion-note>
-        <span *ngIf="riddle.state == 'SOLVED'" color="secondary">
-          <ion-icon name="checkmark-circle"></ion-icon> Gelöst
-        </span>
-        <span *ngIf="riddle.pos_lat && (!riddle.state || riddle.state == 'LOCKED')">
-          <ion-icon name="lock"></ion-icon> Gesperrt
-        </span>
-      </ion-note>
-    </ion-card-header>
-
-    <ion-card-content>
-      <span *ngIf="riddle.question">
-        {{riddle.question}}
-        <button ion-button color="light" full (click)="openSolveModal(riddle.r_ID)" *ngIf="riddle.state != 'SOLVED'">Lösen</button>
-      </span>
-      <span *ngIf="!riddle.question">
-        <i>Frage versteckt. Das Rätsel kann nur vor Ort entsperrt werden.</i>
-      </span>
-    </ion-card-content>
-
-    <ion-row>
-      <ion-col>
-        <ion-icon name="pin" *ngIf="riddle.pos_lat"></ion-icon>
-        <ion-icon name="fastforward" *ngIf="riddle.type == 'MULTI'"></ion-icon>
-      </ion-col>
-      <ion-col>
-
-      </ion-col>
-      <ion-col right text-right>
-        <ion-note>
-          {{riddle.points}} Punkte
-        </ion-note>
-      </ion-col>
-    </ion-row>
-
+    <page-riddle-detail [riddle]="riddle"></page-riddle-detail>
   </ion-card>
 
 </ion-content>

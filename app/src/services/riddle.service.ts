@@ -41,6 +41,14 @@ export class RiddleService {
     return promise
   }
 
+  public unlockRiddle(riddleId): Promise<any> {
+    let promise = this.pioxApi.post('/riddle/' + riddleId + '/unlock', []);
+    promise.then((response) => {
+        this.updateRiddles();
+    });
+    return promise
+  }
+
   private handleError(error: any): Promise<any> {
 
     console.error('An error occurred', error); // for demo purposes only

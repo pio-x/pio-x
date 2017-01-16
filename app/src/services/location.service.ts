@@ -67,7 +67,7 @@ export class LocationService {
     }
 
     getDistanceToUser(lat, lng) {
-        if (!this.userLocation) {
+        if (!this._userLocation.getValue()) {
             // if location is not available, return a huge number :P
             return Number.MAX_VALUE;
         }

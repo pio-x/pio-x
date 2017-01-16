@@ -259,7 +259,7 @@ $app->get('/riddle', function (Request $request, Response $response) use (&$DB) 
 		return $response->withJson($riddles, 200, JSON_NUMERIC_CHECK);
 	} else {
 		if ($request->getAttribute('is_team') == true) {
-			$riddles = $DB->fetchAll("SELECT r.*, tr.state FROM riddle r LEFT JOIN r_team_riddle tr ON r.r_ID = tr.r_ID AND tr.t_ID = ?", array($request->getAttribute('team_id')));
+			$riddles = $DB->fetchAll("SELECT r.*, tr.state, tr.solved_correct FROM riddle r LEFT JOIN r_team_riddle tr ON r.r_ID = tr.r_ID AND tr.t_ID = ?", array($request->getAttribute('team_id')));
 
 			// do not send answers to teams
 			$riddles = APIHelper::removeAttribute($riddles, 'answer');
@@ -367,8 +367,11 @@ $app->post('/riddle/{id}/unlock',function (Request $request, Response $response,
 	);
 
 	try {
-		$DB->insert('r_team_riddle', $data);
-		$log->riddle('Team '.$request->getAttribute('team_name').' hat ein Rätsel entsperrt', $DB->lastInsertId());
+		$updated = $DB->update('r_team_riddle', $data, array('r_ID' => $riddleId, 't_ID' => $teamId));
+		if (!$updated) {
+			$DB->insert('r_team_riddle', $data);
+		}
+		$log->riddle('Team '.$request->getAttribute('team_name').' hat ein Rätsel freigeschaltet', $DB->lastInsertId());
 		return $response->withJson("success");
 	} catch (Doctrine\DBAL\Exception\UniqueConstraintViolationException $e) {
 		return $response->withStatus(403)->withJson("Already unlocked");
@@ -398,16 +401,15 @@ $app->post('/riddle/{id}/solve',function (Request $request, Response $response, 
 		SELECT r.*, tr.state FROM riddle r
 		LEFT JOIN r_team_riddle tr
 			ON tr.r_ID = r.r_ID
-		WHERE r.r_ID = ?
-			AND tr.t_ID = ?",
-		array($riddleId, $teamId));
+			AND tr.t_ID = ?
+		WHERE r.r_ID = ?",
+		array($teamId, $riddleId));
 
 	// riddle does not exist
 	if (!$riddle) {
-		return $response->withStatus(404, "Riddle not found");
+		return $response->withJson(["solved" => false, "message" => "Rätsel nicht gefunden"]);
 	}
 	// it can only be solved once
-	// TODO: check for wrong riddle state
 	if ($riddle['state'] == 'SOLVED') {
 		return $response->withJson(["solved" => false, "message" => "Rätsel bereits gelöst"]);
 	}
@@ -421,16 +423,16 @@ $app->post('/riddle/{id}/solve',function (Request $request, Response $response, 
 			SELECT r.*, tr.state FROM riddle r
 			LEFT JOIN r_team_riddle tr
 				ON tr.r_ID = r.r_ID
-			WHERE r.r_ID = 2
-				AND tr.t_ID = 1 = ?",
-			array($riddleId, $teamId));
-		// TODO: check for wrong riddle state
+				AND tr.t_ID = ?
+			WHERE r.r_ID = ?",
+			array($teamId, $riddle['dep_ID']));
 		if ($dep_riddle['state'] != 'SOLVED') {
 			return $response->withJson(["solved" => false, "message" => "Vorausgesetztes Rätsel muss zuerst gelöst werden"]);
 		}
 	}
 
 	$data = array(
+		'state' => 'SOLVED',
 		'r_ID' => $riddleId,
 		't_ID'=> $teamId,
 		'img_ID' => 0
@@ -438,19 +440,21 @@ $app->post('/riddle/{id}/solve',function (Request $request, Response $response, 
 
 	if (makeComparable($team_answer) == makeComparable($riddle['answer'])) {
 		// answer is correct
-		$updated = $DB->update('r_team_riddle', array('state' => 'SOLVED'), array('r_ID' => $riddleId, 't_ID' => $teamId));
+		$data['solved_correct'] = 1;
+		$updated = $DB->update('r_team_riddle', $data, array('r_ID' => $riddleId, 't_ID' => $teamId));
 		if (!$updated) {
-			$data['state'] = 'SOLVED';
 			$DB->insert('r_team_riddle', $data);
 		}
-		$log->riddle('Team '.$request->getAttribute('team_name').' hat ein Rätsel richtig gelöst', $DB->lastInsertId());
+		$log->riddle('Team '.$request->getAttribute('team_name').' hat Rätsel '.$riddleId.' richtig gelöst', $DB->lastInsertId());
 		return $response->withJson(["solved" => true, "message" => "Richtige Antwort!"]);
 	} else {
 		// answer is wrong
-		$data['state'] = 'WRONG';
-		// TODO: insert with wrong state
-		// ...
-		$log->riddle('Team '.$request->getAttribute('team_name').' hat ein Rätsel falsch gelöst', $DB->lastInsertId());
+		$data['solved_correct'] = 0;
+		$updated = $DB->update('r_team_riddle', $data, array('r_ID' => $riddleId, 't_ID' => $teamId));
+		if (!$updated) {
+			$DB->insert('r_team_riddle', $data);
+		}
+		$log->riddle('Team '.$request->getAttribute('team_name').' hat Rätsel '.$riddleId.' falsch gelöst', $DB->lastInsertId());
 		return $response->withJson(["solved" => false, "message" => "Deine Antwort ist falsch."]);
 	}
 });

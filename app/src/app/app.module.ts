@@ -11,6 +11,7 @@ import {RiddlesPage} from "../pages/riddles/riddles";
 import {RulesPage} from "../pages/rules/rules";
 import {CaptureModal} from "../pages/capture/capture";
 import {RiddlesSolveModalPage} from "../pages/riddles/riddlesSolveModal";
+import {RiddleDetailPage} from "../pages/riddles/riddleDetail";
 
 import {PioxApiService} from "../services/pioxApi.service";
 import {TeamService} from "../services/team.service";
@@ -36,7 +37,8 @@ import { ImageUploadModule } from 'ng2-imageupload';
     TabsPage,
     NotificationDetailComponent,
     CaptureModal,
-    RiddlesSolveModalPage
+    RiddlesSolveModalPage,
+    RiddleDetailPage
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -55,7 +57,8 @@ import { ImageUploadModule } from 'ng2-imageupload';
     RulesPage,
     TabsPage,
     CaptureModal,
-    RiddlesSolveModalPage
+    RiddlesSolveModalPage,
+    RiddleDetailPage
   ],
   providers: [
     {provide: ErrorHandler, useClass: IonicErrorHandler}, 
