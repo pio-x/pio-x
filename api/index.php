@@ -371,7 +371,7 @@ $app->post('/riddle/{id}/unlock',function (Request $request, Response $response,
 		if (!$updated) {
 			$DB->insert('r_team_riddle', $data);
 		}
-		$log->riddle('Team '.$request->getAttribute('team_name').' hat ein Rätsel freigeschaltet', $DB->lastInsertId());
+		$log->riddle('Team '.$request->getAttribute('team_name').' hat ein Rätsel freigeschaltet', $riddleId);
 		return $response->withJson("success");
 	} catch (Doctrine\DBAL\Exception\UniqueConstraintViolationException $e) {
 		return $response->withStatus(403)->withJson("Already unlocked");
@@ -445,7 +445,7 @@ $app->post('/riddle/{id}/solve',function (Request $request, Response $response, 
 		if (!$updated) {
 			$DB->insert('r_team_riddle', $data);
 		}
-		$log->riddle('Team '.$request->getAttribute('team_name').' hat Rätsel '.$riddleId.' richtig gelöst', $DB->lastInsertId());
+		$log->riddle('Team '.$request->getAttribute('team_name').' hat Rätsel '.$riddleId.' richtig gelöst', $riddleId);
 		return $response->withJson(["solved" => true, "message" => "Richtige Antwort!"]);
 	} else {
 		// answer is wrong
@@ -454,7 +454,7 @@ $app->post('/riddle/{id}/solve',function (Request $request, Response $response, 
 		if (!$updated) {
 			$DB->insert('r_team_riddle', $data);
 		}
-		$log->riddle('Team '.$request->getAttribute('team_name').' hat Rätsel '.$riddleId.' falsch gelöst', $DB->lastInsertId());
+		$log->riddle('Team '.$request->getAttribute('team_name').' hat Rätsel '.$riddleId.' falsch gelöst', $riddleId);
 		return $response->withJson(["solved" => false, "message" => "Deine Antwort ist falsch."]);
 	}
 });
