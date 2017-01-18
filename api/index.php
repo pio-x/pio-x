@@ -9,6 +9,7 @@ require 'conf.php';
 
 require 'helpers/APIHelper.php';
 require 'helpers/LogHelper.php';
+require 'helpers/ScoreHelper.php';
 
 require 'middleware/AddHeaders.php';
 require 'middleware/Authentication.php';
@@ -20,6 +21,7 @@ define('UPLOADED_IMAGE_FOLDER', 'uploaded_images/');
 $DB = DriverManager::getConnection($SQL_CREDENTIALS, new \Doctrine\DBAL\Configuration());
 
 $log = new LogHelper($DB);
+$score = new ScoreHelper($DB);
 
 $app = new \Slim\App(['settings' => ['displayErrorDetails' => true]]);
 
@@ -37,15 +39,13 @@ $app->add(new AddHeaders());
 $app->get('/station',function (Request $request, Response $response) use (&$DB) {
 	// stations with last capture info
 	$sql = "
-	SELECT s.*, ts2.t_id as team, t.color, ts2.timestamp as captured_timestamp FROM (
+	SELECT s.*, ts2.t_id as team, ts2.timestamp as captured_timestamp FROM (
 		SELECT s_ID, MAX(timestamp) as timestamp FROM r_team_station GROUP BY s_ID
 	) as ts1 
 	INNER JOIN r_team_station as ts2 
 		ON ts1.s_ID = ts2.s_ID AND ts1.timestamp = ts2.timestamp
 	RIGHT JOIN station s 
 		ON s.s_ID = ts2.s_ID
-	LEFT JOIN team t 
-		ON t.t_ID = ts2.t_ID
 	ORDER BY s.s_ID
 ";
 
@@ -141,6 +141,7 @@ $app->post('/station',function (Request $request, Response $response) use (&$DB)
 
 	$data = array('pos_lat' => $body['pos_lat'],
 				'pos_long' => $body['pos_long'],
+				'points' => (isset($body['points']) ? intval($body['points']) : 0 ),
 				'name' => $body['name'],
 				'description' => $body['description']);
 
@@ -159,6 +160,7 @@ $app->put('/station/{id}',function (Request $request, Response $response, $args)
 
 	$data = array('pos_lat' => $body['pos_lat'],
 			'pos_long' => $body['pos_long'],
+			'points' => (isset($body['points']) ? intval($body['points']) : 0 ),
 			'name' => $body['name'],
 			'description' => $body['description']);
 
@@ -184,7 +186,13 @@ $app->delete('/station/{id}',function (Request $request, Response $response, $ar
 
 // TEAM
 $app->get('/team', function (Request $request, Response $response) use (&$DB) {
-	$teams = $DB->fetchAll("SELECT * FROM team");
+	$teams = $DB->fetchAll("
+		SELECT t.*, trp.score 
+			FROM team t
+		LEFT JOIN
+			(SELECT t_ID, SUM(points) as score from r_team_points GROUP BY t_ID) as trp
+			ON trp.t_ID = t.t_ID
+		");
 	if ($request->getAttribute('is_admin') == false) {
 		// do not send hashes to teams/mrx
 		$teams = APIHelper::removeAttribute($teams, 'hash');
@@ -240,6 +248,7 @@ $app->get('/mrx', function (Request $request, Response $response) use (&$DB) {
 	foreach ($mrxs as $mrx) {
 		// TODO: positionen bei teams nur mitschicken wenn sie sie sehen dürfen
 		// TODO: nur senden wenn noch nicht gefangen
+		// TODO: zusätzlich letzte 3 positionen schicken
 		$location = $DB->fetchAssoc("SELECT * FROM mrx_position WHERE mrx_ID = ? ORDER BY timestamp desc LIMIT 1", array($mrx['x_ID']));
 
 		// nur senden wenn location vorhanden
@@ -259,7 +268,7 @@ $app->get('/riddle', function (Request $request, Response $response) use (&$DB) 
 		return $response->withJson($riddles, 200, JSON_NUMERIC_CHECK);
 	} else {
 		if ($request->getAttribute('is_team') == true) {
-			$riddles = $DB->fetchAll("SELECT r.*, tr.state, tr.solved_correct FROM riddle r LEFT JOIN r_team_riddle tr ON r.r_ID = tr.r_ID AND tr.t_ID = ?", array($request->getAttribute('team_id')));
+			$riddles = $DB->fetchAll("SELECT r.*, tr.state FROM riddle r LEFT JOIN r_team_riddle tr ON r.r_ID = tr.r_ID AND tr.t_ID = ?", array($request->getAttribute('team_id')));
 
 			// do not send answers to teams
 			$riddles = APIHelper::removeAttribute($riddles, 'answer');
@@ -378,7 +387,7 @@ $app->post('/riddle/{id}/unlock',function (Request $request, Response $response,
 	}
 });
 
-$app->post('/riddle/{id}/solve',function (Request $request, Response $response, $args) use (&$DB, &$log) {
+$app->post('/riddle/{id}/solve',function (Request $request, Response $response, $args) use (&$DB, &$log, &$score) {
 	if ($request->getAttribute('is_team') == false) {
 		return $response->withStatus(403)->withJson("Error: not sent by a team");
 	}
@@ -440,20 +449,18 @@ $app->post('/riddle/{id}/solve',function (Request $request, Response $response, 
 
 	if (makeComparable($team_answer) == makeComparable($riddle['answer'])) {
 		// answer is correct
-		$data['solved_correct'] = 1;
 		$updated = $DB->update('r_team_riddle', $data, array('r_ID' => $riddleId, 't_ID' => $teamId));
 		if (!$updated) {
 			$DB->insert('r_team_riddle', $data);
 		}
+		// TODO: punkte geben
+		$score->riddle($teamId, $riddleId);
 		$log->riddle('Team '.$request->getAttribute('team_name').' hat Rätsel '.$riddleId.' richtig gelöst', $riddleId);
 		return $response->withJson(["solved" => true, "message" => "Richtige Antwort!"]);
 	} else {
 		// answer is wrong
-		$data['solved_correct'] = 0;
-		$updated = $DB->update('r_team_riddle', $data, array('r_ID' => $riddleId, 't_ID' => $teamId));
-		if (!$updated) {
-			$DB->insert('r_team_riddle', $data);
-		}
+		// TODO: punkte abziehen
+		$score->riddle($teamId, $riddleId, true);
 		$log->riddle('Team '.$request->getAttribute('team_name').' hat Rätsel '.$riddleId.' falsch gelöst', $riddleId);
 		return $response->withJson(["solved" => false, "message" => "Deine Antwort ist falsch."]);
 	}

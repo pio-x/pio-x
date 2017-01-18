@@ -1,6 +1,7 @@
 <?php
 
 class LogHelper {
+	/** @var \Doctrine\DBAL\Connection */
 	private $DB;
 
 	function __construct($db) {

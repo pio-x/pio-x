@@ -4,9 +4,11 @@ use Doctrine\DBAL\DriverManager;
 require 'vendor/autoload.php';
 require 'conf.php';
 
-define("POINTS", 5);
+require 'helpers/ScoreHelper.php';
 
 $DB = DriverManager::getConnection($SQL_CREDENTIALS, new \Doctrine\DBAL\Configuration());
+
+$score = new ScoreHelper($DB);
 
 function logdate() {
 	return '['.date('H:i:s').'] ';
@@ -23,8 +25,8 @@ $sql = "SELECT ts2.* FROM (
 $stations = $DB->fetchAll($sql);
 
 foreach ($stations as $station) {
-	echo logdate() .'Station '.$station['s_ID'].' owned by team '.$station['t_ID'].'. +'.POINTS.' points'.PHP_EOL;
-	$DB->executeQuery("UPDATE team set score = score+? where t_ID = ? LIMIT 1", array(POINTS, $station['t_ID']));
+	echo logdate() .'Station '.$station['s_ID'].' owned by team '.$station['t_ID'].PHP_EOL;
+	$score->station($station['t_ID'], $station['s_ID']);
 }
 
 echo logdate() .'Done.'.PHP_EOL;
