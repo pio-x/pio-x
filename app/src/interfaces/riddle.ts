@@ -4,6 +4,7 @@ export interface Riddle {
     r_ID: number;
     pos_lat: number;
     pos_long: number;
+    title: string;
     question: string;
     dep_ID: number;
     answer: string;
