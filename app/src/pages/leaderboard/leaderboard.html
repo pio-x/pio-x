@@ -14,7 +14,7 @@
 <ion-content>
   <ion-list no-border>
     <ion-item *ngFor="let team of teams">
-      <ion-icon name='people' item-left [ngStyle]='{"color": team.color}'></ion-icon>
+      <ion-icon name='people' item-left></ion-icon>
       <span *ngIf="team.t_ID == myteam"><b>{{team.name}}</b></span>
       <span *ngIf="team.t_ID != myteam">{{team.name}}</span>
       <ion-badge item-right>{{team.score}}</ion-badge>

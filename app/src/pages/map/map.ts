@@ -147,11 +147,19 @@ export class MapPage {
     getRiddleStateColor(state): string {
         switch(state) {
             case 'UNLOCKED':
-                return '#f4a142';
-            case 'SOLVED':
                 return '#009107';
             default:
-                return "#aaa";
+                return "#F43828";
+        }
+    }
+
+    getStationColor(teamId): string {
+        if (!teamId) {
+            return '#444';
+        } else if (teamId == this.myTeam) {
+            return '#ffc300';
+        } else {
+            return '#000';
         }
     }
 

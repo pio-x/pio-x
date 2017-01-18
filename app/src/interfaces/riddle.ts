@@ -12,5 +12,4 @@ export interface Riddle {
     type: string;
     points: number;
     state: RiddleState;
-    solved_correct: number;
 }

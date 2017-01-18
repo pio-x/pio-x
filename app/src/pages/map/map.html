@@ -25,7 +25,7 @@
             [latitude]="station.pos_lat"
             [longitude]="station.pos_long"
             [radius]="config.station_radius"
-            [fillColor]="station.color"
+            [fillColor]="getStationColor(station.team)"
             [fillOpacity]="0.1"
             [circleDraggable]="false"
             [editable]="false"
@@ -40,9 +40,9 @@
             [longitude]="station.pos_long"
             [iconUrl]="{
                 path: 0,
-                fillColor: station.color,
-                fillOpacity: (station.team == myTeam ? 1 : 0),
-                strokeColor: (station.team == myTeam ? 'white' : station.color),
+                fillColor: getStationColor(station.team),
+                fillOpacity: (station.team == myTeam ? 0.5 : 0),
+                strokeColor: getStationColor(station.team),
                 strokeWeight: 3,
                 scale: 8
             }"
@@ -104,7 +104,7 @@
 
     <!-- Riddles -->
     <span *ngFor="let riddle of riddles">
-      <span *ngIf="riddle.pos_lat">
+      <span *ngIf="riddle.pos_lat && riddle.state != 'SOLVED'">
 
         <!-- Riddle Radius -->
         <sebm-google-map-circle
