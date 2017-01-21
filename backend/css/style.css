@@ -1,6 +1,6 @@
 .content {
 	width: 100%;
-	padding: 0 30px;
+	padding: 0 30px 30px 30px;
 }
 
 .actual-content {
@@ -15,7 +15,7 @@ footer {
 	position: fixed;
 	bottom: 0;
 	left: 0;
-	height: 40px;
+	height: 25px;
 	background: gray;
 	width: 100%;
 	text-align: center;
