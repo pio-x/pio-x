@@ -232,7 +232,11 @@
 								<td><input type="text" class="form-control" value="{{ riddle.question }}" ng-model="riddle.question"/></td>
 								<td><input type="text" class="form-control" value="{{ riddle.dep_ID }}" ng-model="riddle.dep_ID"/></td>
 								<td><input type="text" class="form-control" value="{{ riddle.answer }}" ng-model="riddle.answer"/></td>
-								<td><input type="text" class="form-control" value="{{ riddle.type }}" ng-model="riddle.type"/></td>
+								<td><select class="form-control" ng-model="riddle.type">
+										<option {{ riddle.type == 'MULTI' ? 'selected' }}>MULTI</option>
+										<option {{ riddle.type == 'SINGLE' ? 'selected' }}>SINGLE</option>
+									</select>
+								</td>
 								<td><input type="text" class="form-control" value="{{ riddle.points }}" ng-model="riddle.points"/></td>
 								<td><button ng-click="updateRiddle(riddle.r_ID, riddle)" class="btn btn-default">&#128190;</button></td>
 								<td><button ng-click="deleteRiddle(riddle.r_ID)" class="btn btn-default" ng-confirm-click="ACHTUNG: Willst du das Rätsel wirklich löschen?">&#9003;</button></td>
