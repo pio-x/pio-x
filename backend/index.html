@@ -193,7 +193,7 @@
 								<td><input type="text" class="form-control" value="{{ code.p_ID }}" ng-model="code.p_ID"/></td>
 								<td><input type="text" class="form-control" value="{{ code.code }}" ng-model="code.code"/></td>
 								<td><input type="text" class="form-control" value="{{ code.points }}" ng-model="code.points"/></td>
-								<td><input type="text" class="form-control" value="{{ code.used }}" ng-model="code.used"/></td>
+								<td>{{ code.used ? 'verbraucht' : 'neu' }}</td>
 								<td><input type="text" class="form-control" value="{{ code.mrx_ID }}" ng-model="code.mrx_ID"/></td>
 								<td><button ng-click="updateCode(code.p_ID, code)" class="btn btn-default">&#128190;</button></td>
 								<td><button ng-click="deleteCode(code.p_ID)" class="btn btn-default">&#9003;</button></td>
@@ -202,7 +202,7 @@
 								<td>NEU</td>
 								<td><input type="text" ng-model="newCode.code" class="form-control"/></td>
 								<td><input type="text" ng-model="newCode.points" class="form-control"/></td>
-								<td><input type="text" ng-model="newCode.used" class="form-control"/></td>
+								<td></td>
 								<td><input type="text" ng-model="newCode.mrx_ID" class="form-control"/></td>
 								<td colspan="2"><button ng-click="addNewCode(newCode)" class="btn btn-default" ng-disabled="!newCode.code">&#128190; Erstellen</button></td>
 							</tr>
@@ -259,7 +259,7 @@
 				<div role="tabpanel" class="tab-pane" id="qrcodes" ng-controller="QRCtrl">
 					<p>Welchen Code möchtest du anzeigen?
 					<input type="text" ng-model="search" class="form-control"></p>
-					<h3>{{search ? 'Gefilterte' : 'Alle'}} QR Codes</h3>
+					<h3>{{ search ? 'Gefilterte' : 'Alle' }} QR Codes</h3>
 					<table class="table table-striped">
 						<tr>
 							<td>ID</td>
