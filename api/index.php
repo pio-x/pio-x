@@ -8,6 +8,7 @@ require 'vendor/autoload.php';
 require 'conf.php';
 
 require 'helpers/APIHelper.php';
+require 'helpers/ConfigHelper.php';
 require 'helpers/LogHelper.php';
 require 'helpers/ScoreHelper.php';
 
@@ -22,6 +23,8 @@ $DB = DriverManager::getConnection($SQL_CREDENTIALS, new \Doctrine\DBAL\Configur
 
 $log = new LogHelper($DB);
 $score = new ScoreHelper($DB);
+$configHelper = new ConfigHelper($DB);
+$config = $configHelper->getConfig();
 
 $app = new \Slim\App(['settings' => ['displayErrorDetails' => true]]);
 
@@ -36,7 +39,11 @@ $app->add(new Authentication($DB));
 $app->add(new AddHeaders());
 
 // STATION
-$app->get('/station',function (Request $request, Response $response) use (&$DB) {
+$app->get('/station',function (Request $request, Response $response) use (&$DB, $config) {
+	if (!$config['game_is_running']) {
+		return $response->withJson([]);
+	}
+
 	// stations with last capture info
 	$sql = "
 	SELECT s.*, ts2.t_id as team, ts2.timestamp as captured_timestamp FROM (
@@ -54,9 +61,13 @@ $app->get('/station',function (Request $request, Response $response) use (&$DB) 
 });
 
 // images must be sent as body in data url format
-$app->post('/station/{id}/capture',function (Request $request, Response $response, $args) use (&$DB, &$log) {
+$app->post('/station/{id}/capture',function (Request $request, Response $response, $args) use (&$DB, &$log, $config) {
 	if ($request->getAttribute('is_team') == false) {
 		return $response->withStatus(403)->withJson("Error: not sent by a team");
+	}
+
+	if (!$config['game_is_running']) {
+		return $response->withStatus(403)->withJson("Game is not running");
 	}
 
 	$body = (string) $request->getBody();
@@ -238,7 +249,11 @@ $app->post('/team',function (Request $request, Response $response) use (&$DB) {
 
 
 // MISTER X
-$app->get('/mrx', function (Request $request, Response $response) use (&$DB) {
+$app->get('/mrx', function (Request $request, Response $response) use (&$DB, $config) {
+	if (!$config['game_is_running']) {
+		return $response->withJson([]);
+	}
+
 	$mrxs = $DB->fetchAll("SELECT * FROM mrx");
 	if ($request->getAttribute('is_admin') == false) {
 		// do not send hashes to teams/mrx
@@ -262,7 +277,10 @@ $app->get('/mrx', function (Request $request, Response $response) use (&$DB) {
 
 
 // TOM RIDDLE
-$app->get('/riddle', function (Request $request, Response $response) use (&$DB) {
+$app->get('/riddle', function (Request $request, Response $response) use (&$DB, $config) {
+	if (!$config['game_is_running']) {
+		return $response->withJson([]);
+	}
 	if ($request->getAttribute('is_admin') == true) {
 		$riddles = $DB->fetchAll("SELECT * FROM riddle");
 		return $response->withJson($riddles, 200, JSON_NUMERIC_CHECK);
@@ -359,7 +377,10 @@ $app->delete('/riddle/{id}',function (Request $request, Response $response, $arg
 	}
 });
 
-$app->post('/riddle/{id}/unlock',function (Request $request, Response $response, $args) use (&$DB, &$log) {
+$app->post('/riddle/{id}/unlock',function (Request $request, Response $response, $args) use (&$DB, &$log, $config) {
+	if (!$config['game_is_running']) {
+		return $response->withStatus(403)->withJson("Error: Game is not running");
+	}
 	if ($request->getAttribute('is_team') == false) {
 		return $response->withStatus(403)->withJson("Error: not sent by a team");
 	}
@@ -387,7 +408,10 @@ $app->post('/riddle/{id}/unlock',function (Request $request, Response $response,
 	}
 });
 
-$app->post('/riddle/{id}/solve',function (Request $request, Response $response, $args) use (&$DB, &$log, &$score) {
+$app->post('/riddle/{id}/solve',function (Request $request, Response $response, $args) use (&$DB, &$log, &$score, $config) {
+	if (!$config['game_is_running']) {
+		return $response->withStatus(403)->withJson("Error: Game is not running");
+	}
 	if ($request->getAttribute('is_team') == false) {
 		return $response->withStatus(403)->withJson("Error: not sent by a team");
 	}
@@ -610,14 +634,7 @@ $app->get('/log', function (Request $request, Response $response) use (&$DB) {
 });
 
 // CONFIG
-$app->get('/config', function (Request $request, Response $response) use (&$DB) {
-	$result = $DB->fetchAll("SELECT * FROM config ORDER BY 'key' ASC");
-
-	$config = [];
-	foreach ($result as $item) {
-		$config[$item['key']] = $item['value'];
-	}
-
+$app->get('/config', function (Request $request, Response $response) use (&$DB, $config) {
 	return $response->withJson($config, 200, JSON_NUMERIC_CHECK);
 });
 
