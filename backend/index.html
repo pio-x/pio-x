@@ -164,7 +164,11 @@
 							<td><input type="text" class="form-control" ng-model="newNotification.title"/></td>
 							<td><input type="text" class="form-control" ng-model="newNotification.text"/></td>
 							<td>automatisch</td>
-							<td><input type="text" class="form-control" ng-model="newNotification.t_ID"/></td>
+							<td>
+								<select ng-model="newNotification.t_ID" class="form-control" ng-controller="teamPickerCtrl">
+										<option ng-repeat="team in groups" value="{{ team.t_ID }}">{{ team.name }}</option>
+									</select>
+							</td>
 							<td colspan="2"><button ng-click="addNewNotification(newNotification)" class="btn btn-default" ng-disabled="!newNotification.title">&#128190; Erstellen</button></td>
 						</tr>
 						</table>
