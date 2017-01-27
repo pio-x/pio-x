@@ -32,6 +32,7 @@
 				<li role="presentation"><a href="#passcodes" aria-controls="passcodes" role="tab" data-toggle="tab">Passcodes</a></li>
 				<li role="presentation"><a href="#raetsel" aria-controls="raetsel" role="tab" data-toggle="tab">Rätsel</a></li>
 				<li role="presentation"><a href="#qrcodes" aria-controls="qrcodes" role="tab" data-toggle="tab">QR codes</a></li>
+				<li role="presentation"><a href="#config" aria-controls="config" role="tab" data-toggle="tab">Config</a></li>
 			</ul>
 			<div class="tab-content actual-content">
 				<!-- MAP -->
@@ -297,12 +298,25 @@
 					</table>
 					Test Team Picker: <team-picker/>
 				</div>
+				<!-- Config -->
+				<div role="tabpanel" class="tab-pane" id="config" ng-controller="configCtrl">
+
+					<table class="table table-striped">
+						<tr ng-repeat="(key,conf) in config">
+								<td>{{key}}</td>
+								<td><input type="text" class="form-control" ng-model="conf" id="{{key}}"/></td>
+								<td><button ng-click="saveConfig(key,conf)" class="btn btn-default">Speichern</button></td>
+
+						</tr>
+					</table>
+
+				</div>
 			</div>
 		</div>
 
 
 		<footer>
-			<p>Mit Herzblut programmiert von Fäger, Giga, Folleta, Chäfer und Punkt</p>
+			<p>Mit Herzblut programmiert von Fäger, Giga, Folletta, Chäfer und Punkt</p>
 		</footer>
 	</div>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>

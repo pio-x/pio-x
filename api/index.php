@@ -636,6 +636,17 @@ $app->get('/log', function (Request $request, Response $response) use (&$DB) {
 $app->get('/config', function (Request $request, Response $response) use (&$DB, $config) {
 	return $response->withJson($config, 200, JSON_NUMERIC_CHECK);
 });
+$app->put('/config', function (Request $request, Response $response, $args) use (&$DB) {
+	if ($request->getAttribute('is_admin') == false) {
+		return $response->withStatus(403)->withJson("Error: not sent by admin");
+	}
+
+	$body = json_decode($request->getBody(), true);
+
+	$DB->executeUpdate("UPDATE `config` set `value`=? where `key`=?", array($body['value'], $body['key']));
+
+	return $response->withJson("success");
+});
 
 
 $app->get('/', function (Request $request, Response $response) {
