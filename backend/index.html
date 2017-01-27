@@ -50,7 +50,6 @@
 								<td>Name</td>
 								<td>Score</td>
 								<td>Hash</td>
-								<td>Farbe</td>
 								<td></td>
 								<td></td>
 						</tr>
@@ -59,7 +58,6 @@
 								<td><input type="text" class="form-control" value="{{ group.name }}" /></td>
 								<td><input type="text" class="form-control" value="{{ group.score }}" /></td>
 								<td><input type="text" class="form-control" value="{{ group.hash }}" /></td>
-								<td style="background: {{ group.color }}"><input type="color" placeholder="Teamfarbe" value="{{ group.color }}" /></td>
 								<td><button ng-click="updateTeam(group)" class="btn btn-default" disabled>&#128190;</button></td>
 								<td><button ng-click="deleteTeam(group.t_ID)" class="btn btn-default" disabled>&#9003;</button></td>
 						</tr>
@@ -68,7 +66,6 @@
 							<td><input type="text" class="form-control" ng-model="newTeam.name"/></td>
 							<td><input type="text" class="form-control" ng-model="newTeam.score"/></td>
 							<td><input type="text" class="form-control" ng-model="newTeam.hash"/></td>
-							<td><input type="color" placeholder="Teamfarbe"  ng-model="newTeam.color"/></td>
 							<td colspan="2">
 								<button ng-click="addNewTeam(newTeam)" class="btn btn-default" ng-disabled="!newTeam.name">&#128190; Erstellen</button>
 							</td>
@@ -86,7 +83,6 @@
 								<td>Longitude</td>
 								<td>Letzte Einnahme</td>
 								<td>Team Besitz</td>
-								<td>Team Farbe</td>
 								<td></td>
 								<td></td>
 						</tr>
@@ -98,7 +94,6 @@
 								<td><input type="text" class="form-control" value="{{ station.pos_long }}" ng-model="station.pos_long"/></td>
 								<td><input type="text" class="form-control" value="{{ station.captured_timestamp | date: 'HH:mm dd.MM.yyyy' }}" ng-model="station.captured_timestamp"/></td>
 								<td><input type="text" class="form-control" value="{{ station.team }}" ng-model="station.team"/></td>
-								<td style="background: {{ station.color }}"><input type="color" placeholder="Stationsfarbe" value="{{ station.color }}" ng-model="station.color"/></td>
 								<td><button ng-click="updateStation(station.s_ID, station)" class="btn btn-default">&#128190;</button></td>
 								<td><button ng-click="deleteStation(station.s_ID)" class="btn btn-default" ng-confirm-click="ACHTUNG: Willst Du diese Station wirklich löschen?">&#9003;</button></td>
 						</tr>
@@ -110,7 +105,6 @@
 							<td><input type="text" class="form-control" ng-model="newStation.pos_long"/></td>
 							<td><input type="text" class="form-control" ng-model="newStation.captured_timestamp"/></td>
 							<td><input type="text" class="form-control" ng-model="newStation.team"/></td>
-							<td>Neutral</td>
 							<td colspan="2"><button ng-click="addNewStation(newStation)" class="btn btn-default" ng-disabled="!newStation.name">&#128190; Erstellen</button></td>
 						</tr>
 					</table>

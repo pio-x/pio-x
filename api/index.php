@@ -48,10 +48,10 @@ $app->get('/station',function (Request $request, Response $response) use (&$DB, 
 	$sql = "
 	SELECT s.*, ts2.t_id as team, ts2.timestamp as captured_timestamp FROM (
 		SELECT s_ID, MAX(timestamp) as timestamp FROM r_team_station GROUP BY s_ID
-	) as ts1 
-	INNER JOIN r_team_station as ts2 
+	) as ts1
+	INNER JOIN r_team_station as ts2
 		ON ts1.s_ID = ts2.s_ID AND ts1.timestamp = ts2.timestamp
-	RIGHT JOIN station s 
+	RIGHT JOIN station s
 		ON s.s_ID = ts2.s_ID
 	ORDER BY s.s_ID
 ";
@@ -198,7 +198,7 @@ $app->delete('/station/{id}',function (Request $request, Response $response, $ar
 // TEAM
 $app->get('/team', function (Request $request, Response $response) use (&$DB) {
 	$teams = $DB->fetchAll("
-		SELECT t.*, trp.score 
+		SELECT t.*, trp.score
 			FROM team t
 		LEFT JOIN
 			(SELECT t_ID, SUM(points) as score from r_team_points GROUP BY t_ID) as trp
@@ -233,8 +233,7 @@ $app->post('/team',function (Request $request, Response $response) use (&$DB) {
 	}
 
 	$body = json_decode($request->getBody(), true);
-	$data = array('name' => $body['name'],
-				'color' => $body['color']);
+	$data = array('name' => $body['name']);
 
 	if (isset($body['hash']) && $body['hash']) {
 		$data['hash'] = $body['hash'];
