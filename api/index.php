@@ -245,6 +245,17 @@ $app->post('/team',function (Request $request, Response $response) use (&$DB) {
 
 	return $response->withJson("success");
 });
+$app->put('/team/{id}', function (Request $request, Response $response, $args) use (&$DB, $config) {
+	if ($request->getAttribute('is_admin') == false) {
+		return $response->withStatus(403)->withJson("Error: not sent by admin");
+	}
+	$teamId = $args['id'];
+	$body = json_decode($request->getBody(), true);
+
+	$DB->update('team', array('name' => $body['name']), array('t_ID' => $teamId));
+
+	return $response->withJson("success");
+});
 
 
 // MISTER X

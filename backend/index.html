@@ -45,6 +45,8 @@
 				</div>
 				<!-- TEAMS -->
 				<div role="tabpanel" class="tab-pane" id="teams" ng-controller="teamCtrl">
+					<p>Suche:
+					<input type="text" ng-model="search" class="form-control"></p>
 					<table id="teamliste" class="table table-striped">
 						<tr>
 								<td>ID</td>
@@ -54,12 +56,12 @@
 								<td></td>
 								<td></td>
 						</tr>
-						<tr ng-repeat="group in groups">
+						<tr ng-repeat="group in groups | filter:search">
 								<td>{{ group.t_ID }}</td>
-								<td><input type="text" class="form-control" value="{{ group.name }}" /></td>
-								<td><input type="text" class="form-control" value="{{ group.score }}" /></td>
-								<td><input type="text" class="form-control" value="{{ group.hash }}" /></td>
-								<td><button ng-click="updateTeam(group)" class="btn btn-default" disabled>&#128190;</button></td>
+								<td><input type="text" class="form-control" value="{{ group.name }}" ng-model="group.name"/></td>
+								<td>{{ group.score }}</td>
+								<td>{{ group.hash }}</td>
+								<td><button ng-click="updateTeam(group, group.t_ID)" class="btn btn-default">&#128190;</button></td>
 								<td><button ng-click="deleteTeam(group.t_ID)" class="btn btn-default" disabled>&#9003;</button></td>
 						</tr>
 						<tr>
