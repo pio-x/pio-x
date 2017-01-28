@@ -21,6 +21,7 @@ import {NotificationService} from "../services/notification.service";
 import {LocationService} from "../services/location.service";
 import {MrxService} from "../services/mrx.service";
 import {ConfigService} from "../services/config.service";
+import {NavigationService} from "../services/navigation.service";
 
 import { AgmCoreModule } from 'angular2-google-maps/core';
 
@@ -61,7 +62,7 @@ import { ImageUploadModule } from 'ng2-imageupload';
     RiddleDetailPage
   ],
   providers: [
-    {provide: ErrorHandler, useClass: IonicErrorHandler}, 
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
     Storage,
     TeamService,
     RiddleService,
@@ -70,7 +71,8 @@ import { ImageUploadModule } from 'ng2-imageupload';
     NotificationService,
     PioxApiService,
     MrxService,
-    ConfigService
+    ConfigService,
+    NavigationService
   ]
 })
 export class AppModule {}

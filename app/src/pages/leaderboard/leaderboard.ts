@@ -2,8 +2,8 @@ import { Team } from '../../interfaces/team';
 
 import { TeamService } from '../../services/team.service';
 import { Component } from '@angular/core';
+import {NavigationService} from "../../services/navigation.service";
 
-import { NavController, ActionSheetController } from 'ionic-angular';
 
 @Component({
   selector: 'page-leaderboard',
@@ -14,7 +14,8 @@ export class LeaderboardPage {
   myteam: number = 0;
   myname: string = '';
 
-  constructor(public navCtrl: NavController, private teamService:TeamService, public actionSheetCtrl: ActionSheetController) {
+  constructor(private teamService:TeamService,
+              public navService: NavigationService) {
     this.myteam = parseInt(localStorage.getItem('team'));
     this.myname = decodeURIComponent(localStorage.getItem('player')).replace( /\+/g, ' ');
 
@@ -32,33 +33,8 @@ export class LeaderboardPage {
   updateLeaderboard(): void {
     this.teamService.updateTeams();
   }
-
   presentActionSheet() {
-    let actionSheet = this.actionSheetCtrl.create({
-        title: 'Optionen',
-        buttons: [
-            {
-                text: 'Cache löschen',
-                handler: () => {
-                    // according to stackoverflow this should force a reload from the server
-                    window.location.reload(true);
-                }
-            },
-            {
-                text: 'Abmelden',
-                handler: () => {
-                    window.location.href = 'login.html?logout=true';
-                }
-            },
-            {
-                text: 'Abbrechen',
-                role: 'cancel',
-                handler: () => {}
-            }
-        ]
-    });
-
-    actionSheet.present();
+    this.navService.presentActionSheet()
   }
 
 }

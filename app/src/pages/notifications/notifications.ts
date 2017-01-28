@@ -4,7 +4,7 @@ import { NotificationService } from '../../services/notification.service';
 
 import { Component } from '@angular/core';
 
-import { NavController } from 'ionic-angular';
+import {NavigationService} from "../../services/navigation.service";
 
 @Component({
   selector: 'page-notifications',
@@ -13,11 +13,15 @@ import { NavController } from 'ionic-angular';
 export class NotificationsPage {
   notifications:Notification[] = [];
 
-  constructor(public navCtrl: NavController, private notificationService:NotificationService) {
+  constructor(private notificationService:NotificationService,
+              public navService: NavigationService) {
     this.updateNotifications();
     notificationService.notifications.subscribe((notifications: Array<Notification>) => {
         this.notifications = notifications;
     });
+  }
+  presentActionSheet() {
+    this.navService.presentActionSheet()
   }
 
   updateNotifications(): void {

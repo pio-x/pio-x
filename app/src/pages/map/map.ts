@@ -18,6 +18,7 @@ import { SebmGoogleMap } from 'angular2-google-maps/core/directives';
 import {RiddlesSolveModalPage} from "../riddles/riddlesSolveModal";
 import {ConfigService} from "../../services/config.service";
 import {Config} from "../../interfaces/config";
+import {NavigationService} from "../../services/navigation.service";
 
 declare var fontawesome: any;
 declare var google: any;
@@ -52,7 +53,8 @@ export class MapPage {
         private locationService: LocationService,
         private mrxService: MrxService,
         private riddleService: RiddleService,
-        public modalCtrl: ModalController
+        public modalCtrl: ModalController,
+        public navService: NavigationService
     ) {
         this.updateMap();
 
@@ -76,11 +78,13 @@ export class MapPage {
         this.configService.config.subscribe((config: Riddle[]) => {
             this.configUpdated(config);
         });
-
         // bind icons into local scope
         this.fa = fontawesome;
     }
-
+    presentActionSheet() {
+      this.navService.presentActionSheet()
+    }
+    
     openCaptureModal(station: Station) {
         let modal = this.modalCtrl.create(CaptureModal, { station: station });
         modal.onDidDismiss(data => {
