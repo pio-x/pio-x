@@ -13,6 +13,37 @@ function getTeamData(){
     }
   });
 }
+function getStationData(map){
+  var url = 'http://127.0.0.1/pio-x/api/index.php/station?hash=admin';
+  $.ajax({
+    url: url,
+    dataType: 'json',
+    success: function(stations){
+      stations.forEach(function(station){
+        var position ={lat: station.pos_lat, lng: station.pos_long};
+        var marker = new google.maps.Marker({
+            position: position,
+            map: map,
+            title: station.name,
+            icon: {
+             path: 0,
+             strokeColor: '#000',
+             strokeWeight: 3,
+             scale: 8
+           }
+          });
+        marker.addListener('click', function() {
+          new google.maps.InfoWindow({
+            content: station.name
+          }).open(map, marker);
+        });
+      });
+    },
+    error: function(error, status, abc){
+      console.log(error, status, abc);
+    }
+  });
+}
 
 function processTeamData(teams){
   for(var i = 0; i < teams.length; i++){
@@ -32,4 +63,5 @@ function initMap() {
     position: winti,
     map: map
   });
+  getStationData(map);
 }
