@@ -3,8 +3,10 @@ import { Notification } from '../../interfaces/notification';
 import { NotificationService } from '../../services/notification.service';
 
 import { Component } from '@angular/core';
+import { GameStreamPage } from './game_stream';
 
 import {NavigationService} from "../../services/navigation.service";
+import {NotificationTabPage} from "./notification_tab";
 
 @Component({
   selector: 'page-notifications',
@@ -13,12 +15,12 @@ import {NavigationService} from "../../services/navigation.service";
 export class NotificationsPage {
   notifications:Notification[] = [];
 
+  gameFeedTab: any = GameStreamPage;
+  notificationsTab: any = NotificationTabPage;
+
   constructor(private notificationService:NotificationService,
               public navService: NavigationService) {
-    this.updateNotifications();
-    notificationService.notifications.subscribe((notifications: Array<Notification>) => {
-        this.notifications = notifications;
-    });
+
   }
   presentActionSheet() {
     this.navService.presentActionSheet()

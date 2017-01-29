@@ -1,3 +1,4 @@
+
 <ion-header>
   <ion-navbar>
     <ion-title>
@@ -12,16 +13,8 @@
 </ion-header>
 
 <ion-content>
-
-  <ion-card *ngFor="let notification of notifications">
-
-    <ion-card-header>
-      {{notification.title}}
-    </ion-card-header>
-
-    <ion-card-content>
-      {{notification.text}}
-    </ion-card-content>
-
-  </ion-card>
+  <ion-tabs>
+    <ion-tab [root]="notificationsTab" tabTitle="Nachrichten" tabIcon="megaphone"></ion-tab>
+    <ion-tab [root]="gameFeedTab" tabTitle="Stream" tabIcon="list"></ion-tab>
+  </ion-tabs>
 </ion-content>

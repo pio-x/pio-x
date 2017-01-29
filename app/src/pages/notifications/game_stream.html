@@ -1,0 +1,13 @@
+<ion-content>
+  <ion-card *ngFor="let log of logs">
+
+    <ion-card-header>
+      {{log.text}}
+    </ion-card-header>
+    <ion-card-content>
+      <img *ngIf="log.image" src="https://api.pio-x.ch/uploaded_images/{{ log.image }}.jpg" style="width: 150px">
+
+    </ion-card-content>
+
+  </ion-card>
+</ion-content>

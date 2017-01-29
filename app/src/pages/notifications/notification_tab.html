@@ -1,0 +1,14 @@
+<ion-content>
+
+  <ion-card *ngFor="let notification of notifications">
+
+    <ion-card-header>
+      {{notification.title}}
+    </ion-card-header>
+
+    <ion-card-content>
+      {{notification.text}}
+    </ion-card-content>
+
+  </ion-card>
+</ion-content>
