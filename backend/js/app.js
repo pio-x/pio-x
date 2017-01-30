@@ -121,6 +121,9 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap'])
                 $scope.logs = articlesResponse.data;
             });
         };
+        $scope.parseDate = function(date) {
+            return new Date(date);
+        };
         $scope.getLogs();
         $scope.updateLog = function(id, data) {
             apiService.put('/log/' + id, data)
