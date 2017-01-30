@@ -2,7 +2,6 @@
 .idea
 # NPM
 npm-debug.log
-node_modules
 # API
 api/vendor
 api/conf.php
