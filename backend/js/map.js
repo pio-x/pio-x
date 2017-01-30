@@ -14,7 +14,11 @@ function getTeamData(){
   });
 }
 function getStationData(map){
-  var url = 'http://127.0.0.1/pio-x/api/index.php/station?hash=admin';
+  var baseURL = 'https://api.pio-x.ch';
+  if(window.location.host == "localhost") {
+      baseURL = 'http://localhost' + window.location.pathname + '../api';
+  }
+  var url = baseURL + '/station?hash=admin';
   $.ajax({
     url: url,
     dataType: 'json',
