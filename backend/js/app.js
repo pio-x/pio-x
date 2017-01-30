@@ -1,4 +1,26 @@
-var backendApp = angular.module('backendApp', ['monospaced.qrcode'])
+var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap'])
+    //MAP
+    .controller('mapCtrl', function($scope, NgMap, apiService) {
+        NgMap.getMap().then(function(map) {
+            $scope.map = map;
+        });
+        apiService.get('/team').then(function(articlesResponse) {
+            $scope.groups = articlesResponse.data;
+        });
+        $scope.showTeamOnMap = function(id) {
+            //TODO zeige Team auf Karte an
+        };
+        $scope.getStations = function() {
+            apiService.get('/station').then(function(articlesResponse) {
+                $scope.stations = articlesResponse.data;
+            });
+        };
+        $scope.getStations();
+        $scope.showStationWindow = function(evt, id) {
+            $scope.station = $scope.stations[id];
+            $scope.map.showInfoWindow('stationWindow', this);
+        };
+    })
     //QR CODES
     .controller('QRCtrl', function($scope, apiService){
         apiService.get('/team').then(function(articlesResponse) {
@@ -50,15 +72,6 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode'])
                     $scope.getTeams();
                     $scope.emptyNewTeam();
                 });
-        };
-    })
-    //mapCtrl
-    .controller('mapCtrl', function($scope, apiService){
-        apiService.get('/team').then(function(articlesResponse) {
-            $scope.groups = articlesResponse.data;
-        });
-        $scope.showTeamOnMap = function(id) {
-            //TODO zeige Team auf Karte an
         };
     })
     //STATIONS
