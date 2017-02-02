@@ -16,10 +16,16 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap'])
             });
         };
         $scope.getStations();
-        $scope.showStationWindow = function(evt, id) {
-            $scope.station = $scope.stations[id];
-            $scope.map.showInfoWindow('stationWindow', this);
+        $scope.showTooltip = function(evt, id, obj) {
+            $scope.shown = obj[id];
+            $scope.map.showInfoWindow('infoWindow', this);
         };
+        $scope.getRiddles = function() {
+            apiService.get('/riddle').then(function(articlesResponse) {
+                $scope.riddles = articlesResponse.data;
+            });
+        };
+        $scope.getRiddles();
     })
     //QR CODES
     .controller('QRCtrl', function($scope, apiService){

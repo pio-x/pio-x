@@ -38,14 +38,21 @@
 				<div role="tabpanel" class="tab-pane active" id="karte" ng-controller="mapCtrl">
 					<div map-lazy-load="https://maps.google.com/maps/api/js?key=AIzaSyAjEW54VdlWZT07n90oTjvaLIl3q27ZL4Y">
 						<ng-map center="47.498934,8.728970" zoom="14" style="height: 600px">
-							<info-window id="stationWindow">
-								<div ng-non-bindable="">
-									<b>{{station.name}}</b>
+							<info-window id="infoWindow">
+								<div ng-non-bindable=""><!-- Für jeden Typ ein schönes Window designen -->
+									<b ng-if="shown.name">{{shown.name}}</b>
+									<b ng-if="shown.question">{{shown.question}}</b>
 								</div>
 							</info-window>
-							<marker position="[{{ station.pos_lat }},{{ station.pos_long }}]" on-click="showStationWindow($index)" ng-repeat="station in stations track by $index" icon="{
+							<marker position="[{{ station.pos_lat }},{{ station.pos_long }}]" on-click="showTooltip($index, stations)" ng-repeat="station in stations track by $index" icon="{
 								path: 0,
 								strokeColor: '#000',
+								strokeWeight: 3,
+								scale: 8 }">
+							</marker>
+							<marker position="[{{ riddle.pos_lat }},{{ riddle.pos_long }}]" on-click="showTooltip($index, riddles)" ng-repeat="riddle in riddles track by $index" icon="{
+								path: 0,
+								strokeColor: '#f00',
 								strokeWeight: 3,
 								scale: 8 }">
 							</marker>
