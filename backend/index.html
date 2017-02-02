@@ -18,8 +18,11 @@
 			<button ng-click="logout()" ng-if="loggedIn" class="btn btn-default">Logout</button>
 		</header>
 		<div class="content" ng-if="loggedIn == false && showLogin == true">
-				<input type="text" ng-model="hash" ng-keyup="$event.keyCode == 13 && login(hash)"/>
-				<button ng-click="login(hash)" class="btn btn-default">Login</button>
+			<div class="input-group">
+				<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i> Backend Hash:</span>
+				<input class="form-control" type="text" ng-model="hash" ng-keyup="$event.keyCode == 13 && login(hash)"/>
+			</div>
+			<button ng-click="login(hash)" class="btn btn-default">Login</button>
 		</div>
 		<div class="content" ng-if="loggedIn == true">
 			<ul class="nav nav-tabs" role="tablist">
