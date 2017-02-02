@@ -35,7 +35,9 @@
 			</ul>
 			<div class="tab-content actual-content">
 				<!-- MAP -->
-				<backend-map />
+				<div role="tabpanel" class="tab-pane active" id="karte" ng-controller="mapCtrl">
+					<backend-map />
+				</div>
 				<!-- TEAMS -->
 				<div role="tabpanel" class="tab-pane" id="teams" ng-controller="teamCtrl">
 					<p>Suche:
