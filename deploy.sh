@@ -34,5 +34,6 @@ export HOME=$PROJECT_DIR/api
 curl -sS https://getcomposer.org/installer | php
 php composer.phar install
 
+git status
 
 echo -e "\n ======= Installation Done ========\n"
