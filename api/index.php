@@ -273,12 +273,11 @@ $app->get('/mrx', function (Request $request, Response $response) use (&$DB, $co
 	foreach ($mrxs as $mrx) {
 		// TODO: positionen bei teams nur mitschicken wenn sie sie sehen dürfen
 		// TODO: nur senden wenn noch nicht gefangen
-		// TODO: zusätzlich letzte 3 positionen schicken
-		$location = $DB->fetchAssoc("SELECT * FROM mrx_position WHERE mrx_ID = ? ORDER BY timestamp desc LIMIT 1", array($mrx['x_ID']));
+		$locations = $DB->fetchAll("SELECT xpos_lat, xpos_long, timestamp, description FROM mrx_position WHERE mrx_ID = ? ORDER BY timestamp desc LIMIT 3", array($mrx['x_ID']));
 
-		// nur senden wenn location vorhanden
-		if (is_array($location)) {
-			$mrx = array_merge($mrx, $location);
+		// nur senden wenn mind. 1 location vorhanden
+		if (is_array($locations) && count($locations) > 0) {
+			$mrx['locations'] = $locations;
 			$data[] = $mrx;
 		}
 	}
