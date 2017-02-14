@@ -1,4 +1,5 @@
 import { NgModule, ErrorHandler } from '@angular/core';
+import { DatePipe } from '@angular/common';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { MyApp } from './app.component';
@@ -74,6 +75,7 @@ import { ImageUploadModule } from 'ng2-imageupload';
   ],
   providers: [
     {provide: ErrorHandler, useClass: IonicErrorHandler},
+    DatePipe,
     Storage,
     TeamService,
     RiddleService,

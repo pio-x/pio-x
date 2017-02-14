@@ -7,7 +7,10 @@
     </ion-card-header>
 
     <ion-card-content>
-      {{notification.text}}
+      <p [innerHTML]="notification.text"></p>
+      <ion-note>
+        {{notification.timestamp | date:'HH:mm'}}
+      </ion-note>
     </ion-card-content>
 
   </ion-card>
