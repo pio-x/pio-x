@@ -12,6 +12,7 @@
       <ion-icon name="happy" color="secondary"></ion-icon>
       <h3>Richtig!</h3>
       Passcode eingelöst!
+      <br><br>
     </div>
 
     <button ion-button full color="danger" (click)="dismiss()">Schliessen</button>
@@ -22,7 +23,7 @@
       <ion-input type="text" [(ngModel)]="passcode" placeholder="Passcode"></ion-input>
     </ion-item>
     <p>
-      <button ion-button full color="secondary" (click)="claimPasscode()" >Einlösen</button>
+      <button ion-button full color="secondary" (click)="claimPasscode()" [disabled]="!passcode.length">Einlösen</button>
     </p>
     <button ion-button full color="danger" (click)="dismiss()">Schliessen</button>
   </span>
