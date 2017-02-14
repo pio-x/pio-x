@@ -605,7 +605,7 @@ $app->post('/passcode/solve', function (Request $request, Response $response, $a
 
 	// passcode does not exist
 	if (!$passcode) {
-		return $response->withJson(["solved" => false, "message" => "Passcode (" . $passcode . ") nicht gefunden " . $body]);
+		return $response->withJson(["solved" => false, "message" => "Passcode (" . $code . ") ist ungültig. "]);
 	}
 	// it can only be used once
 	if ($passcode['used'] == '1') {
