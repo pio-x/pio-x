@@ -4,9 +4,6 @@
       Rätsel
     </ion-title>
     <ion-buttons end>
-      <button ion-button icon-only (click)="updateRiddles()">
-        <ion-icon name="refresh"></ion-icon>
-      </button>
       <button ion-button icon-only (click)="presentActionSheet()" >
         <ion-icon name="more"></ion-icon>
       </button>
@@ -15,6 +12,10 @@
 </ion-header>
 
 <ion-content>
+
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
 
   <ion-card *ngFor="let riddle of riddles">
     <page-riddle-detail [riddle]="riddle"></page-riddle-detail>

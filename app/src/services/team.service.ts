@@ -25,12 +25,13 @@ export class TeamService {
     return this._teams.asObservable();
   }
 
-  public updateTeams(): void {
-    this.pioxApi.get('/team')
-        .then((response) => {
-            this._teams.next(response)
-        })
-        .catch(this.handleError);
+  public updateTeams(): Promise<any> {
+    let promise: Promise<any> = this.pioxApi.get('/team');
+    promise.then((response) => {
+        this._teams.next(response)
+    })
+    .catch(this.handleError);
+    return promise;
   }
 
   private handleError(error: any): Promise<any> {

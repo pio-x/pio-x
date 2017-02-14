@@ -25,4 +25,12 @@ export class NotificationTabPage {
     this.notificationService.notificationsRead();
   }
 
+  doRefresh(refresher) {
+      this.notificationService.updateNotifications().then(() => {
+          refresher.complete();
+      }).catch(() => {
+          refresher.complete();
+      });
+  }
+
 }

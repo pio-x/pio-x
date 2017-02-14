@@ -25,12 +25,13 @@ export class MrxService {
     return this._mrxs.asObservable();
   }
 
-  public updateMrxs(): void {
-    this.pioxApi.get('/mrx')
-        .then((response) => {
-            this._mrxs.next(response)
-        })
-        .catch(this.handleError);
+  public updateMrxs(): Promise<any> {
+    let promise: Promise<any> = this.pioxApi.get('/mrx');
+    promise.then((response) => {
+        this._mrxs.next(response)
+    })
+    .catch(this.handleError);
+    return promise;
   }
 
   private handleError(error: any): Promise<any> {

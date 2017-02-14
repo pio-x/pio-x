@@ -21,12 +21,13 @@ export class GameStreamService {
     return this._logs.asObservable();
   }
 
-  public updateStream(): void {
-    this.pioxApi.get('/log')
-      .then((response) => {
-            this._logs.next(response)
-        })
-        .catch(this.handleError);
+  public updateStream(): Promise<any> {
+    let promise: Promise<any> = this.pioxApi.get('/log');
+    promise.then((response) => {
+        this._logs.next(response)
+    })
+    .catch(this.handleError);
+    return promise;
   }
 
   private handleError(error: any): Promise<any> {

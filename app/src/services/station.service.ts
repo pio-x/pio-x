@@ -24,12 +24,13 @@ export class StationService {
         return this._stations.asObservable();
   }
 
-  public updateStations(): void {
-    this.pioxApi.get('/station')
-        .then((response) => {
-            this._stations.next(response);
-        })
-        .catch(this.handleError);
+  public updateStations(): Promise<any> {
+    let promise: Promise<any> = this.pioxApi.get('/station');
+    promise.then((response) => {
+        this._stations.next(response);
+    })
+    .catch(this.handleError);
+    return promise;
   }
 
   captureStation(stationId: number, imageData: any, tags: any): Promise<any> {

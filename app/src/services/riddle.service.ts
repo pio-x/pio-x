@@ -25,12 +25,13 @@ export class RiddleService {
     return this._riddles.asObservable();
   }
 
-  public updateRiddles(): void {
-    this.pioxApi.get('/riddle')
-        .then((response) => {
-            this._riddles.next(response)
-        })
-        .catch(this.handleError);
+  public updateRiddles(): Promise<any> {
+    let promise: Promise<any> = this.pioxApi.get('/riddle');
+    promise.then((response) => {
+        this._riddles.next(response)
+    })
+    .catch(this.handleError);
+    return promise;
   }
 
   public solveRiddle(riddleId, answer): Promise<any> {

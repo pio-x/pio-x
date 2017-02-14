@@ -21,4 +21,12 @@ export class GameStreamPage {
     this.gameStreamService.updateStream();
   }
 
+  doRefresh(refresher) {
+      this.gameStreamService.updateStream().then(() => {
+          refresher.complete();
+      }).catch(() => {
+          refresher.complete();
+      });
+  }
+
 }

@@ -29,12 +29,13 @@ export class ConfigService {
     return this._config.getValue();
   }
 
-  public updateConfig(): void {
-    this.pioxApi.get('/config')
-        .then((response) => {
-            this._config.next(response)
-        })
-        .catch(this.handleError);
+  public updateConfig(): Promise<any> {
+    let promise: Promise<any> = this.pioxApi.get('/config');
+    promise.then((response) => {
+        this._config.next(response)
+    })
+    .catch(this.handleError);
+    return promise;
   }
 
   private handleError(error: any): Promise<any> {

@@ -27,6 +27,14 @@ export class RiddlesPage {
         this.riddleService.updateRiddles();
     }
     presentActionSheet() {
-      this.navService.presentActionSheet()
+        this.navService.presentActionSheet()
+    }
+
+    doRefresh(refresher) {
+        this.riddleService.updateRiddles().then(() => {
+            refresher.complete();
+        }).catch(() => {
+            refresher.complete();
+        });
     }
 }

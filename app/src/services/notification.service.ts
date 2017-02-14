@@ -37,12 +37,13 @@ export class NotificationService {
         return this._unread.asObservable();
     }
 
-  public updateNotifications(): void {
-    this.pioxApi.get('/notification')
-        .then((response) => {
-            this._notifications.next(response);
-        })
-        .catch(this.handleError);
+  public updateNotifications(): Promise<any> {
+    let promise: Promise<any> = this.pioxApi.get('/notification');
+    promise.then((response) => {
+        this._notifications.next(response);
+    })
+    .catch(this.handleError);
+    return promise;
   }
 
   public notificationsRead(): void {

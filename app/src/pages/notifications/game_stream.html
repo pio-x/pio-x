@@ -1,4 +1,9 @@
 <ion-content>
+
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
   <ion-card *ngFor="let log of logs">
     <img *ngIf="log.image" src="https://api.pio-x.ch/uploaded_images/{{ log.image }}.jpg">
     <ion-card-content>

@@ -37,4 +37,12 @@ export class LeaderboardPage {
     this.navService.presentActionSheet()
   }
 
+  doRefresh(refresher) {
+      this.teamService.updateTeams().then(() => {
+          refresher.complete();
+      }).catch(() => {
+          refresher.complete();
+      });
+  }
+
 }
