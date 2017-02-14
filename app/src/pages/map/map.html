@@ -1,8 +1,11 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Map</ion-title>
+    <ion-title>
+      Map
+      <ion-spinner *ngIf="isRefreshing"></ion-spinner>
+    </ion-title>
     <ion-buttons end>
-      <button ion-button icon-only (click)="updateMap()">
+      <button *ngIf="!isRefreshing" ion-button icon-only (click)="updateMap()">
         <ion-icon name="refresh"></ion-icon>
       </button>
       <button ion-button icon-only (click)="presentActionSheet()" >

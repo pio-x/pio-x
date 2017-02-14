@@ -22293,6 +22293,16 @@ page-map .sebm-google-map-container {
   height: 100%;
 }
 
+page-map .spinner {
+  width: 16px;
+  height: 16px;
+}
+
+page-map .spinner svg {
+  width: 16px;
+  height: 16px;
+}
+
 page-notifications .bold {
   font-weight: bold;
 }

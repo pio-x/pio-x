@@ -32,6 +32,8 @@ export class MapPage {
     default_lng: number = 8.728729;
     default_zoom: number = 13;
 
+    isRefreshing: boolean = false;
+
     myTeam: number = 0;
 
     stations: Station[] = [];
@@ -103,14 +105,19 @@ export class MapPage {
     }
 
     updateMap() {
+        this.isRefreshing = true;
         if (this.map) {
             // attempt to fix map offset that happen sometimes
             this.map.triggerResize();
         }
-        this.stationService.updateStations();
-        this.teamService.updateTeams();
-        this.mrxService.updateMrxs();
-        this.riddleService.updateRiddles();
+        Promise.all([
+            this.stationService.updateStations(),
+            this.teamService.updateTeams(),
+            this.mrxService.updateMrxs(),
+            this.riddleService.updateRiddles()
+        ]).then(() => {
+            this.isRefreshing = false;
+        });
     }
 
     userLocationUpdated(position) {
