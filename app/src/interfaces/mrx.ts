@@ -1,10 +1,13 @@
 export interface Mrx {
     x_ID: number;
     name: string;
-    xpos_ID: number;
+    mrx_ID: number;
+    locations: MrxLocation[];
+}
+
+export interface MrxLocation {
     xpos_lat: number;
     xpos_long: number;
-    mrx_ID: number;
     timestamp: string;
     description: string;
 }

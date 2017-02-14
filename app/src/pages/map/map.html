@@ -89,8 +89,8 @@
     <!-- Mrx Icons -->
     <sebm-google-map-marker
             *ngFor="let mrx of mrxs"
-            [latitude]="mrx.xpos_lat"
-            [longitude]="mrx.xpos_long"
+            [latitude]="mrx.locations[0].xpos_lat"
+            [longitude]="mrx.locations[0].xpos_long"
             [iconUrl]="{
                 url: '/assets/mrx.png',
                 anchor: {x: 13, y: 15},
