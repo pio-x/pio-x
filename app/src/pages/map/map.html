@@ -119,7 +119,12 @@
     >
       <sebm-google-map-info-window [disableAutoPan]="true">
         <h3>{{mrx.name}}</h3>
-        {{mrx.description}}
+        <div>
+          {{mrx.locations[0].description}}
+        </div>
+        <ion-note>
+          {{mrx.locations[0].timestamp | date:'HH:mm'}}
+        </ion-note>
       </sebm-google-map-info-window>
     </sebm-google-map-marker>
 
