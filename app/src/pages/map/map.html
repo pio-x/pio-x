@@ -86,6 +86,25 @@
     >
     </sebm-google-map-marker>
 
+    <!-- Mrx Paths -->
+    <span *ngFor="let mrx of mrxs">
+      <sebm-google-map-polyline
+              [editable]="false"
+              [clickable]="false"
+              [polylineDraggable]="false"
+              strokeColor="#c1272d"
+              strokeWeight="3"
+              strokeOpacity="0.7"
+      >
+         <sebm-google-map-polyline-point
+                 *ngFor="let location of mrx.locations"
+                 [latitude]="location.xpos_lat"
+                 [longitude]="location.xpos_long"
+         >
+         </sebm-google-map-polyline-point>
+       </sebm-google-map-polyline>
+    </span>
+
     <!-- Mrx Icons -->
     <sebm-google-map-marker
             *ngFor="let mrx of mrxs"
