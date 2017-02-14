@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Passcode einlösen
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <div *ngIf="response && response.solved">
+    <div class="riddle-solved">
+      <ion-icon name="happy" color="secondary"></ion-icon>
+      <h3>Richtig!</h3>
+      Passcode eingelöst!
+    </div>
+
+    <button ion-button full color="danger" (click)="dismiss()">Schliessen</button>
+  </div>
+
+  <span *ngIf="!response || !response.solved">
+    <ion-item>
+      <ion-input type="text" [(ngModel)]="passcode" placeholder="Passcode"></ion-input>
+    </ion-item>
+    <p>
+      <button ion-button full color="secondary" (click)="claimPasscode()" >Einlösen</button>
+    </p>
+    <button ion-button full color="danger" (click)="dismiss()">Schliessen</button>
+  </span>
+  <div *ngIf="response && !response.solved">
+    <div class="riddle-solved">
+      <ion-icon name="sad" color="danger"></ion-icon>
+      <h3>Falsch</h3>
+      {{response.message}}
+    </div>
+  </div>
+
+
+</ion-content>

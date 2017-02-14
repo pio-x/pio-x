@@ -14,6 +14,7 @@ import {RiddlesSolveModalPage} from "../pages/riddles/riddlesSolveModal";
 import {RiddleDetailPage} from "../pages/riddles/riddleDetail";
 import {GameStreamPage} from "../pages/notifications/game_stream";
 import {NotificationTabPage} from "../pages/notifications/notification_tab";
+import {PasscodePage} from "../pages/passcode/passcode";
 
 import {PioxApiService} from "../services/pioxApi.service";
 import {TeamService} from "../services/team.service";
@@ -25,6 +26,7 @@ import {MrxService} from "../services/mrx.service";
 import {ConfigService} from "../services/config.service";
 import {NavigationService} from "../services/navigation.service";
 import {GameStreamService} from "../services/game_stream.service";
+import {PasscodeService} from "../services/passcode.service";
 
 import { AgmCoreModule } from 'angular2-google-maps/core';
 
@@ -44,7 +46,8 @@ import { ImageUploadModule } from 'ng2-imageupload';
     RiddlesSolveModalPage,
     RiddleDetailPage,
     GameStreamPage,
-    NotificationTabPage
+    NotificationTabPage,
+    PasscodePage
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -66,7 +69,8 @@ import { ImageUploadModule } from 'ng2-imageupload';
     RiddlesSolveModalPage,
     RiddleDetailPage,
     GameStreamPage,
-    NotificationTabPage
+    NotificationTabPage,
+    PasscodePage
   ],
   providers: [
     {provide: ErrorHandler, useClass: IonicErrorHandler},
@@ -80,7 +84,8 @@ import { ImageUploadModule } from 'ng2-imageupload';
     MrxService,
     ConfigService,
     NavigationService,
-    GameStreamService
+    GameStreamService,
+    PasscodeService
   ]
 })
 export class AppModule {}

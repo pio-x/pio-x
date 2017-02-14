@@ -22297,6 +22297,14 @@ page-notifications .bold {
   font-weight: bold;
 }
 
+.passcode-solved {
+  text-align: center;
+}
+
+.passcode-solved ion-icon {
+  font-size: 50vmin;
+}
+
 .riddle-solved {
   text-align: center;
 }

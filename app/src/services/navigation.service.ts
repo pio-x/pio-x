@@ -1,12 +1,15 @@
 
 import { Injectable }    from '@angular/core';
 
-import { PioxApiService } from './pioxApi.service';
-import { NavController, ActionSheetController } from 'ionic-angular';
+import { ActionSheetController } from 'ionic-angular';
+import { ModalController } from 'ionic-angular';
+import { PasscodePage } from '../pages/passcode/passcode';
+
 
 @Injectable()
 export class NavigationService {
-  constructor(public actionSheetCtrl: ActionSheetController) {
+  constructor(public actionSheetCtrl: ActionSheetController,
+    public modalCtrl: ModalController) {
 
   }
 
@@ -28,6 +31,12 @@ export class NavigationService {
                 }
             },
             {
+                text: 'Passcode einlösen',
+                handler: () => {
+                    this.openPasscodeModal();
+                }
+            },
+            {
                 text: 'Abbrechen',
                 role: 'cancel',
                 handler: () => {}
@@ -36,5 +45,10 @@ export class NavigationService {
     });
 
     actionSheet.present();
+  }
+
+  openPasscodeModal() {
+      let passcodeModal = this.modalCtrl.create(PasscodePage);
+      passcodeModal.present();
   }
 }

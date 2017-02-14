@@ -590,6 +590,38 @@ $app->post('/passcode', function (Request $request, Response $response, $args) u
 	return $response->withJson("success");
 });
 
+$app->post('/passcode/solve', function (Request $request, Response $response, $args) use (&$DB, $config) {
+	if (!$config['game_is_running']) {
+		return $response->withStatus(403)->withJson("Error: Game is not running");
+	}
+	if ($request->getAttribute('is_team') == false) {
+		return $response->withStatus(403)->withJson("Error: not sent by a team");
+	}
+
+	$body = json_decode($request->getBody(), true);
+	$teamId = $body['team_ID'];
+	$code = $body['passcode'];
+
+	$passcode = $DB->fetchAssoc("SELECT * from passcode where code = ?", array($code));
+
+	// passcode does not exist
+	if (!$passcode) {
+		return $response->withJson(["solved" => false, "message" => "Passcode (" . $passcode . ") nicht gefunden " . $body]);
+	}
+	// it can only be used once
+	if ($passcode['used'] == '1') {
+		return $response->withJson(["solved" => false, "message" => "Passcode bereits benutzt"]);
+	}
+	$DB->update('passcode', array('used' => '1'), array('p_ID' => $passcode['p_ID']));
+
+	$team_data = array('t_ID' => $teamId,
+											'points' => $passcode['points'],
+											'type' => 'PASSCODE',
+											'FK_ID' => $passcode['p_ID']);
+	$DB->insert('r_team_points', $team_data);
+	return $response->withJson(["solved" => true, "message" => "Passcode erfolgreich freigeschaltet!"]);
+});
+
 $app->put('/passcode/{id}', function (Request $request, Response $response, $args) use (&$DB) {
 	if ($request->getAttribute('is_admin') == false) {
 		return $response->withStatus(403)->withJson("Error: not sent by admin");
