@@ -1,0 +1,58 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Standort senden
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="presentActionSheet()">
+        <ion-icon name="more"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+  <div *ngIf="userLocation">
+    <sebm-google-map
+          #gmap
+          [latitude]="userLocation.lat"
+          [longitude]="userLocation.lng"
+          [zoom]="16"
+          [streetViewControl]="false"
+          [mapTypeControl]="true"
+    >
+      <!-- User Location Icon -->
+      <sebm-google-map-marker
+              [latitude]="userLocation.lat"
+              [longitude]="userLocation.lng"
+              [iconUrl]="{
+                  url: '/assets/bluecircle.png',
+                  anchor: {x: 8, y: 8},
+                  size: {width: 16, height: 16},
+                  scaledSize: {width: 16, height: 16}
+              }"
+      >
+      </sebm-google-map-marker>
+
+    </sebm-google-map>
+    <div padding>
+      <h2>Standort senden</h2>
+      <div>Gib hier einen kurzen Hinweis an, was du vorhast:</div>
+      <ion-item>
+        <ion-input type="text" [(ngModel)]="description" placeholder="Hinweis"></ion-input>
+      </ion-item>
+      <p>
+        <button ion-button full color="secondary" (click)="sendLocation()" [disabled]="!description">Standort senden</button>
+      </p>
+      <ion-note>{{userLocation.lat}} / {{userLocation.lng}}</ion-note>
+    </div>
+  </div>
+  <div *ngIf="!userLocation" padding>
+    Standort suchen ...
+  </div>
+  <div padding>
+    <ion-icon name="person"></ion-icon> Angemeldet als {{myname}}
+  </div>
+
+</ion-content>

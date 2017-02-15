@@ -284,6 +284,17 @@ $app->get('/mrx', function (Request $request, Response $response) use (&$DB, $co
 	return $response->withJson($data, 200, JSON_NUMERIC_CHECK);
 });
 
+$app->post('/mrx/{id}/location', function (Request $request, Response $response) use (&$DB, $config) {
+	if ($request->getAttribute('is_mrx') == false) {
+		return $response->withStatus(403)->withJson("Error: not sent by a mrx");
+	}
+	$body = json_decode($request->getBody(), true);
+
+	// TODO: implement save
+	$data = [];
+	return $response->withJson($data, 200, JSON_NUMERIC_CHECK);
+});
+
 
 // TOM RIDDLE
 $app->get('/riddle', function (Request $request, Response $response) use (&$DB, $config) {

@@ -6,6 +6,7 @@ import { IntervalObservable} from "rxjs/observable/IntervalObservable";
 
 import { Mrx } from '../interfaces/mrx';
 import { PioxApiService } from './pioxApi.service';
+import {LatLngLocation} from "../interfaces/LatLngLocation";
 
 @Injectable()
 export class MrxService {
@@ -32,6 +33,15 @@ export class MrxService {
     })
     .catch(this.handleError);
     return promise;
+  }
+
+  public sendLocation(location: LatLngLocation, description: string): Promise<any> {
+    let myMrxId: number = parseInt(localStorage.getItem('mrx'));
+    let promise = this.pioxApi.post('/mrx/' + myMrxId + '/location', {'description': description, 'location': location});
+    promise.then((response) => {
+        this.updateMrxs();
+    });
+    return promise
   }
 
   private handleError(error: any): Promise<any> {

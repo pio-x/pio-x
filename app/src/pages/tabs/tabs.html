@@ -1,9 +1,10 @@
 <ion-tabs *ngIf="isLoggedIn">
-  <ion-tab [root]="tab1Root" tabTitle="Karte" tabIcon="map"></ion-tab>
-  <ion-tab [root]="tab2Root" tabTitle="Rangliste" tabIcon="trophy"></ion-tab>
-  <ion-tab [root]="tab3Root" tabTitle="Rätsel" tabIcon="key"></ion-tab>
-  <ion-tab [root]="tab4Root" tabTitle="Infos" tabIcon="book"></ion-tab>
-  <ion-tab [root]="tab5Root" tabTitle="Nachrichten" tabIcon="megaphone" [tabBadge]="notificationCount" tabBadgeStyle="danger"></ion-tab>
+  <ion-tab [root]="tab1Root" tabTitle="Karte" tabIcon="map" *ngIf="isLoggedIn"></ion-tab>
+  <ion-tab [root]="tab2Root" tabTitle="Rangliste" tabIcon="trophy" *ngIf="isLoggedIn"></ion-tab>
+  <ion-tab [root]="tab3Root" tabTitle="Rätsel" tabIcon="key" *ngIf="isTeam"></ion-tab>
+  <ion-tab [root]="tab4Root" tabTitle="Standort" tabIcon="navigate" *ngIf="isMrx"></ion-tab>
+  <ion-tab [root]="tab5Root" tabTitle="Infos" tabIcon="book" *ngIf="isLoggedIn"></ion-tab>
+  <ion-tab [root]="tab6Root" tabTitle="Nachrichten" tabIcon="megaphone" [tabBadge]="notificationCount" tabBadgeStyle="danger" *ngIf="isLoggedIn"></ion-tab>
 </ion-tabs>
 <ion-content *ngIf="!isLoggedIn">
   <ion-card>

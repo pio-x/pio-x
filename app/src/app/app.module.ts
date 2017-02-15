@@ -16,6 +16,7 @@ import {RiddleDetailPage} from "../pages/riddles/riddleDetail";
 import {GameStreamPage} from "../pages/notifications/game_stream";
 import {NotificationTabPage} from "../pages/notifications/notification_tab";
 import {PasscodePage} from "../pages/passcode/passcode";
+import {MrxPage} from "../pages/mrx/mrx";
 
 import {PioxApiService} from "../services/pioxApi.service";
 import {TeamService} from "../services/team.service";
@@ -48,7 +49,8 @@ import { ImageUploadModule } from 'ng2-imageupload';
     RiddleDetailPage,
     GameStreamPage,
     NotificationTabPage,
-    PasscodePage
+    PasscodePage,
+    MrxPage
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -71,7 +73,8 @@ import { ImageUploadModule } from 'ng2-imageupload';
     RiddleDetailPage,
     GameStreamPage,
     NotificationTabPage,
-    PasscodePage
+    PasscodePage,
+    MrxPage
   ],
   providers: [
     {provide: ErrorHandler, useClass: IonicErrorHandler},

@@ -66,6 +66,7 @@
       } else {
           if ($.urlParam('logout')) {
             localStorage.removeItem('team');
+            localStorage.removeItem('mrx');
             localStorage.removeItem('hash');
             console.log('Ausgeloggt');
             window.location.href = "/";
