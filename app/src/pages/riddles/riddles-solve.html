@@ -17,9 +17,26 @@
     <ion-item>
       <ion-input type="text" [(ngModel)]="answer" placeholder="Antwort"></ion-input>
     </ion-item>
+    <ion-item>
+      <input type="file"
+             accept="image/*"
+             image-upload
+             (change)="imageChanged($event)"
+             (imageSelected)="imageSelected($event)"
+             [resizeOptions]="resizeOptions"
+             #imgupload
+      >
+      <div class="uploaded-image-holder" (click)="imgupload.click()">
+        <img class="uploaded-image" id="uploaded-image" [attr.data-orientation]="imageOrientation" [hidden]="!imageData"/>
+        <div class="uploaded-image-placeholder" *ngIf="!imageData">
+          <ion-icon name="camera"></ion-icon>
+        </div>
+      </div>
+    </ion-item>
+    <br>
 
     <p>
-      <button ion-button full color="secondary" (click)="solveRiddle()" [disabled]="!answer">Lösen</button>
+      <button ion-button full color="secondary" (click)="solveRiddle()" [disabled]="!answer && !imageData">Lösen</button>
     </p>
     <p>
       <button ion-button full color="danger" (click)="dismiss()">Abbrechen</button>

@@ -34,8 +34,13 @@ export class RiddleService {
     return promise;
   }
 
-  public solveRiddle(riddleId, answer): Promise<any> {
-    let promise = this.pioxApi.post('/riddle/' + riddleId + '/solve', {'answer': answer});
+  public solveRiddle(riddleId, answer, imageData, tags): Promise<any> {
+    let promise;
+    if (imageData) {
+        promise = this.pioxApi.post('/riddle/' + riddleId + '/solve?tags=' + JSON.stringify(tags), imageData);
+    } else {
+      promise = this.pioxApi.post('/riddle/' + riddleId + '/solve', {'answer': answer});
+    }
     promise.then((response) => {
         this.updateRiddles();
     });

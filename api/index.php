@@ -79,52 +79,8 @@ $app->post('/station/{id}/capture',function (Request $request, Response $respons
 	$teamId = $request->getAttribute('team_id');
 
 	$qsa = $request->getQueryParams();
-	if (isset($qsa['tags'])) {
-		$tags = json_decode($qsa['tags'], true);
-	} else {
-		$tags = [];
-	}
-
-	// process image
-	$file = file_get_contents($body);
-	$image = imagecreatefromstring($file);
-	if (isset($tags['Orientation'])) {
-		$or = $tags['Orientation'];
-		switch ($or) {
-			case 1:
-				break;
-			case 2:
-				imageflip($image, IMG_FLIP_HORIZONTAL);
-				break;
-			case 3:
-				$image = imagerotate($image, 180, 0);
-				break;
-			case 4:
-				imageflip($image, IMG_FLIP_HORIZONTAL);
-				$image = imagerotate($image, 180, 0);
-				break;
-			case 5:
-				imageflip($image, IMG_FLIP_HORIZONTAL);
-				$image = imagerotate($image, 90, 0);
-				break;
-			case 6:
-				$image = imagerotate($image, 90, 0);
-				break;
-			case 7:
-				imageflip($image, IMG_FLIP_HORIZONTAL);
-				$image = imagerotate($image, 270, 0);
-				break;
-			case 8:
-				$image = imagerotate($image, 270, 0);
-				break;
-		}
-	}
-
-	// save image
 	$imageId = 'capture_s' . $stationId . '_t' . $teamId . '_' . round(microtime(true) * 1000);
-	$filename = UPLOADED_IMAGE_FOLDER.$imageId.'.jpg';
-	imagejpeg($image, $filename, 75);
-	chmod($filename, 0766);
+	process_and_save_image($imageId, $body, $qsa);
 
 	// TODO: location check
 
@@ -139,7 +95,11 @@ $app->post('/station/{id}/capture',function (Request $request, Response $respons
 
 	$station = $DB->fetchAssoc("SELECT name FROM station WHERE s_ID = ?", array($stationId));
 	$log->station('Team '.$request->getAttribute('team_name').' hat die Station '.$station['name'].' eingenommen', $insertId);
-
+	if (isset($qsa['tags'])) {
+		$tags = json_decode($qsa['tags'], true);
+	} else {
+		$tags = [];
+	}
 	return $response->withJson($tags);
 });
 
@@ -442,7 +402,6 @@ $app->post('/riddle/{id}/solve',function (Request $request, Response $response, 
 	$riddleId = $args['id'];
 	$teamId = $request->getAttribute('team_id');
 	$body = $request->getParsedBody();
-	$team_answer = $body['answer'];
 
 	function makeComparable($answer) {
 		// Antwort auf ein möglichst einheitliches Format bringen,
@@ -495,7 +454,25 @@ $app->post('/riddle/{id}/solve',function (Request $request, Response $response, 
 		'img_ID' => 0
 	);
 
-	if (makeComparable($team_answer) == makeComparable($riddle['answer'])) {
+	$solved = false;
+	if ($riddle['answer_required']) {
+		$team_answer = $body['answer'];
+		if (makeComparable($team_answer) == makeComparable($riddle['answer'])) {
+				$solved = true;
+		}
+	} else if ($riddle['image_required']) {
+		$body = (string) $request->getBody();
+		if (substr($body,0,10) != 'data:image') {
+			return $response->withJson(["solved" => false, "message" => "Kein Bild gesendet!"]);
+		} else {
+			$qsa = $request->getQueryParams();
+			$id = 'riddle_r' . $riddle['r_ID'] . '_t' . $teamId . '_' . round(microtime(true) * 1000);
+			process_and_save_image($id, $body, $qsa);
+			$solved = true;
+		}
+	}
+
+	if ($solved) {
 		// answer is correct
 		$updated = $DB->update('r_team_riddle', $data, array('r_ID' => $riddleId, 't_ID' => $teamId));
 		if (!$updated) {
@@ -711,3 +688,50 @@ $app->get('/', function (Request $request, Response $response) {
 });
 
 $app->run();
+
+function process_and_save_image($imageId, $body, $qsa) {
+	if (isset($qsa['tags'])) {
+		$tags = json_decode($qsa['tags'], true);
+	} else {
+		$tags = [];
+	}
+	// process image
+	$file = file_get_contents($body);
+	$image = imagecreatefromstring($file);
+	if (isset($tags['Orientation'])) {
+		$or = $tags['Orientation'];
+		switch ($or) {
+			case 1:
+				break;
+			case 2:
+				imageflip($image, IMG_FLIP_HORIZONTAL);
+				break;
+			case 3:
+				$image = imagerotate($image, 180, 0);
+				break;
+			case 4:
+				imageflip($image, IMG_FLIP_HORIZONTAL);
+				$image = imagerotate($image, 180, 0);
+				break;
+			case 5:
+				imageflip($image, IMG_FLIP_HORIZONTAL);
+				$image = imagerotate($image, 90, 0);
+				break;
+			case 6:
+				$image = imagerotate($image, 90, 0);
+				break;
+			case 7:
+				imageflip($image, IMG_FLIP_HORIZONTAL);
+				$image = imagerotate($image, 270, 0);
+				break;
+			case 8:
+				$image = imagerotate($image, 270, 0);
+				break;
+		}
+	}
+
+	// save image
+	$filename = UPLOADED_IMAGE_FOLDER.$imageId.'.jpg';
+	imagejpeg($image, $filename, 75);
+	chmod($filename, 0766);
+}
