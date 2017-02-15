@@ -205,6 +205,7 @@ $app->post('/team',function (Request $request, Response $response) use (&$DB) {
 
 	return $response->withJson("success");
 });
+
 $app->put('/team/{id}', function (Request $request, Response $response, $args) use (&$DB, $config) {
 	if ($request->getAttribute('is_admin') == false) {
 		return $response->withStatus(403)->withJson("Error: not sent by admin");
@@ -215,6 +216,37 @@ $app->put('/team/{id}', function (Request $request, Response $response, $args) u
 	$DB->update('team', array('name' => $body['name']), array('t_ID' => $teamId));
 
 	return $response->withJson("success");
+});
+
+$app->get('/team/{id}/location', function (Request $request, Response $response, $args) use (&$DB, $config) {
+	if ($request->getAttribute('is_admin') == false) {
+		return $response->withStatus(403)->withJson("Error: not sent by admin");
+	}
+
+	$teamId = $args['id'];
+	$players = $DB->fetchAll("SELECT DISTINCT player FROM teamposition WHERE t_ID = ?", array($teamId));
+
+	$data = [];
+	if (is_array($players) && count($players)) {
+		foreach ($players as $playerdata) {
+			$player = $playerdata['player'];
+			$data[$player] = [];
+			$locations = $DB->fetchAll("SELECT team_lat as lat, team_long as lng, timestamp FROM teamposition WHERE t_ID = ? AND player = ? ORDER BY timestamp DESC", array($teamId, $player));
+			foreach ($locations as $location) {
+				if (count($data[$player]) > 0) {
+					// remove duplicates: only add position if last added position is different
+					$lastElement = array_values(array_slice($data[$player], -1))[0];
+					if ($lastElement['lat'] != $location['lat'] || $lastElement['lng'] != $location['lng']) {
+						$data[$player][] = $location;
+					}
+				} else {
+					$data[$player][] = $location;
+				}
+			}
+		}
+	}
+
+	return $response->withJson($data, 200, JSON_NUMERIC_CHECK);
 });
 
 
