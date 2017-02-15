@@ -4,23 +4,40 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap'])
         NgMap.getMap().then(function(map) {
             $scope.map = map;
         });
-        apiService.get('/team').then(function(articlesResponse) {
-            $scope.groups = articlesResponse.data;
-        });
+
         $scope.showStations = true;
-        $scope.showTeamOnMap = function(id) {
-            //TODO zeige Team auf Karte an
+        $scope.showRiddles = true;
+        $scope.showMrxs = true;
+        $scope.showTeams = true;
+        $scope.showTeam = true;
+        
+
+        $scope.showTooltip = function(evt, id, obj) {
+            $scope.shown = obj[id];
+            $scope.map.showInfoWindow('infoWindow', this);
         };
+
+        $scope.getTeams = function() {
+            apiService.get('/team').then(function(articlesResponse) {
+                $scope.groups = articlesResponse.data;
+            });
+        };
+        $scope.getTeams();
+
         $scope.getStations = function() {
             apiService.get('/station').then(function(articlesResponse) {
                 $scope.stations = articlesResponse.data;
             });
         };
         $scope.getStations();
-        $scope.showTooltip = function(evt, id, obj) {
-            $scope.shown = obj[id];
-            $scope.map.showInfoWindow('infoWindow', this);
+
+        $scope.getMrxs = function() {
+            apiService.get('/mrx').then(function(articlesResponse) {
+                $scope.mrxs = articlesResponse.data;
+            });
         };
+        $scope.getMrxs();
+
         $scope.getRiddles = function() {
             apiService.get('/riddle').then(function(articlesResponse) {
                 $scope.riddles = articlesResponse.data;
