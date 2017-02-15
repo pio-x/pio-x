@@ -1,0 +1,31 @@
+[
+    {
+        "id": 1,
+        "timestamp": 123,
+        "title": "test1",
+        "message": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr vero eos et accusam et justo duo dolo",
+        "read": false
+    },
+    {
+        "id": 2,
+        "timestamp": 623,
+        "title": "test1",
+        "message": "Lorem ipsum dolor sit aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolo",
+        "read": false
+    },
+    {
+        "id": 3,
+        "timestamp": 223,
+        "title": "test1",
+        "message": " dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolo",
+        "read": false
+    },
+    {
+        "id": 4,
+        "timestamp": 124,
+        "title": "test1",
+        "message": "Loro",
+        "read": false
+    }
+
+]
