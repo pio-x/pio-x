@@ -1,0 +1,7 @@
+1. Docker installieren
+2. Container bauen: docker build -t mylocust:1.0 .
+3. Container rennen lassen: docker run -p 127.0.0.1:8089:8089 locust-test --name locust -t mylocust:1.0
+4. http://localhost:8089
+
+
+Cleanup: docker stop locust && docker rm locust && docker rmi mylocust:1.0

@@ -1,0 +1,3 @@
+FROM christianbladescb/locustio
+
+ENTRYPOINT [ "/usr/bin/locust", "--host", "http://api.pio-x.ch" ]
