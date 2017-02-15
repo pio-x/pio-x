@@ -1,12 +1,12 @@
-				<div ng-controller="mapCtrl">
-					<div map-lazy-load="https://maps.google.com/maps/api/js?key=AIzaSyAjEW54VdlWZT07n90oTjvaLIl3q27ZL4Y">
+				<div>
+					<div map-lazy-load="https://maps.google.com/maps/api/js?key=AIzaSyAjEW54VdlWZT07n90oTjvaLIl3q27ZL4Y" class="col-md-10">
 						<ng-map center="47.498934,8.728970" zoom="14" style="height: 600px">
                             <map-info />
 							<marker position="[{{ station.pos_lat }},{{ station.pos_long }}]" on-click="showTooltip($index, stations)" ng-repeat="station in stations track by $index" icon="{
 								path: 0,
 								strokeColor: '#000',
 								strokeWeight: 3,
-								scale: 8 }">
+								scale: 8 }" ng-if="showTeams">
 							</marker>
 							<marker position="[{{ riddle.pos_lat }},{{ riddle.pos_long }}]" on-click="showTooltip($index, riddles)" ng-repeat="riddle in riddles track by $index" icon="{
 								path: 0,
@@ -16,6 +16,9 @@
 							</marker>
 						</ng-map>
 					</div>
-    				<div class="btn btn-default" ng-click="showTeamOnMap(group.t_ID)" ng-repeat="group in groups">{{ group.name }}</div>
+					<div class="col-md-2">
+						<input type="checkbox" ng-change="showStations=!enabled" checked /> Stationen anzeigen
+	    				<div class="btn btn-default" ng-click="showTeamOnMap(group.t_ID)" ng-repeat="group in groups">{{ group.name }}</div>
+					</div>
 				</div>
                 

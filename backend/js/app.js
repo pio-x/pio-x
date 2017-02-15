@@ -7,6 +7,7 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap'])
         apiService.get('/team').then(function(articlesResponse) {
             $scope.groups = articlesResponse.data;
         });
+        $scope.showTeams = true;
         $scope.showTeamOnMap = function(id) {
             //TODO zeige Team auf Karte an
         };
@@ -120,8 +121,13 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap'])
                 });
         };
     })
-    //LOG
+    // LOG / IMAGES / STREAM
     .controller('logCtrl', function($scope, apiService){
+        $scope.apiUrl = 'https://api.pio-x.ch/image/';
+        if(window.location.host == "localhost") {
+            $scope.apiUrl = 'http://localhost' + window.location.pathname + '../api/';
+        }
+        $scope.imgHash = "?hash=" + localStorage.getItem("hash");
         $scope.getLogs = function() {
             apiService.get('/log').then(function(articlesResponse) {
                 $scope.logs = articlesResponse.data;
