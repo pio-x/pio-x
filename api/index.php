@@ -284,14 +284,18 @@ $app->get('/mrx', function (Request $request, Response $response) use (&$DB, $co
 	return $response->withJson($data, 200, JSON_NUMERIC_CHECK);
 });
 
-$app->post('/mrx/{id}/location', function (Request $request, Response $response) use (&$DB, $config) {
+$app->post('/mrx/{id}/location', function (Request $request, Response $response, $args) use (&$DB, $config) {
 	if ($request->getAttribute('is_mrx') == false) {
 		return $response->withStatus(403)->withJson("Error: not sent by a mrx");
 	}
-	$body = json_decode($request->getBody(), true);
 
-	// TODO: implement save
-	$data = [];
+	$body = json_decode($request->getBody(), true);
+	$data = array('xpos_lat' => $body['location']['lat'],
+				'xpos_long' => $body['location']['lng'],
+				'description' => $body['description'],
+				'mrx_ID' => $args['id']);
+
+	$DB->insert('mrx_position', $data);
 	return $response->withJson($data, 200, JSON_NUMERIC_CHECK);
 });
 
