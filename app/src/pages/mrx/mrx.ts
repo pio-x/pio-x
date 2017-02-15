@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {LoadingController} from "ionic-angular";
 
 import {LatLngLocation} from "../../interfaces/LatLngLocation";
+import {Mrx} from "../../interfaces/mrx";
 import {LocationService} from "../../services/location.service";
 import {MrxService} from "../../services/mrx.service";
 
@@ -15,10 +16,13 @@ import { SebmGoogleMap } from 'angular2-google-maps/core/directives';
 export class MrxPage {
 
     myname: string = '';
+    mrxid: number = 0;
 
     description: string = '';
 
     userLocation: LatLngLocation;
+
+    mrxs: Mrx[];
 
     constructor(
         private locationService: LocationService,
@@ -26,14 +30,24 @@ export class MrxPage {
         public loadingCtrl: LoadingController
     ) {
         this.myname = decodeURIComponent(localStorage.getItem('player')).replace( /\+/g, ' ');
+        this.mrxid = parseInt(localStorage.getItem('mrx'));
 
         this.locationService.userLocation.subscribe((pos: LatLngLocation) => {
             this.userLocationUpdated(pos);
+        });
+        this.mrxService.mrxs.subscribe((mrxs: Mrx[]) => {
+            this.mrxsUpdated(mrxs);
         });
     }
 
     userLocationUpdated(position) {
         this.userLocation = position;
+    }
+
+    mrxsUpdated(mrxs: Array<Mrx>): void {
+        if (JSON.stringify(this.mrxs) != JSON.stringify(mrxs)) {
+            this.mrxs = mrxs;
+        }
     }
 
     sendLocation() {
