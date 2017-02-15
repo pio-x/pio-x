@@ -17,6 +17,9 @@
     <a href="login.html?team=2&hash=222">Login mit Team Grün</a><br>
     <a href="login.html?team=3&hash=333">Login mit Team Blau</a><br>
     <a href="login.html?team=4&hash=444">Login mit Team Gelb</a><br>
+    <a href="login.html?mrx=1&hash=x111">Login mit MrX 1</a><br>
+    <a href="login.html?mrx=2&hash=x222">Login mit MrX 2</a><br>
+    <a href="login.html?mrx=3&hash=x333">Login mit MrX 3</a><br>
     <br>
     <a href="login.html?logout=true">Logout</a><br>
   </div>
@@ -37,11 +40,13 @@
 
 <script type="text/javascript">
   $( document ).ready(function() {
+      var mrx = $.urlParam('mrx');
       var team = $.urlParam('team');
       var hash = $.urlParam('hash');
       var player = $.urlParam('player');
       if (team && hash && player) {
           localStorage.setItem('team', team);
+          localStorage.setItem('mrx', 0);
           localStorage.setItem('hash', hash);
           localStorage.setItem('player', player);
           console.log('Eingeloggt mit ' + team + ':' + hash + ' als ' + player);
@@ -51,6 +56,13 @@
           $('#loginform').show();
           $('#input_team').val(team);
           $('#input_hash').val(hash);
+      } else if (mrx && hash) {
+          localStorage.setItem('team', 0);
+          localStorage.setItem('mrx', mrx);
+          localStorage.setItem('hash', hash);
+          localStorage.setItem('player', 'Mister X ' + mrx);
+          console.log('Eingeloggt mit Mister X ' + mrx + ':' + hash);
+          window.location.href = "/";
       } else {
           if ($.urlParam('logout')) {
             localStorage.removeItem('team');
