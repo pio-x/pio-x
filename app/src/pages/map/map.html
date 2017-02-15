@@ -39,6 +39,28 @@
     >
     </sebm-google-map-circle>
 
+
+    <sebm-google-map-marker
+            *ngIf="!config.game_is_running"
+            [latitude]="config.home_location_lat"
+            [longitude]="config.home_location_long"
+            [iconUrl]="{
+                path: fa.markers.FLAG,
+                scale: 0.5,
+                anchor: {x: 20, y: -30},
+                strokeWeight: 2,
+                strokeColor: 'white',
+                strokeOpacity: 1,
+                fillColor: 'green',
+                fillOpacity: 1
+            }"
+    >
+      <sebm-google-map-info-window [disableAutoPan]="true">
+        <h3>{{config.home_location_title}}</h3>
+      </sebm-google-map-info-window>
+    </sebm-google-map-marker>
+
+
     <!-- Station Icons -->
     <sebm-google-map-marker
             *ngFor="let station of stations"
