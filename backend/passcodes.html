@@ -1,0 +1,91 @@
+<!DOCTYPE HTML>
+
+<html ng-app="backendApp">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>PIO-X Backend</title>
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="css/style.css">
+
+    <style type="text/css">
+    .body {
+        font-size: 12px;
+    }
+    </style>
+</head>
+
+<body>
+    <!-- QR CODES -->
+	<div id="qrcodes" ng-controller="QRViewCtrl">
+        <div ng-repeat="group in groups">
+          <img style="float:right; width:180px" src="passcodes/Logo.png">
+            <h1>Gruppe {{group.name}} ({{group.t_ID}})</h1>
+            Scanne diesen QR-Code mit dem Handy, um ins Spiel einzusteigen:<br><br>
+            <div>
+                <qrcode version="5" error-correction-level="M" size="200" 
+                data="https://app.pio-x.ch/login.html?team={{group.t_ID}}&hash={{group.hash}}" ></qrcode>
+            </div>
+            <br>
+            Adresse zum eintippen falls du kein QR-Code Programm hast: <br>
+            https://app.pio-x.ch/login.html?team={{group.t_ID}}&hash={{group.hash}}
+
+ <h3>Spielregeln</h3>
+  <h5>Stationen</h5>
+  <p>
+    Alle 5 Minuten werden Punkte für Stationen die den Teams gehören verteilt.<br>
+    Stationen einnehmen gibt keine Punkte.<br>
+    Stationen dürfen weder von innerhalb eines Busses aus eingenommen werden, noch darf man die 'raus-click-rein' Technik benutzen. Nach dem Einnehmen einer Station muss man den Bus abfahren lassen.
+  </p>
+
+  <h5>MisterX</h5>
+  <p>
+    Jeder MisterX kann pro Gruppe nur einmal gefangen werden.<br>
+    Infos über alle MisterX's können immer nach einer gewissen Punkteanzahl angezeigt werden. Dafür kann die Gruppe manuell einen 'Timer' starten. Für eine gewisse Zeit werden dann alle MisterX angezeigt.<br>
+    MisterX's verlassen ihr vorgegebenes Gebiet nicht.<br>
+  </p>
+
+  <h5>Rätsel</h5>
+  <p>
+    Ein Rätsel ist nur einmal pro Gruppe lösbar.<br>
+    Einige Rätsel können erst freigeschaltet werden wenn man in der Nähe ist ('freigeschaltet' = Rätseltext kann angezeigt werden).
+  </p>
+
+  <h5>Passcodes</h5>
+  <p>
+    Code (und evtl. Bild) eingeben um Punkte zu erhalten<br>
+    Passcodes werden für Rätsel und MisterX verwendet.<br>
+    Einige Rätsel können nach einem obligatorischen Bild verlangen.
+  </p>
+
+  <h3>Infos</h3>
+  <h5>Start & Ende</h5>
+  <p>
+    noch zu definieren
+  </p>
+
+  <h5>Notfallnummern</h5>
+  <p>
+    noch zu definieren
+  </p>
+
+            <p style="page-break-after:always;"></p>
+		</div>
+	</div>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+	<script src="js/app.js"></script>
+  <script src="passcodes/passcodes.js"></script>
+	<script src="js/services/apiService.js"></script>
+	<script src="js/vendor/qrcode.js"></script>
+	<script src="js/vendor/angular-qrcode.js"></script>
+	<script src="js/directives/ngConfirmClick.js"></script>
+	<script src="js/directives/ngTeamPicker.js"></script>
+	<script src="js/directives/ngBackendMap.js"></script>
+	<script src="js/directives/ngMapInfo.js"></script>
+	<script src="node_modules/ngmap/build/scripts/ng-map.min.js"></script>
+</body>
+
+</html>
