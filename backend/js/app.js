@@ -45,6 +45,13 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap'])
         };
         $scope.getRiddles();
     })
+    // MAP EVENT Controller
+    .controller('mapEventCtrl', function($window) {
+        var mec = this;
+        mec.showAlert = function() {
+            $window.alert('map clicked');
+        }
+    })
     //QR CODES
     .controller('QRCtrl', function($scope, apiService){
         apiService.get('/team').then(function(articlesResponse) {
