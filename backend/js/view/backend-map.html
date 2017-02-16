@@ -20,15 +20,25 @@
 								strokeWeight: 3,
 								scale: 8 }" ng-if="showMrxs">
 							</marker>
-							<!-- TODO Auf API für Team Standort warten und dann Teams anzeigen -->
+							<span ng-repeat="locations in players">
+								<marker position="[{{ location.lat }},{{ location.lng }}]" on-click="showTooltip($index, locations)" ng-repeat="location in locations track by $index" icon="{
+									path: 0,
+									strokeColor: '#f00',
+									strokeWeight: 3,
+									scale: 8 }" ng-if="showTeamLocation">
+								</marker>
+							</span>
 						</ng-map>
 					</div>
 					<div class="col-md-3">
+						<button ng-click="refreshData()" class="btn btn-default">Alle Daten aktualisieren</button><br />
 						<input type="checkbox" ng-model="showStations" checked /> Stationen anzeigen<br />
 						<input type="checkbox" ng-model="showRiddles" checked /> Rätsel anzeigen<br />
 						<input type="checkbox" ng-model="showMrxs" checked /> Alle Mr. X anzeigen<br />
-						<!-- <input type="checkbox" ng-model="showTeams" checked /> Alle Teams anzeigen<br />
-						<span ng-repeat="group in groups"><input type="checkbox" checked/> Team {{ group.t_ID }} anzeigen<br /></span> -->
+						<input type="checkbox" ng-model="showTeamLocation" /> Team anzeigen<br />
+						<span ng-repeat="group in groups" ng-if="showTeamLocation">
+							&nbsp;&nbsp;<input type="radio" name="teamRadioSelect" ng-checked="$index==0?true:false" ng-click="getTeamLocations(group.t_ID)"/> Team {{ group.t_ID }} anzeigen<br />
+						</span>
 					</div>
 				</div>
                 

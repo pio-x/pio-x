@@ -10,6 +10,7 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap'])
         $scope.showMrxs = true;
         $scope.showTeams = true;
         $scope.showTeam = true;
+        $scope.showTeamLocation = false;
         
 
         $scope.showTooltip = function(evt, id, obj) {
@@ -23,6 +24,16 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap'])
             });
         };
         $scope.getTeams();
+
+        $scope.getTeamLocations = function(id) {
+            apiService.get('/team/' + id + '/location').then(function(articlesResponse) {
+                $scope.players = articlesResponse.data;
+                //console.log('/team/' + id + '/location');
+                //console.log($scope.players);
+            });
+        };
+        $scope.selectedTeam = 1;
+        $scope.getTeamLocations($scope.selectedTeam);
 
         $scope.getStations = function() {
             apiService.get('/station').then(function(articlesResponse) {
@@ -44,6 +55,14 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap'])
             });
         };
         $scope.getRiddles();
+
+        $scope.refreshData = function() {
+            $scope.getTeams();
+            $scope.getTeamLocations(1);
+            $scope.getStations();
+            $scope.getMrxs();
+            $scope.getRiddles();
+        };
     })
     // MAP EVENT Controller
     .controller('mapEventCtrl', function($window) {
