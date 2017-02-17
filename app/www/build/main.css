@@ -22227,14 +22227,14 @@ sub {
   display: none !important;
 }
 
-modal-capture .uploaded-image-holder {
+image-uploader .uploaded-image-holder {
   max-width: 100%;
   height: 50%;
   text-align: center;
   padding-top: 30px;
 }
 
-modal-capture .uploaded-image-holder .uploaded-image {
+image-uploader .uploaded-image-holder .uploaded-image {
   max-height: 100%;
   max-width: 80%;
   border: 10px solid white;
@@ -22243,47 +22243,47 @@ modal-capture .uploaded-image-holder .uploaded-image {
   margin-top: 5px;
 }
 
-modal-capture .uploaded-image-holder .uploaded-image[data-orientation="1"] {
+image-uploader .uploaded-image-holder .uploaded-image[data-orientation="1"] {
   -webkit-transform: rotate(7deg);
   transform: rotate(7deg);
 }
 
-modal-capture .uploaded-image-holder .uploaded-image[data-orientation="2"] {
+image-uploader .uploaded-image-holder .uploaded-image[data-orientation="2"] {
   -webkit-transform: scaleX(-1) rotate(-7deg);
   transform: scaleX(-1) rotate(-7deg);
 }
 
-modal-capture .uploaded-image-holder .uploaded-image[data-orientation="3"] {
+image-uploader .uploaded-image-holder .uploaded-image[data-orientation="3"] {
   -webkit-transform: rotate(187deg);
   transform: rotate(187deg);
 }
 
-modal-capture .uploaded-image-holder .uploaded-image[data-orientation="4"] {
+image-uploader .uploaded-image-holder .uploaded-image[data-orientation="4"] {
   -webkit-transform: scaleX(-1) rotate(173deg);
   transform: scaleX(-1) rotate(173deg);
 }
 
-modal-capture .uploaded-image-holder .uploaded-image[data-orientation="5"] {
+image-uploader .uploaded-image-holder .uploaded-image[data-orientation="5"] {
   -webkit-transform: scaleX(-1) rotate(83deg);
   transform: scaleX(-1) rotate(83deg);
 }
 
-modal-capture .uploaded-image-holder .uploaded-image[data-orientation="6"] {
+image-uploader .uploaded-image-holder .uploaded-image[data-orientation="6"] {
   -webkit-transform: rotate(97deg);
   transform: rotate(97deg);
 }
 
-modal-capture .uploaded-image-holder .uploaded-image[data-orientation="7"] {
+image-uploader .uploaded-image-holder .uploaded-image[data-orientation="7"] {
   -webkit-transform: scaleX(-1) rotate(263deg);
   transform: scaleX(-1) rotate(263deg);
 }
 
-modal-capture .uploaded-image-holder .uploaded-image[data-orientation="8"] {
+image-uploader .uploaded-image-holder .uploaded-image[data-orientation="8"] {
   -webkit-transform: rotate(277deg);
   transform: rotate(277deg);
 }
 
-modal-capture .uploaded-image-holder .uploaded-image-placeholder {
+image-uploader .uploaded-image-holder .uploaded-image-placeholder {
   color: #bbb;
   font-size: 50vmin;
 }
@@ -22326,59 +22326,4 @@ page-notifications .bold {
 
 .riddle-solved ion-icon {
   font-size: 50vmin;
-}
-
-.uploaded-image-holder {
-  max-width: 100%;
-  height: 30%;
-  text-align: center;
-}
-
-.uploaded-image-holder .uploaded-image {
-  max-height: 100%;
-  max-width: 80%;
-  border: 10px solid white;
-  border-radius: 3px;
-  box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.3);
-  margin-top: 5px;
-}
-
-.uploaded-image-holder .uploaded-image[data-orientation="1"] {
-  -webkit-transform: rotate(7deg);
-  transform: rotate(7deg);
-}
-
-.uploaded-image-holder .uploaded-image[data-orientation="2"] {
-  -webkit-transform: scaleX(-1) rotate(-7deg);
-  transform: scaleX(-1) rotate(-7deg);
-}
-
-.uploaded-image-holder .uploaded-image[data-orientation="3"] {
-  -webkit-transform: rotate(187deg);
-  transform: rotate(187deg);
-}
-
-.uploaded-image-holder .uploaded-image[data-orientation="4"] {
-  -webkit-transform: scaleX(-1) rotate(173deg);
-  transform: scaleX(-1) rotate(173deg);
-}
-
-.uploaded-image-holder .uploaded-image[data-orientation="5"] {
-  -webkit-transform: scaleX(-1) rotate(83deg);
-  transform: scaleX(-1) rotate(83deg);
-}
-
-.uploaded-image-holder .uploaded-image[data-orientation="6"] {
-  -webkit-transform: rotate(97deg);
-  transform: rotate(97deg);
-}
-
-.uploaded-image-holder .uploaded-image[data-orientation="7"] {
-  -webkit-transform: scaleX(-1) rotate(263deg);
-  transform: scaleX(-1) rotate(263deg);
-}
-
-.uploaded-image-holder .uploaded-image[data-orientation="8"] {
-  -webkit-transform: rotate(277deg);
-  transform: rotate(277deg);
 }

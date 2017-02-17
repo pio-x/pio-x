@@ -8,21 +8,7 @@
 
 <ion-content padding>
   <h3>Foto hochladen</h3>
-  <input type="file"
-         accept="image/*"
-         image-upload
-         (change)="imageChanged($event)"
-         (imageSelected)="imageSelected($event)"
-         [resizeOptions]="resizeOptions"
-         #imgupload
-  >
-  <br>
-  <div class="uploaded-image-holder" (click)="imgupload.click()">
-    <img class="uploaded-image" id="uploaded-image" [attr.data-orientation]="imageOrientation" [hidden]="!imageData"/>
-    <div class="uploaded-image-placeholder" *ngIf="!imageData">
-      <ion-icon name="camera"></ion-icon>
-    </div>
-  </div>
+  <image-uploader [(tags)]="tags" [(image)]="imageData"></image-uploader>
   <br>
   <br>
   <p>

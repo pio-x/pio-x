@@ -1,0 +1,17 @@
+<div class="image-uploader">
+  <input type="file"
+         accept="image/*"
+         image-upload
+         (change)="imageChanged($event)"
+         (imageSelected)="imageSelected($event)"
+         [resizeOptions]="resizeOptions"
+         #imgupload
+  />
+  <br>
+  <div class="uploaded-image-holder" (click)="imgupload.click()">
+    <img class="uploaded-image" id="uploaded-image" [attr.data-orientation]="imageOrientation" [hidden]="!imageRaw"/>
+    <div class="uploaded-image-placeholder" *ngIf="!imageRaw">
+      <ion-icon name="camera"></ion-icon>
+    </div>
+  </div>
+</div>

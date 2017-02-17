@@ -1,12 +1,10 @@
-import { Component, ElementRef } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { ViewController, NavParams, LoadingController } from 'ionic-angular';
 
 import {Riddle} from "../../interfaces/riddle";
 import {RiddleService} from "../../services/riddle.service";
-import { ImageResult, ResizeOptions } from 'ng2-imageupload';
 
-import EXIF from "exif-js"
 
 @Component({
   selector: 'modal-riddles-solve',
@@ -20,15 +18,12 @@ export class RiddlesSolveModalPage {
     answered: boolean = false;
     response: any;
     imageData: string = null;
-    imageDataResized: string = null;
-    imageOrientation: number = 0;
     tags = {};
 
     constructor(private riddleService:RiddleService,
                 public params: NavParams,
                 public viewCtrl: ViewController,
-                public loadingCtrl: LoadingController,
-                private element: ElementRef
+                public loadingCtrl: LoadingController
     ) {
         this.riddleId = params.get('riddleId');
 
@@ -49,7 +44,7 @@ export class RiddlesSolveModalPage {
             content: 'Rätsel lösen ...'
         });
         loading.present();
-        this.riddleService.solveRiddle(this.riddleId, this.answer, this.imageDataResized, this.tags)
+        this.riddleService.solveRiddle(this.riddleId, this.answer, this.imageData, this.tags)
             .then((response) => {
                 this.answered = true;
                 this.response = response;
@@ -64,39 +59,5 @@ export class RiddlesSolveModalPage {
 
     dismiss() {
         this.viewCtrl.dismiss();
-    }
-
-    imageChanged(event: any) {
-        // reset image if none was selected
-        if (event.target.files.length == 0) {
-            let image = this.element.nativeElement.querySelector('.uploaded-image');
-            image.src = "";
-            this.imageData = null;
-            this.imageDataResized = null;
-        }
-    }
-
-    readOrientation() {
-        let img: any = document.getElementById("uploaded-image");
-        // clear exif cache
-        delete img.exifdata;
-
-        let self = this;
-        EXIF.getData(img, function() {
-            //self.tags = EXIF.getAllTags(this);
-            self.imageOrientation = EXIF.getTag(this, "Orientation");
-        });
-    }
-
-    imageSelected(imageResult: ImageResult) {
-        let image = this.element.nativeElement.querySelector('.uploaded-image');
-
-        this.imageDataResized = imageResult.resized
-            && imageResult.resized.dataURL
-            || imageResult.dataURL;
-
-        image.src = imageResult.dataURL;
-        this.imageData = imageResult.dataURL;
-        this.readOrientation();
     }
 }

@@ -14,43 +14,42 @@
   </p>
 
   <span *ngIf="!answered">
-    <ion-item>
+    <ion-item *ngIf="riddles[riddleId].answer_required">
       <ion-input type="text" [(ngModel)]="answer" placeholder="Antwort"></ion-input>
     </ion-item>
-    <ion-item>
-      <input type="file"
-             accept="image/*"
-             image-upload
-             (change)="imageChanged($event)"
-             (imageSelected)="imageSelected($event)"
-             [resizeOptions]="resizeOptions"
-             #imgupload
-      >
-      <div class="uploaded-image-holder" (click)="imgupload.click()">
-        <img class="uploaded-image" id="uploaded-image" [attr.data-orientation]="imageOrientation" [hidden]="!imageData"/>
-        <div class="uploaded-image-placeholder" *ngIf="!imageData">
-          <ion-icon name="camera"></ion-icon>
-        </div>
-      </div>
-    </ion-item>
+    <div *ngIf="riddles[riddleId].image_required">
+      <image-uploader [(tags)]="tags" [(image)]="imageData"></image-uploader>
+    </div>
     <br>
 
     <p>
-      <button ion-button full color="secondary" (click)="solveRiddle()" [disabled]="!answer && !imageData">Lösen</button>
+      <button ion-button
+              full
+              color="secondary"
+              (click)="solveRiddle()"
+              [disabled]="(riddles[riddleId].answer_required && !answer) || (riddles[riddleId].image_required && !imageData)"
+      >
+        Lösen
+      </button>
     </p>
     <p>
       <button ion-button full color="danger" (click)="dismiss()">Abbrechen</button>
     </p>
   </span>
   <span *ngIf="answered">
-    <div>
+    <div *ngIf="riddles[riddleId].answer_required">
       Deine Antwort: <b>{{answer}}</b>
     </div>
     <div *ngIf="response.solved">
       <div class="riddle-solved">
         <ion-icon name="happy" color="secondary"></ion-icon>
-        <h3>Richtig!</h3>
-        Deine Antwort war richtig!
+        <div *ngIf="riddles[riddleId].answer_required">
+          <h3>Korrekt!</h3>
+          Deine Antwort war richtig!
+        </div>
+        <div *ngIf="riddles[riddleId].image_required">
+          <h3>Rätsel gelöst!</h3>
+        </div>
       </div>
 
     </div>

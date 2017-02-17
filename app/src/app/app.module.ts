@@ -30,6 +30,8 @@ import {NavigationService} from "../services/navigation.service";
 import {GameStreamService} from "../services/game_stream.service";
 import {PasscodeService} from "../services/passcode.service";
 
+import {ImageUploader} from "../components/image-uploader/image-uploader";
+
 import { AgmCoreModule } from 'angular2-google-maps/core';
 
 import { ImageUploadModule } from 'ng2-imageupload';
@@ -50,7 +52,8 @@ import { ImageUploadModule } from 'ng2-imageupload';
     GameStreamPage,
     NotificationTabPage,
     PasscodePage,
-    MrxPage
+    MrxPage,
+    ImageUploader
   ],
   imports: [
     IonicModule.forRoot(MyApp),
