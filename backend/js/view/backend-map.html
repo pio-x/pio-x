@@ -12,7 +12,7 @@
 								path: 0,
 								strokeColor: '#00f',
 								strokeWeight: 3,
-								scale: 8 }" ng-if="showRiddles">
+								scale: 8 }" ng-if="showRiddles && riddle.pos_lat">
 							</marker>
 							<marker position="[{{ mrx.locations[1].xpos_lat }},{{ mrx.locations[1].xpos_long }}]" on-click="showTooltip($index, mrxs)" ng-repeat="mrx in mrxs track by $index" icon="{
 								path: 0,
