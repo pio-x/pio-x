@@ -65,11 +65,15 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap'])
         };
     })
     // MAP EVENT Controller
-    .controller('mapEventCtrl', function($window) {
+    .controller('mapEventCtrl', function($scope, $window) {
         var mec = this;
         mec.showAlert = function() {
             $window.alert('map clicked');
-        }
+        };
+        mec.createNew = function(evt) {
+            $scope.latlng = [evt.latLng.lat(), evt.latLng.lng()];
+            console.log($scope.latLng);
+        };
     })
     //QR CODES
     .controller('QRCtrl', function($scope, apiService){
