@@ -71,7 +71,9 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap'])
             $window.alert('map clicked');
         };
         mec.createNew = function(evt) {
-            $scope.latlng = [evt.latLng.lat(), evt.latLng.lng()];
+            $scope.newlatlng = [evt.latLng.lat(), evt.latLng.lng()];
+            $scope.newlat = evt.latLng.lat();
+            $scope.newlng = evt.latLng.lng();
             console.log($scope.latLng);
         };
     })
