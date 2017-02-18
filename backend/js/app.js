@@ -11,7 +11,24 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap'])
         $scope.showTeams = true;
         $scope.showTeam = true;
         $scope.showTeamLocation = false;
+        $scope.showNewStation = true;
+        $scope.showNewRiddle = false;
         
+        $scope.createNewStation = function() {
+            
+            var data = {
+                name: $scope.newStationName,
+                description: $scope.newStationDescription,
+                pos_lat: $scope.newlat,
+                pos_long: $scope.newlng
+            };
+            console.log(data);
+            apiService.post('/station', data)
+                .then(function(){
+                    $Scope.refreshData();
+                }
+            );
+        };
 
         $scope.showTooltip = function(evt, id, obj) {
             $scope.shown = obj[id];

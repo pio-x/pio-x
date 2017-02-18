@@ -42,8 +42,31 @@
 							&nbsp;&nbsp;<input type="radio" name="teamRadioSelect" ng-checked="$index==0?true:false" ng-click="getTeamLocations(group.t_ID)"/> Team {{ group.t_ID }} anzeigen<br />
 						</span>
 						<hr/>
-						<input type="text" ng-model="newlat" />
-						<input type="text" ng-model="newlng" />
+						<span ng-if="newlat">
+							Neu erstellen:<br/>
+							<input type="radio" name="newobjSelect" ng-click="showNewStation = true" checked/> Station<br />
+							<input type="radio" name="newobjSelect" ng-click="showNewRiddle = true"/> Rätsel<br />
+							<hr />
+							<div class="input-group">
+								<span class="input-group-addon">Lat:</span>
+								<input class="form-control" type="text" ng-model="newlat"/>
+								<span class="input-group-addon">Lng:</span>
+								<input class="form-control" type="text" ng-model="newlng"/>
+							</div>
+							<span ng-if="showNewStation">
+								Neue Station:<br/>
+								<div class="input-group">
+									<span class="input-group-addon">Name:</span>
+									<input class="form-control" type="text" ng-model="newStationName"/>
+								</div>
+								<div class="input-group">
+									<span class="input-group-addon">Beschreibung:</span>
+									<input class="form-control" type="text" ng-model="newStationDescription"/>
+								</div>
+								<button ng-click="createNewStation()" class="btn btn-default">Station erstellen</button>
+							</span>
+
+						</span>
 					</div>
 				</div>
                 
