@@ -4,11 +4,21 @@
 }
 
 .actual-content {
+	padding-top: 10px;
+}
 
+body {
+	margin-bottom: 30px;
 }
 
 header {
 	text-align: center !important;
+}
+
+.navbar-brand>img {
+	display: inline-block;
+	vertical-align: top;
+	margin-right: 4px;
 }
 
 footer {
@@ -19,6 +29,10 @@ footer {
 	background: gray;
 	width: 100%;
 	text-align: center;
+	padding-top: 5px;
+	font-size: 80%;
+	opacity: 0.8;
+	color: white;
 }
 
 
