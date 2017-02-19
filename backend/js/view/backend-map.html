@@ -28,8 +28,8 @@
 									scale: 8 }" ng-if="showTeamLocation">
 								</marker>
 							</span>
-							<marker position="{{newlatlng}}" title="Neues Objekt" on-dragend="mec.createNew($event)" animation="DROP" draggable="true"></marker>
-							</ng-map>
+							<marker position="{{newlatlng}}" title="Neues Objekt" on-dragend="mec.createNew($event)" animation="DROP" draggable="true">
+							</marker>
 						</ng-map>
 					</div>
 					<div class="col-md-3">
@@ -44,8 +44,8 @@
 						<hr/>
 						<span ng-if="newlat">
 							Neu erstellen:<br/>
-							<input type="radio" name="newobjSelect" ng-click="showNewStation = true" checked/> Station<br />
-							<input type="radio" name="newobjSelect" ng-click="showNewRiddle = true"/> Rätsel<br />
+							<input type="radio" name="newobjSelect" value="station" ng-model="showNewObjectInput" checked/> Station<br />
+							<input type="radio" name="newobjSelect" value="riddle" ng-model="showNewObjectInput"/> Rätsel<br />
 							<hr />
 							<div class="input-group">
 								<span class="input-group-addon">Lat:</span>
@@ -53,17 +53,48 @@
 								<span class="input-group-addon">Lng:</span>
 								<input class="form-control" type="text" ng-model="newlng"/>
 							</div>
-							<span ng-if="showNewStation">
+							<span ng-if="showNewObjectInput == 'station'">
 								Neue Station:<br/>
 								<div class="input-group">
 									<span class="input-group-addon">Name:</span>
-									<input class="form-control" type="text" ng-model="newStationName"/>
+									<input class="form-control" type="text" ng-model="newStation.name"/>
 								</div>
 								<div class="input-group">
 									<span class="input-group-addon">Beschreibung:</span>
-									<input class="form-control" type="text" ng-model="newStationDescription"/>
+									<input class="form-control" type="text" ng-model="newStation.description"/>
 								</div>
 								<button ng-click="createNewStation()" class="btn btn-default">Station erstellen</button>
+							</span>
+							<span ng-if="showNewObjectInput == 'riddle'">
+								Neues Rätsel:<br/>
+								<div class="input-group">
+									<span class="input-group-addon">Titel:</span>
+									<input class="form-control" type="text" ng-model="newRiddle.title"/>
+								</div>
+								<div class="input-group">
+									<span class="input-group-addon">Frage:</span>
+									<input class="form-control" type="text" ng-model="newRiddle.question"/>
+								</div>
+								<div class="input-group">
+									<span class="input-group-addon">Anhängig:</span>
+									<input class="form-control" type="text" ng-model="newRiddle.dep_ID"/>
+								</div>
+								<div class="input-group">
+									<span class="input-group-addon">Antwort:</span>
+									<input class="form-control" type="text" ng-model="newRiddle.answer"/>
+								</div>
+								<div class="input-group">
+									<span class="input-group-addon">Typ:</span>
+									<select class="form-control" ng-model="newRiddle.type">
+										<option value="MULTI">MULTI</option>
+										<option value="SINGLE" selected>SINGLE</option>
+									</select>
+								</div>
+								<div class="input-group">
+									<span class="input-group-addon">Punkte:</span>
+									<input class="form-control" type="text" ng-model="newRiddle.points"/>
+								</div>
+								<button ng-click="createNewRiddle()" class="btn btn-default">Station erstellen</button>
 							</span>
 
 						</span>
