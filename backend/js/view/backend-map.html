@@ -1,7 +1,7 @@
-				<div ng-controller="mapEventCtrl as mec">
+				<div ng-controller="mapCtrl">
 					<div map-lazy-load="https://maps.google.com/maps/api/js?key=AIzaSyAjEW54VdlWZT07n90oTjvaLIl3q27ZL4Y" class="col-md-9">
-						<ng-map center="47.498934,8.728970" zoom="14" style="height: 600px" on-click="mec.createNew($event)">
-                            <map-info />
+						<ng-map center="47.498934,8.728970" zoom="14" style="height: 600px" on-click="showCreateNew($event)">
+							<map-info />
 							<marker position="[{{ station.pos_lat }},{{ station.pos_long }}]" on-click="showTooltip($index, stations)" ng-repeat="station in stations track by $index" icon="{
 								path: 0,
 								strokeColor: '#000',
@@ -28,7 +28,7 @@
 									scale: 8 }" ng-if="showTeamLocation">
 								</marker>
 							</span>
-							<marker position="{{newlatlng}}" title="Neues Objekt" on-dragend="mec.createNew($event)" animation="DROP" draggable="true">
+							<marker position="{{newObjectPosition}}" title="Neues Objekt" on-dragend="showCreateNew($event)" animation="DROP" draggable="true">
 							</marker>
 						</ng-map>
 					</div>
@@ -100,4 +100,3 @@
 						</span>
 					</div>
 				</div>
-                

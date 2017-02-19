@@ -1,6 +1,6 @@
 var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap'])
     //MAP
-    .controller('mapCtrl', function($scope, NgMap, apiService) {
+    .controller('mapCtrl', function($scope, NgMap, apiService, $window) {
         NgMap.getMap().then(function(map) {
             $scope.map = map;
         });
@@ -13,24 +13,21 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap'])
         $scope.showTeamLocation = false;
         $scope.showNewObjectInput = 'station';
         $scope.showNewRiddle = false;
+        $scope.newStation = {};
 
         $scope.createNewStation = function() {
             var data = {
-                name: $scope.newStationName,
+                name: $scope.newStation.name,
                 description: $scope.newStation.description,
                 pos_lat: $scope.newlat,
                 pos_long: $scope.newlng
             };
             console.log(data);
-            console.log($scope.newStation.name);
-            console.log($scope.newStation.description);
-            console.log($scope.newlat);
-            console.log($scope.newlng);
-            /*apiService.post('/station', data)
+            apiService.post('/station', data)
                 .then(function(){
                     $scope.refreshData();
                 }
-            );*/
+            );
         };
 
         $scope.showTooltip = function(evt, id, obj) {
@@ -83,18 +80,14 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap'])
             $scope.getMrxs();
             $scope.getRiddles();
         };
-    })
-    // MAP EVENT Controller
-    .controller('mapEventCtrl', function($scope, $window) {
-        var mec = this;
-        mec.showAlert = function() {
+
+        $scope.showAlert = function() {
             $window.alert('map clicked');
         };
-        mec.createNew = function(evt) {
-            $scope.newlatlng = [evt.latLng.lat(), evt.latLng.lng()];
+        $scope.showCreateNew = function(evt) {
+            $scope.newObjectPosition = [evt.latLng.lat(), evt.latLng.lng()];
             $scope.newlat = evt.latLng.lat();
             $scope.newlng = evt.latLng.lng();
-            console.log($scope.latLng);
         };
     })
     //QR CODES
