@@ -42,6 +42,8 @@ export class MapPage {
     riddles: Riddle[];
     config: Config;
 
+    lastInfowindow: any = null;
+
     fa: any;
 
     userLocation: LatLngLocation;
@@ -172,6 +174,13 @@ export class MapPage {
         } else {
             return '#000';
         }
+    }
+
+    onInfoWindowOpen(infoWindow) {
+      if (this.lastInfowindow && this.lastInfowindow !== infoWindow){
+         this.lastInfowindow.close();
+      }
+      this.lastInfowindow = infoWindow;
     }
 
 }

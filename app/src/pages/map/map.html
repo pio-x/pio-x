@@ -39,7 +39,7 @@
     >
     </sebm-google-map-circle>
 
-
+    <!-- Home Location -->
     <sebm-google-map-marker
             *ngIf="!config.game_is_running"
             [latitude]="config.home_location_lat"
@@ -64,6 +64,7 @@
     <!-- Station Icons -->
     <sebm-google-map-marker
             *ngFor="let station of stations"
+            (markerClick)="onInfoWindowOpen(infowindowstation)"
             [latitude]="station.pos_lat"
             [longitude]="station.pos_long"
             [iconUrl]="{
@@ -75,7 +76,7 @@
                 scale: 8
             }"
     >
-      <sebm-google-map-info-window [disableAutoPan]="true">
+      <sebm-google-map-info-window [disableAutoPan]="true" #infowindowstation>
         <h3>{{station.name}}</h3>
         <div *ngIf="teams[station.team]">
           <span *ngIf="station.team == myTeam"><i>Diese Station gehört deinem Team.</i></span>
@@ -133,6 +134,7 @@
     <!-- Mrx Icons -->
     <sebm-google-map-marker
             *ngFor="let mrx of mrxs"
+            (markerClick)="onInfoWindowOpen(infowindowmrx)"
             [latitude]="mrx.locations[0].xpos_lat"
             [longitude]="mrx.locations[0].xpos_long"
             [iconUrl]="{
@@ -142,7 +144,7 @@
                 scaledSize: {width: 27, height: 30}
             }"
     >
-      <sebm-google-map-info-window [disableAutoPan]="true">
+      <sebm-google-map-info-window [disableAutoPan]="true" #infowindowmrx>
         <h3>{{mrx.name}}</h3>
         <div>
           {{mrx.locations[0].description}}
@@ -174,6 +176,7 @@
 
         <!-- Riddle Icons -->
         <sebm-google-map-marker
+                (markerClick)="onInfoWindowOpen(infowindowriddle)"
                 [latitude]="riddle.pos_lat"
                 [longitude]="riddle.pos_long"
                 [iconUrl]="{
@@ -187,7 +190,7 @@
                     fillOpacity: 1
                 }"
         >
-          <sebm-google-map-info-window [disableAutoPan]="true">
+          <sebm-google-map-info-window [disableAutoPan]="true" #infowindowriddle>
             <page-riddle-detail [riddle]="riddle"></page-riddle-detail>
           </sebm-google-map-info-window>
         </sebm-google-map-marker>
