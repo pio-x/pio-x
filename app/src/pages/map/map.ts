@@ -116,7 +116,8 @@ export class MapPage {
             this.stationService.updateStations(),
             this.teamService.updateTeams(),
             this.mrxService.updateMrxs(),
-            this.riddleService.updateRiddles()
+            this.riddleService.updateRiddles(),
+            this.configService.updateConfig()
         ]).then(() => {
             this.isRefreshing = false;
         });
