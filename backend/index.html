@@ -147,7 +147,7 @@
 								<td>{{ parseDate(log.timestamp) | date: 'HH:mm dd.MM.yyyy' }}</td>
 								<td>{{ log.type }}</td>
 								<td>{{ log.FK_ID }}</td>
-								<td>{{ log.text }} > {{ apiUrl }} <</td>
+								<td>{{ log.text }}</td>
 								<td><img ng-src="{{ apiUrl + log.image }}.jpg{{ imgHash }}"/ height="50" ng-if="log.image"></td>
 								<!-- TODO Bildanzeige optimieren -->
 								<td><button ng-click="updateLog(log.n_ID, msg)" class="btn btn-default">&#128190;</button></td>
