@@ -28,24 +28,24 @@
 									scale: 8 }" ng-if="showTeamLocation">
 								</marker>
 							</span>
-							<marker position="{{newObjectPosition}}" title="Neues Objekt" on-dragend="showCreateNew($event)" animation="DROP" draggable="true">
+							<marker position="{{newObjectPosition}}" title="Neues Objekt" on-dragend="showCreateNew($event)" animation="DROP" draggable="true" ng-if="newObjectPosition.length">
 							</marker>
 						</ng-map>
 					</div>
 					<div class="col-md-3">
 						<button ng-click="refreshData()" class="btn btn-default">Alle Daten aktualisieren</button><br />
-						<input type="checkbox" ng-model="showStations" checked /> Stationen anzeigen<br />
-						<input type="checkbox" ng-model="showRiddles" checked /> Rätsel anzeigen<br />
-						<input type="checkbox" ng-model="showMrxs" checked /> Alle Mr. X anzeigen<br />
-						<input type="checkbox" ng-model="showTeamLocation" /> Team anzeigen<br />
+						<label><input type="checkbox" ng-model="showStations" checked /> Stationen anzeigen</label><br />
+						<label><input type="checkbox" ng-model="showRiddles" checked /> Rätsel anzeigen</label><br />
+						<label><input type="checkbox" ng-model="showMrxs" checked /> Alle Mr. X anzeigen</label><br />
+						<label><input type="checkbox" ng-model="showTeamLocation" /> Team anzeigen</label><br />
 						<span ng-repeat="group in groups" ng-if="showTeamLocation">
-							&nbsp;&nbsp;<input type="radio" name="teamRadioSelect" ng-checked="$index==0?true:false" ng-click="getTeamLocations(group.t_ID)"/> Team {{ group.t_ID }} anzeigen<br />
+							&nbsp;&nbsp;<label><input type="radio" name="teamRadioSelect" ng-checked="$index==0?true:false" ng-click="getTeamLocations(group.t_ID)"/> Team {{ group.t_ID }} anzeigen</label><br />
 						</span>
 						<hr/>
 						<span ng-if="newlat">
 							Neu erstellen:<br/>
-							<input type="radio" name="newobjSelect" value="station" ng-model="showNewObjectInput" checked/> Station<br />
-							<input type="radio" name="newobjSelect" value="riddle" ng-model="showNewObjectInput"/> Rätsel<br />
+							<label><input type="radio" name="newobjSelect" value="station" ng-model="showNewObjectInput" checked/> Station</label><br />
+							<label><input type="radio" name="newobjSelect" value="riddle" ng-model="showNewObjectInput"/> Rätsel</label><br />
 							<hr />
 							<div class="input-group">
 								<span class="input-group-addon">Lat:</span>

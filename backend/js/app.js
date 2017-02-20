@@ -12,8 +12,8 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap'])
         $scope.showTeam = true;
         $scope.showTeamLocation = false;
         $scope.showNewObjectInput = 'station';
-        $scope.showNewRiddle = false;
         $scope.newStation = {};
+        $scope.newObjectPosition = [];
 
         $scope.createNewStation = function() {
             var data = {
@@ -22,12 +22,23 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap'])
                 pos_lat: $scope.newlat,
                 pos_long: $scope.newlng
             };
-            console.log(data);
+            //console.log(data);
             apiService.post('/station', data)
                 .then(function(){
                     $scope.refreshData();
+                    $scope.newlat = '';
+                    $scope.newlng = '';
+                    $scope.newStation = {};
+                    $scope.newObjectPosition = [];
+                    //console.log($scope.newObjectPosition)
                 }
             );
+        };
+
+        $scope.showCreateNew = function(evt) {
+            $scope.newObjectPosition = [evt.latLng.lat(), evt.latLng.lng()];
+            $scope.newlat = evt.latLng.lat();
+            $scope.newlng = evt.latLng.lng();
         };
 
         $scope.showTooltip = function(evt, id, obj) {
@@ -79,15 +90,6 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap'])
             $scope.getStations();
             $scope.getMrxs();
             $scope.getRiddles();
-        };
-
-        $scope.showAlert = function() {
-            $window.alert('map clicked');
-        };
-        $scope.showCreateNew = function(evt) {
-            $scope.newObjectPosition = [evt.latLng.lat(), evt.latLng.lng()];
-            $scope.newlat = evt.latLng.lat();
-            $scope.newlng = evt.latLng.lng();
         };
     })
     //QR CODES
