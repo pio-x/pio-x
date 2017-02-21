@@ -96,17 +96,11 @@
 								</div>
 								<div class="input-group">
 									<span class="input-group-addon">Antwort?:</span>
-									<select class="form-control" ng-model="newRiddle.answer_required">
-										<option value="0">Nein</option>
-										<option value="1" selected>Ja</option>
-									</select>
+									<input type="checkbox" class="form-control" ng-model="newRiddle.answer_required" ng-true-value="1" ng-false-value="0"/>
 								</div>
 								<div class="input-group">
 									<span class="input-group-addon">Bild?:</span>
-									<select class="form-control" ng-model="newRiddle.image_required">
-										<option value="1">Ja</option>
-										<option value="0" selected>Nein</option>
-									</select>
+									<input type="checkbox" class="form-control" ng-model="newRiddle.image_required" ng-true-value="1" ng-false-value="0"/>
 								</div>
 								<button ng-click="createNewRiddle()" class="btn btn-default">Rätsel speichern</button>
 							</span>
