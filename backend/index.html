@@ -61,8 +61,10 @@
 				</div>
 				<!-- TEAMS -->
 				<div role="tabpanel" class="tab-pane" id="teams" ng-controller="teamCtrl">
-					<p>Suche:
-					<input type="text" ng-model="search" class="form-control"></p>
+					<div class="input-group">
+						<span class="input-group-addon">Suche:</span>
+						<input type="text" ng-model="search" class="form-control">
+					</div>
 					<table id="teamliste" class="table table-striped">
 						<tr>
 								<td>ID</td>
@@ -93,6 +95,10 @@
 				</div>
 				<!-- STATIONS -->
 				<div role="tabpanel" class="tab-pane" id="stationen" ng-controller="stationCtrl">
+					<div class="input-group">
+						<span class="input-group-addon">Suche:</span>
+						<input type="text" ng-model="search" class="form-control">
+					</div>
 					<table id="stationenliste" class="table table-striped">
 						<tr>
 								<td>ID</td>
@@ -105,7 +111,7 @@
 								<td></td>
 								<td></td>
 						</tr>
-						<tr ng-repeat="station in stations">
+						<tr ng-repeat="station in stations | filter:search">
 								<td>{{ station.s_ID }}</td>
 								<td><input type="text" class="form-control" value="{{ station.name }}" ng-model="station.name"/></td>
 								<td><input type="text" class="form-control" value="{{ station.description }}" ng-model="station.description"/></td>
@@ -131,6 +137,10 @@
 				<!-- LOG / IMAGES / STREAM -->
 				<div role="tabpanel" class="tab-pane" id="stream" ng-controller="logCtrl">
 					<div id="loglist">
+						<div class="input-group">
+							<span class="input-group-addon">Suche:</span>
+							<input type="text" ng-model="search" class="form-control">
+						</div>
 						<table class="table table-striped">
 							<tr>
 								<td>ID</td>
@@ -142,7 +152,7 @@
 								<td></td>
 								<td></td>
 							</tr>
-							<tr ng-repeat="log in logs">
+							<tr ng-repeat="log in logs | filter:search">
 								<td>{{ log.l_ID }}</td>
 								<td>{{ parseDate(log.timestamp) | date: 'HH:mm dd.MM.yyyy' }}</td>
 								<td>{{ log.type }}</td>
@@ -159,6 +169,10 @@
 				<!-- NOTIFICATIONS -->
 				<div role="tabpanel" class="tab-pane" id="notifications" ng-controller="notificationCtrl">
 					<div id="notificationlist">
+						<div class="input-group">
+							<span class="input-group-addon">Suche:</span>
+							<input type="text" ng-model="search" class="form-control">
+						</div>
 						<table class="table table-striped">
 							<tr>
 								<td>ID</td>
@@ -169,7 +183,7 @@
 								<td></td>
 								<td></td>
 							</tr>
-							<tr ng-repeat="msg in notifications">
+							<tr ng-repeat="msg in notifications | filter:search">
 								<td>{{ msg.n_ID }}</td>
 								<td>{{ msg.title }}</td>
 								<td>{{ msg.text }}</td>
@@ -196,6 +210,10 @@
 				<!-- PASSCODES -->
 				<div role="tabpanel" class="tab-pane" id="passcodes" ng-controller="passcodeCtrl">
 					<div id="passcodelist">
+						<div class="input-group">
+							<span class="input-group-addon">Suche:</span>
+							<input type="text" ng-model="search" class="form-control">
+						</div>
 						<table class="table table-striped">
 							<tr>
 								<td>ID</td>
@@ -206,7 +224,7 @@
 								<td></td>
 								<td></td>
 							</tr>
-							<tr ng-repeat="code in passcodes">
+							<tr ng-repeat="code in passcodes | filter:search">
 								<td><input type="text" class="form-control" value="{{ code.p_ID }}" ng-model="code.p_ID"/></td>
 								<td><input type="text" class="form-control" value="{{ code.code }}" ng-model="code.code"/></td>
 								<td><input type="text" class="form-control" value="{{ code.points }}" ng-model="code.points"/></td>
@@ -229,6 +247,10 @@
 				<!-- RIDDLES -->
 				<div role="tabpanel" class="tab-pane" id="raetsel" ng-controller="riddleCtrl">
 					<div id="riddlelist">
+						<div class="input-group">
+							<span class="input-group-addon">Suche:</span>
+							<input type="text" ng-model="search" class="form-control">
+						</div>
 						<table class="table table-striped">
 							<tr>
 								<td>ID</td>
@@ -245,7 +267,7 @@
 								<td></td>
 								<td></td>
 							</tr>
-							<tr ng-repeat="riddle in riddles">
+							<tr ng-repeat="riddle in riddles | filter:search">
 								<td>{{ riddle.r_ID }}</td>
 								<td class="col-xs-1"><input type="text" class="form-control input-sm" value="{{ riddle.pos_lat }}" ng-model="riddle.pos_lat"/></td>
 								<td class="col-xs-1"><input type="text" class="form-control input-sm" value="{{ riddle.pos_long }}" ng-model="riddle.pos_long"/></td>
@@ -327,7 +349,10 @@
 				</div>
 				<!-- Config -->
 				<div role="tabpanel" class="tab-pane" id="config" ng-controller="configCtrl">
-
+					<div class="input-group">
+						<span class="input-group-addon">Suche:</span>
+						<input type="text" ng-model="search" class="form-control">
+					</div>
 					<table class="table table-striped">
 						<tr ng-repeat="(key,conf) in config">
 								<td>{{key}}</td>
