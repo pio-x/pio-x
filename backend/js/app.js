@@ -13,7 +13,12 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap'])
         $scope.showTeamLocation = false;
         $scope.showNewObjectInput = 'station';
         $scope.newStation = {};
-        $scope.newRiddle = {};
+        $scope.newRiddle = {
+            type: "MULTI",
+            answer_required: 1,
+            image_required: 0,
+            points: 1
+        };
         $scope.newObjectPosition = [];
 
         $scope.createNewStation = function() {
