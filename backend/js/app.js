@@ -13,6 +13,7 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap'])
         $scope.showTeamLocation = false;
         $scope.showNewObjectInput = 'station';
         $scope.newStation = {};
+        $scope.newRiddle = {};
         $scope.newObjectPosition = [];
 
         $scope.createNewStation = function() {
@@ -29,6 +30,33 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap'])
                     $scope.newlat = '';
                     $scope.newlng = '';
                     $scope.newStation = {};
+                    $scope.newObjectPosition = [];
+                    //console.log($scope.newObjectPosition)
+                }
+            );
+        };
+
+        $scope.createNewRiddle = function() {
+            //console.log($scope.newRiddle.title);
+            var data = {
+                title: $scope.newRiddle.title,
+                question: $scope.newRiddle.question,
+                pos_lat: $scope.newlat,
+                pos_long: $scope.newlng,
+                dep_ID: $scope.newRiddle.dep_ID,
+                answer: $scope.newRiddle.answer,
+                type: $scope.newRiddle.type,
+                points: $scope.newRiddle.points,
+                answer_required: $scope.newRiddle.answer_required,
+                image_required: $scope.newRiddle.image_required
+            };
+            //console.log(data);
+            apiService.post('/riddle', data)
+                .then(function(){
+                    $scope.refreshData();
+                    $scope.newlat = '';
+                    $scope.newlng = '';
+                    $scope.newRiddle = {};
                     $scope.newObjectPosition = [];
                     //console.log($scope.newObjectPosition)
                 }

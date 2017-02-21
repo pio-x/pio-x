@@ -68,7 +68,7 @@
 							<span ng-if="showNewObjectInput == 'riddle'">
 								Neues Rätsel:<br/>
 								<div class="input-group">
-									<span class="input-group-addon">Titel:</span>
+									<span class="input-group-addon">Titel: {{ newRiddle.title }}</span>
 									<input class="form-control" type="text" ng-model="newRiddle.title"/>
 								</div>
 								<div class="input-group">
@@ -94,7 +94,21 @@
 									<span class="input-group-addon">Punkte:</span>
 									<input class="form-control" type="text" ng-model="newRiddle.points"/>
 								</div>
-								<button ng-click="createNewRiddle()" class="btn btn-default">Station erstellen</button>
+								<div class="input-group">
+									<span class="input-group-addon">Antwort?:</span>
+									<select class="form-control" ng-model="newRiddle.answer_required">
+										<option value="0">Nein</option>
+										<option value="1" selected>Ja</option>
+									</select>
+								</div>
+								<div class="input-group">
+									<span class="input-group-addon">Bild?:</span>
+									<select class="form-control" ng-model="newRiddle.image_required">
+										<option value="1">Ja</option>
+										<option value="0" selected>Nein</option>
+									</select>
+								</div>
+								<button ng-click="createNewRiddle()" class="btn btn-default">Rätsel speichern</button>
 							</span>
 
 						</span>
