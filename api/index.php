@@ -349,10 +349,13 @@ $app->post('/riddle',function (Request $request, Response $response) use (&$DB) 
 	$data = array('pos_lat' => $body['pos_lat'],
 				'pos_long' => $body['pos_long'],
 				'question' => $body['question'],
+				'title' => $body['title'],
 				'answer' => $body['answer'],
 				'type' => $body['type'],
 				'points' => $body['points'],
-				'dep_ID' => $body['dep_ID']);
+				'answer_required' => $body['answer_required'],
+				'image_required' => $body['image_required'],
+				'dep_ID' => isset($body['dep_ID']) ? $body['dep_ID'] : NULL);
 
 	$DB->insert('riddle', $data);
 
@@ -369,10 +372,13 @@ $app->put('/riddle/{id}',function (Request $request, Response $response, $args) 
 	$data = array('pos_lat' => $body['pos_lat'],
 				'pos_long' => $body['pos_long'],
 				'question' => $body['question'],
+				'title' => $body['title'],
 				'answer' => $body['answer'],
 				'type' => $body['type'],
 				'points' => $body['points'],
-				'dep_ID' => $body['dep_ID']);
+				'answer_required' => $body['answer_required'],
+				'image_required' => $body['image_required'],
+				'dep_ID' => isset($body['dep_ID']) ? $body['dep_ID'] : NULL);
 
 	$DB->update('riddle', $data, array('r_ID' => $riddleId));
 

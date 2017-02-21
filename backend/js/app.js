@@ -331,11 +331,14 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap'])
             $scope.newRiddle = {
                 pos_lat: "",
                 pos_long: "",
+                title: "",
                 question: "",
                 dep_ID: "",
                 answer: "",
                 type: "MULTI",
-                points: 1
+                points: 1,
+                answer_required: 1,
+                image_required: 0
             };
         };
         $scope.emptyNewRiddle();
