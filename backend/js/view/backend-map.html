@@ -51,7 +51,8 @@
 									geodesic="true"
 									stroke-color="#FF0000"
 									stroke-opacity="1.0"
-									stroke-weight="2" ng-repeat="location in locations track by $index">
+									stroke-weight="2" ng-repeat="location in locations track by $index"
+									ng-if="showTeamLocation">
 								</shape>
 							</span>
 							<marker position="{{newObjectPosition}}" title="Neues Objekt" on-dragend="showCreateNew($event)" animation="DROP" draggable="true" ng-if="newObjectPosition.length">
