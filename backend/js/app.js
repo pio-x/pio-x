@@ -142,6 +142,15 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap'])
     })
     //QR CODES CONTROLLER ==============================================================================
     .controller('QRCtrl', function($scope, apiService){
+        //Initiiert die Basis URL, je nach Standort der Installation
+        $scope.baseURL = 'https://api.pio-x.ch';
+        if(window.location.host == "localhost") {
+            $scope.baseURL = 'http://localhost' + window.location.pathname + '../api';
+            if(window.location.pathname.substr("passcodes.html")) {
+                $scope.baseURL = 'http://localhost' + window.location.pathname.substr(0, window.location.pathname.lastIndexOf('/')) + '/../app/www';
+            }
+        }
+
         //Aktualisiert die Teams
         $scope.getTeams = function() {
             apiService.get('/team').then(function(articlesResponse) {

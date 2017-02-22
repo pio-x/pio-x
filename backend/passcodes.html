@@ -19,18 +19,18 @@
 
 <body>
     <!-- QR CODES -->
-	<div id="qrcodes" ng-controller="QRViewCtrl">
+	<div id="qrcodes" ng-controller="QRCtrl">
         <div ng-repeat="group in groups">
-          <img style="float:right; width:180px" src="passcodes/Logo.png">
+          <img style="float:right; width:180px" src="img/logo2.png">
             <h1>Gruppe {{group.name}} ({{group.t_ID}})</h1>
             Scanne diesen QR-Code mit dem Handy, um ins Spiel einzusteigen:<br><br>
             <div>
                 <qrcode version="5" error-correction-level="M" size="200" 
-                data="https://app.pio-x.ch/login.html?team={{group.t_ID}}&hash={{group.hash}}" ></qrcode>
+                data="{{ baseURL }}/login.html?team={{group.t_ID}}&hash={{group.hash}}" ></qrcode>
             </div>
             <br>
             Adresse zum eintippen falls du kein QR-Code Programm hast: <br>
-            https://app.pio-x.ch/login.html?team={{group.t_ID}}&hash={{group.hash}}
+            {{ baseURL }}/login.html?team={{group.t_ID}}&hash={{group.hash}}
 
  <h3>Spielregeln</h3>
   <h5>Stationen</h5>
@@ -77,7 +77,7 @@
 
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
 	<script src="js/app.js"></script>
-  <script src="passcodes/passcodes.js"></script>
+  
 	<script src="js/services/apiService.js"></script>
 	<script src="js/vendor/qrcode.js"></script>
 	<script src="js/vendor/angular-qrcode.js"></script>

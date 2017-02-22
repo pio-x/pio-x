@@ -2,6 +2,9 @@ backendApp.factory('apiService', ['$http', '$rootScope', function($http, $rootSc
     var baseURL = 'https://api.pio-x.ch';
     if(window.location.host == "localhost") {
         baseURL = 'http://localhost' + window.location.pathname + '../api';
+        if(window.location.pathname.substr("passcodes.html")) {
+            baseURL = window.location.pathname.substr(0, window.location.pathname.lastIndexOf('/')) + '/../api';
+        }
     }
     return {
         get:function(url) {
