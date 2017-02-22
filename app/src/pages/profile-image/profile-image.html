@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Team Bild ändern
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <image-uploader [(tags)]="tags" [(image)]="imageData"></image-uploader>
+  <br>
+  <br>
+  <p>
+    <button ion-button full color="secondary" (click)="uploadImage()" [disabled]="!imageData">Bild hochladen</button>
+    <br>
+    <button ion-button full color="danger" (click)="dismiss()">Abbrechen</button>
+  </p>
+</ion-content>

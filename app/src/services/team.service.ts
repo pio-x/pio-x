@@ -34,6 +34,11 @@ export class TeamService {
     return promise;
   }
 
+  updateProfileImage(imageData: any): Promise<any> {
+      let teamId: string = localStorage.getItem('team');
+      return this.pioxApi.put('/team/' + teamId + '/image', imageData)
+  }
+
   private handleError(error: any): Promise<any> {
 
     console.error('An error occurred', error); // for demo purposes only

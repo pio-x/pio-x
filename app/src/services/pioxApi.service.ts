@@ -47,6 +47,12 @@ export class PioxApiService {
                     .then(response => response.json())
                     .catch(this.handleError);
   }
+  put(url, data): Promise<any> {
+    return this.http.put(this.baseurl + url, data, this.getOptions())
+                    .toPromise()
+                    .then(response => response.json())
+                    .catch(this.handleError);
+  }
 
   private handleError(error: any): Promise<any> {
 

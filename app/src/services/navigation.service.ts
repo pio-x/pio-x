@@ -4,6 +4,7 @@ import { Injectable }    from '@angular/core';
 import { ActionSheetController } from 'ionic-angular';
 import { ModalController } from 'ionic-angular';
 import { PasscodePage } from '../pages/passcode/passcode';
+import { ProfileImagePage } from '../pages/profile-image/profile-image';
 
 
 @Injectable()
@@ -37,6 +38,12 @@ export class NavigationService {
                 }
             },
             {
+                text: 'Profilbild ändern',
+                handler: () => {
+                    this.openProfileImageModal();
+                }
+            },
+            {
                 text: 'Abbrechen',
                 role: 'cancel',
                 handler: () => {}
@@ -50,5 +57,10 @@ export class NavigationService {
   openPasscodeModal() {
       let passcodeModal = this.modalCtrl.create(PasscodePage);
       passcodeModal.present();
+  }
+
+  openProfileImageModal() {
+      let modal = this.modalCtrl.create(ProfileImagePage);
+      modal.present();
   }
 }

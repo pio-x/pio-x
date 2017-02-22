@@ -16,6 +16,7 @@ import {RiddleDetailPage} from "../pages/riddles/riddleDetail";
 import {GameStreamPage} from "../pages/notifications/game_stream";
 import {NotificationTabPage} from "../pages/notifications/notification_tab";
 import {PasscodePage} from "../pages/passcode/passcode";
+import {ProfileImagePage} from "../pages/profile-image/profile-image";
 import {MrxPage} from "../pages/mrx/mrx";
 
 import {PioxApiService} from "../services/pioxApi.service";
@@ -53,6 +54,7 @@ import { ImageUploadModule } from 'ng2-imageupload';
     NotificationTabPage,
     PasscodePage,
     MrxPage,
+    ProfileImagePage,
     ImageUploader
   ],
   imports: [
@@ -77,6 +79,7 @@ import { ImageUploadModule } from 'ng2-imageupload';
     GameStreamPage,
     NotificationTabPage,
     PasscodePage,
+    ProfileImagePage,
     MrxPage
   ],
   providers: [
