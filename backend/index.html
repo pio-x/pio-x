@@ -309,9 +309,16 @@
 				</div>
 				<!-- QR CODES -->
 				<div role="tabpanel" class="tab-pane" id="qrcodes" ng-controller="QRCtrl">
-					<p>Welchen Code möchtest du anzeigen?
-					<input type="text" ng-model="search" class="form-control"></p>
-					<h3>{{ search ? 'Gefilterte' : 'Alle' }} QR Codes</h3>
+					<div class="input-group">
+						<span class="input-group-addon">Suche:</span>
+						<input type="text" ng-model="search" class="form-control">
+					</div>
+					<table>
+						<tr>
+							<td class="col-sm-6"><h3>{{ search ? 'Gefilterte' : 'Alle' }} QR Codes</h3></td>
+							<td><button ng-click="refresh()" class="btn btn-default">Liste Aktualisieren</button></td>
+						</tr>
+					</table>
 					<table class="table table-striped">
 						<tr>
 							<td>ID</td>
@@ -319,9 +326,8 @@
 							<td>Hash</td>
 							<td>QR Code</td>
 							<td rowspan="{{ groups.length + mrxs.length }}">
-								QR Code<span ng-if="qrUrl.team"> von {{ qrUrl.team }}</span>
 								<div ng-if="qrUrl.team">
-									<a href="{{ qrUrl.link }}">{{ qrUrl.link }}</a> <br/>
+									<a href="{{ qrUrl.link }}">Login Link für Team {{ qrUrl.team }}</a> <br/>
 									<qrcode version="5" error-correction-level="M" size="200" data="{{ qrUrl.link }}" href="{{ qrUrl.link }}"></qrcode>
 								</div>
 							</td>
