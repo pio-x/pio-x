@@ -104,32 +104,37 @@
 								<td>ID</td>
 								<td>Name</td>
 								<td>Beschreibung</td>
-								<td>Latitude</td>
-								<td>Longitude</td>
-								<td>Letzte Einnahme</td>
+								<td>LAT</td>
+								<td>LNG</td>
+								<td>Einnahme</td>
 								<td>Team Besitz</td>
 								<td></td>
 								<td></td>
 						</tr>
 						<tr ng-repeat="station in stations | filter:search">
 								<td>{{ station.s_ID }}</td>
-								<td><input type="text" class="form-control" value="{{ station.name }}" ng-model="station.name"/></td>
-								<td><input type="text" class="form-control" value="{{ station.description }}" ng-model="station.description"/></td>
-								<td><input type="text" class="form-control" value="{{ station.pos_lat }}" ng-model="station.pos_lat"/></td>
-								<td><input type="text" class="form-control" value="{{ station.pos_long }}" ng-model="station.pos_long"/></td>
+								<td><input type="text" class="form-control input-sm" value="{{ station.name }}" ng-model="station.name"/></td>
+								<td class="col-xs-4"><input type="text" class="form-control input-sm" value="{{ station.description }}" ng-model="station.description"/></td>
+								<td class="col-xs-1"><input type="text" class="form-control input-sm" value="{{ station.pos_lat }}" ng-model="station.pos_lat"/></td>
+								<td class="col-xs-1"><input type="text" class="form-control input-sm" value="{{ station.pos_long }}" ng-model="station.pos_long"/></td>
 								<td>{{ station.captured_timestamp | moment:'HH:mm.ss' }}</td>
-								<td><input type="text" class="form-control" value="{{ station.team }}" ng-model="station.team"/></td>
-								<td><button ng-click="updateStation(station.s_ID, station)" class="btn btn-default">&#128190;</button></td>
-								<td><button ng-click="deleteStation(station.s_ID)" class="btn btn-default" ng-confirm-click="ACHTUNG: Willst Du diese Station wirklich löschen?">&#9003;</button></td>
+								<td>
+									<select ng-model="station.team" class="form-control input-sm" ng-controller="teamPickerCtrl">
+										<option ng-repeat="team in groups" value="{{ team.t_ID }}">{{ team.name }}</option>
+									</select><!-- TODO Hier klappt die Übergabe vom Team beim Save nicht -->
+								</td>
+								<!--<td>{{ station.team }}</td>-->
+								<td><button ng-click="updateStation(station.s_ID, station)" class="btn btn-default input-sm">&#128190;</button></td>
+								<td><button ng-click="deleteStation(station.s_ID)" class="btn btn-default input-sm" ng-confirm-click="ACHTUNG: Willst Du diese Station wirklich löschen?">&#9003;</button></td>
 						</tr>
 						<tr>
 							<td>NEU</td>
-							<td><input type="text" class="form-control" ng-model="newStation.name"/></td>
-							<td><input type="text" class="form-control" ng-model="newStation.description"/></td>
-							<td><input type="text" class="form-control" ng-model="newStation.pos_lat"/></td>
-							<td><input type="text" class="form-control" ng-model="newStation.pos_long"/></td>
-							<td><input type="text" class="form-control" ng-model="newStation.captured_timestamp"/></td>
-							<td><input type="text" class="form-control" ng-model="newStation.team"/></td>
+							<td><input type="text" class="form-control input-sm" ng-model="newStation.name"/></td>
+							<td><input type="text" class="form-control input-sm" ng-model="newStation.description"/></td>
+							<td><input type="text" class="form-control input-sm" ng-model="newStation.pos_lat"/></td>
+							<td><input type="text" class="form-control input-sm" ng-model="newStation.pos_long"/></td>
+							<td><input type="text" class="form-control input-sm" ng-model="newStation.captured_timestamp"/></td>
+							<td><input type="text" class="form-control input-sm" ng-model="newStation.team"/></td>
 							<td colspan="2"><button ng-click="addNewStation(newStation)" class="btn btn-default" ng-disabled="!newStation.name">&#128190; Erstellen</button></td>
 						</tr>
 					</table>
