@@ -459,4 +459,9 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap'])
                     alert('Config erfolgreich gespeichert!');
                 });
         };
+    })
+    .filter('moment', function() {
+        return function(dateString, format) {
+            return moment(dateString).format(format);
+        };
     });

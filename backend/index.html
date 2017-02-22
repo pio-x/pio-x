@@ -117,7 +117,7 @@
 								<td><input type="text" class="form-control" value="{{ station.description }}" ng-model="station.description"/></td>
 								<td><input type="text" class="form-control" value="{{ station.pos_lat }}" ng-model="station.pos_lat"/></td>
 								<td><input type="text" class="form-control" value="{{ station.pos_long }}" ng-model="station.pos_long"/></td>
-								<td><input type="text" class="form-control" value="{{ station.captured_timestamp | date: 'HH:mm dd.MM.yyyy' }}" ng-model="station.captured_timestamp"/></td>
+								<td>{{ station.captured_timestamp | moment:'h:mm.ss' }}</td>
 								<td><input type="text" class="form-control" value="{{ station.team }}" ng-model="station.team"/></td>
 								<td><button ng-click="updateStation(station.s_ID, station)" class="btn btn-default">&#128190;</button></td>
 								<td><button ng-click="deleteStation(station.s_ID)" class="btn btn-default" ng-confirm-click="ACHTUNG: Willst Du diese Station wirklich löschen?">&#9003;</button></td>
@@ -154,7 +154,7 @@
 							</tr>
 							<tr ng-repeat="log in logs | filter:search">
 								<td>{{ log.l_ID }}</td>
-								<td>{{ parseDate(log.timestamp) | date: 'HH:mm dd.MM.yyyy' }}</td>
+								<td>{{ parseDate(log.timestamp) | moment:'h:mm.ss' }}</td>
 								<td>{{ log.type }}</td>
 								<td>{{ log.FK_ID }}</td>
 								<td>{{ log.text }}</td>
@@ -187,7 +187,7 @@
 								<td>{{ msg.n_ID }}</td>
 								<td>{{ msg.title }}</td>
 								<td>{{ msg.text }}</td>
-								<td>{{ msg.timestamp | date: 'HH:mm dd.MM.yyyy' }}</td>
+								<td>{{ msg.timestamp | moment:'h:mm:ss' }}</td>
 								<td>{{ msg.t_ID }}</td>
 								<td><button ng-click="updateNotification(msg.n_ID, msg)" class="btn btn-default">&#128190;</button></td>
 								<td><button ng-click="deleteNotification(msg.n_ID)" class="btn btn-default" ng-confirm-click="ACHTUNG: Willst Du diese Nachricht wirklich löschen?">&#9003;</button></td>
@@ -392,6 +392,7 @@
 	<script src="js/directives/ngBackendMap.js"></script>
 	<script src="js/directives/ngMapInfo.js"></script>
 	<script src="node_modules/ngmap/build/scripts/ng-map.min.js"></script>
+	<script src="js/vendor/moment-with-locales.js"></script>
 </body>
 
 </html>
