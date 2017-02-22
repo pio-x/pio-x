@@ -21,16 +21,28 @@
 								scale: 8 }" ng-if="showMrxs">
 							</marker>
 							<span ng-repeat="locations in players">
-								<shape name="circle" on-click="showTooltip($index, locations)" ng-repeat="location in locations track by $index" 
-									stroke-color="#FF0000"
-									stroke-opacity="{{ 1 / $index }}"
-									stroke-weight="{{ 3 / $index }}"
-									fill-color="{{ playerColors[$index] }}"
-									fill-opacity="{{ 0.4 / $index }}"
+								<!-- circle for the last position of every player on the selected team -->
+								<marker position="[{{ location.lat }},{{ location.lng }}]" 
+									on-click="showTooltip($index, locations)" 
+									ng-repeat="location in locations track by $index" 
+									icon="{
+										path: 0,
+										strokeColor: 'blue',
+										strokeWeight: 2,
+										scale: 6 }" 
+									ng-if="showTeamLocation">
+								</marker>
+								<shape name="circle" ng-repeat="location in locations track by $index | limitTo: 1" 
+									stroke-color="blue"
+									stroke-opacity="2"
+									stroke-weight="2"
+									fill-color="blue"
+									fill-opacity="0.3"
 									center="[{{ location.lat }}, {{ location.lng }}]"
-									radius="{{ 80 / $index }}"
+									radius="50"
 									ng-if="showTeamLocation">
 								</shape>
+								<!-- polyline for every player on the selected team -->
 								<shape name="polyline" 
 									path="[
 										[{{ location.lat }}, {{ location.lng }}],
@@ -39,7 +51,7 @@
 									geodesic="true"
 									stroke-color="#FF0000"
 									stroke-opacity="1.0"
-									stroke-weight="2" ng-repeat="location in locations track by $index | limitTo: locations.length - 1">
+									stroke-weight="2" ng-repeat="location in locations track by $index">
 								</shape>
 							</span>
 							<marker position="{{newObjectPosition}}" title="Neues Objekt" on-dragend="showCreateNew($event)" animation="DROP" draggable="true" ng-if="newObjectPosition.length">

@@ -140,24 +140,43 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap'])
             $scope.getRiddles();
         };
     })
-    //QR CODES
+    //QR CODES CONTROLLER ==============================================================================
     .controller('QRCtrl', function($scope, apiService){
-        apiService.get('/team').then(function(articlesResponse) {
-            $scope.groups = articlesResponse.data;
-        });
-        apiService.get('/mrx').then(function(articlesResponse) {
-            $scope.mrxs = articlesResponse.data;
-        });
+        //Aktualisiert die Teams
+        $scope.getTeams = function() {
+            apiService.get('/team').then(function(articlesResponse) {
+                $scope.groups = articlesResponse.data;
+            });
+        };
+        $scope.getTeams();
+
+        //Aktualisiert die Mr.X
+        $scope.getMrxs = function() {
+            apiService.get('/mrx').then(function(articlesResponse) {
+                $scope.mrxs = articlesResponse.data;
+            });
+        };
+        $scope.getMrxs();
+
+        //Initiiert die QRCODE URL Variable
         $scope.qrUrl = {
             team: "",
             link: ""
         };
+
+        //zeigt den QR CODE für den Login vom gewählten Team/MrX an
         $scope.showQR = function(id, name, hash, type) {
             $scope.qrUrl.team = name;
             $scope.qrUrl.link = 'https://app.pio-x.ch/login.html?' + type +'=' + id + '&hash=' + hash;
         };
+
+        //Aktualisiert die ganze Liste
+        $scope.refresh = function() {
+            $scope.getTeams();
+            $scope.getMrxs();
+        };
     })
-    //TEAMS
+    //TEAMS CONTROLLER ==============================================================================
     .controller('teamCtrl', function($scope, apiService){
         $scope.getTeams = function() {
             apiService.get('/team').then(function(articlesResponse) {
@@ -193,7 +212,7 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap'])
                 });
         };
     })
-    //STATIONS
+    //STATIONS CONTROLLER ==============================================================================
     .controller('stationCtrl', function($scope, apiService){
         $scope.getStations = function() {
             apiService.get('/station').then(function(articlesResponse) {
@@ -233,7 +252,7 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap'])
                 });
         };
     })
-    // LOG / IMAGES / STREAM
+    // LOG / IMAGES / STREAM CONTROLLER ==============================================================================
     .controller('logCtrl', function($scope, apiService){
         $scope.apiUrl = 'https://api.pio-x.ch/image/';
         if(window.location.host == "localhost") {
@@ -262,7 +281,7 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap'])
                 });
         };
     })
-    //PASSCODES
+    //PASSCODES CONTROLLER ==============================================================================
     .controller('passcodeCtrl', function($scope, apiService){
         $scope.getCodes = function() {
             apiService.get('/passcode').then(function(articlesResponse) {
@@ -300,7 +319,7 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap'])
                 });
         };
     })
-    //NOTIFICATIONS
+    //NOTIFICATIONS CONTROLLER ==============================================================================
     .controller('notificationCtrl', function($scope, apiService){
         $scope.getNotifications = function() {
             apiService.get('/notification').then(function(articlesResponse) {
@@ -338,7 +357,7 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap'])
                 });
         };
     })
-    //RIDDLES
+    //RIDDLES CONTROLLER ==============================================================================
     .controller('riddleCtrl', function($scope, apiService){
         $scope.getRiddles = function() {
             apiService.get('/riddle').then(function(articlesResponse) {
@@ -382,7 +401,7 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap'])
                 });
         };
     })
-    //MAIN
+    //MAIN CONTROLLER ==============================================================================
     .controller('mainCtrl', function($scope, apiService){
         $scope.loggedIn = false;
         $scope.showLogin = false;
@@ -406,7 +425,7 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap'])
             $scope.checkLogin();
         };
     })
-    //TEAMS
+    //TEAMS CONTROLLER ==============================================================================
     .controller('teamPickerCtrl', function($scope, apiService){
         $scope.getTeams = function() {
             apiService.get('/team').then(function(articlesResponse) {
@@ -415,7 +434,7 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap'])
         };
         $scope.getTeams();
     })
-    //Config
+    //CONFIG CONTROLLER ==============================================================================
     .controller('configCtrl', function($scope, apiService){
         $scope.getConfig = function() {
             apiService.get('/config').then(function(articlesResponse) {
