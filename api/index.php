@@ -187,6 +187,30 @@ $app->get('/team/{id}', function (Request $request, Response $response, $args) u
 	}
 });
 
+$app->put('/team/{id}/image', function (Request $request, Response $response, $args) use (&$DB, $config) {
+	$teamId = intval($args['id']);
+	if (!$request->getAttribute('is_team') && !$request->getAttribute('is_admin')) {
+		return $response->withStatus(403)->withJson("Error: not sent by a team");
+	}
+	if ($request->getAttribute('team_id') != $teamId) {
+		return $response->withStatus(403)->withJson("Error: teams can only change their own image");
+	}
+
+	$body = (string) $request->getBody();
+	if (substr($body,0,10) != 'data:image') {
+		return $response->withStatus(403)->withJson("Error: no valid image data sent");
+	}
+
+	$qsa = $request->getQueryParams();
+	$imageId = 'team_' . $teamId . '_' . round(microtime(true) * 1000);
+	process_and_save_image($imageId, $body, $qsa);
+
+
+	$DB->update('team', array('img_ID' => $imageId), array('t_ID' => $teamId));
+
+	return $response->withJson("success");
+});
+
 $app->post('/team',function (Request $request, Response $response) use (&$DB) {
 	if ($request->getAttribute('is_admin') == false) {
 		return $response->withStatus(403)->withJson("Error: not sent by an admin");
