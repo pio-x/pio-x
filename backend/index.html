@@ -320,37 +320,37 @@
 							<td><a type="button" href="./passcodes.html" value="Passcodes" target="_blank" class="btn btn-default button">Öffne neues Fenster um Checkin Karten zu drucken</a></td>
 						</tr>
 					</table>
-					<table class="table table-striped">
-						<tr>
-							<td>ID</td>
-							<td>Team</td>
-							<td>Hash</td>
-							<td>QR Code</td>
-							<td rowspan="{{ groups.length + mrxs.length }}">
-								<div ng-if="qrUrl.team">
-									<a href="{{ qrUrl.link }}">Login Link für Team {{ qrUrl.team }}</a> <br/>
-									<qrcode version="5" error-correction-level="M" size="200" data="{{ qrUrl.link }}" href="{{ qrUrl.link }}"></qrcode>
-								</div>
-							</td>
-						</tr>
-						<tr ng-repeat="group in groups | filter:search">
-							<td>&#128100; {{ group.t_ID }}</td>
-							<td>{{ group.name }}</td>
-							<td>{{ group.hash }}</td>
-							<td>
-								<a href="#" ng-click="showQR(group.t_ID, group.name, group.hash, 'team')">anzeigen</a>
-							</td>
-							<td></td>
-						</tr>
-						<tr ng-repeat="mrx in mrxs | filter:search">
-							<td>&#128373; {{ mrx.x_ID }}</td>
-							<td>{{ mrx.name }}</td>
-							<td>{{ mrx.x_hash }}</td>
-							<td>
-								<a href="#" ng-click="showQR(mrx.x_ID, mrx.name, mrx.x_hash, 'mrx')">anzeigen</a>
-							</td>
-							<td></td>
-						</tr>
+					<table class="table"><tr><td class="col-md-8">
+						<table class="table table-striped">
+							<tr>
+								<td>ID</td>
+								<td>Team</td>
+								<td>Hash</td>
+								<td>QR Code</td>
+							</tr>
+							<tr ng-repeat="group in groups | filter:search">
+								<td>&#128100; {{ group.t_ID }}</td>
+								<td>{{ group.name }}</td>
+								<td>{{ group.hash }}</td>
+								<td>
+									<a href="#" ng-click="showQR(group.t_ID, group.name, group.hash, 'team')">anzeigen</a>
+								</td>
+							</tr>
+							<tr ng-repeat="mrx in mrxs | filter:search">
+								<td>&#128373; {{ mrx.x_ID }}</td>
+								<td>{{ mrx.name }}</td>
+								<td>{{ mrx.x_hash }}</td>
+								<td>
+									<a href="#" ng-click="showQR(mrx.x_ID, mrx.name, mrx.x_hash, 'mrx')">anzeigen</a>
+								</td>
+							</tr>
+						</table>
+						</td><td class="col-md-4">
+							<div ng-if="qrUrl.team">
+								<a href="{{ qrUrl.link }}">Login Link für Team {{ qrUrl.team }}</a> <br/>
+								<qrcode version="5" error-correction-level="M" size="200" data="{{ qrUrl.link }}" href="{{ qrUrl.link }}"></qrcode>
+							</div>
+						</td></tr>
 					</table>
 					Test Team Picker: <team-picker/>
 				</div>
