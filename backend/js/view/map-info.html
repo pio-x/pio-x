@@ -1,6 +1,10 @@
 							<info-window id="infoWindow">
 								<div ng-non-bindable=""><!-- Für jeden Typ ein schönes Window designen -->
-									<b ng-if="shown.name">{{shown.name}}</b>
-									<b ng-if="shown.question">{{shown.question}}</b>
+									<b ng-if="shown.infotype">{{shown.infotype}}<br /></b>
+									<b ng-if="shown.name">{{shown.name}}<br /></b>
+									<b ng-if="shown.question">{{shown.question}}<br /></b>
+									<b ng-if="shown.timestamp">{{shown.timestamp}}<br /></b>
+									<b ng-if="shown.lat">{{shown.lat}}<br /></b>
+									<b ng-if="shown.lng">{{shown.lng}}<br /></b>
 								</div>
 							</info-window>
