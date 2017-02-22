@@ -5,9 +5,10 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap'])
             $scope.map = map;
         });
 
-        $scope.showStations = true;
-        $scope.showRiddles = true;
-        $scope.showMrxs = true;
+        //Initiierung der Variablen und Vorselektion der Anzeige
+        $scope.showStations = false;
+        $scope.showRiddles = false;
+        $scope.showMrxs = false;
         $scope.showTeams = true;
         $scope.showTeam = true;
         $scope.showTeamLocation = true;
@@ -22,6 +23,7 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap'])
         };
         $scope.newObjectPosition = [];
 
+        //Erfasst eine neue Station
         $scope.createNewStation = function() {
             var data = {
                 name: $scope.newStation.name,
@@ -42,6 +44,7 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap'])
             );
         };
 
+        //Erfasst eine neues Rätsel
         $scope.createNewRiddle = function() {
             //console.log($scope.newRiddle.title);
             var data = {
@@ -69,17 +72,21 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap'])
             );
         };
 
+        //Zeigt den Editor für neue Stationen und Rätsel an
         $scope.showCreateNew = function(evt) {
             $scope.newObjectPosition = [evt.latLng.lat(), evt.latLng.lng()];
             $scope.newlat = evt.latLng.lat();
             $scope.newlng = evt.latLng.lng();
         };
 
+        //Zeigt auf einem Marker ein Tooltip mit Infos an
         $scope.showTooltip = function(evt, id, obj) {
             $scope.shown = obj[id];
             $scope.map.showInfoWindow('infoWindow', this);
+            console.log(obj);
         };
 
+        //Aktualisiert die Teams
         $scope.getTeams = function() {
             apiService.get('/team').then(function(articlesResponse) {
                 $scope.groups = articlesResponse.data;
@@ -87,6 +94,10 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap'])
         };
         $scope.getTeams();
 
+        //Selektionsvariable, welches Team angezeigt wird.
+        $scope.selectedTeam = 2;
+
+        //Ruft die Positionen aller Spieler aus einem Team ab
         $scope.getTeamLocations = function(id) {
             apiService.get('/team/' + id + '/location').then(function(articlesResponse) {
                 $scope.players = articlesResponse.data;
@@ -94,9 +105,9 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap'])
                 //console.log($scope.players);
             });
         };
-        $scope.selectedTeam = 1;
         $scope.getTeamLocations($scope.selectedTeam);
 
+        //Aktualisiert die Stationen
         $scope.getStations = function() {
             apiService.get('/station').then(function(articlesResponse) {
                 $scope.stations = articlesResponse.data;
@@ -104,6 +115,7 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap'])
         };
         $scope.getStations();
 
+        //Aktualisiert die Mr.X Positionen
         $scope.getMrxs = function() {
             apiService.get('/mrx').then(function(articlesResponse) {
                 $scope.mrxs = articlesResponse.data;
@@ -111,6 +123,7 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap'])
         };
         $scope.getMrxs();
 
+        //Aktualisiert die Rätsel
         $scope.getRiddles = function() {
             apiService.get('/riddle').then(function(articlesResponse) {
                 $scope.riddles = articlesResponse.data;
@@ -118,6 +131,7 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap'])
         };
         $scope.getRiddles();
 
+        //Ruft alle Aktualisierungsfunktionen in diesem Controller auf
         $scope.refreshData = function() {
             $scope.getTeams();
             $scope.getTeamLocations(1);
