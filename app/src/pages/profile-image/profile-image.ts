@@ -25,7 +25,15 @@ export class ProfileImagePage {
     }
 
     uploadImage() {
-        this.teamService.updateProfileImage(this.imageData);
+        let loading = this.loadingCtrl.create({
+            content: 'Bild hochladen ...'
+        });
+        loading.present();
+        this.teamService.updateProfileImage(this.imageData)
+            .then(() => {
+                this.dismiss();
+                loading.dismiss();
+            });
     }
 
     dismiss() {
