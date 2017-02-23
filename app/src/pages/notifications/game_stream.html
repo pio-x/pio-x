@@ -5,7 +5,13 @@
   </ion-refresher>
 
   <ion-card *ngFor="let log of logs">
-    <img *ngIf="log.image" src="https://api.pio-x.ch/uploaded_images/{{ log.image }}.jpg">
+    <ion-item>
+      <ion-avatar item-left *ngIf="teams[log.t_ID].img_ID">
+        <img [src]="teamService.imageUrl(teams[log.t_ID].img_ID)">
+      </ion-avatar>
+      <h2>{{teams[log.t_ID].name}}</h2>
+    </ion-item>
+    <img *ngIf="log.image" [src]="teamService.imageUrl(log.image)">
     <ion-card-content>
       <p>
         {{log.text}}

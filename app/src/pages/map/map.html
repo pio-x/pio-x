@@ -79,12 +79,18 @@
     >
       <sebm-google-map-info-window [disableAutoPan]="true" #infowindow>
         <h3>{{station.name}}</h3>
-        <div *ngIf="teams[station.team]">
-          <span *ngIf="station.team == myTeam"><i>Diese Station gehört deinem Team.</i></span>
-          <span *ngIf="station.team != myTeam">
+        <ion-item *ngIf="teams[station.team]">
+					<ion-avatar item-left *ngIf="teams[station.team].img_ID">
+						<img [src]="teamService.imageUrl(teams[station.team].img_ID)">
+					</ion-avatar>
+					<h2>
+						{{teams[station.team].name}}
+					</h2>
+          <p *ngIf="station.team == myTeam"><i>Diese Station gehört deinem Team.</i></p>
+          <p *ngIf="station.team != myTeam">
             Diese Station gehört {{teams[station.team].name}}<br>
-          </span>
-        </div>
+          </p>
+        </ion-item>
         <div *ngIf="!teams[station.team]">
           Diese Station gehört noch keinem Team.
         </div>

@@ -5,4 +5,7 @@ export interface Log {
     timestamp: string;
     text: string;
     type: LOG_TYPE;
+    FK_ID: number;
+    t_ID: number;
+    image: string;
 }

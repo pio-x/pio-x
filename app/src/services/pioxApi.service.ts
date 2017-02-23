@@ -13,7 +13,7 @@ export class PioxApiService {
           // on live, use real api url
           return 'https://api.pio-x.ch';
       } else {
-          // of local_config.js was loaded, use that domain config
+          // if local_config.js was loaded, use that domain config
           if (window['pioxApiDomain']) {
             return window['pioxApiDomain'];
           } else {

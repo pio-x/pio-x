@@ -44,4 +44,18 @@ export class TeamService {
     console.error('An error occurred', error); // for demo purposes only
     return Promise.reject(error.message || error);
   }
+
+  public imageUrl(img_ID: string) {
+      if (window.location.hostname == 'app.pio-x.ch') {
+          // on live, use real api url
+          return 'https://api.pio-x.ch/uploaded_images/' + img_ID + '.jpg';
+      } else {
+          // if local_config.js was loaded, use that domain config
+          if (window['pioxApiDomain']) {
+            return window['pioxApiDomain'] + '/uploaded_images/' + img_ID + '.jpg';
+          } else {
+            return '';
+          }
+      }
+  }
 }
