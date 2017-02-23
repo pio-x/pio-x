@@ -94,7 +94,7 @@ $app->post('/station/{id}/capture',function (Request $request, Response $respons
 	$insertId = $DB->lastInsertId();
 
 	$station = $DB->fetchAssoc("SELECT name FROM station WHERE s_ID = ?", array($stationId));
-	$log->station('Team '.$request->getAttribute('team_name').' hat die Station '.$station['name'].' eingenommen', $insertId);
+	$log->station('Team '.$request->getAttribute('team_name').' hat die Station '.$station['name'].' eingenommen', $request->getAttribute('team_id'), $insertId);
 	if (isset($qsa['tags'])) {
 		$tags = json_decode($qsa['tags'], true);
 	} else {
@@ -447,7 +447,7 @@ $app->post('/riddle/{id}/unlock',function (Request $request, Response $response,
 		if (!$updated) {
 			$DB->insert('r_team_riddle', $data);
 		}
-		$log->riddle('Team '.$request->getAttribute('team_name').' hat ein Rätsel freigeschaltet', $riddleId);
+		$log->riddle('Team '.$request->getAttribute('team_name').' hat ein Rätsel freigeschaltet', $request->getAttribute('team_id'), $riddleId);
 		return $response->withJson("success");
 	} catch (Doctrine\DBAL\Exception\UniqueConstraintViolationException $e) {
 		return $response->withStatus(403)->withJson("Already unlocked");
@@ -542,13 +542,13 @@ $app->post('/riddle/{id}/solve',function (Request $request, Response $response, 
 		}
 		// TODO: punkte geben
 		$score->riddle($teamId, $riddleId);
-		$log->riddle('Team '.$request->getAttribute('team_name').' hat Rätsel '.$riddleId.' richtig gelöst', $riddleId);
+		$log->riddle('Team '.$request->getAttribute('team_name').' hat Rätsel '.$riddleId.' richtig gelöst', $request->getAttribute('team_id'), $riddleId);
 		return $response->withJson(["solved" => true, "message" => "Richtige Antwort!"]);
 	} else {
 		// answer is wrong
 		// TODO: punkte abziehen
 		$score->riddle($teamId, $riddleId, true);
-		$log->riddle('Team '.$request->getAttribute('team_name').' hat Rätsel '.$riddleId.' falsch gelöst', $riddleId);
+		$log->riddle('Team '.$request->getAttribute('team_name').' hat Rätsel '.$riddleId.' falsch gelöst', $request->getAttribute('team_id'), $riddleId);
 		return $response->withJson(["solved" => false, "message" => "Deine Antwort ist falsch."]);
 	}
 });
