@@ -9,8 +9,10 @@ import { ProfileImagePage } from '../pages/profile-image/profile-image';
 
 @Injectable()
 export class NavigationService {
-  constructor(public actionSheetCtrl: ActionSheetController,
-    public modalCtrl: ModalController) {
+  constructor(
+    public actionSheetCtrl: ActionSheetController,
+    public modalCtrl: ModalController
+  ) {
 
   }
 
@@ -38,7 +40,7 @@ export class NavigationService {
                 }
             },
             {
-                text: 'Profilbild ändern',
+                text: 'Teambild ändern',
                 handler: () => {
                     this.openProfileImageModal();
                 }

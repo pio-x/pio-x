@@ -32,6 +32,7 @@ export class ProfileImagePage {
             .then(() => {
                 this.dismiss();
                 loading.dismiss();
+                this.teamService.updateTeams();
             });
     }
 
