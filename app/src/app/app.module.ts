@@ -7,7 +7,6 @@ import { TabsPage } from '../pages/tabs/tabs';
 import {MapPage} from "../pages/map/map";
 import {LeaderboardPage} from "../pages/leaderboard/leaderboard";
 import {NotificationsPage} from "../pages/notifications/notifications";
-import {NotificationDetailComponent} from "../pages/notifications/notification-detail.component";
 import {RiddlesPage} from "../pages/riddles/riddles";
 import {RulesPage} from "../pages/rules/rules";
 import {CaptureModal} from "../pages/capture/capture";
@@ -46,7 +45,6 @@ import { ImageUploadModule } from 'ng2-imageupload';
     RiddlesPage,
     RulesPage,
     TabsPage,
-    NotificationDetailComponent,
     CaptureModal,
     RiddlesSolveModalPage,
     RiddleDetailPage,
