@@ -15,7 +15,10 @@
   <ion-card-content>
     <span *ngIf="riddle.question">
       {{riddle.question}}
-      <button ion-button color="light" full (click)="openSolveModal(riddle.r_ID)" *ngIf="riddle.state != 'SOLVED'">Lösen</button>
+      <button ion-button color="light" full (click)="openSolveModal(riddle.r_ID)" *ngIf="riddle.state != 'SOLVED'">
+        <ion-icon name="camera" *ngIf="riddle.image_required"></ion-icon>&nbsp;
+        Lösen
+      </button>
     </span>
     <span *ngIf="!riddle.question">
       <i>Frage versteckt. Das Rätsel kann nur vor Ort entsperrt werden.</i>
