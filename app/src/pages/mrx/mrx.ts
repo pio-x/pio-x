@@ -6,9 +6,6 @@ import {Mrx} from "../../interfaces/mrx";
 import {LocationService} from "../../services/location.service";
 import {MrxService} from "../../services/mrx.service";
 
-import { SebmGoogleMap } from 'angular2-google-maps/core/directives';
-
-
 @Component({
   selector: 'page-mrx',
   templateUrl: 'mrx.html'

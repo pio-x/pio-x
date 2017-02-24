@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 
 import { ViewController, NavParams, LoadingController } from 'ionic-angular';
 
-import {Team} from "../../interfaces/team";
 import {TeamService} from "../../services/team.service";
 
 @Component({
