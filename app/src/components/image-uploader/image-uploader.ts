@@ -1,7 +1,6 @@
 import {Component, ElementRef, Output, EventEmitter, Input} from '@angular/core';
 
-import {ViewController, NavParams, LoadingController} from 'ionic-angular';
-
+import { LoadingController } from 'ionic-angular';
 import { ImageResult, ResizeOptions } from 'ng2-imageupload';
 
 import EXIF from "exif-js"
@@ -19,6 +18,7 @@ export class ImageUploader {
     _tags = {};
     imageRaw: string = null;
     imageOrientation: number = 0;
+    loading: any = null;
 
     resizeOptions: ResizeOptions = {
         resizeMaxHeight: 1024,
@@ -27,6 +27,7 @@ export class ImageUploader {
 
     constructor(
         private element: ElementRef,
+        public loadingCtrl: LoadingController
     ) {
         // nothing
     }
@@ -58,10 +59,19 @@ export class ImageUploader {
             image.src = "";
             this.imageRaw = null;
             this.image = null;
+        } else {
+            // show image processing message (resize takes a while)
+            this.loading = this.loadingCtrl.create({
+                content: 'Bild wird geladen ...'
+            });
+            this.loading.present();
         }
     }
 
     imageSelected(imageResult: ImageResult) {
+        // hide image processing message
+        this.loading.dismiss();
+
         let image = this.element.nativeElement.querySelector('.uploaded-image');
 
         this.image = imageResult.resized
