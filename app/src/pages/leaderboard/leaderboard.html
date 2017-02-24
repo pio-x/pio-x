@@ -19,7 +19,7 @@
 
   <ion-list no-border>
     <ion-item *ngFor="let team of teams">
-			<ion-avatar item-left *ngIf="team.img_ID">
+      <ion-avatar item-left *ngIf="team.img_ID">
         <img [src]="teamService.imageUrl(team.img_ID)">
       </ion-avatar>
       <ion-icon name='people' item-left *ngIf="!team.img_ID"></ion-icon>

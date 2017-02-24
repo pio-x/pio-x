@@ -17,6 +17,12 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
+  <ion-card>
+    <ion-card-content>
+      <button ion-button color="light" full (click)="openPasscodeModal()">Passcode einlösen</button>
+    </ion-card-content>
+  </ion-card>
+
   <ion-card *ngFor="let riddle of riddles">
     <page-riddle-detail [riddle]="riddle"></page-riddle-detail>
   </ion-card>
