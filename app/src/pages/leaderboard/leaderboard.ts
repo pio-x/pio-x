@@ -3,6 +3,8 @@ import { Team } from '../../interfaces/team';
 import { TeamService } from '../../services/team.service';
 import { Component } from '@angular/core';
 import {NavigationService} from "../../services/navigation.service";
+import {ProfileImagePage} from "../profile-image/profile-image";
+import {ModalController} from "ionic-angular";
 
 
 @Component({
@@ -14,8 +16,11 @@ export class LeaderboardPage {
   myteam: number = 0;
   myname: string = '';
 
-  constructor(private teamService:TeamService,
-              public navService: NavigationService) {
+  constructor(
+      private teamService:TeamService,
+      public navService: NavigationService,
+      public modalCtrl: ModalController
+  ) {
     this.myteam = parseInt(localStorage.getItem('team'));
     this.myname = decodeURIComponent(localStorage.getItem('player')).replace( /\+/g, ' ');
 
@@ -43,6 +48,11 @@ export class LeaderboardPage {
       }).catch(() => {
           refresher.complete();
       });
+  }
+
+  openProfileImageModal() {
+      let modal = this.modalCtrl.create(ProfileImagePage);
+      modal.present();
   }
 
 }

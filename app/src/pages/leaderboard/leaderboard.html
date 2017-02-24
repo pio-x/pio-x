@@ -19,7 +19,10 @@
 
   <ion-list no-border>
     <ion-item *ngFor="let team of teams">
-      <ion-icon name='people' item-left></ion-icon>
+			<ion-avatar item-left *ngIf="team.img_ID">
+        <img [src]="teamService.imageUrl(team.img_ID)">
+      </ion-avatar>
+      <ion-icon name='people' item-left *ngIf="!team.img_ID"></ion-icon>
       <span *ngIf="team.t_ID == myteam"><b>{{team.name}}</b></span>
       <span *ngIf="team.t_ID != myteam">{{team.name}}</span>
       <ion-badge item-right>{{team.score}}</ion-badge>
@@ -27,7 +30,7 @@
   </ion-list>
 
   <div padding>
-    <ion-icon name="person"></ion-icon> Angemeldet als {{myname}}
+    <ion-icon name="person"></ion-icon> Angemeldet als {{myname}} <a (click)="openProfileImageModal()">Teambild ändern</a>
   </div>
 
 </ion-content>
