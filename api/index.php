@@ -728,6 +728,46 @@ $app->get('/log', function (Request $request, Response $response) use (&$DB) {
 	return $response->withJson($logs_with_img, 200, JSON_NUMERIC_CHECK);
 });
 
+// STATISTICS
+$app->get('/statistics/points', function (Request $request, Response $response) use (&$DB) {
+	if ($request->getAttribute('is_admin') == false) {
+		return $response->withStatus(403)->withJson("Error: not sent by admin");
+	}
+
+	$teams = [];
+
+	$rows = $DB->fetchAll("SELECT * FROM team");
+	foreach ($rows as $team) {
+		$teams[$team['t_ID']] = [
+			"name" => $team['name'] . ' (ID:' . $team['t_ID'] . ')',
+			"data" => []
+		];
+	}
+
+	$rows = $DB->fetchAll("SELECT t_ID, sum(points) as points, UNIX_TIMESTAMP(timestamp)*1000 as timestamp 
+			FROM r_team_points 
+			GROUP BY t_ID, timestamp 
+			ORDER BY timestamp ASC");
+
+	foreach ($rows as $row) {
+		$lastpoints = 0;
+		if (count($teams[$row['t_ID']]['data']) > 0) {
+			$lastelement = count($teams[$row['t_ID']]['data']) - 1;
+			$lastpoints = $teams[$row['t_ID']]['data'][$lastelement][1];
+		}
+		$teams[$row['t_ID']]['data'][] = [
+			$row['timestamp'],
+			$lastpoints + $row['points']
+		];
+		// max. 200 einträge pro team senden, da statistik sonst zu langsam ist beim anzeigen
+		if (count($teams[$row['t_ID']]['data']) > 200) {
+			array_shift($teams[$row['t_ID']]['data']);
+		}
+	}
+
+	return $response->withJson($teams, 200, JSON_NUMERIC_CHECK);
+});
+
 // CONFIG
 $app->get('/config', function (Request $request, Response $response) use (&$DB, $config) {
 	return $response->withJson($config, 200, JSON_NUMERIC_CHECK);
