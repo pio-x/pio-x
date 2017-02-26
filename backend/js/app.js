@@ -1,4 +1,4 @@
-var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap'])
+var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap', 'highcharts-ng'])
     //MAP
     .controller('mapCtrl', function($scope, NgMap, apiService, $window) {
         NgMap.getMap().then(function(map) {

@@ -53,6 +53,7 @@
 				<li role="presentation"><a href="#raetsel" aria-controls="raetsel" role="tab" data-toggle="tab">Rätsel</a></li>
 				<li role="presentation"><a href="#qrcodes" aria-controls="qrcodes" role="tab" data-toggle="tab">QR codes</a></li>
 				<li role="presentation"><a href="#config" aria-controls="config" role="tab" data-toggle="tab">Config</a></li>
+				<li role="presentation"><a href="#stats" aria-controls="stats" role="tab" data-toggle="tab">Stats</a></li>
 			</ul>
 			<div class="tab-content actual-content">
 				<!-- MAP -->
@@ -359,6 +360,7 @@
 					</table>
 					Test Team Picker: <team-picker/>
 				</div>
+
 				<!-- Config -->
 				<div role="tabpanel" class="tab-pane" id="config" ng-controller="configCtrl">
 					<div class="input-group">
@@ -375,6 +377,12 @@
 					</table>
 
 				</div>
+				<!-- Stats -->
+				<div role="tabpanel" class="tab-pane" id="stats" ng-controller="statsCtrl">
+					<button ng-click="reload()" class="btn btn-default">Aktualisieren</button>
+					<span ng-if="isLoading">Statistik laden ...</span>
+					<highchart id="chart_points" config="pointsChartConfig"></highchart>
+				</div>
 			</div>
 		</div>
 
@@ -387,6 +395,8 @@
 	<script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 	<script src="node_modules/angular-animate/angular-animate.min.js"></script>
 	<script src="node_modules/angular-touch/angular-touch.min.js"></script>
+	<script src="node_modules/highcharts/highcharts.src.js"></script>
+	<script src="node_modules/highcharts-ng/dist/highcharts-ng.min.js"></script>
 	<script src="js/app.js"></script>
 	<script src="js/services/apiService.js"></script>
 	<script src="js/vendor/qrcode.js"></script>
@@ -396,6 +406,7 @@
 	<script src="js/directives/ngTeamPicker.js"></script>
 	<script src="js/directives/ngBackendMap.js"></script>
 	<script src="js/directives/ngMapInfo.js"></script>
+	<script src="js/controllers/statsCtrl.js"></script>
 	<script src="node_modules/ngmap/build/scripts/ng-map.min.js"></script>
 	<script src="js/vendor/moment-with-locales.js"></script>
 </body>
