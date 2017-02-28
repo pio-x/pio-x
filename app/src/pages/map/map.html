@@ -101,8 +101,14 @@
           Diese Station gehört noch keinem Team.
         </div>
         <br>
-        <div *ngIf="userLocation && station.team != myTeam">
-          <button ion-button full (click)="openCaptureModal(station)">Einnehmen</button>
+        <div *ngIf="userLocation && station.team != myTeam" >
+          <div *ngIf="inRange(station.pos_lat, station.pos_long)">
+            <button ion-button full (click)="openCaptureModal(station)">Einnehmen</button>
+          </div>
+          <div *ngIf="!inRange(station.pos_lat, station.pos_long)">
+            <button ion-button full disabled (click)="openCaptureModal(station)">zu weit weg</button>
+          </div>
+          
         </div>
         <div *ngIf="!userLocation">
           <b>Kein Standort gefunden</b><br>

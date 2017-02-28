@@ -86,6 +86,10 @@ export class MapPage {
         this.fa = fontawesome;
     }
 
+    inRange(pos_lat, pos_long) {
+        return this.locationService.getDistanceToUser(pos_lat, pos_long) <= this.configService.getConfig().station_radius
+    }
+
     presentActionSheet() {
       this.navService.presentActionSheet()
     }
