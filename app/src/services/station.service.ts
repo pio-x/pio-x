@@ -34,7 +34,15 @@ export class StationService {
   }
 
   captureStation(stationId: number, imageData: any, tags: any): Promise<any> {
-      return this.pioxApi.post('/station/' + stationId + '/capture?tags=' + JSON.stringify(tags), imageData)
+      let cleanTags = {};
+
+      for (var key in tags) {   
+        if (tags.hasOwnProperty(key) && (JSON.stringify(tags[key]).length < 50)) {
+          cleanTags[key] = tags[key];
+        }
+      }
+
+      return this.pioxApi.post('/station/' + stationId + '/capture?tags=' + JSON.stringify(cleanTags), imageData)
   }
 
   private handleError(error: any): Promise<any> {
