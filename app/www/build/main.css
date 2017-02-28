@@ -22229,7 +22229,7 @@ sub {
 
 image-uploader .uploaded-image-holder {
   max-width: 100%;
-  height: 50%;
+  height: 40%;
   text-align: center;
   padding-top: 30px;
 }
@@ -22285,7 +22285,7 @@ image-uploader .uploaded-image-holder .uploaded-image[data-orientation="8"] {
 
 image-uploader .uploaded-image-holder .uploaded-image-placeholder {
   color: #bbb;
-  font-size: 50vmin;
+  font-size: 35vmin;
 }
 
 page-map .sebm-google-map-container {
