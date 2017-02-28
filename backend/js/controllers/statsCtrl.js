@@ -1,14 +1,16 @@
 backendApp.controller('statsCtrl', function($scope, apiService) {
 
+    $scope.statsLoaded = false;
     $scope.isLoading = false;
+
     $scope.reload = function() {
         $scope.isLoading = true;
         apiService.get('/statistics/points').then(function(result) {
             $scope.pointsChartConfig.series = result.data;
             $scope.isLoading = false;
+            $scope.statsLoaded = true;
         });
     };
-    $scope.reload();
 
     $scope.pointsChartConfig = {
         chart: {
