@@ -46,7 +46,7 @@ $app->get('/station',function (Request $request, Response $response) use (&$DB, 
 
 	// stations with last capture info
 	$sql = "
-	SELECT s.*, ts2.t_id as team, ts2.timestamp as captured_timestamp FROM (
+	SELECT s.*, ts2.t_id as team, UNIX_TIMESTAMP(ts2.timestamp)*1000 as captured_timestamp FROM (
 		SELECT s_ID, MAX(timestamp) as timestamp FROM r_team_station GROUP BY s_ID
 	) as ts1
 	INNER JOIN r_team_station as ts2
@@ -289,7 +289,7 @@ $app->get('/mrx', function (Request $request, Response $response) use (&$DB, $co
 	foreach ($mrxs as $mrx) {
 		// TODO: positionen bei teams nur mitschicken wenn sie sie sehen dürfen
 		// TODO: nur senden wenn noch nicht gefangen
-		$locations = $DB->fetchAll("SELECT xpos_lat, xpos_long, timestamp, description FROM mrx_position WHERE mrx_ID = ? ORDER BY timestamp desc LIMIT 3", array($mrx['x_ID']));
+		$locations = $DB->fetchAll("SELECT xpos_lat, xpos_long, UNIX_TIMESTAMP(timestamp)*1000 as timestamp, description FROM mrx_position WHERE mrx_ID = ? ORDER BY timestamp desc LIMIT 3", array($mrx['x_ID']));
 
 		// nur senden wenn mind. 1 location vorhanden
 		if (is_array($locations) && count($locations) > 0) {
@@ -558,14 +558,14 @@ $app->post('/riddle/{id}/solve',function (Request $request, Response $response, 
 $app->get('/notification', function (Request $request, Response $response) use (&$DB) {
 	if ($request->getAttribute('is_admin') == true) {
 		// admin sees all notifications
-		$notifications = $DB->fetchAll("SELECT * FROM notification ORDER BY timestamp DESC");
+		$notifications = $DB->fetchAll("SELECT n_ID, title, text, UNIX_TIMESTAMP(timestamp)*1000 as timestamp, t_ID FROM notification ORDER BY timestamp DESC");
 	} else {
 		if ($request->getAttribute('is_team') == true) {
 			// teams see their own notifications and the "all"-notifications
-			$notifications = $DB->fetchAll("SELECT * FROM notification WHERE t_ID = ? OR t_ID IS NULL ORDER BY timestamp DESC", array($request->getAttribute('team_id')));
+			$notifications = $DB->fetchAll("SELECT n_ID, title, text, UNIX_TIMESTAMP(timestamp)*1000 as timestamp, t_ID FROM notification WHERE t_ID = ? OR t_ID IS NULL ORDER BY timestamp DESC", array($request->getAttribute('team_id')));
 		} else {
 			// mrx only see the "all"-notifications
-			$notifications = $DB->fetchAll("SELECT * FROM notification WHERE t_ID IS NULL ORDER BY timestamp DESC");
+			$notifications = $DB->fetchAll("SELECT n_ID, title, text, UNIX_TIMESTAMP(timestamp)*1000 as timestamp, t_ID FROM notification WHERE t_ID IS NULL ORDER BY timestamp DESC");
 		}
 	}
 	return $response->withJson($notifications, 200, JSON_NUMERIC_CHECK);
@@ -708,7 +708,7 @@ $app->delete('/passcode/{id}', function (Request $request, Response $response, $
 
 // LOG
 $app->get('/log', function (Request $request, Response $response) use (&$DB) {
-	$logs = $DB->fetchAll("SELECT * FROM log ORDER BY timestamp DESC");
+	$logs = $DB->fetchAll("SELECT l_ID, text, UNIX_TIMESTAMP(timestamp)*1000 as timestamp, type, FK_ID, t_ID FROM log ORDER BY timestamp DESC");
 
 	$logs_with_img = [];
 	foreach ($logs as $log) {
