@@ -107,6 +107,7 @@
 								<td>Beschreibung</td>
 								<td>LAT</td>
 								<td>LNG</td>
+								<td>Punkte</td>
 								<td>Aktiv</td>
 								<td>Einnahme</td>
 								<td>Team Besitz</td>
@@ -115,10 +116,11 @@
 						</tr>
 						<tr ng-repeat="station in stations | filter:search">
 								<td>{{ station.s_ID }}</td>
-								<td><input type="text" class="form-control input-sm" value="{{ station.name }}" ng-model="station.name"/></td>
-								<td class="col-xs-4"><input type="text" class="form-control input-sm" value="{{ station.description }}" ng-model="station.description"/></td>
-								<td class="col-xs-1"><input type="text" class="form-control input-sm" value="{{ station.pos_lat }}" ng-model="station.pos_lat"/></td>
-								<td class="col-xs-1"><input type="text" class="form-control input-sm" value="{{ station.pos_long }}" ng-model="station.pos_long"/></td>
+								<td><input type="text" class="form-control input-sm" ng-model="station.name"/></td>
+								<td class="col-xs-4"><input type="text" class="form-control input-sm" ng-model="station.description"/></td>
+								<td class="col-xs-1"><input type="text" class="form-control input-sm" ng-model="station.pos_lat"/></td>
+								<td class="col-xs-1"><input type="text" class="form-control input-sm" ng-model="station.pos_long"/></td>
+								<td class="col-xs-1"><input type="number" class="form-control input-sm" ng-model="station.points"/></td>
 								<td class="col-xs-1"><input type="checkbox" ng-model="station.enabled" ng-true-value="1" ng-false-value="0"/></td>
 								<td><span ng-if="station.captured_timestamp">{{ station.captured_timestamp | moment:'HH:mm.ss' }}</span></td>
 								<td>
@@ -136,7 +138,8 @@
 							<td><input type="text" class="form-control input-sm" ng-model="newStation.description"/></td>
 							<td><input type="text" class="form-control input-sm" ng-model="newStation.pos_lat"/></td>
 							<td><input type="text" class="form-control input-sm" ng-model="newStation.pos_long"/></td>
-							<td><input type="checkbox" class="form-control input-sm" ng-model="newStation.enabled" ng-true-value="1" ng-false-value="0"/></td>
+							<td><input type="number" class="form-control input-sm" ng-model="newStation.points"/></td>
+							<td><input type="checkbox" ng-model="newStation.enabled" ng-true-value="1" ng-false-value="0"/></td>
 							<td>&nbsp;</td>
 							<td>&nbsp;</td>
 							<td colspan="2"><button ng-click="addNewStation(newStation)" class="btn btn-default" ng-disabled="!newStation.name">&#128190; Erstellen</button></td>
