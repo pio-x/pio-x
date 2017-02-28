@@ -28,9 +28,9 @@ declare var google: any;
     templateUrl: 'map.html'
 })
 export class MapPage {
-    default_lat: number = 47.499002;
-    default_lng: number = 8.728729;
-    default_zoom: number = 13;
+    default_lat: number = 47.499163;
+    default_lng: number = 8.721871;
+    default_zoom: number = 15;
 
     isRefreshing: boolean = false;
 
@@ -85,6 +85,7 @@ export class MapPage {
         // bind icons into local scope
         this.fa = fontawesome;
     }
+
     presentActionSheet() {
       this.navService.presentActionSheet()
     }
@@ -121,6 +122,13 @@ export class MapPage {
         ]).then(() => {
             this.isRefreshing = false;
         });
+    }
+
+    zoomToMyLocation() {
+        if (this.userLocation.lat) {
+            this.default_lat = this.userLocation.lat;
+            this.default_lng = this.userLocation.lng;
+        }
     }
 
     userLocationUpdated(position) {
