@@ -69,6 +69,31 @@
 							&nbsp;&nbsp;<label><input type="radio" name="teamRadioSelect" ng-checked="$index==0?true:false" ng-click="getTeamLocations(group.t_ID)"/> Team {{ group.name }} ({{ group.t_ID }})</label><br />
 						</span>
 						<hr/>
+						<span ng-if="showEditStation">
+							Station editieren:<br/>
+							<div class="input-group">
+								<span class="input-group-addon">LAT:</span>
+								<input class="form-control" type="text" ng-model="changedStation.pos_lat"/>
+							</div>
+							<div class="input-group">
+								<span class="input-group-addon">LNG:</span>
+								<input class="form-control" type="text" ng-model="changedStation.pos_long"/>
+							</div>
+							<div class="input-group">
+								<span class="input-group-addon">Name:</span>
+								<input class="form-control" type="text" ng-model="changedStation.name"/>
+							</div>
+							<div class="input-group">
+								<span class="input-group-addon">Beschreibung:</span>
+								<input class="form-control" type="text" ng-model="changedStation.description"/>
+							</div>
+							<div class="input-group">
+								<span class="input-group-addon">Punkte:</span>
+								<input class="form-control" type="text" ng-model="changedStation.points"/>
+							</div>
+							<button ng-click="saveStation()" class="btn btn-default">Speichern</button>
+							<hr />
+						</span>
 						<span ng-if="newlat">
 							Neu erstellen:<br/>
 							<label><input type="radio" name="newobjSelect" value="station" ng-model="showNewObjectInput" checked/> Station</label><br />

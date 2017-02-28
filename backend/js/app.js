@@ -6,12 +6,12 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap', 'hi
         });
 
         //Initiierung der Variablen und Vorselektion der Anzeige
-        $scope.showStations = false;
+        $scope.showStations = true;
         $scope.showRiddles = false;
         $scope.showMrxs = false;
-        $scope.showTeams = true;
-        $scope.showTeam = true;
-        $scope.showTeamLocation = true;
+        $scope.showTeams = false;
+        $scope.showTeam = false;
+        $scope.showTeamLocation = false;
         $scope.playerColors = ["#f00", "#0f0", "#00f"]
         $scope.showNewObjectInput = 'station';
         $scope.newStation = {};
@@ -22,6 +22,24 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap', 'hi
             points: 1
         };
         $scope.newObjectPosition = [];
+        $scope.showEditStation = false;
+
+        //Zum Station bearbeiten
+        $scope.changedStation = {};
+        $scope.editStation = function(id) {
+            $scope.showEditStation = true;
+            apiService.get('/station/' + id).then(function(articlesResponse) {
+                $scope.changedStation = articlesResponse.data;
+            });
+        };
+        $scope.saveStation = function() {
+            apiService.put('/station/' + $scope.changedStation.s_ID, $scope.changedStation)
+                .then(function(){
+                    $scope.getStations();
+                });
+            $scope.map.hideInfoWindow('infoWindow');
+            $scope.showEditStation = false;
+        }
 
         //Erfasst eine neue Station
         $scope.createNewStation = function() {
@@ -83,7 +101,7 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap', 'hi
         $scope.showTooltip = function(evt, id, obj) {
             $scope.shown = obj[id];
             $scope.map.showInfoWindow('infoWindow', this);
-            console.log(obj);
+            //console.log(obj);
         };
 
         //Aktualisiert die Teams
