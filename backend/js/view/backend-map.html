@@ -66,7 +66,7 @@
 						<label><input type="checkbox" ng-model="showMrxs" checked /> Alle Mr. X anzeigen</label><br />
 						<label><input type="checkbox" ng-model="showTeamLocation" /> Team anzeigen</label><br />
 						<span ng-repeat="group in groups" ng-if="showTeamLocation">
-							&nbsp;&nbsp;<label><input type="radio" name="teamRadioSelect" ng-checked="$index==0?true:false" ng-click="getTeamLocations(group.t_ID)"/> Team {{ group.t_ID }} anzeigen</label><br />
+							&nbsp;&nbsp;<label><input type="radio" name="teamRadioSelect" ng-checked="$index==0?true:false" ng-click="getTeamLocations(group.t_ID)"/> Team {{ group.name }} ({{ group.t_ID }})</label><br />
 						</span>
 						<hr/>
 						<span ng-if="newlat">
@@ -89,6 +89,10 @@
 								<div class="input-group">
 									<span class="input-group-addon">Beschreibung:</span>
 									<input class="form-control" type="text" ng-model="newStation.description"/>
+								</div>
+								<div class="input-group">
+									<span class="input-group-addon">Punkte:</span>
+									<input class="form-control" type="text" ng-model="newStation.points"/>
 								</div>
 								<button ng-click="createNewStation()" class="btn btn-default">Station erstellen</button>
 							</span>
