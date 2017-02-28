@@ -125,7 +125,7 @@ export class MapPage {
     }
 
     zoomToMyLocation() {
-        if (this.userLocation.lat) {
+        if (this.userLocation && this.userLocation.lat) {
             this.default_lat = this.userLocation.lat;
             this.default_lng = this.userLocation.lng;
         }
@@ -177,11 +177,11 @@ export class MapPage {
 
     getStationColor(teamId): string {
         if (!teamId) {
-            return '#444';
-        } else if (teamId == this.myTeam) {
-            return '#ffc300';
-        } else {
             return '#000';
+        } else if (teamId == this.myTeam) {
+            return '#bf5900';
+        } else {
+            return '#4500b5';
         }
     }
 
