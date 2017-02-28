@@ -1,5 +1,6 @@
 <?php
+	error_reporting(E_ALL);
 	echo "<pre>";
-	$out = shell_exec('/home/dienerli/public_html/pioxapp/deploy.sh');
+	$out = shell_exec('/var/www/piox/deploy.sh');
 	echo $out;
-    echo "</pre>";
+	echo "</pre>";
