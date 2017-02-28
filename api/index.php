@@ -44,17 +44,34 @@ $app->get('/station',function (Request $request, Response $response) use (&$DB, 
 		return $response->withJson([]);
 	}
 
-	// stations with last capture info
-	$sql = "
-	SELECT s.*, ts2.t_id as team, UNIX_TIMESTAMP(ts2.timestamp)*1000 as captured_timestamp FROM (
-		SELECT s_ID, MAX(timestamp) as timestamp FROM r_team_station GROUP BY s_ID
-	) as ts1
-	INNER JOIN r_team_station as ts2
-		ON ts1.s_ID = ts2.s_ID AND ts1.timestamp = ts2.timestamp
-	RIGHT JOIN station s
-		ON s.s_ID = ts2.s_ID
-	ORDER BY s.s_ID
-";
+	if ($request->getAttribute('is_admin')) {
+		// stations with last capture info
+		$sql = "
+			SELECT s.*, ts2.t_id as team, UNIX_TIMESTAMP(ts2.timestamp)*1000 as captured_timestamp FROM (
+				SELECT s_ID, MAX(timestamp) as timestamp FROM r_team_station GROUP BY s_ID
+			) as ts1
+			INNER JOIN r_team_station as ts2
+				ON ts1.s_ID = ts2.s_ID AND ts1.timestamp = ts2.timestamp
+			RIGHT JOIN station s
+				ON s.s_ID = ts2.s_ID
+			ORDER BY s.s_ID
+		";
+	} else {
+		// stations with last capture info
+		$sql = "
+			SELECT s.*, ts2.t_id as team, UNIX_TIMESTAMP(ts2.timestamp)*1000 as captured_timestamp FROM (
+				SELECT s_ID, MAX(timestamp) as timestamp FROM r_team_station GROUP BY s_ID
+			) as ts1
+			INNER JOIN r_team_station as ts2
+				ON ts1.s_ID = ts2.s_ID AND ts1.timestamp = ts2.timestamp
+			RIGHT JOIN station s
+				ON s.s_ID = ts2.s_ID
+			WHERE s.enabled = 1
+			ORDER BY s.s_ID
+		";
+	}
+
+
 
 	$stations = $DB->fetchAll($sql);
 	return $response->withJson($stations, 200, JSON_NUMERIC_CHECK);
@@ -78,6 +95,12 @@ $app->post('/station/{id}/capture',function (Request $request, Response $respons
 	$stationId = $args['id'];
 	$teamId = $request->getAttribute('team_id');
 
+	$station = $DB->fetchAssoc("SELECT name, enabled FROM station WHERE s_ID = ?", array($stationId));
+
+	if (!$station['enabled']) {
+		return $response->withStatus(403)->withJson("Error: this station is not enabled");
+	}
+
 	$qsa = $request->getQueryParams();
 	$imageId = 'capture_s' . $stationId . '_t' . $teamId . '_' . round(microtime(true) * 1000);
 	process_and_save_image($imageId, $body, $qsa);
@@ -93,7 +116,6 @@ $app->post('/station/{id}/capture',function (Request $request, Response $respons
 	$DB->insert('r_team_station', $data);
 	$insertId = $DB->lastInsertId();
 
-	$station = $DB->fetchAssoc("SELECT name FROM station WHERE s_ID = ?", array($stationId));
 	$log->station('Team '.$request->getAttribute('team_name').' hat die Station '.$station['name'].' eingenommen', $request->getAttribute('team_id'), $insertId);
 	if (isset($qsa['tags'])) {
 		$tags = json_decode($qsa['tags'], true);
@@ -114,6 +136,7 @@ $app->post('/station',function (Request $request, Response $response) use (&$DB)
 				'pos_long' => $body['pos_long'],
 				'points' => (isset($body['points']) ? intval($body['points']) : 0 ),
 				'name' => $body['name'],
+				'enabled' => ($body['enabled'] ? 1 : 0 ),
 				'description' => $body['description']);
 
 	$DB->insert('station', $data);
@@ -133,6 +156,7 @@ $app->put('/station/{id}',function (Request $request, Response $response, $args)
 			'pos_long' => $body['pos_long'],
 			'points' => (isset($body['points']) ? intval($body['points']) : 0 ),
 			'name' => $body['name'],
+			'enabled' => ($body['enabled'] ? 1 : 0 ),
 			'description' => $body['description']);
 
 	$DB->update('station', $data, array('s_ID' => $stationId));

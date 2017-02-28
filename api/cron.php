@@ -29,7 +29,10 @@ $sql = "SELECT ts2.* FROM (
 			SELECT s_ID, MAX(timestamp) as timestamp FROM r_team_station GROUP BY s_ID
 		) as ts1 
 		INNER JOIN r_team_station as ts2 
-			ON ts1.s_ID = ts2.s_ID AND ts1.timestamp = ts2.timestamp";
+			ON ts1.s_ID = ts2.s_ID AND ts1.timestamp = ts2.timestamp
+		LEFT JOIN station s
+			ON s.s_ID = ts2.s_ID
+		WHERE s.enabled = 1";
 
 $stations = $DB->fetchAll($sql);
 

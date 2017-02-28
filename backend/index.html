@@ -107,6 +107,7 @@
 								<td>Beschreibung</td>
 								<td>LAT</td>
 								<td>LNG</td>
+								<td>Aktiv</td>
 								<td>Einnahme</td>
 								<td>Team Besitz</td>
 								<td></td>
@@ -118,7 +119,8 @@
 								<td class="col-xs-4"><input type="text" class="form-control input-sm" value="{{ station.description }}" ng-model="station.description"/></td>
 								<td class="col-xs-1"><input type="text" class="form-control input-sm" value="{{ station.pos_lat }}" ng-model="station.pos_lat"/></td>
 								<td class="col-xs-1"><input type="text" class="form-control input-sm" value="{{ station.pos_long }}" ng-model="station.pos_long"/></td>
-								<td>{{ station.captured_timestamp | moment:'HH:mm.ss' }}</td>
+								<td class="col-xs-1"><input type="checkbox" ng-model="station.enabled" ng-true-value="1" ng-false-value="0"/></td>
+								<td><span ng-if="station.captured_timestamp">{{ station.captured_timestamp | moment:'HH:mm.ss' }}</span></td>
 								<td>
 									<select ng-model="station.team" class="form-control input-sm" ng-controller="teamPickerCtrl">
 										<option ng-repeat="team in groups" value="{{ team.t_ID }}">{{ team.name }}</option>
@@ -134,8 +136,9 @@
 							<td><input type="text" class="form-control input-sm" ng-model="newStation.description"/></td>
 							<td><input type="text" class="form-control input-sm" ng-model="newStation.pos_lat"/></td>
 							<td><input type="text" class="form-control input-sm" ng-model="newStation.pos_long"/></td>
-							<td><input type="text" class="form-control input-sm" ng-model="newStation.captured_timestamp"/></td>
-							<td><input type="text" class="form-control input-sm" ng-model="newStation.team"/></td>
+							<td><input type="checkbox" class="form-control input-sm" ng-model="newStation.enabled" ng-true-value="1" ng-false-value="0"/></td>
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
 							<td colspan="2"><button ng-click="addNewStation(newStation)" class="btn btn-default" ng-disabled="!newStation.name">&#128190; Erstellen</button></td>
 						</tr>
 					</table>
