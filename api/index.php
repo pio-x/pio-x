@@ -77,6 +77,17 @@ $app->get('/station',function (Request $request, Response $response) use (&$DB, 
 	return $response->withJson($stations, 200, JSON_NUMERIC_CHECK);
 });
 
+// STATION SINGLE
+$app->get('/station/{id}',function (Request $request, Response $response, $args) use (&$DB, $config) {
+	if ($request->getAttribute('is_admin') == false) {
+		return $response->withStatus(403)->withJson("Error: not sent by an admin");
+	}
+
+	$station = $DB->fetchAssoc("SELECT * FROM station WHERE s_ID = ?", array($args['id']));
+
+	return $response->withJson($station, 200, JSON_NUMERIC_CHECK);
+});
+
 // images must be sent as body in data url format
 $app->post('/station/{id}/capture',function (Request $request, Response $response, $args) use (&$DB, &$log, $config) {
 	if ($request->getAttribute('is_team') == false) {
