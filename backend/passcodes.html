@@ -20,7 +20,7 @@
 <body>
 		<!-- QR CODES -->
 	<div id="qrcodes" ng-controller="QRCtrl">
-				<div ng-repeat="group in groups">
+				<div ng-repeat="group in groups track by $index">
 					<img style="float:right; width:180px" src="img/logo2.png">
 						<h1>Gruppe {{group.name}} ({{group.t_ID}})</h1>
 						Scanne diesen QR-Code mit dem Handy, um ins Spiel einzusteigen:<br><br>
@@ -75,9 +75,13 @@
 		</div>
 	</div>
 
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+	<script src="node_modules/angular/angular.min.js"></script>
+	<script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="node_modules/angular-animate/angular-animate.min.js"></script>
+	<script src="node_modules/angular-touch/angular-touch.min.js"></script>
+	<script src="node_modules/highcharts/highcharts.src.js"></script>
+	<script src="node_modules/highcharts-ng/dist/highcharts-ng.min.js"></script>
 	<script src="js/app.js"></script>
-	
 	<script src="js/services/apiService.js"></script>
 	<script src="js/vendor/qrcode.js"></script>
 	<script src="js/vendor/angular-qrcode.js"></script>
