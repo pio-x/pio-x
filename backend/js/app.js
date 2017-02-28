@@ -229,6 +229,15 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap', 'hi
             });
         };
         $scope.getStations();
+        $scope.getTeams = function() {
+            apiService.get('/team').then(function(articlesResponse) {
+                $scope.teams = {};
+                angular.forEach(articlesResponse.data, function(value, key) {
+                    $scope.teams[value['t_ID']] = value;
+                });
+            });
+        };
+        $scope.getTeams();
         $scope.newStation = {};
         $scope.emptyNewStation = function() {
             $scope.newStation = {
