@@ -10,6 +10,7 @@ require 'conf.php';
 require 'helpers/APIHelper.php';
 require 'helpers/ConfigHelper.php';
 require 'helpers/LogHelper.php';
+require 'helpers/Passcodes.php';
 require 'helpers/ScoreHelper.php';
 
 require 'middleware/AddHeaders.php';
@@ -257,7 +258,7 @@ $app->post('/team',function (Request $request, Response $response) use (&$DB) {
 	if (isset($body['hash']) && $body['hash']) {
 		$data['hash'] = $body['hash'];
 	} else {
-		$data['hash'] = md5(time() . $body['name'] . 'PIOX' . rand());
+		$data['hash'] = passcode(3);
 	}
 
 	$DB->insert('team', $data);
