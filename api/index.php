@@ -379,7 +379,7 @@ $app->get('/riddle', function (Request $request, Response $response) use (&$DB, 
 			foreach ($riddles as $riddle) {
 
 				// only send dependent riddles if precursor was solved
-				if ($riddle['dep_ID'] !== null && !in_array($riddle['dep_ID'], $solved)) {
+				if ($riddle['dep_ID'] && !in_array($riddle['dep_ID'], $solved)) {
 					continue;
 				}
 
