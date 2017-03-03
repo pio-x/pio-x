@@ -19,7 +19,7 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap', 'hi
             type: "MULTI",
             answer_required: 1,
             image_required: 0,
-            points: 1
+            points: 50
         };
         $scope.newObjectPosition = [];
         $scope.showEditStation = false;
@@ -83,7 +83,10 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap', 'hi
                     $scope.refreshData();
                     $scope.newlat = '';
                     $scope.newlng = '';
-                    $scope.newRiddle = {};
+                    $scope.newRiddle.title = '';
+                    $scope.newRiddle.question = '';
+                    $scope.newRiddle.dep_ID = 0;
+                    $scope.newRiddle.answer = '';
                     $scope.newObjectPosition = [];
                     //console.log($scope.newObjectPosition)
                 }
@@ -411,7 +414,7 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap', 'hi
                 dep_ID: "",
                 answer: "",
                 type: "MULTI",
-                points: 1,
+                points: 50,
                 answer_required: 1,
                 image_required: 0
             };
