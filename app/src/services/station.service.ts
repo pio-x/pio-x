@@ -34,6 +34,8 @@ export class StationService {
   }
 
   captureStation(stationId: number, imageData: any, tags: any): Promise<any> {
+      // Tags disabled because lots of problems
+      /*
       let cleanTags = {};
 
       for (var key in tags) {   
@@ -43,6 +45,8 @@ export class StationService {
       }
 
       return this.pioxApi.post('/station/' + stationId + '/capture?tags=' + JSON.stringify(cleanTags), imageData)
+      */
+      return this.pioxApi.post('/station/' + stationId + '/capture', imageData)
   }
 
   private handleError(error: any): Promise<any> {
