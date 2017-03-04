@@ -291,7 +291,7 @@ $app->get('/team/{id}/location', function (Request $request, Response $response,
 		foreach ($players as $playerdata) {
 			$player = $playerdata['player'];
 			$data[$player] = [];
-			$locations = $DB->fetchAll("SELECT team_lat as lat, team_long as lng, timestamp FROM teamposition WHERE t_ID = ? AND player = ? ORDER BY timestamp DESC", array($teamId, $player));
+			$locations = $DB->fetchAll("SELECT team_lat as lat, team_long as lng, UNIX_TIMESTAMP(timestamp)*1000 as timestamp FROM teamposition WHERE t_ID = ? AND player = ? ORDER BY timestamp DESC", array($teamId, $player));
 			foreach ($locations as $location) {
 				if (count($data[$player]) > 0) {
 					// remove duplicates: only add position if last added position is different
