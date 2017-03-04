@@ -21,27 +21,28 @@
 								scale: 8 }" ng-if="showMrxs">
 							</marker>
 							<span ng-repeat="(key, locations) in players"  ng-init="locationIndex = $index">
-								<!-- circle of the position of every player from the selected team -->
+								<!-- big red circle of the last position of every player from the selected team -->
+								<shape name="circle" ng-repeat="location in locations | limitTo: 1 track by $index"
+									stroke-color="red"
+									stroke-opacity="2"
+									stroke-weight="2"
+									fill-color="red"
+									fill-opacity="0.5"
+									center="[{{ location.lat }}, {{ location.lng }}]"
+									radius="30"
+									ng-if="showTeamLocation">
+								</shape>
+								<!-- circle for every position of every player from the selected team -->
 								<marker position="[{{ location.lat }},{{ location.lng }}]" 
 									on-click="showTooltip($index, locations, key)" 
 									ng-repeat="location in locations track by $index" 
 									icon="{
 										path: 0,
-										strokeColor: 'blue',
-										strokeWeight: 2,
-										scale: 6 }" 
+										strokeColor: '{{ playerColors[locationIndex] }}',
+										strokeWeight: 1,
+										scale: 4 }" 
 									ng-if="showTeamLocation">
 								</marker>
-								<shape name="circle" ng-repeat="location in locations | limitTo: 1 track by $index"
-									stroke-color="blue"
-									stroke-opacity="2"
-									stroke-weight="2"
-									fill-color="blue"
-									fill-opacity="0.3"
-									center="[{{ location.lat }}, {{ location.lng }}]"
-									radius="50"
-									ng-if="showTeamLocation">
-								</shape>
 								<!-- polyline for every player on the selected team -->
 								<shape name="polyline" 
 									path="[
