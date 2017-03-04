@@ -42,7 +42,9 @@ export class NotificationService {
     promise.then((response) => {
         this._notifications.next(response);
     })
-    .catch(this.handleError);
+    .catch(() => {
+      console.log('an error occured, but we ignore it because its probably a 401 Unauthorized');
+    });
     return promise;
   }
 
@@ -60,11 +62,5 @@ export class NotificationService {
       }
     }
     this._unread.next(count);
-  }
-
-  private handleError(error: any): Promise<any> {
-
-    console.error('An error occurred', error); // for demo purposes only
-    return Promise.reject(error.message || error);
   }
 }
