@@ -5,21 +5,40 @@
 							<marker position="[{{ station.pos_lat }},{{ station.pos_long }}]" on-click="showTooltip($index, stations)" ng-repeat="station in stations track by $index" icon="{
 								path: 0,
 								strokeColor: '#000',
-								strokeWeight: 3,
+								strokeWeight: 2,
 								scale: 8 }" ng-if="showStations">
 							</marker>
 							<marker position="[{{ riddle.pos_lat }},{{ riddle.pos_long }}]" on-click="showTooltip($index, riddles)" ng-repeat="riddle in riddles track by $index" icon="{
 								path: 0,
 								strokeColor: '#00f',
-								strokeWeight: 3,
+								strokeWeight: 2,
 								scale: 8 }" ng-if="showRiddles && riddle.pos_lat">
 							</marker>
-							<marker position="[{{ mrx.locations[1].xpos_lat }},{{ mrx.locations[1].xpos_long }}]" on-click="showTooltip($index, mrxs, key)" ng-repeat="(key, mrx) in mrxs track by $index" icon="{
-								path: 0,
-								strokeColor: '#0f0',
-								strokeWeight: 3,
-								scale: 8 }" ng-if="showMrxs">
-							</marker>
+							<span ng-repeat="(key, mrx) in mrxs track by $index"  ng-init="mrxIndex = $index">
+								<marker position="[{{ location.xpos_lat }},{{ location.xpos_long }}]" 
+									on-click="showTooltip($index, location, mrxIndex)" 
+									ng-repeat="(key, location) in mrx.locations track by $index" 
+									icon="{
+										path: 0,
+										strokeColor: 'lime',
+										strokeWeight: 2,
+										scale: 8 
+									}" 
+									ng-if="showMrxs">
+								</marker>
+								<shape name="polyline" 
+									path="[
+										[{{ location.xpos_lat }}, {{ location.xpos_long }}],
+										[{{ mrx.locations[$index + 1].xpos_lat }}, {{ mrx.locations[$index + 1].xpos_long }}]
+									]"
+									geodesic="true"
+									stroke-color="lime"
+									stroke-opacity="1.0"
+									stroke-weight="2"
+									ng-repeat="(key, location) in mrx.locations track by $index"
+									ng-if="showMrxs && mrx.locations[$index + 1]">
+								</shape>
+							</span>
 							<span ng-repeat="(key, locations) in players"  ng-init="locationIndex = $index">
 								<!-- big red circle of the last position of every player from the selected team -->
 								<shape name="circle" ng-repeat="location in locations | limitTo: 1 track by $index"
