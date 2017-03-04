@@ -20,11 +20,11 @@
 								strokeWeight: 3,
 								scale: 8 }" ng-if="showMrxs">
 							</marker>
-							<span ng-repeat="locations in players"  ng-init="locationIndex = $index">
-								<!-- circle for the last position of every player on the selected team -->
+							<span ng-repeat="(key, locations) in players"  ng-init="locationIndex = $index">
+								<!-- circle of the position of every player from the selected team -->
 								<marker position="[{{ location.lat }},{{ location.lng }}]" 
 									on-click="showTooltip($index, locations, key)" 
-									ng-repeat="(key, location) in locations track by $index" 
+									ng-repeat="location in locations track by $index" 
 									icon="{
 										path: 0,
 										strokeColor: 'blue',

@@ -100,10 +100,11 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap', 'hi
         };
 
         //Zeigt auf einem Marker ein Tooltip mit Infos an
-        $scope.showTooltip = function(evt, id, obj) {
+        $scope.showTooltip = function(evt, id, obj, key) {
             $scope.shown = obj[id];
+            $scope.key = key;
             $scope.map.showInfoWindow('infoWindow', this);
-            //console.log(obj);
+            //console.log(key);
         };
 
         //Aktualisiert die Teams
