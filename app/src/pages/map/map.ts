@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, ViewChild, ChangeDetectorRef, ChangeDetectionStrategy} from '@angular/core';
 
 import {ModalController} from 'ionic-angular';
 
@@ -25,7 +25,10 @@ declare var google: any;
 
 @Component({
     selector: 'page-map',
-    templateUrl: 'map.html'
+    templateUrl: 'map.html',
+    // onPush strategy improves map performance a lot
+    // but we need to manually trigger dom updates with this.cd.markForCheck();
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MapPage {
     default_lat: number = 47.499163;
@@ -58,7 +61,8 @@ export class MapPage {
         private mrxService: MrxService,
         private riddleService: RiddleService,
         public modalCtrl: ModalController,
-        public navService: NavigationService
+        public navService: NavigationService,
+        private cd: ChangeDetectorRef
     ) {
         this.updateMap();
 
@@ -93,7 +97,7 @@ export class MapPage {
     presentActionSheet() {
       this.navService.presentActionSheet()
     }
-    
+
     openCaptureModal(station: Station) {
         let modal = this.modalCtrl.create(CaptureModal, { station: station });
         modal.onDidDismiss(data => {
@@ -113,6 +117,7 @@ export class MapPage {
 
     updateMap() {
         this.isRefreshing = true;
+        this.cd.markForCheck();
         if (this.map) {
             // attempt to fix map offset that happen sometimes
             this.map.triggerResize();
@@ -125,6 +130,7 @@ export class MapPage {
             this.configService.updateConfig()
         ]).then(() => {
             this.isRefreshing = false;
+            this.cd.markForCheck();
         });
     }
 
@@ -137,6 +143,7 @@ export class MapPage {
 
     userLocationUpdated(position) {
         this.userLocation = position;
+        this.cd.markForCheck();
     }
 
     teamsUpdated(teams: Array<Team>): void {
@@ -194,6 +201,7 @@ export class MapPage {
          this.lastInfowindow.close();
       }
       this.lastInfowindow = infoWindow;
+      this.cd.markForCheck();
     }
 
 }
