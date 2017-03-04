@@ -329,16 +329,14 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap', 'hi
             });
         };
         $scope.getCodes();
-        $scope.newCode = {};
-        $scope.emptyNewCode = function() {
-            $scope.newCode = {
-                code: "",
-                points: "",
-                used: "",
-                mrx_ID: ""
-            };
+        $scope.newCode = {
+            code: "",
+            points: 500,
+            mrx_ID: 1
         };
-        $scope.emptyNewCode();
+        $scope.emptyNewCode = function() {
+            $scope.newCode.code = "";
+        };
         $scope.addNewCode = function(data) {
             apiService.post('/passcode', data)
                 .then(function(){

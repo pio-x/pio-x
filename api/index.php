@@ -669,10 +669,17 @@ $app->post('/passcode', function (Request $request, Response $response, $args) u
 	}
 
 	$body = json_decode($request->getBody(), true);
-	$data = array('code' => $body['code'],
-				'points' => $body['points'],
-				'used' => $body['used'],
-				'mrx_ID' => $body['mrx_ID']);
+	$data = array(
+		'code' => $body['code'],
+		'points' => $body['points'],
+		'mrx_ID' => $body['mrx_ID']
+	);
+
+	if (isset($body['code']) && $body['code']) {
+		$data['code'] = $body['code'];
+	} else {
+		$data['code'] = passcode(2);
+	}
 
 	$DB->insert('passcode', $data);
 
