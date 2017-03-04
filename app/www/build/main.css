@@ -22227,6 +22227,14 @@ sub {
   display: none !important;
 }
 
+#app_loading {
+  width: 100%;
+  text-align: center;
+  font-family: -apple-system, "Helvetica Neue", "Roboto", sans-serif;
+  margin-top: 50%;
+  font-size: 20px;
+}
+
 image-uploader .uploaded-image-holder {
   max-width: 100%;
   height: 40%;

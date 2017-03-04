@@ -8,6 +8,7 @@ import {NotificationsPage} from "../notifications/notifications";
 import {MrxPage} from "../mrx/mrx";
 
 import { NotificationService } from '../../services/notification.service';
+import {Platform} from "ionic-angular";
 
 @Component({
   templateUrl: 'tabs.html'
@@ -29,7 +30,12 @@ export class TabsPage {
   isTeam: number = 0;
   isMrx: number = 0;
 
-  constructor(private notificationService:NotificationService) {
+  constructor(private notificationService:NotificationService, public platform: Platform) {
+
+    this.platform.ready().then((readySource) => {
+      // hide app loading
+      document.getElementById('app_loading').style.display = 'none';
+    });
 
     this.isTeam = parseInt(localStorage.getItem('team'));
     this.isMrx = parseInt(localStorage.getItem('mrx'));

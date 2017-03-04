@@ -18,3 +18,11 @@
 [hidden] {
   display: none !important;
 }
+
+#app_loading {
+  width: 100%;
+  text-align: center;
+  font-family: $font-family-base;
+  margin-top: 50%;
+  font-size: 20px;
+}
