@@ -1,6 +1,6 @@
 var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap', 'highcharts-ng'])
     //MAP
-    .controller('mapCtrl', function($scope, NgMap, apiService, $window) {
+    .controller('mapCtrl', function($scope, NgMap, apiService, riddleService, $window) {
         NgMap.getMap().then(function(map) {
             $scope.map = map;
         });
@@ -146,11 +146,12 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap', 'hi
 
         //Aktualisiert die Rätsel
         $scope.getRiddles = function() {
-            apiService.get('/riddle').then(function(articlesResponse) {
-                $scope.riddles = articlesResponse.data;
-            });
+            riddleService.update();
         };
         $scope.getRiddles();
+        riddleService.subscribe(function(riddles) {
+            $scope.riddles = riddles;
+        });
 
         //Ruft alle Aktualisierungsfunktionen in diesem Controller auf
         $scope.refreshData = function() {
@@ -397,13 +398,14 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap', 'hi
         };
     })
     //RIDDLES CONTROLLER ==============================================================================
-    .controller('riddleCtrl', function($scope, apiService){
-        $scope.getRiddles = function() {
-            apiService.get('/riddle').then(function(articlesResponse) {
-                $scope.riddles = articlesResponse.data;
-            });
-        };
-        $scope.getRiddles();
+    .controller('riddleCtrl', function($scope, apiService, riddleService){
+        $scope.riddles = [];
+        $scope.riddleService = riddleService;
+        $scope.riddleService.subscribe(function(riddles) {
+            $scope.riddles = riddles;
+        });
+        $scope.riddleService.update();
+
         $scope.newRiddle = {};
         $scope.emptyNewRiddle = function() {
             $scope.newRiddle = {
@@ -423,20 +425,20 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap', 'hi
         $scope.addNewRiddle = function(data) {
             apiService.post('/riddle', data)
                 .then(function(){
-                    $scope.getRiddles();
+                    $scope.riddleService.update();
                     $scope.emptyNewRiddle();
                 });
         };
         $scope.deleteRiddle = function(id) {
             apiService.delete('/riddle/' + id)
                 .then(function(){
-                    $scope.getRiddles();
+                    $scope.riddleService.update();
                 });
         };
         $scope.updateRiddle = function(id, data) {
             apiService.put('/riddle/' + id, data)
                 .then(function(){
-                    $scope.getRiddles();
+                    $scope.riddleService.update();
                 });
         };
     })
