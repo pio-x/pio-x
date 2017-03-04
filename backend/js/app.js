@@ -148,7 +148,6 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap', 'hi
         $scope.getRiddles = function() {
             riddleService.update();
         };
-        $scope.getRiddles();
         riddleService.subscribe(function(riddles) {
             $scope.riddles = riddles;
         });
@@ -404,7 +403,6 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap', 'hi
         $scope.riddleService.subscribe(function(riddles) {
             $scope.riddles = riddles;
         });
-        $scope.riddleService.update();
 
         $scope.newRiddle = {};
         $scope.emptyNewRiddle = function() {
