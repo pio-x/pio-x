@@ -7,11 +7,11 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap', 'hi
 
         //Initiierung der Variablen und Vorselektion der Anzeige
         $scope.showStations = true;
-        $scope.showRiddles = false;
-        $scope.showMrxs = false;
+        $scope.showRiddles = true;
+        $scope.showMrxs = true;
         $scope.showTeams = false;
         $scope.showTeam = false;
-        $scope.showTeamLocation = true;
+        $scope.showTeamLocation = false;
         $scope.playerColors = ["blue", "lime", "darkorange", "gold", "darkviolet", "brown", "darkgreen", "darkred", "olivedrab", "saddlebrown", "tomato", "darkcyan", "pink"]
         $scope.showNewObjectInput = 'station';
         $scope.newStation = {};
@@ -116,8 +116,8 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap', 'hi
         };
         $scope.getTeams();
 
-        //Selektionsvariable, welches Team angezeigt wird.
-        $scope.selectedTeam = 2;
+        //Selektionsvariable, welches Team zu Beginn angezeigt wird.
+        $scope.selectedTeam = 1;
 
         //Ruft die Positionen aller Spieler aus einem Team ab
         $scope.getTeamLocations = function(id) {
