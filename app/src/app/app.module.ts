@@ -30,6 +30,8 @@ import {NavigationService} from "../services/navigation.service";
 import {GameStreamService} from "../services/game_stream.service";
 import {PasscodeService} from "../services/passcode.service";
 
+import {PioxErrorHandler} from "./PioxErrorHandler"
+
 import {ImageUploader} from "../components/image-uploader/image-uploader";
 
 import { AgmCoreModule } from 'angular2-google-maps/core';
@@ -81,7 +83,7 @@ import { ImageUploadModule } from 'ng2-imageupload';
     MrxPage
   ],
   providers: [
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    {provide: ErrorHandler, useClass: PioxErrorHandler},
     DatePipe,
     Storage,
     TeamService,

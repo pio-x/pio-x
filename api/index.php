@@ -691,6 +691,12 @@ $app->post('/passcode/solve', function (Request $request, Response $response, $a
 	$teamId = $body['team_ID'];
 	$code = $body['passcode'];
 
+
+	// for debug only
+	if ($code == 'error') {
+		return $response->write('i am an error :{ ...and i have a moustache');
+	}
+
 	$passcode = $DB->fetchAssoc("SELECT * from passcode where code = ?", array($code));
 
 	// passcode does not exist
