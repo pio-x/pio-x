@@ -286,7 +286,7 @@
 								<td class="col-xs-1"><input type="text" class="form-control input-sm" value="{{ riddle.pos_lat }}" ng-model="riddle.pos_lat"/></td>
 								<td class="col-xs-1"><input type="text" class="form-control input-sm" value="{{ riddle.pos_long }}" ng-model="riddle.pos_long"/></td>
 								<td class="col-xs-1"><input type="text" class="form-control input-sm" value="{{ riddle.title }}" ng-model="riddle.title"/></td>
-								<td><input type="text" class="form-control input-sm" value="{{ riddle.question }}" ng-model="riddle.question"/></td>
+								<td><textarea class="form-control input-sm" ng-model="riddle.question" rows="1"></textarea></td>
 								<td class="col-xs-1"><riddle-picker selected="riddle.dep_ID"></riddle-picker></td>
 								<td><input type="text" class="form-control input-sm" value="{{ riddle.answer }}" ng-model="riddle.answer" ng-if="riddle.answer_required"/></td>
 								<td><select class="form-control input-sm" ng-model="riddle.type">
@@ -305,7 +305,7 @@
 								<td class="col-xs-1"><input type="text" ng-model="newRiddle.pos_lat" class="form-control input-sm"/></td>
 								<td class="col-xs-1"><input type="text" ng-model="newRiddle.pos_long" class="form-control input-sm"/></td>
 								<td class="col-xs-1"><input type="text" ng-model="newRiddle.title" class="form-control input-sm"/></td>
-								<td><input type="text" ng-model="newRiddle.question" class="form-control input-sm"/></td>
+								<td><textarea class="form-control input-sm" ng-model="newRiddle.question" rows="1"></textarea></td>
 								<td class="col-xs-1"><riddle-picker selected="newRiddle.dep_ID"></riddle-picker></td>
 								<td><input type="text" ng-model="newRiddle.answer" ng-if="newRiddle.answer_required" class="form-control input-sm"/></td>
 								<td><select ng-model="newRiddle.type" class="form-control input-sm">
