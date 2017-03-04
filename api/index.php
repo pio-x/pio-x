@@ -148,8 +148,11 @@ $app->post('/station',function (Request $request, Response $response) use (&$DB)
 				'pos_long' => $body['pos_long'],
 				'points' => (isset($body['points']) ? intval($body['points']) : 0 ),
 				'name' => $body['name'],
-				'enabled' => ($body['enabled'] ? 1 : 0 ),
 				'description' => $body['description']);
+
+	if (isset($body['enabled'])) {
+		$data['enabled'] = ($body['enabled'] ? 1 : 0 );
+	}
 
 	$DB->insert('station', $data);
 
