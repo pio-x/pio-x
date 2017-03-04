@@ -2,9 +2,8 @@
 								<div ng-non-bindable=""><!-- Für jeden Typ ein schönes Window designen -->
 									<b ng-if="shown.infotype">{{shown.infotype}}<br /></b>
 									<b ng-if="shown.question">{{shown.question}}<br /></b>
-									<b ng-if="shown.timestamp">{{shown.timestamp}}<br /></b>
-									<b ng-if="shown.lat">{{shown.lat}}<br /></b>
-									<b ng-if="shown.lng">{{shown.lng}}<br /></b>
+									<b ng-if="shown.timestamp">{{ key }}: {{shown.timestamp | moment:'HH:mm:ss'}}<br /></b>
+									<span ng-if="shown.lat">{{shown.lat}} / {{shown.lng}}<br /></span>
 									<span ng-if="shown.s_ID">
 										<table>
 											<tr>

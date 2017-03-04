@@ -294,8 +294,8 @@
 										<option>SINGLE</option>
 									</select>
 								</td>
-								<td><input type="checkbox" ng-model="riddle.answer_required" ng-true-value="1" ng-false-value="0"/></td>
-								<td><input type="checkbox" ng-model="riddle.image_required" ng-true-value="1" ng-false-value="0"/></td>
+								<td><input type="checkbox" class="form-control input-sm" ng-model="riddle.answer_required" ng-true-value="1" ng-false-value="0"/></td>
+								<td><input type="checkbox" class="form-control input-sm" ng-model="riddle.image_required" ng-true-value="1" ng-false-value="0"/></td>
 								<td class="col-xs-1"><input type="text" class="form-control input-sm" value="{{ riddle.points }}" ng-model="riddle.points"/></td>
 								<td><button ng-click="updateRiddle(riddle.r_ID, riddle)" class="btn btn-default">&#128190;</button></td>
 								<td><button ng-click="deleteRiddle(riddle.r_ID)" class="btn btn-default" ng-confirm-click="ACHTUNG: Willst du das Rätsel wirklich löschen?">&#9003;</button></td>
@@ -313,8 +313,8 @@
 										<option>SINGLE</option>
 									</select>
 								</td>
-								<td><input type="checkbox" ng-model="newRiddle.answer_required" ng-true-value="1" ng-false-value="0"/></td>
-								<td><input type="checkbox" ng-model="newRiddle.image_required" ng-true-value="1" ng-false-value="0"/></td>
+								<td><input type="checkbox" class="form-control input-sm" ng-model="newRiddle.answer_required" ng-true-value="1" ng-false-value="0"/></td>
+								<td><input type="checkbox" class="form-control input-sm" ng-model="newRiddle.image_required" ng-true-value="1" ng-false-value="0"/></td>
 								<td class="col-xs-1"><input type="text" ng-model="newRiddle.points" class="form-control input-sm"/></td>
 								<td colspan="2"><button ng-click="addNewRiddle(newRiddle)" class="btn btn-default" ng-disabled="!newRiddle.question">&#128190; Erstellen</button></td>
 							</tr>

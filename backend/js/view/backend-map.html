@@ -14,17 +14,17 @@
 								strokeWeight: 3,
 								scale: 8 }" ng-if="showRiddles && riddle.pos_lat">
 							</marker>
-							<marker position="[{{ mrx.locations[1].xpos_lat }},{{ mrx.locations[1].xpos_long }}]" on-click="showTooltip($index, mrxs)" ng-repeat="mrx in mrxs track by $index" icon="{
+							<marker position="[{{ mrx.locations[1].xpos_lat }},{{ mrx.locations[1].xpos_long }}]" on-click="showTooltip($index, mrxs, key)" ng-repeat="(key, mrx) in mrxs track by $index" icon="{
 								path: 0,
 								strokeColor: '#0f0',
 								strokeWeight: 3,
 								scale: 8 }" ng-if="showMrxs">
 							</marker>
-							<span ng-repeat="locations in players">
+							<span ng-repeat="locations in players"  ng-init="locationIndex = $index">
 								<!-- circle for the last position of every player on the selected team -->
 								<marker position="[{{ location.lat }},{{ location.lng }}]" 
-									on-click="showTooltip($index, locations)" 
-									ng-repeat="location in locations track by $index" 
+									on-click="showTooltip($index, locations, key)" 
+									ng-repeat="(key, location) in locations track by $index" 
 									icon="{
 										path: 0,
 										strokeColor: 'blue',
@@ -49,10 +49,11 @@
 										[{{ locations[$index + 1].lat }}, {{ locations[$index + 1].lng }}]
 									]"
 									geodesic="true"
-									stroke-color="#FF0000"
+									stroke-color="{{ playerColors[locationIndex] }}"
 									stroke-opacity="1.0"
-									stroke-weight="2" ng-repeat="location in locations track by $index"
-									ng-if="showTeamLocation">
+									stroke-weight="2"
+									ng-repeat="location in locations track by $index"
+									ng-if="showTeamLocation && locations[$index + 1]">
 								</shape>
 							</span>
 							<marker position="{{newObjectPosition}}" title="Neues Objekt" on-dragend="showCreateNew($event)" animation="DROP" draggable="true" ng-if="newObjectPosition.length">
