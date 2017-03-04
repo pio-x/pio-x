@@ -112,7 +112,12 @@
 								<span class="input-group-addon">Punkte:</span>
 								<input class="form-control" type="text" ng-model="changedStation.points"/>
 							</div>
+							<div class="input-group">
+								<span class="input-group-addon">Aktiviert?</span>
+								<input type="checkbox" class="form-control input-sm" ng-model="changedStation.enabled" ng-true-value="1" ng-false-value="0"/>
+							</div>
 							<button ng-click="saveStation()" class="btn btn-default">Speichern</button>
+							<button ng-click="hideEditStation()" class="btn btn-default">Abbrechen</button>
 							<hr />
 						</span>
 						<span ng-if="newlat">
@@ -139,6 +144,10 @@
 								<div class="input-group">
 									<span class="input-group-addon">Punkte:</span>
 									<input class="form-control" type="text" ng-model="newStation.points"/>
+								</div>
+								<div class="input-group">
+									<span class="input-group-addon">Aktiviert?</span>
+									<input type="checkbox" class="form-control input-sm" ng-model="newRiddle.enabled" ng-true-value="1" ng-false-value="0"/>
 								</div>
 								<button ng-click="createNewStation()" class="btn btn-default">Station erstellen</button>
 							</span>

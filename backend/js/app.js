@@ -14,7 +14,10 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap', 'hi
         $scope.showTeamLocation = false;
         $scope.playerColors = ["blue", "lime", "darkorange", "gold", "darkviolet", "brown", "darkgreen", "darkred", "olivedrab", "saddlebrown", "tomato", "darkcyan", "pink"]
         $scope.showNewObjectInput = 'station';
-        $scope.newStation = {};
+        $scope.newStation = {
+            points: 10,
+            enabled: 1
+        };
         $scope.newRiddle = {
             type: "MULTI",
             answer_required: 1,
@@ -23,6 +26,9 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap', 'hi
         };
         $scope.newObjectPosition = [];
         $scope.showEditStation = false;
+        $scope.hideEditStation = function() {
+            $scope.showEditStation = false;
+        }
 
         //Zum Station bearbeiten
         $scope.changedStation = {};
@@ -47,7 +53,9 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap', 'hi
                 name: $scope.newStation.name,
                 description: $scope.newStation.description,
                 pos_lat: $scope.newlat,
-                pos_long: $scope.newlng
+                pos_long: $scope.newlng,
+                points: $scope.newStation.points,
+                enabled: $scope.newStation.enabled
             };
             //console.log(data);
             apiService.post('/station', data)
@@ -55,7 +63,10 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap', 'hi
                     $scope.refreshData();
                     $scope.newlat = '';
                     $scope.newlng = '';
-                    $scope.newStation = {};
+                    $scope.newStation = {
+                        points: 10,
+                        enabled: 1
+                    };
                     $scope.newObjectPosition = [];
                     //console.log($scope.newObjectPosition)
                 }
@@ -267,7 +278,7 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap', 'hi
                 description: "",
                 pos_lat: "",
                 pos_long: "",
-                captured_timestamp: "",
+                points: 10,
                 team: ""
             }
         };
