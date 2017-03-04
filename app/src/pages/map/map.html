@@ -70,7 +70,7 @@
 
     <!-- Station Icons -->
     <sebm-google-map-marker
-            *ngFor="let station of stations"
+            *ngFor="let station of stations; trackBy:trackByStationId"
             (markerClick)="onInfoWindowOpen(infowindow)"
             [latitude]="station.pos_lat"
             [longitude]="station.pos_long"

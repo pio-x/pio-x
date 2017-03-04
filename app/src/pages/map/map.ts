@@ -204,4 +204,8 @@ export class MapPage {
       this.cd.markForCheck();
     }
 
+    trackByStationId(index,item){
+      return item.s_ID;
+    }
+
 }
