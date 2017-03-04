@@ -1,6 +1,6 @@
 var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap', 'highcharts-ng'])
     //MAP
-    .controller('mapCtrl', function($scope, NgMap, apiService, riddleService, $window) {
+    .controller('mapCtrl', function($scope, NgMap, apiService, riddleService, stationService, $window) {
         NgMap.getMap().then(function(map) {
             $scope.map = map;
         });
@@ -41,11 +41,11 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap', 'hi
         $scope.saveStation = function() {
             apiService.put('/station/' + $scope.changedStation.s_ID, $scope.changedStation)
                 .then(function(){
-                    $scope.getStations();
+                    stationService.update();
                 });
             $scope.map.hideInfoWindow('infoWindow');
             $scope.showEditStation = false;
-        }
+        };
 
         //Erfasst eine neue Station
         $scope.createNewStation = function() {
@@ -141,12 +141,10 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap', 'hi
         $scope.getTeamLocations($scope.selectedTeam);
 
         //Aktualisiert die Stationen
-        $scope.getStations = function() {
-            apiService.get('/station').then(function(articlesResponse) {
-                $scope.stations = articlesResponse.data;
-            });
-        };
-        $scope.getStations();
+        $scope.stations = [];
+        stationService.subscribe(function(stations) {
+            $scope.stations = stations;
+        });
 
         //Aktualisiert die Mr.X Positionen
         $scope.getMrxs = function() {
@@ -157,9 +155,7 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap', 'hi
         $scope.getMrxs();
 
         //Aktualisiert die Rätsel
-        $scope.getRiddles = function() {
-            riddleService.update();
-        };
+        $scope.riddles = [];
         riddleService.subscribe(function(riddles) {
             $scope.riddles = riddles;
         });
@@ -168,9 +164,9 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap', 'hi
         $scope.refreshData = function() {
             $scope.getTeams();
             $scope.getTeamLocations(1);
-            $scope.getStations();
             $scope.getMrxs();
-            $scope.getRiddles();
+            riddleService.update();
+            stationService.update();
         };
     })
     //QR CODES CONTROLLER ==============================================================================
@@ -255,13 +251,13 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap', 'hi
         };
     })
     //STATIONS CONTROLLER ==============================================================================
-    .controller('stationCtrl', function($scope, apiService){
-        $scope.getStations = function() {
-            apiService.get('/station').then(function(articlesResponse) {
-                $scope.stations = articlesResponse.data;
-            });
-        };
-        $scope.getStations();
+    .controller('stationCtrl', function($scope, apiService, stationService){
+        $scope.stations = [];
+        $scope.stationService = stationService;
+        $scope.stationService.subscribe(function(stations) {
+            $scope.stations = stations;
+        });
+
         $scope.getTeams = function() {
             apiService.get('/team').then(function(articlesResponse) {
                 $scope.teams = {};
@@ -286,20 +282,20 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap', 'hi
         $scope.updateStation = function(id, data) {
             apiService.put('/station/' + id, data)
                 .then(function(){
-                    $scope.getStations();
+                    $scope.stationService.update();
                 });
         };
         $scope.addNewStation = function(data) {
             apiService.post('/station', data)
                 .then(function(){
-                    $scope.getStations();
+                    $scope.stationService.update();
                     $scope.emptyNewStation();
                 });
         };
         $scope.deleteStation = function(id) {
             apiService.delete('/station/' + id)
                 .then(function(){
-                    $scope.getStations();
+                    $scope.stationService.update();
                 });
         };
     })
