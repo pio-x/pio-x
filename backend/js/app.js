@@ -212,6 +212,7 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap', 'hi
     })
     //TEAMS CONTROLLER ==============================================================================
     .controller('teamCtrl', function($scope, apiService, teamService){
+        $scope.apiService = apiService;
         $scope.groups = [];
         teamService.subscribe(function(teams) {
             $scope.groups = teams;
