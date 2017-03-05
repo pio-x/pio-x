@@ -22,10 +22,10 @@ function passcode($words) {
 }
 
 function simplepasscode($numbers) {
-    $simplepasscode = '';
+    $simplepasscode = 1;
 
-    for ($i=0;$i<$numbers;$i++) {
-        $simplepasscode .= rand(1,9);
+    for ($i=1;$i<$numbers;$i++) {
+        $simplepasscode .= rand(0,9);
     }
     
     return $simplepasscode;
