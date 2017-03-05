@@ -324,23 +324,26 @@ $app->get('/mrx', function (Request $request, Response $response) use (&$DB, $co
 	}
 
 	$mrxs = $DB->fetchAll("SELECT * FROM mrx");
-	if ($request->getAttribute('is_admin') == false) {
+	if ($request->getAttribute('is_admin')) {
+		return $response->withJson($mrxs, 200, JSON_NUMERIC_CHECK);
+	} else {
 		// do not send hashes to teams/mrx
 		$mrxs = APIHelper::removeAttribute($mrxs, 'x_hash');
-	}
-	$data = [];
-	foreach ($mrxs as $mrx) {
-		// TODO: positionen bei teams nur mitschicken wenn sie sie sehen dürfen
-		// TODO: nur senden wenn noch nicht gefangen
-		$locations = $DB->fetchAll("SELECT xpos_lat, xpos_long, UNIX_TIMESTAMP(timestamp)*1000 as timestamp, description FROM mrx_position WHERE mrx_ID = ? ORDER BY timestamp desc LIMIT 3", array($mrx['x_ID']));
 
-		// nur senden wenn mind. 1 location vorhanden
-		if (is_array($locations) && count($locations) > 0) {
-			$mrx['locations'] = $locations;
-			$data[] = $mrx;
+		$data = [];
+		foreach ($mrxs as $mrx) {
+			// TODO: positionen bei teams nur mitschicken wenn sie sie sehen dürfen
+			// TODO: nur senden wenn noch nicht gefangen
+			$locations = $DB->fetchAll("SELECT xpos_lat, xpos_long, UNIX_TIMESTAMP(timestamp)*1000 as timestamp, description FROM mrx_position WHERE mrx_ID = ? ORDER BY timestamp desc LIMIT 3", array($mrx['x_ID']));
+
+			// nur senden wenn mind. 1 location vorhanden
+			if (is_array($locations) && count($locations) > 0) {
+				$mrx['locations'] = $locations;
+				$data[] = $mrx;
+			}
 		}
+		return $response->withJson($data, 200, JSON_NUMERIC_CHECK);
 	}
-	return $response->withJson($data, 200, JSON_NUMERIC_CHECK);
 });
 
 $app->post('/mrx/{id}/location', function (Request $request, Response $response, $args) use (&$DB, $config) {
