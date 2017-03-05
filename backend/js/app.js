@@ -169,6 +169,7 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap', 'hi
     })
     //QR CODES CONTROLLER ==============================================================================
     .controller('QRCtrl', function($scope, apiService, teamService){
+        $scope.apiService = apiService;
         //Initiiert die Basis URL, je nach Standort der Installation
         $scope.baseURL = 'https://api.pio-x.ch';
         if(window.location.host == "localhost") {
@@ -293,11 +294,7 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap', 'hi
     })
     // LOG / IMAGES / STREAM CONTROLLER ==============================================================================
     .controller('logCtrl', function($scope, apiService){
-        $scope.apiUrl = 'https://api.pio-x.ch/image/';
-        if(window.location.host == "localhost") {
-            $scope.apiUrl = 'http://localhost' + window.location.pathname + '../api/image/';
-        }
-        $scope.imgHash = "?hash=" + localStorage.getItem("hash");
+        $scope.apiService = apiService;
         $scope.getLogs = function() {
             apiService.get('/log').then(function(articlesResponse) {
                 $scope.logs = articlesResponse.data;

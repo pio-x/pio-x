@@ -78,7 +78,7 @@
 						</tr>
 						<tr ng-repeat="group in groups | filter:search">
 								<td>{{ group.t_ID }}</td>
-								<td><img src="../api/uploaded_images/{{group.img_ID}}.jpg" ng-if="group.img_ID" class="profile-image"></td>
+								<td><img src="{{apiService.imageUrl(group.img_ID)}}" ng-if="group.img_ID" class="profile-image"></td>
 								<td><input type="text" class="form-control input-sm" value="{{ group.name }}" ng-model="group.name"/></td>
 								<td>{{ group.score }}</td>
 								<td>{{ group.hash }}</td>
@@ -175,7 +175,7 @@
 								<td>{{ log.type }}</td>
 								<td>{{ log.FK_ID }}</td>
 								<td>{{ log.text }}</td>
-								<td><a href="{{ apiUrl + log.image }}.jpg{{ imgHash }}" target="_blank"><img ng-src="{{ apiUrl + log.image }}.jpg{{ imgHash }}" height="50" ng-if="log.image" /></a></td>
+								<td><a href="{{apiService.imageUrl(log.image)}}" target="_blank"><img ng-src="{{apiService.imageUrl(log.image)}}" height="50" ng-if="log.image" /></a></td>
 								<!-- TODO Bildanzeige optimieren -->
 								<td><button ng-click="updateLog(log.n_ID, msg)" class="btn btn-default">&#128190;</button></td>
 								<td><button ng-click="deleteLog(log.n_ID)" class="btn btn-default" ng-confirm-click="ACHTUNG: Willst Du diese Nachricht wirklich löschen?">&#9003;</button></td>
@@ -349,7 +349,7 @@
 							</tr>
 							<tr ng-repeat="group in groups | filter:search">
 								<td>&#128100; {{ group.t_ID }}</td>
-								<td><img src="../api/uploaded_images/{{group.img_ID}}.jpg" ng-if="group.img_ID" class="profile-image"></td>
+								<td><img src="{{apiService.imageUrl(group.img_ID)}}" ng-if="group.img_ID" class="profile-image"></td>
 								<td>{{ group.name }}</td>
 								<td>{{ group.hash }}</td>
 								<td>
