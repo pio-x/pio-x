@@ -705,7 +705,7 @@ $app->post('/passcode/solve', function (Request $request, Response $response, $a
 	}
 
 	$body = json_decode($request->getBody(), true);
-	$teamId = $body['team_ID'];
+	$teamId = $request->getAttribute('team_id');;
 	$code = $body['passcode'];
 
 
