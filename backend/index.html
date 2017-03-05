@@ -69,6 +69,7 @@
 					<table id="teamliste" class="table table-striped">
 						<tr>
 								<td>ID</td>
+								<td>&nbsp;</td>
 								<td>Name</td>
 								<td>Score</td>
 								<td>Hash</td>
@@ -77,6 +78,7 @@
 						</tr>
 						<tr ng-repeat="group in groups | filter:search">
 								<td>{{ group.t_ID }}</td>
+								<td><img src="../api/uploaded_images/{{group.img_ID}}.jpg" ng-if="group.img_ID" class="profile-image"></td>
 								<td><input type="text" class="form-control input-sm" value="{{ group.name }}" ng-model="group.name"/></td>
 								<td>{{ group.score }}</td>
 								<td>{{ group.hash }}</td>
@@ -85,6 +87,7 @@
 						</tr>
 						<tr>
 							<td>NEU</td>
+							<td></td>
 							<td><input type="text" class="form-control input-sm" ng-model="newTeam.name"/></td>
 							<td></td>
 							<td><input type="text" class="form-control input-sm" ng-model="newTeam.hash"/></td>
@@ -336,12 +339,14 @@
 						<table class="table table-striped">
 							<tr>
 								<td>ID</td>
+								<td>&nbsp;</td>
 								<td>Team</td>
 								<td>Hash</td>
 								<td>QR Code</td>
 							</tr>
 							<tr ng-repeat="group in groups | filter:search">
 								<td>&#128100; {{ group.t_ID }}</td>
+								<td><img src="../api/uploaded_images/{{group.img_ID}}.jpg" ng-if="group.img_ID" class="profile-image"></td>
 								<td>{{ group.name }}</td>
 								<td>{{ group.hash }}</td>
 								<td>
@@ -350,6 +355,7 @@
 							</tr>
 							<tr ng-repeat="mrx in mrxs | filter:search">
 								<td>&#128373; {{ mrx.x_ID }}</td>
+								<td>&nbsp;</td>
 								<td>{{ mrx.name }}</td>
 								<td>{{ mrx.x_hash }}</td>
 								<td>

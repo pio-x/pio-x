@@ -76,3 +76,9 @@ footer {
 #stationlist .team {
 	margin-bottom: 15px !important;
 }
+
+.profile-image {
+	width: 30px;
+	height: 30px;
+	border-radius: 15px;
+}
