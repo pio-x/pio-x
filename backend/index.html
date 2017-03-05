@@ -151,6 +151,9 @@
 				<!-- LOG / IMAGES / STREAM -->
 				<div role="tabpanel" class="tab-pane" id="stream" ng-controller="logCtrl">
 					<div id="loglist">
+						<div>
+							<button ng-click="getLogs()" class="btn btn-default">Aktualisieren</button>
+						</div>
 						<div class="input-group">
 							<span class="input-group-addon">Suche:</span>
 							<input type="text" ng-model="search" class="form-control">
@@ -172,7 +175,7 @@
 								<td>{{ log.type }}</td>
 								<td>{{ log.FK_ID }}</td>
 								<td>{{ log.text }}</td>
-								<td><img ng-src="{{ apiUrl + log.image }}.jpg{{ imgHash }}"/ height="50" ng-if="log.image"></td>
+								<td><a href="{{ apiUrl + log.image }}.jpg{{ imgHash }}" target="_blank"><img ng-src="{{ apiUrl + log.image }}.jpg{{ imgHash }}" height="50" ng-if="log.image" /></a></td>
 								<!-- TODO Bildanzeige optimieren -->
 								<td><button ng-click="updateLog(log.n_ID, msg)" class="btn btn-default">&#128190;</button></td>
 								<td><button ng-click="deleteLog(log.n_ID)" class="btn btn-default" ng-confirm-click="ACHTUNG: Willst Du diese Nachricht wirklich löschen?">&#9003;</button></td>
