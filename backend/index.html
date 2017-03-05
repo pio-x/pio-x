@@ -209,9 +209,7 @@
 							<td><input type="text" class="form-control input-sm" ng-model="newNotification.text"/></td>
 							<td>automatisch</td>
 							<td>
-								<select ng-model="newNotification.t_ID" class="form-control input-sm" ng-controller="teamPickerCtrl">
-										<option ng-repeat="team in groups" value="{{ team.t_ID }}">{{ team.name }}</option>
-									</select>
+								<team-picker selected="newNotification.t_ID"></team-picker>
 							</td>
 							<td colspan="2"><button ng-click="addNewNotification(newNotification)" class="btn btn-default" ng-disabled="!newNotification.title">&#128190; Erstellen</button></td>
 						</tr>
@@ -409,14 +407,15 @@
 	<script src="js/services/apiService.js"></script>
 	<script src="js/services/riddleService.js"></script>
 	<script src="js/services/stationService.js"></script>
+	<script src="js/services/teamService.js"></script>
 	<script src="js/vendor/qrcode.js"></script>
 	<script src="js/vendor/angular-qrcode.js"></script>
 	<script src="js/vendor/ui-bootstrap-tpls-2.5.0.min.js"></script>
 	<script src="js/directives/ngConfirmClick.js"></script>
-	<script src="js/directives/ngTeamPicker.js"></script>
 	<script src="js/directives/ngBackendMap.js"></script>
 	<script src="js/directives/ngMapInfo.js"></script>
 	<script src="js/directives/riddlePicker.js"></script>
+	<script src="js/directives/teamPicker.js"></script>
 	<script src="js/controllers/statsCtrl.js"></script>
 	<script src="node_modules/ngmap/build/scripts/ng-map.min.js"></script>
 	<script src="js/vendor/moment-with-locales.js"></script>

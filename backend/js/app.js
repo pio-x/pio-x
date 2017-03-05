@@ -1,6 +1,6 @@
 var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap', 'highcharts-ng'])
     //MAP
-    .controller('mapCtrl', function($scope, NgMap, apiService, riddleService, stationService, $window) {
+    .controller('mapCtrl', function($scope, NgMap, apiService, riddleService, stationService, teamService, $window) {
         NgMap.getMap().then(function(map) {
             $scope.map = map;
         });
@@ -120,12 +120,10 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap', 'hi
         };
 
         //Aktualisiert die Teams
-        $scope.getTeams = function() {
-            apiService.get('/team').then(function(articlesResponse) {
-                $scope.groups = articlesResponse.data;
-            });
-        };
-        $scope.getTeams();
+        $scope.groups = [];
+        teamService.subscribe(function(teams) {
+            $scope.groups = teams;
+        });
 
         //Selektionsvariable, welches Team zu Beginn angezeigt wird.
         $scope.selectedTeam = 1;
@@ -162,15 +160,15 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap', 'hi
 
         //Ruft alle Aktualisierungsfunktionen in diesem Controller auf
         $scope.refreshData = function() {
-            $scope.getTeams();
             $scope.getTeamLocations(1);
             $scope.getMrxs();
+            teamService.update();
             riddleService.update();
             stationService.update();
         };
     })
     //QR CODES CONTROLLER ==============================================================================
-    .controller('QRCtrl', function($scope, apiService){
+    .controller('QRCtrl', function($scope, apiService, teamService){
         //Initiiert die Basis URL, je nach Standort der Installation
         $scope.baseURL = 'https://api.pio-x.ch';
         if(window.location.host == "localhost") {
@@ -180,13 +178,10 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap', 'hi
             }
         }
 
-        //Aktualisiert die Teams
-        $scope.getTeams = function() {
-            apiService.get('/team').then(function(articlesResponse) {
-                $scope.groups = articlesResponse.data;
-            });
-        };
-        $scope.getTeams();
+        $scope.groups = [];
+        teamService.subscribe(function(teams) {
+            $scope.groups = teams;
+        });
 
         //Aktualisiert die Mr.X
         $scope.getMrxs = function() {
@@ -210,22 +205,21 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap', 'hi
 
         //Aktualisiert die ganze Liste
         $scope.refresh = function() {
-            $scope.getTeams();
+            teamService.update();
             $scope.getMrxs();
         };
     })
     //TEAMS CONTROLLER ==============================================================================
-    .controller('teamCtrl', function($scope, apiService){
-        $scope.getTeams = function() {
-            apiService.get('/team').then(function(articlesResponse) {
-                $scope.groups = articlesResponse.data;
-            });
-        };
-        $scope.getTeams();
+    .controller('teamCtrl', function($scope, apiService, teamService){
+        $scope.groups = [];
+        teamService.subscribe(function(teams) {
+            $scope.groups = teams;
+        });
+
         $scope.updateTeam = function(data, id) {
             apiService.put('/team/' + id, data)
                 .then(function(){
-                    $scope.getTeams();
+                    teamService.update();
                 });
         };
         $scope.deleteTeam = function(id) {
@@ -245,28 +239,26 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap', 'hi
         $scope.addNewTeam = function(data) {
             apiService.post('/team', data)
                 .then(function(){
-                    $scope.getTeams();
+                    teamService.update();
                     $scope.emptyNewTeam();
                 });
         };
     })
     //STATIONS CONTROLLER ==============================================================================
-    .controller('stationCtrl', function($scope, apiService, stationService){
+    .controller('stationCtrl', function($scope, apiService, stationService, teamService){
         $scope.stations = [];
         $scope.stationService = stationService;
         $scope.stationService.subscribe(function(stations) {
             $scope.stations = stations;
         });
 
-        $scope.getTeams = function() {
-            apiService.get('/team').then(function(articlesResponse) {
-                $scope.teams = {};
-                angular.forEach(articlesResponse.data, function(value, key) {
-                    $scope.teams[value['t_ID']] = value;
-                });
+        $scope.teams = {};
+        teamService.subscribe(function(teams) {
+            angular.forEach(teams, function(value, key) {
+                $scope.teams[value['t_ID']] = value;
             });
-        };
-        $scope.getTeams();
+        });
+
         $scope.newStation = {};
         $scope.emptyNewStation = function() {
             $scope.newStation = {
@@ -469,15 +461,6 @@ var backendApp = angular.module('backendApp', ['monospaced.qrcode', 'ngMap', 'hi
             localStorage.setItem('hash', '');
             $scope.checkLogin();
         };
-    })
-    //TEAMS CONTROLLER ==============================================================================
-    .controller('teamPickerCtrl', function($scope, apiService){
-        $scope.getTeams = function() {
-            apiService.get('/team').then(function(articlesResponse) {
-                $scope.groups = articlesResponse.data;
-            });
-        };
-        $scope.getTeams();
     })
     //CONFIG CONTROLLER ==============================================================================
     .controller('configCtrl', function($scope, apiService){

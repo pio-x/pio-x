@@ -1,3 +1,3 @@
-<select ng-controller="teamPickerCtrl">
-    <option ng-repeat="team in groups">{{ team.t_ID }}: {{ team.name }}</option>
+<select ng-model="selected" class="form-control input-sm" ng-options="team.t_ID as team.t_ID + ' ' + team.name for team in teams">
+    <option value=""></option>
 </select>
