@@ -20,3 +20,13 @@ function passcode($words) {
     
     return $passcode;
 }
+
+function simplepasscode($numbers) {
+    $simplepasscode = '';
+
+    for ($i=0;$i<$numbers;$i++) {
+        $simplepasscode .= rand(1,9);
+    }
+    
+    return $simplepasscode;
+}

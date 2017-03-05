@@ -685,7 +685,7 @@ $app->post('/passcode', function (Request $request, Response $response, $args) u
 	if (isset($body['code']) && $body['code']) {
 		$data['code'] = $body['code'];
 	} else {
-		$data['code'] = passcode(2);
+		$data['code'] = simplepasscode(6);
 	}
 
 	$DB->insert('passcode', $data);
