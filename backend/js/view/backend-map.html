@@ -16,7 +16,7 @@
 							</marker>
 							<span ng-repeat="(key, mrx) in mrxs track by $index"  ng-init="mrxIndex = $index">
 								<marker position="[{{ location.xpos_lat }},{{ location.xpos_long }}]" 
-									on-click="showTooltip($index, location, mrxIndex)" 
+									on-click="showTooltip($index, mrx, mrxIndex)" 
 									ng-repeat="(key, location) in mrx.locations track by $index" 
 									icon="{
 										path: 0,
