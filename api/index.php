@@ -128,7 +128,7 @@ $app->post('/station/{id}/capture',function (Request $request, Response $respons
 	$DB->insert('r_team_station', $data);
 	$insertId = $DB->lastInsertId();
 
-	$log->station('Team '.$request->getAttribute('team_name').' hat die Station '.$station['name'].' eingenommen', $request->getAttribute('team_id'), $insertId);
+	$log->station('Team '.$request->getAttribute('team_name').' hat die Station "'.$station['name'].'" eingenommen', $request->getAttribute('team_id'), $insertId);
 	if (isset($qsa['tags'])) {
 		$tags = json_decode($qsa['tags'], true);
 	} else {
@@ -498,12 +498,14 @@ $app->post('/riddle/{id}/unlock',function (Request $request, Response $response,
 		'img_ID' => 0
 	);
 
+	$riddle = $DB->fetchAssoc("SELECT * FROM riddle WHERE r_ID = ?", array($riddleId));
+
 	try {
 		$updated = $DB->update('r_team_riddle', $data, array('r_ID' => $riddleId, 't_ID' => $teamId));
 		if (!$updated) {
 			$DB->insert('r_team_riddle', $data);
 		}
-		$log->riddle('Team '.$request->getAttribute('team_name').' hat ein Rätsel freigeschaltet', $request->getAttribute('team_id'), $riddleId);
+		$log->riddle('Team '.$request->getAttribute('team_name').' hat das Rätsel "'.$riddle['title'].'" freigeschaltet', $request->getAttribute('team_id'), $riddleId);
 		return $response->withJson("success");
 	} catch (Doctrine\DBAL\Exception\UniqueConstraintViolationException $e) {
 		return $response->withStatus(403)->withJson("Already unlocked");
@@ -598,13 +600,13 @@ $app->post('/riddle/{id}/solve',function (Request $request, Response $response, 
 		}
 		// punkte geben
 		$points = $score->riddle($teamId, $riddleId);
-		$log->riddle('Team '.$request->getAttribute('team_name').' hat Rätsel '.$riddleId.' richtig gelöst', $request->getAttribute('team_id'), $riddleId);
+		$log->riddle('Team '.$request->getAttribute('team_name').' hat Rätsel "'.$riddle['title'].'" richtig gelöst', $request->getAttribute('team_id'), $riddleId);
 		return $response->withJson(["solved" => true, "message" => "Richtige Antwort!", "points" => $points], 200, JSON_NUMERIC_CHECK);
 	} else {
 		// answer is wrong
 		// punkte abziehen
 		$points = $score->riddle($teamId, $riddleId, true);
-		$log->riddle('Team '.$request->getAttribute('team_name').' hat Rätsel '.$riddleId.' falsch gelöst', $request->getAttribute('team_id'), $riddleId);
+		$log->riddle('Team '.$request->getAttribute('team_name').' hat Rätsel "'.$riddle['title'].'" falsch gelöst', $request->getAttribute('team_id'), $riddleId);
 		return $response->withJson(["solved" => false, "message" => "Deine Antwort ist falsch.", "points" => $points], 200, JSON_NUMERIC_CHECK);
 	}
 });
