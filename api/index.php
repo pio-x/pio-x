@@ -332,13 +332,25 @@ $app->get('/mrx', function (Request $request, Response $response) use (&$DB, $co
 
 	$data = [];
 	foreach ($mrxs as $mrx) {
-		// TODO: nur senden wenn noch nicht gefangen
 		$locations = $DB->fetchAll("SELECT xpos_lat, xpos_long, UNIX_TIMESTAMP(timestamp)*1000 as timestamp, description FROM mrx_position WHERE mrx_ID = ? ORDER BY timestamp desc LIMIT 3", array($mrx['x_ID']));
 
-		// nur senden wenn mind. 1 location vorhanden
-		if (is_array($locations) && count($locations) > 0) {
+		// nur senden wenn noch nicht gefangen
+		if ($request->getAttribute('is_team')) {
+			$mrx_catched = $DB->fetchAssoc("SELECT * from r_team_mrx where t_ID = ? AND x_ID = ?", array($request->getAttribute('team_id'), $mrx['x_ID']));
+			if ($mrx_catched) {
+				$locations = [];
+			}
+		}
+
+		// an teams/mrx nur senden wenn mind. 1 location vorhanden
+		if ($request->getAttribute('is_admin')) {
 			$mrx['locations'] = $locations;
 			$data[] = $mrx;
+		} else {
+			if (is_array($locations) && count($locations) > 0) {
+				$mrx['locations'] = $locations;
+				$data[] = $mrx;
+			}
 		}
 	}
 	return $response->withJson($data, 200, JSON_NUMERIC_CHECK);
