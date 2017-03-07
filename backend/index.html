@@ -78,7 +78,7 @@
 						</tr>
 						<tr ng-repeat="group in groups | filter:search">
 								<td>{{ group.t_ID }}</td>
-								<td><img src="{{apiService.imageUrl(group.img_ID)}}" ng-if="group.img_ID" class="profile-image"></td>
+								<td><img ng-src="{{apiService.imageUrl(group.img_ID)}}" ng-if="group.img_ID" class="profile-image"></td>
 								<td><input type="text" class="form-control input-sm" value="{{ group.name }}" ng-model="group.name"/></td>
 								<td>{{ group.score }}</td>
 								<td>{{ group.hash }}</td>
@@ -352,7 +352,7 @@
 							</tr>
 							<tr ng-repeat="group in groups | filter:search">
 								<td>&#128100; {{ group.t_ID }}</td>
-								<td><img src="{{apiService.imageUrl(group.img_ID)}}" ng-if="group.img_ID" class="profile-image"></td>
+								<td><img ng-src="{{apiService.imageUrl(group.img_ID)}}" ng-if="group.img_ID" class="profile-image"></td>
 								<td>{{ group.name }}</td>
 								<td>{{ group.hash }}</td>
 								<td>
