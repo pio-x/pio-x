@@ -1,196 +1,196 @@
-				<div ng-controller="mapCtrl" class="row">
-					<div map-lazy-load="https://maps.google.com/maps/api/js?key=AIzaSyAjEW54VdlWZT07n90oTjvaLIl3q27ZL4Y" class="col-md-9">
-						<ng-map center="47.498934,8.728970" zoom="14" style="height: 600px" on-click="showCreateNew($event)">
-							<map-info />
-							<marker position="[{{ station.pos_lat }},{{ station.pos_long }}]" on-click="showTooltip($index, stations)" ng-repeat="station in stations track by $index" icon="{
-								path: 0,
-								strokeColor: '#000',
-								strokeWeight: 2,
-								scale: 8 }" ng-if="showStations">
-							</marker>
-							<marker position="[{{ riddle.pos_lat }},{{ riddle.pos_long }}]" on-click="showTooltip($index, riddles)" ng-repeat="riddle in riddles track by $index" icon="{
-								path: 0,
-								strokeColor: '#00f',
-								strokeWeight: 2,
-								scale: 8 }" ng-if="showRiddles && riddle.pos_lat">
-							</marker>
-							<span ng-repeat="(key, mrx) in mrxs track by $index"  ng-init="mrxIndex = $index">
-								<marker position="[{{ location.xpos_lat }},{{ location.xpos_long }}]" 
-									on-click="showTooltip($index, mrx, mrxIndex)" 
-									ng-repeat="(key, location) in mrx.locations track by $index" 
-									icon="{
-										path: 0,
-										strokeColor: 'lime',
-										strokeWeight: 2,
-										scale: 8 
-									}" 
-									ng-if="showMrxs">
-								</marker>
-								<shape name="polyline" 
-									path="[
-										[{{ location.xpos_lat }}, {{ location.xpos_long }}],
-										[{{ mrx.locations[$index + 1].xpos_lat }}, {{ mrx.locations[$index + 1].xpos_long }}]
-									]"
-									geodesic="true"
-									stroke-color="lime"
-									stroke-opacity="1.0"
-									stroke-weight="2"
-									ng-repeat="(key, location) in mrx.locations track by $index"
-									ng-if="showMrxs && mrx.locations[$index + 1]">
-								</shape>
-							</span>
-							<span ng-repeat="(key, locations) in players"  ng-init="locationIndex = $index">
-								<!-- big red circle of the last position of every player from the selected team -->
-								<shape name="circle" ng-repeat="location in locations | limitTo: 1 track by $index"
-									stroke-color="red"
-									stroke-opacity="2"
-									stroke-weight="2"
-									fill-color="red"
-									fill-opacity="0.5"
-									center="[{{ location.lat }}, {{ location.lng }}]"
-									radius="30"
-									ng-if="showTeamLocation">
-								</shape>
-								<!-- circle for every position of every player from the selected team -->
-								<marker position="[{{ location.lat }},{{ location.lng }}]" 
-									on-click="showTooltip($index, locations, key)" 
-									ng-repeat="location in locations track by $index" 
-									icon="{
-										path: 0,
-										strokeColor: '{{ playerColors[locationIndex] }}',
-										strokeWeight: 1,
-										scale: 4 }" 
-									ng-if="showTeamLocation">
-								</marker>
-								<!-- polyline for every player on the selected team -->
-								<shape name="polyline" 
-									path="[
-										[{{ location.lat }}, {{ location.lng }}],
-										[{{ locations[$index + 1].lat }}, {{ locations[$index + 1].lng }}]
-									]"
-									geodesic="true"
-									stroke-color="{{ playerColors[locationIndex] }}"
-									stroke-opacity="1.0"
-									stroke-weight="2"
-									ng-repeat="location in locations track by $index"
-									ng-if="showTeamLocation && locations[$index + 1]">
-								</shape>
-							</span>
-							<marker position="{{newObjectPosition}}" title="Neues Objekt" on-dragend="showCreateNew($event)" animation="DROP" draggable="true" ng-if="newObjectPosition.length">
-							</marker>
-						</ng-map>
-					</div>
-					<div class="col-md-3">
-						<button ng-click="refreshData()" class="btn btn-default">Alle Daten aktualisieren</button><br />
-						<label><input type="checkbox" ng-model="showStations" checked /> Stationen anzeigen</label><br />
-						<label><input type="checkbox" ng-model="showRiddles" checked /> Rätsel anzeigen</label><br />
-						<label><input type="checkbox" ng-model="showMrxs" checked /> Alle Mr. X anzeigen</label><br />
-						<label><input type="checkbox" ng-model="showTeamLocation" /> Team anzeigen</label><br />
-						<span ng-repeat="group in groups" ng-if="showTeamLocation">
-							&nbsp;&nbsp;<label><input type="radio" name="teamRadioSelect" ng-checked="$index==0?true:false" ng-click="getTeamLocations(group.t_ID)"/> {{ group.t_ID }}: Team {{ group.name }}</label><br />
-						</span>
-						<hr/>
-						<span ng-if="showEditStation">
-							Station editieren:<br/>
-							<div class="input-group">
-								<span class="input-group-addon">LAT:</span>
-								<input class="form-control" type="text" ng-model="changedStation.pos_lat"/>
-							</div>
-							<div class="input-group">
-								<span class="input-group-addon">LNG:</span>
-								<input class="form-control" type="text" ng-model="changedStation.pos_long"/>
-							</div>
-							<div class="input-group">
-								<span class="input-group-addon">Name:</span>
-								<input class="form-control" type="text" ng-model="changedStation.name"/>
-							</div>
-							<div class="input-group">
-								<span class="input-group-addon">Beschreibung:</span>
-								<input class="form-control" type="text" ng-model="changedStation.description"/>
-							</div>
-							<div class="input-group">
-								<span class="input-group-addon">Punkte:</span>
-								<input class="form-control" type="text" ng-model="changedStation.points"/>
-							</div>
-							<div class="input-group">
-								<span class="input-group-addon">Aktiviert?</span>
-								<input type="checkbox" class="form-control input-sm" ng-model="changedStation.enabled" ng-true-value="1" ng-false-value="0"/>
-							</div>
-							<button ng-click="saveStation()" class="btn btn-default">Speichern</button>
-							<button ng-click="hideEditStation()" class="btn btn-default">Abbrechen</button>
-							<hr />
-						</span>
-						<span ng-if="newlat">
-							Neu erstellen:<br/>
-							<label><input type="radio" name="newobjSelect" value="station" ng-model="showNewObjectInput" checked/> Station</label><br />
-							<label><input type="radio" name="newobjSelect" value="riddle" ng-model="showNewObjectInput"/> Rätsel</label><br />
-							<hr />
-							<div class="input-group">
-								<span class="input-group-addon">Lat:</span>
-								<input class="form-control" type="text" ng-model="newlat"/>
-								<span class="input-group-addon">Lng:</span>
-								<input class="form-control" type="text" ng-model="newlng"/>
-							</div>
-							<span ng-if="showNewObjectInput == 'station'">
-								Neue Station:<br/>
-								<div class="input-group">
-									<span class="input-group-addon">Name:</span>
-									<input class="form-control" type="text" ng-model="newStation.name"/>
-								</div>
-								<div class="input-group">
-									<span class="input-group-addon">Beschreibung:</span>
-									<input class="form-control" type="text" ng-model="newStation.description"/>
-								</div>
-								<div class="input-group">
-									<span class="input-group-addon">Punkte:</span>
-									<input class="form-control" type="text" ng-model="newStation.points"/>
-								</div>
-								<div class="input-group">
-									<span class="input-group-addon">Aktiviert?</span>
-									<input type="checkbox" class="form-control input-sm" ng-model="newStation.enabled" ng-true-value="1" ng-false-value="0"/>
-								</div>
-								<button ng-click="createNewStation()" class="btn btn-default">Station erstellen</button>
-							</span>
-							<span ng-if="showNewObjectInput == 'riddle'">
-								Neues Rätsel:<br/>
-								<div class="input-group">
-									<span class="input-group-addon">Titel:</span>
-									<input class="form-control" type="text" ng-model="newRiddle.title"/>
-								</div>
-								<div class="input-group">
-									<span class="input-group-addon">Frage:</span>
-									<input class="form-control" type="text" ng-model="newRiddle.question"/>
-								</div>
-								<div class="input-group">
-									<span class="input-group-addon">Anhängig:</span>
-									<riddle-picker selected="newRiddle.dep_ID"></riddle-picker>
-								</div>
-								<div class="input-group">
-									<span class="input-group-addon">Antwort:</span>
-									<input class="form-control" type="text" ng-model="newRiddle.answer"/>
-								</div>
-								<div class="input-group">
-									<span class="input-group-addon">Typ:</span>
-									<select class="form-control" ng-model="newRiddle.type">
-										<option value="MULTI">MULTI</option>
-										<option value="SINGLE" selected>SINGLE</option>
-									</select>
-								</div>
-								<div class="input-group">
-									<span class="input-group-addon">Punkte:</span>
-									<input class="form-control" type="text" ng-model="newRiddle.points"/>
-								</div>
-								<div class="input-group">
-									<span class="input-group-addon">Antwort zum lösen?:</span>
-									<input type="checkbox" class="form-control" ng-model="newRiddle.answer_required" ng-true-value="1" ng-false-value="0"/>
-								</div>
-								<div class="input-group">
-									<span class="input-group-addon">Bild zum lösen?:</span>
-									<input type="checkbox" class="form-control" ng-model="newRiddle.image_required" ng-true-value="1" ng-false-value="0"/>
-								</div>
-								<button ng-click="createNewRiddle()" class="btn btn-default">Rätsel speichern</button>
-							</span>
-
-						</span>
-					</div>
+<div ng-controller="mapCtrl" class="row">
+	<div map-lazy-load="https://maps.google.com/maps/api/js?key=AIzaSyAjEW54VdlWZT07n90oTjvaLIl3q27ZL4Y" class="col-md-9">
+		<ng-map center="47.498934,8.728970" zoom="14" style="height: 600px" on-click="showCreateNew($event)">
+			<map-info />
+			<marker position="[{{ station.pos_lat }},{{ station.pos_long }}]" on-click="showTooltip($index, stations)" ng-repeat="station in stations track by $index" icon="{
+				path: 0,
+				strokeColor: '#000',
+				strokeWeight: 2,
+				scale: 8 }" ng-if="showStations">
+			</marker>
+			<marker position="[{{ riddle.pos_lat }},{{ riddle.pos_long }}]" on-click="showTooltip($index, riddles)" ng-repeat="riddle in riddles track by $index" icon="{
+				path: 0,
+				strokeColor: '#00f',
+				strokeWeight: 2,
+				scale: 8 }" ng-if="showRiddles && riddle.pos_lat">
+			</marker>
+			<span ng-repeat="(key, mrx) in mrxs track by $index"  ng-init="mrxIndex = $index">
+				<marker position="[{{ location.xpos_lat }},{{ location.xpos_long }}]"
+					on-click="showTooltip($index, mrx, mrxIndex)"
+					ng-repeat="(key, location) in mrx.locations track by $index"
+					icon="{
+						path: 0,
+						strokeColor: 'lime',
+						strokeWeight: 2,
+						scale: 8
+					}"
+					ng-if="showMrxs">
+				</marker>
+				<shape name="polyline"
+					path="[
+						[{{ location.xpos_lat }}, {{ location.xpos_long }}],
+						[{{ mrx.locations[$index + 1].xpos_lat }}, {{ mrx.locations[$index + 1].xpos_long }}]
+					]"
+					geodesic="true"
+					stroke-color="lime"
+					stroke-opacity="1.0"
+					stroke-weight="2"
+					ng-repeat="(key, location) in mrx.locations track by $index"
+					ng-if="showMrxs && mrx.locations[$index + 1]">
+				</shape>
+			</span>
+			<span ng-repeat="(key, locations) in players"  ng-init="locationIndex = $index">
+				<!-- big red circle of the last position of every player from the selected team -->
+				<shape name="circle" ng-repeat="location in locations | limitTo: 1 track by $index"
+					stroke-color="red"
+					stroke-opacity="2"
+					stroke-weight="2"
+					fill-color="red"
+					fill-opacity="0.5"
+					center="[{{ location.lat }}, {{ location.lng }}]"
+					radius="30"
+					ng-if="showTeamLocation">
+				</shape>
+				<!-- circle for every position of every player from the selected team -->
+				<marker position="[{{ location.lat }},{{ location.lng }}]"
+					on-click="showTooltip($index, locations, key)"
+					ng-repeat="location in locations track by $index"
+					icon="{
+						path: 0,
+						strokeColor: '{{ playerColors[locationIndex] }}',
+						strokeWeight: 1,
+						scale: 4 }"
+					ng-if="showTeamLocation">
+				</marker>
+				<!-- polyline for every player on the selected team -->
+				<shape name="polyline"
+					path="[
+						[{{ location.lat }}, {{ location.lng }}],
+						[{{ locations[$index + 1].lat }}, {{ locations[$index + 1].lng }}]
+					]"
+					geodesic="true"
+					stroke-color="{{ playerColors[locationIndex] }}"
+					stroke-opacity="1.0"
+					stroke-weight="2"
+					ng-repeat="location in locations track by $index"
+					ng-if="showTeamLocation && locations[$index + 1]">
+				</shape>
+			</span>
+			<marker position="{{newObjectPosition}}" title="Neues Objekt" on-dragend="showCreateNew($event)" animation="DROP" draggable="true" ng-if="newObjectPosition.length">
+			</marker>
+		</ng-map>
+	</div>
+	<div class="col-md-3">
+		<button ng-click="refreshData()" class="btn btn-default">Alle Daten aktualisieren</button><br />
+		<label><input type="checkbox" ng-model="showStations" checked /> Stationen anzeigen</label><br />
+		<label><input type="checkbox" ng-model="showRiddles" checked /> Rätsel anzeigen</label><br />
+		<label><input type="checkbox" ng-model="showMrxs" checked /> Alle Mr. X anzeigen</label><br />
+		<label><input type="checkbox" ng-model="showTeamLocation" /> Team anzeigen</label><br />
+		<span ng-repeat="group in groups" ng-if="showTeamLocation">
+			&nbsp;&nbsp;<label><input type="radio" name="teamRadioSelect" ng-checked="$index==0?true:false" ng-click="getTeamLocations(group.t_ID)"/> {{ group.t_ID }}: Team {{ group.name }}</label><br />
+		</span>
+		<hr/>
+		<div ng-if="showEditStation">
+			Station editieren:<br/>
+			<div class="input-group">
+				<span class="input-group-addon">LAT:</span>
+				<input class="form-control" type="text" ng-model="changedStation.pos_lat"/>
+			</div>
+			<div class="input-group">
+				<span class="input-group-addon">LNG:</span>
+				<input class="form-control" type="text" ng-model="changedStation.pos_long"/>
+			</div>
+			<div class="input-group">
+				<span class="input-group-addon">Name:</span>
+				<input class="form-control" type="text" ng-model="changedStation.name"/>
+			</div>
+			<div class="input-group">
+				<span class="input-group-addon">Beschreibung:</span>
+				<input class="form-control" type="text" ng-model="changedStation.description"/>
+			</div>
+			<div class="input-group">
+				<span class="input-group-addon">Punkte:</span>
+				<input class="form-control" type="text" ng-model="changedStation.points"/>
+			</div>
+			<div class="input-group">
+				<span class="input-group-addon">Aktiviert?</span>
+				<input type="checkbox" class="form-control input-sm" ng-model="changedStation.enabled" ng-true-value="1" ng-false-value="0"/>
+			</div>
+			<button ng-click="saveStation()" class="btn btn-default">Speichern</button>
+			<button ng-click="hideEditStation()" class="btn btn-default">Abbrechen</button>
+			<hr />
+		</div>
+		<div ng-if="newlat">
+			Neu erstellen:<br/>
+			<label><input type="radio" name="newobjSelect" value="station" ng-model="showNewObjectInput" checked/> Station</label><br />
+			<label><input type="radio" name="newobjSelect" value="riddle" ng-model="showNewObjectInput"/> Rätsel</label><br />
+			<hr />
+			<div class="input-group">
+				<span class="input-group-addon">Lat:</span>
+				<input class="form-control" type="text" ng-model="newlat"/>
+				<span class="input-group-addon">Lng:</span>
+				<input class="form-control" type="text" ng-model="newlng"/>
+			</div>
+			<span ng-if="showNewObjectInput == 'station'">
+				Neue Station:<br/>
+				<div class="input-group">
+					<span class="input-group-addon">Name:</span>
+					<input class="form-control" type="text" ng-model="newStation.name"/>
 				</div>
+				<div class="input-group">
+					<span class="input-group-addon">Beschreibung:</span>
+					<input class="form-control" type="text" ng-model="newStation.description"/>
+				</div>
+				<div class="input-group">
+					<span class="input-group-addon">Punkte:</span>
+					<input class="form-control" type="text" ng-model="newStation.points"/>
+				</div>
+				<div class="input-group">
+					<span class="input-group-addon">Aktiviert?</span>
+					<input type="checkbox" class="form-control input-sm" ng-model="newStation.enabled" ng-true-value="1" ng-false-value="0"/>
+				</div>
+				<button ng-click="createNewStation()" class="btn btn-default">Station erstellen</button>
+			</span>
+			<div ng-if="showNewObjectInput == 'riddle'">
+				Neues Rätsel:<br/>
+				<div class="input-group">
+					<span class="input-group-addon">Titel:</span>
+					<input class="form-control" type="text" ng-model="newRiddle.title"/>
+				</div>
+				<div class="input-group">
+					<span class="input-group-addon">Frage:</span>
+					<input class="form-control" type="text" ng-model="newRiddle.question"/>
+				</div>
+				<div class="input-group">
+					<span class="input-group-addon">Anhängig:</span>
+					<riddle-picker selected="newRiddle.dep_ID"></riddle-picker>
+				</div>
+				<div class="input-group">
+					<span class="input-group-addon">Antwort:</span>
+					<input class="form-control" type="text" ng-model="newRiddle.answer"/>
+				</div>
+				<div class="input-group">
+					<span class="input-group-addon">Typ:</span>
+					<select class="form-control" ng-model="newRiddle.type">
+						<option value="MULTI">MULTI</option>
+						<option value="SINGLE" selected>SINGLE</option>
+					</select>
+				</div>
+				<div class="input-group">
+					<span class="input-group-addon">Punkte:</span>
+					<input class="form-control" type="text" ng-model="newRiddle.points"/>
+				</div>
+				<div class="input-group">
+					<span class="input-group-addon">Antwort zum lösen?:</span>
+					<input type="checkbox" class="form-control" ng-model="newRiddle.answer_required" ng-true-value="1" ng-false-value="0"/>
+				</div>
+				<div class="input-group">
+					<span class="input-group-addon">Bild zum lösen?:</span>
+					<input type="checkbox" class="form-control" ng-model="newRiddle.image_required" ng-true-value="1" ng-false-value="0"/>
+				</div>
+				<button ng-click="createNewRiddle()" class="btn btn-default">Rätsel speichern</button>
+			</div>
+
+		</div>
+	</div>
+</div>
