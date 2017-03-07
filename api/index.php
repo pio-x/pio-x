@@ -680,7 +680,7 @@ $app->post('/passcode', function (Request $request, Response $response, $args) u
 	$data = array(
 		'code' => $body['code'],
 		'points' => $body['points'],
-		'mrx_ID' => $body['mrx_ID']
+		'mrx_ID' => ($body['mrx_ID'] ? $body['mrx_ID'] : 0)
 	);
 
 	if (isset($body['code']) && $body['code']) {
