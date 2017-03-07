@@ -29,6 +29,7 @@ footer {
 	background: gray;
 	width: 100%;
 	text-align: center;
+	padding: 0 10px;
 	padding-top: 5px;
 	font-size: 80%;
 	opacity: 0.8;
@@ -81,4 +82,19 @@ footer {
 	width: 30px;
 	height: 30px;
 	border-radius: 15px;
+}
+
+@media only screen and (max-width: 767px) {
+	.content {
+		padding: 0 10px 10px 10px;
+	}
+
+	footer {
+		position: static;
+		height: auto;
+	}
+
+	input.form-control {
+		padding: 4px 1px;
+	}
 }
