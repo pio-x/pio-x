@@ -12,6 +12,7 @@
 
 <body>
 	<div ng-controller="mainCtrl" ng-cloak>
+
 		<header>
 			<nav class="navbar navbar-default">
 				<div class="container-fluid">
@@ -35,6 +36,8 @@
 				</div>
 			</nav>
 		</header>
+
+		<!-- Login -->
 		<div class="content" ng-if="loggedIn == false && showLogin == true">
 			<div class="input-group">
 				<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i> Backend Hash:</span>
@@ -42,6 +45,8 @@
 			</div>
 			<button ng-click="login(hash)" class="btn btn-default">Login</button>
 		</div>
+
+		<!-- Tabs -->
 		<div class="content" ng-if="loggedIn == true">
 			<ul class="nav nav-tabs" role="tablist">
 				<li role="presentation" class="active"><a href="#karte" aria-controls="karte" role="tab" data-toggle="tab">Karte</a></li>
@@ -58,356 +63,51 @@
 			<div class="tab-content actual-content">
 				<!-- MAP -->
 				<div role="tabpanel" class="tab-pane active" id="karte">
-					<ng-include src="'js/templates/pages/backend-map.html'"></ng-include>
+					<ng-include src="'js/templates/pages/map.html'"></ng-include>
 				</div>
 				<!-- TEAMS -->
-				<div role="tabpanel" class="tab-pane" id="teams" ng-controller="teamCtrl">
-					<div class="input-group">
-						<span class="input-group-addon">Suche:</span>
-						<input type="text" ng-model="search" class="form-control">
-					</div>
-					<table id="teamliste" class="table table-striped">
-						<tr>
-								<td>ID</td>
-								<td>&nbsp;</td>
-								<td>Name</td>
-								<td>Score</td>
-								<td>Hash</td>
-								<td></td>
-								<td></td>
-						</tr>
-						<tr ng-repeat="group in groups | filter:search">
-								<td>{{ group.t_ID }}</td>
-								<td><img ng-src="{{apiService.imageUrl(group.img_ID)}}" ng-if="group.img_ID" class="profile-image"></td>
-								<td><input type="text" class="form-control input-sm" value="{{ group.name }}" ng-model="group.name"/></td>
-								<td>{{ group.score }}</td>
-								<td>{{ group.hash }}</td>
-								<td><button ng-click="updateTeam(group, group.t_ID)" class="btn btn-default input-sm">&#128190;</button></td>
-								<td><button ng-click="deleteTeam(group.t_ID)" class="btn btn-default input-sm" disabled>&#9003;</button></td>
-						</tr>
-						<tr>
-							<td>NEU</td>
-							<td></td>
-							<td><input type="text" class="form-control input-sm" ng-model="newTeam.name"/></td>
-							<td></td>
-							<td><input type="text" class="form-control input-sm" ng-model="newTeam.hash"/></td>
-							<td colspan="2">
-								<button ng-click="addNewTeam(newTeam)" class="btn btn-default input-sm" ng-disabled="!newTeam.name">&#128190; Erstellen</button>
-							</td>
-						</tr>
-					</table>
+				<div role="tabpanel" class="tab-pane" id="teams">
+					<ng-include src="'js/templates/pages/teams.html'"></ng-include>
 				</div>
 				<!-- STATIONS -->
-				<div role="tabpanel" class="tab-pane" id="stationen" ng-controller="stationCtrl">
-					<div>
-						<button ng-click="stationService.update()" class="btn btn-default">Aktualisieren</button>
-					</div>
-					<div class="input-group">
-						<span class="input-group-addon">Suche:</span>
-						<input type="text" ng-model="search" class="form-control">
-					</div>
-					<table id="stationenliste" class="table table-striped">
-						<tr>
-								<td>ID</td>
-								<td>Name</td>
-								<td>Beschreibung</td>
-								<td>LAT</td>
-								<td>LNG</td>
-								<td>Punkte</td>
-								<td>Aktiv</td>
-								<td>Einnahme</td>
-								<td>Team Besitz</td>
-								<td></td>
-								<td></td>
-						</tr>
-						<tr ng-repeat="station in stations | filter:search">
-								<td>{{ station.s_ID }}</td>
-								<td><input type="text" class="form-control input-sm" ng-model="station.name"/></td>
-								<td class="col-xs-4"><input type="text" class="form-control input-sm" ng-model="station.description"/></td>
-								<td class="col-xs-1"><input type="text" class="form-control input-sm" ng-model="station.pos_lat"/></td>
-								<td class="col-xs-1"><input type="text" class="form-control input-sm" ng-model="station.pos_long"/></td>
-								<td class="col-xs-1"><input type="number" class="form-control input-sm" ng-model="station.points"/></td>
-								<td class="col-xs-1"><input type="checkbox" ng-model="station.enabled" ng-true-value="1" ng-false-value="0"/></td>
-								<td><span ng-if="station.captured_timestamp">{{ station.captured_timestamp | moment:'HH:mm:ss' }}</span></td>
-								<td>{{teams[station.team].name}}</td>
-								<!--<td>{{ station.team }}</td>-->
-								<td><button ng-click="updateStation(station.s_ID, station)" class="btn btn-default input-sm">&#128190;</button></td>
-								<td><button ng-click="deleteStation(station.s_ID)" class="btn btn-default input-sm" ng-confirm-click="ACHTUNG: Willst Du diese Station wirklich löschen?">&#9003;</button></td>
-						</tr>
-						<tr>
-							<td>NEU</td>
-							<td><input type="text" class="form-control input-sm" ng-model="newStation.name"/></td>
-							<td><input type="text" class="form-control input-sm" ng-model="newStation.description"/></td>
-							<td><input type="text" class="form-control input-sm" ng-model="newStation.pos_lat"/></td>
-							<td><input type="text" class="form-control input-sm" ng-model="newStation.pos_long"/></td>
-							<td><input type="number" class="form-control input-sm" ng-model="newStation.points"/></td>
-							<td><input type="checkbox" ng-model="newStation.enabled" ng-true-value="1" ng-false-value="0"/></td>
-							<td>&nbsp;</td>
-							<td>&nbsp;</td>
-							<td colspan="2"><button ng-click="addNewStation(newStation)" class="btn btn-default" ng-disabled="!newStation.name">&#128190; Erstellen</button></td>
-						</tr>
-					</table>
+				<div role="tabpanel" class="tab-pane" id="stationen">
+					<ng-include src="'js/templates/pages/stations.html'"></ng-include>
 				</div>
 				<!-- LOG / IMAGES / STREAM -->
-				<div role="tabpanel" class="tab-pane" id="stream" ng-controller="logCtrl">
-					<div id="loglist">
-						<div>
-							<button ng-click="getLogs()" class="btn btn-default">Aktualisieren</button>
-						</div>
-						<div class="input-group">
-							<span class="input-group-addon">Suche:</span>
-							<input type="text" ng-model="search" class="form-control">
-						</div>
-						<table class="table table-striped">
-							<tr>
-								<td>ID</td>
-								<td>Zeit</td>
-								<td>Typ</td>
-								<td>FK_ID</td>
-								<td>Beschreibung</td>
-								<td>Foto</td>
-								<td></td>
-								<td></td>
-							</tr>
-							<tr ng-repeat="log in logs | filter:search">
-								<td>{{ log.l_ID }}</td>
-								<td>{{ parseDate(log.timestamp) | moment:'HH:mm:ss' }}</td>
-								<td>{{ log.type }}</td>
-								<td>{{ log.FK_ID }}</td>
-								<td>{{ log.text }}</td>
-								<td><a href="{{apiService.imageUrl(log.image)}}" target="_blank"><img ng-src="{{apiService.imageUrl(log.image)}}" height="50" ng-if="log.image" /></a></td>
-								<!-- TODO Bildanzeige optimieren -->
-								<td><button ng-click="updateLog(log.n_ID, msg)" class="btn btn-default">&#128190;</button></td>
-								<td><button ng-click="deleteLog(log.n_ID)" class="btn btn-default" ng-confirm-click="ACHTUNG: Willst Du diese Nachricht wirklich löschen?">&#9003;</button></td>
-							</tr>
-						</table>
-					</div>
+				<div role="tabpanel" class="tab-pane" id="stream">
+					<ng-include src="'js/templates/pages/log.html'"></ng-include>
 				</div>
 				<!-- NOTIFICATIONS -->
-				<div role="tabpanel" class="tab-pane" id="notifications" ng-controller="notificationCtrl">
-					<div id="notificationlist">
-						<div class="input-group">
-							<span class="input-group-addon">Suche:</span>
-							<input type="text" ng-model="search" class="form-control">
-						</div>
-						<table class="table table-striped">
-							<tr>
-								<td>ID</td>
-								<td>Titel</td>
-								<td>Nachricht</td>
-								<td>Zeit</td>
-								<td>Team ID</td>
-								<td></td>
-								<td></td>
-							</tr>
-							<tr ng-repeat="msg in notifications | filter:search">
-								<td>{{ msg.n_ID }}</td>
-								<td>{{ msg.title }}</td>
-								<td>{{ msg.text }}</td>
-								<td>{{ msg.timestamp | moment:'HH:mm:ss' }}</td>
-								<td>{{ msg.t_ID }}</td>
-								<td><button ng-click="updateNotification(msg.n_ID, msg)" class="btn btn-default" disabled>&#128190;</button></td>
-								<td><button ng-click="deleteNotification(msg.n_ID)" class="btn btn-default" ng-confirm-click="ACHTUNG: Willst Du diese Nachricht wirklich löschen?">&#9003;</button></td>
-							</tr>
-						<tr>
-							<td>NEU</td>
-							<td><input type="text" class="form-control input-sm" ng-model="newNotification.title"/></td>
-							<td><input type="text" class="form-control input-sm" ng-model="newNotification.text"/></td>
-							<td>automatisch</td>
-							<td>
-								<team-picker selected="newNotification.t_ID"></team-picker>
-							</td>
-							<td colspan="2"><button ng-click="addNewNotification(newNotification)" class="btn btn-default" ng-disabled="!newNotification.title">&#128190; Erstellen</button></td>
-						</tr>
-						</table>
-					</div>
+				<div role="tabpanel" class="tab-pane" id="notifications">
+					<ng-include src="'js/templates/pages/notifications.html'"></ng-include>
 				</div>
 				<!-- PASSCODES -->
-				<div role="tabpanel" class="tab-pane" id="passcodes" ng-controller="passcodeCtrl">
-					<div id="passcodelist">
-						<div>
-							<a class="btn btn-default" href="mrx_passcodes.html">Mr.X Passcodes drucken</a>
-						</div>
-						<div class="input-group">
-							<span class="input-group-addon">Suche:</span>
-							<input type="text" ng-model="search" class="form-control">
-						</div>
-						<table class="table table-striped">
-							<tr>
-								<td>ID</td>
-								<td>Passcode</td>
-								<td>Punkte</td>
-								<td>Gebraucht</td>
-								<td>Mr ?</td>
-								<td></td>
-								<td></td>
-							</tr>
-							<tr ng-repeat="code in passcodes | filter:search">
-								<td>{{ code.p_ID }}</td> 
-								<td><input type="text" class="form-control input-sm" value="{{ code.code }}" ng-model="code.code"/></td>
-								<td><input type="text" class="form-control input-sm" value="{{ code.points }}" ng-model="code.points"/></td>
-								<td>{{ code.used ? 'verbraucht' : 'neu' }}</td>
-								<td><input type="text" class="form-control input-sm" value="{{ code.mrx_ID }}" ng-model="code.mrx_ID"/></td>
-								<td><button ng-click="updateCode(code.p_ID, code)" class="btn btn-default">&#128190;</button></td>
-								<td><button ng-click="deleteCode(code.p_ID)" class="btn btn-default">&#9003;</button></td>
-							</tr>
-							<tr >
-								<td>NEU</td>
-								<td><input type="text" ng-model="newCode.code" class="form-control input-sm"/></td>
-								<td><input type="text" ng-model="newCode.points" class="form-control input-sm"/></td>
-								<td></td>
-								<td><input type="text" ng-model="newCode.mrx_ID" class="form-control input-sm"/></td>
-								<td colspan="2"><button ng-click="addNewCode(newCode)" class="btn btn-default" ng-disabled="!newCode.code || !newCode.points">&#128190; Erstellen</button></td>
-							</tr>
-						</table>
-					</div>
+				<div role="tabpanel" class="tab-pane" id="passcodes">
+					<ng-include src="'js/templates/pages/passcodes.html'"></ng-include>
 				</div>
 				<!-- RIDDLES -->
-				<div role="tabpanel" class="tab-pane" id="raetsel" ng-controller="riddleCtrl">
-					<div id="riddlelist">
-						<div>
-							<button ng-click="riddleService.update()" class="btn btn-default">Aktualisieren</button>
-						</div>
-						<div class="input-group">
-							<span class="input-group-addon">Suche:</span>
-							<input type="text" ng-model="search" class="form-control">
-						</div>
-						<table class="table table-striped">
-							<tr>
-								<td>ID</td>
-								<td class="col-xs-1">Latitude</td>
-								<td class="col-xs-1">Longitude</td>
-								<td class="col-xs-1">Titel</td>
-								<td>Frage</td>
-								<td class="col-xs-1">Abhängig</td>
-								<td>Antwort</td>
-								<td>Typ</td>
-								<td>Antwort?</td>
-								<td>Bild?</td>
-								<td class="col-xs-1">Punkte</td>
-								<td></td>
-								<td></td>
-							</tr>
-							<tr ng-repeat="riddle in riddles | filter:search">
-								<td>{{ riddle.r_ID }}</td>
-								<td class="col-xs-1"><input type="text" class="form-control input-sm" value="{{ riddle.pos_lat }}" ng-model="riddle.pos_lat"/></td>
-								<td class="col-xs-1"><input type="text" class="form-control input-sm" value="{{ riddle.pos_long }}" ng-model="riddle.pos_long"/></td>
-								<td class="col-xs-1"><input type="text" class="form-control input-sm" value="{{ riddle.title }}" ng-model="riddle.title"/></td>
-								<td><textarea class="form-control input-sm" ng-model="riddle.question" rows="1"></textarea></td>
-								<td class="col-xs-1"><riddle-picker selected="riddle.dep_ID"></riddle-picker></td>
-								<td><input type="text" class="form-control input-sm" value="{{ riddle.answer }}" ng-model="riddle.answer" ng-if="riddle.answer_required"/></td>
-								<td><select class="form-control input-sm" ng-model="riddle.type">
-										<option>MULTI</option>
-										<option>SINGLE</option>
-									</select>
-								</td>
-								<td><input type="checkbox" class="form-control input-sm" ng-model="riddle.answer_required" ng-true-value="1" ng-false-value="0"/></td>
-								<td><input type="checkbox" class="form-control input-sm" ng-model="riddle.image_required" ng-true-value="1" ng-false-value="0"/></td>
-								<td class="col-xs-1"><input type="text" class="form-control input-sm" value="{{ riddle.points }}" ng-model="riddle.points"/></td>
-								<td><button ng-click="updateRiddle(riddle.r_ID, riddle)" class="btn btn-default">&#128190;</button></td>
-								<td><button ng-click="deleteRiddle(riddle.r_ID)" class="btn btn-default" ng-confirm-click="ACHTUNG: Willst du das Rätsel wirklich löschen?">&#9003;</button></td>
-							</tr>
-							<tr >
-								<td>NEU</td>
-								<td class="col-xs-1"><input type="text" ng-model="newRiddle.pos_lat" class="form-control input-sm"/></td>
-								<td class="col-xs-1"><input type="text" ng-model="newRiddle.pos_long" class="form-control input-sm"/></td>
-								<td class="col-xs-1"><input type="text" ng-model="newRiddle.title" class="form-control input-sm"/></td>
-								<td><textarea class="form-control input-sm" ng-model="newRiddle.question" rows="1"></textarea></td>
-								<td class="col-xs-1"><riddle-picker selected="newRiddle.dep_ID"></riddle-picker></td>
-								<td><input type="text" ng-model="newRiddle.answer" ng-if="newRiddle.answer_required" class="form-control input-sm"/></td>
-								<td><select ng-model="newRiddle.type" class="form-control input-sm">
-										<option selected>MULTI</option>
-										<option>SINGLE</option>
-									</select>
-								</td>
-								<td><input type="checkbox" class="form-control input-sm" ng-model="newRiddle.answer_required" ng-true-value="1" ng-false-value="0"/></td>
-								<td><input type="checkbox" class="form-control input-sm" ng-model="newRiddle.image_required" ng-true-value="1" ng-false-value="0"/></td>
-								<td class="col-xs-1"><input type="text" ng-model="newRiddle.points" class="form-control input-sm"/></td>
-								<td colspan="2"><button ng-click="addNewRiddle(newRiddle)" class="btn btn-default" ng-disabled="!newRiddle.question">&#128190; Erstellen</button></td>
-							</tr>
-						</table>
-					</div>
+				<div role="tabpanel" class="tab-pane" id="raetsel">
+					<ng-include src="'js/templates/pages/riddles.html'"></ng-include>
 				</div>
 				<!-- QR CODES -->
-				<div role="tabpanel" class="tab-pane" id="qrcodes" ng-controller="QRCtrl">
-					<div class="input-group">
-						<span class="input-group-addon">Suche:</span>
-						<input type="text" ng-model="search" class="form-control">
-					</div>
-					<table>
-						<tr>
-							<td class="col-sm-6"><h3>{{ search ? 'Gefilterte' : 'Alle' }} QR Codes</h3></td>
-							<td><button ng-click="refresh()" class="btn btn-default">Liste Aktualisieren</button></td>
-							<td><a type="button" href="./passcodes.html" value="Passcodes" target="_blank" class="btn btn-default button">Öffne neues Fenster um Checkin Karten zu drucken</a></td>
-						</tr>
-					</table>
-					<table class="table"><tr><td class="col-md-8">
-						<table class="table table-striped">
-							<tr>
-								<td>ID</td>
-								<td>&nbsp;</td>
-								<td>Team</td>
-								<td>Hash</td>
-								<td>QR Code</td>
-							</tr>
-							<tr ng-repeat="group in groups | filter:search">
-								<td>&#128100; {{ group.t_ID }}</td>
-								<td><img ng-src="{{apiService.imageUrl(group.img_ID)}}" ng-if="group.img_ID" class="profile-image"></td>
-								<td>{{ group.name }}</td>
-								<td>{{ group.hash }}</td>
-								<td>
-									<a href="#" ng-click="showQR(group.t_ID, group.name, group.hash, 'team')">anzeigen</a>
-								</td>
-							</tr>
-							<tr ng-repeat="mrx in mrxs | filter:search">
-								<td>&#128373; {{ mrx.x_ID }}</td>
-								<td>&nbsp;</td>
-								<td>{{ mrx.name }}</td>
-								<td>{{ mrx.x_hash }}</td>
-								<td>
-									<a href="#" ng-click="showQR(mrx.x_ID, mrx.name, mrx.x_hash, 'mrx')">anzeigen</a>
-								</td>
-							</tr>
-						</table>
-						</td><td class="col-md-4">
-							<div ng-if="qrUrl.team">
-								<a href="{{ qrUrl.link }}">Login Link für Team {{ qrUrl.team }}</a> <br/>
-								<qrcode version="6" error-correction-level="M" size="200" data="{{ qrUrl.link }}" href="{{ qrUrl.link }}"></qrcode>
-							</div>
-						</td></tr>
-					</table>
-					Test Team Picker: <team-picker/>
+				<div role="tabpanel" class="tab-pane" id="qrcodes">
+					<ng-include src="'js/templates/pages/qrcodes.html'"></ng-include>
 				</div>
-
-				<!-- Config -->
-				<div role="tabpanel" class="tab-pane" id="config" ng-controller="configCtrl">
-					<div class="input-group">
-						<span class="input-group-addon">Suche:</span>
-						<input type="text" ng-model="search" class="form-control input-sm">
-					</div>
-					<table class="table table-striped">
-						<tr ng-repeat="(key,conf) in config">
-								<td><span class="input-group-addon">{{ key }}</span></td>
-								<td><input type="text" class="form-control input-sm" ng-model="conf" id="{{key}}"/></td>
-								<td><button ng-click="saveConfig(key,conf)" class="btn btn-default">Speichern</button></td>
-
-						</tr>
-					</table>
-
+				<!-- CONFIG -->
+				<div role="tabpanel" class="tab-pane" id="config">
+					<ng-include src="'js/templates/pages/config.html'"></ng-include>
 				</div>
-				<!-- Stats -->
-				<div role="tabpanel" class="tab-pane" id="stats" ng-controller="statsCtrl">
-					<button ng-click="reload()" class="btn btn-default">Aktualisieren</button>
-					<span ng-if="isLoading">Statistik laden ...</span>
-					<highchart id="chart_points" config="pointsChartConfig"></highchart>
+				<!-- STATS -->
+				<div role="tabpanel" class="tab-pane" id="stats">
+					<ng-include src="'js/templates/pages/stats.html'"></ng-include>
 				</div>
 			</div>
 		</div>
 
-
 		<footer>
 			<p>Mit Herzblut programmiert von Fäger, Giga, Folletta, Chäfer und Punkt</p>
 		</footer>
+
 	</div>
 	<script src="node_modules/angular/angular.min.js"></script>
 	<script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>

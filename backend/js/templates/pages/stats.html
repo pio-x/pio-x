@@ -1,0 +1,5 @@
+<div ng-controller="statsCtrl">
+    <button ng-click="reload()" class="btn btn-default">Aktualisieren</button>
+    <span ng-if="isLoading">Statistik laden ...</span>
+    <highchart id="chart_points" config="pointsChartConfig"></highchart>
+</div>

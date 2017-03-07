@@ -1,0 +1,36 @@
+<div id="notificationlist" ng-controller="notificationCtrl">
+    <div class="input-group">
+        <span class="input-group-addon">Suche:</span>
+        <input type="text" ng-model="search" class="form-control">
+    </div>
+    <table class="table table-striped">
+        <tr>
+            <td>ID</td>
+            <td>Titel</td>
+            <td>Nachricht</td>
+            <td>Zeit</td>
+            <td>Team ID</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr ng-repeat="msg in notifications | filter:search">
+            <td>{{ msg.n_ID }}</td>
+            <td>{{ msg.title }}</td>
+            <td>{{ msg.text }}</td>
+            <td>{{ msg.timestamp | moment:'HH:mm:ss' }}</td>
+            <td>{{ msg.t_ID }}</td>
+            <td><button ng-click="updateNotification(msg.n_ID, msg)" class="btn btn-default" disabled>&#128190;</button></td>
+            <td><button ng-click="deleteNotification(msg.n_ID)" class="btn btn-default" ng-confirm-click="ACHTUNG: Willst Du diese Nachricht wirklich löschen?">&#9003;</button></td>
+        </tr>
+    <tr>
+        <td>NEU</td>
+        <td><input type="text" class="form-control input-sm" ng-model="newNotification.title"/></td>
+        <td><input type="text" class="form-control input-sm" ng-model="newNotification.text"/></td>
+        <td>automatisch</td>
+        <td>
+            <team-picker selected="newNotification.t_ID"></team-picker>
+        </td>
+        <td colspan="2"><button ng-click="addNewNotification(newNotification)" class="btn btn-default" ng-disabled="!newNotification.title">&#128190; Erstellen</button></td>
+    </tr>
+    </table>
+</div>

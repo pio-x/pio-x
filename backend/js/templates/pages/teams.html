@@ -1,0 +1,36 @@
+<div ng-controller="teamCtrl">
+    <div class="input-group">
+        <span class="input-group-addon">Suche:</span>
+        <input type="text" ng-model="search" class="form-control">
+    </div>
+    <table id="teamliste" class="table table-striped">
+        <tr>
+            <td>ID</td>
+            <td>&nbsp;</td>
+            <td>Name</td>
+            <td>Score</td>
+            <td>Hash</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr ng-repeat="group in groups | filter:search">
+            <td>{{ group.t_ID }}</td>
+            <td><img ng-src="{{apiService.imageUrl(group.img_ID)}}" ng-if="group.img_ID" class="profile-image"></td>
+            <td><input type="text" class="form-control input-sm" value="{{ group.name }}" ng-model="group.name"/></td>
+            <td>{{ group.score }}</td>
+            <td>{{ group.hash }}</td>
+            <td><button ng-click="updateTeam(group, group.t_ID)" class="btn btn-default input-sm">&#128190;</button></td>
+            <td><button ng-click="deleteTeam(group.t_ID)" class="btn btn-default input-sm" disabled>&#9003;</button></td>
+        </tr>
+        <tr>
+            <td>NEU</td>
+            <td></td>
+            <td><input type="text" class="form-control input-sm" ng-model="newTeam.name"/></td>
+            <td></td>
+            <td><input type="text" class="form-control input-sm" ng-model="newTeam.hash"/></td>
+            <td colspan="2">
+                <button ng-click="addNewTeam(newTeam)" class="btn btn-default input-sm" ng-disabled="!newTeam.name">&#128190; Erstellen</button>
+            </td>
+        </tr>
+    </table>
+</div>

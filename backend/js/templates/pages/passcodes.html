@@ -1,0 +1,37 @@
+<div id="passcodelist" ng-controller="passcodeCtrl">
+    <div>
+        <a class="btn btn-default" href="mrx_passcodes.html">Mr.X Passcodes drucken</a>
+    </div>
+    <div class="input-group">
+        <span class="input-group-addon">Suche:</span>
+        <input type="text" ng-model="search" class="form-control">
+    </div>
+    <table class="table table-striped">
+        <tr>
+            <td>ID</td>
+            <td>Passcode</td>
+            <td>Punkte</td>
+            <td>Gebraucht</td>
+            <td>Mr ?</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr ng-repeat="code in passcodes | filter:search">
+            <td>{{ code.p_ID }}</td>
+            <td><input type="text" class="form-control input-sm" value="{{ code.code }}" ng-model="code.code"/></td>
+            <td><input type="text" class="form-control input-sm" value="{{ code.points }}" ng-model="code.points"/></td>
+            <td>{{ code.used ? 'verbraucht' : 'neu' }}</td>
+            <td><input type="text" class="form-control input-sm" value="{{ code.mrx_ID }}" ng-model="code.mrx_ID"/></td>
+            <td><button ng-click="updateCode(code.p_ID, code)" class="btn btn-default">&#128190;</button></td>
+            <td><button ng-click="deleteCode(code.p_ID)" class="btn btn-default">&#9003;</button></td>
+        </tr>
+        <tr >
+            <td>NEU</td>
+            <td><input type="text" ng-model="newCode.code" class="form-control input-sm"/></td>
+            <td><input type="text" ng-model="newCode.points" class="form-control input-sm"/></td>
+            <td></td>
+            <td><input type="text" ng-model="newCode.mrx_ID" class="form-control input-sm"/></td>
+            <td colspan="2"><button ng-click="addNewCode(newCode)" class="btn btn-default" ng-disabled="!newCode.code || !newCode.points">&#128190; Erstellen</button></td>
+        </tr>
+    </table>
+</div>

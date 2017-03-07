@@ -1,0 +1,50 @@
+<div ng-controller="stationCtrl">
+    <div>
+        <button ng-click="stationService.update()" class="btn btn-default">Aktualisieren</button>
+    </div>
+    <div class="input-group">
+        <span class="input-group-addon">Suche:</span>
+        <input type="text" ng-model="search" class="form-control">
+    </div>
+    <table id="stationenliste" class="table table-striped">
+        <tr>
+            <td>ID</td>
+            <td>Name</td>
+            <td>Beschreibung</td>
+            <td>LAT</td>
+            <td>LNG</td>
+            <td>Punkte</td>
+            <td>Aktiv</td>
+            <td>Einnahme</td>
+            <td>Team Besitz</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr ng-repeat="station in stations | filter:search">
+            <td>{{ station.s_ID }}</td>
+            <td><input type="text" class="form-control input-sm" ng-model="station.name"/></td>
+            <td class="col-xs-4"><input type="text" class="form-control input-sm" ng-model="station.description"/></td>
+            <td class="col-xs-1"><input type="text" class="form-control input-sm" ng-model="station.pos_lat"/></td>
+            <td class="col-xs-1"><input type="text" class="form-control input-sm" ng-model="station.pos_long"/></td>
+            <td class="col-xs-1"><input type="number" class="form-control input-sm" ng-model="station.points"/></td>
+            <td class="col-xs-1"><input type="checkbox" ng-model="station.enabled" ng-true-value="1" ng-false-value="0"/></td>
+            <td><span ng-if="station.captured_timestamp">{{ station.captured_timestamp | moment:'HH:mm:ss' }}</span></td>
+            <td>{{teams[station.team].name}}</td>
+            <!--<td>{{ station.team }}</td>-->
+            <td><button ng-click="updateStation(station.s_ID, station)" class="btn btn-default input-sm">&#128190;</button></td>
+            <td><button ng-click="deleteStation(station.s_ID)" class="btn btn-default input-sm" ng-confirm-click="ACHTUNG: Willst Du diese Station wirklich löschen?">&#9003;</button></td>
+        </tr>
+        <tr>
+            <td>NEU</td>
+            <td><input type="text" class="form-control input-sm" ng-model="newStation.name"/></td>
+            <td><input type="text" class="form-control input-sm" ng-model="newStation.description"/></td>
+            <td><input type="text" class="form-control input-sm" ng-model="newStation.pos_lat"/></td>
+            <td><input type="text" class="form-control input-sm" ng-model="newStation.pos_long"/></td>
+            <td><input type="number" class="form-control input-sm" ng-model="newStation.points"/></td>
+            <td><input type="checkbox" ng-model="newStation.enabled" ng-true-value="1" ng-false-value="0"/></td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td colspan="2"><button ng-click="addNewStation(newStation)" class="btn btn-default" ng-disabled="!newStation.name">&#128190; Erstellen</button></td>
+        </tr>
+    </table>
+</div>

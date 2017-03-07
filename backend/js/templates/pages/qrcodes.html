@@ -1,0 +1,48 @@
+<div ng-controller="QRCtrl">
+    <div class="input-group">
+        <span class="input-group-addon">Suche:</span>
+        <input type="text" ng-model="search" class="form-control">
+    </div>
+    <table>
+        <tr>
+            <td class="col-sm-6"><h3>{{ search ? 'Gefilterte' : 'Alle' }} QR Codes</h3></td>
+            <td><button ng-click="refresh()" class="btn btn-default">Liste Aktualisieren</button></td>
+            <td><a type="button" href="./passcodes.html" value="Passcodes" target="_blank" class="btn btn-default button">Öffne neues Fenster um Checkin Karten zu drucken</a></td>
+        </tr>
+    </table>
+    <table class="table"><tr><td class="col-md-8">
+        <table class="table table-striped">
+            <tr>
+                <td>ID</td>
+                <td>&nbsp;</td>
+                <td>Team</td>
+                <td>Hash</td>
+                <td>QR Code</td>
+            </tr>
+            <tr ng-repeat="group in groups | filter:search">
+                <td>&#128100; {{ group.t_ID }}</td>
+                <td><img ng-src="{{apiService.imageUrl(group.img_ID)}}" ng-if="group.img_ID" class="profile-image"></td>
+                <td>{{ group.name }}</td>
+                <td>{{ group.hash }}</td>
+                <td>
+                    <a href="#" ng-click="showQR(group.t_ID, group.name, group.hash, 'team')">anzeigen</a>
+                </td>
+            </tr>
+            <tr ng-repeat="mrx in mrxs | filter:search">
+                <td>&#128373; {{ mrx.x_ID }}</td>
+                <td>&nbsp;</td>
+                <td>{{ mrx.name }}</td>
+                <td>{{ mrx.x_hash }}</td>
+                <td>
+                    <a href="#" ng-click="showQR(mrx.x_ID, mrx.name, mrx.x_hash, 'mrx')">anzeigen</a>
+                </td>
+            </tr>
+        </table>
+        </td><td class="col-md-4">
+            <div ng-if="qrUrl.team">
+                <a href="{{ qrUrl.link }}">Login Link für Team {{ qrUrl.team }}</a> <br/>
+                <qrcode version="6" error-correction-level="M" size="200" data="{{ qrUrl.link }}" href="{{ qrUrl.link }}"></qrcode>
+            </div>
+        </td></tr>
+    </table>
+</div>
