@@ -722,13 +722,30 @@ $app->post('/passcode/solve', function (Request $request, Response $response, $a
 	if ($passcode['used'] == '1') {
 		return $response->withJson(["solved" => false, "message" => "Passcode bereits benutzt"]);
 	}
+
+	// check if team already used a code for this mrx
+	if ($passcode['mrx_ID']) {
+		$mrx_catched = $DB->fetchAssoc("SELECT * from r_team_mrx where t_ID = ? AND x_ID = ?", array($teamId, $passcode['mrx_ID']));
+		if ($mrx_catched) {
+			return $response->withJson(["solved" => false, "message" => "Mr.X bereits gefangen."]);
+		}
+	}
+
 	$DB->update('passcode', array('used' => '1'), array('p_ID' => $passcode['p_ID']));
 
+	// update points
 	$team_data = array('t_ID' => $teamId,
-											'points' => $passcode['points'],
-											'type' => 'PASSCODE',
-											'FK_ID' => $passcode['p_ID']);
+						'points' => $passcode['points'],
+						'type' => 'PASSCODE',
+						'FK_ID' => $passcode['p_ID']);
 	$DB->insert('r_team_points', $team_data);
+
+	// update mrx found status
+	if ($passcode['mrx_ID']) {
+		$team_mrx_data = array('t_ID' => $teamId, 'x_ID' => $passcode['mrx_ID']);
+		$DB->insert('r_team_mrx', $team_mrx_data);
+	}
+
 	return $response->withJson(["solved" => true, "message" => "Passcode erfolgreich freigeschaltet!"]);
 });
 
