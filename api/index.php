@@ -41,7 +41,7 @@ $app->add(new AddHeaders());
 
 // STATION
 $app->get('/station',function (Request $request, Response $response) use (&$DB, $config) {
-	if (!$config['game_is_running']) {
+	if (!$request->getAttribute('is_admin') && !$config['game_is_running']) {
 		return $response->withJson([]);
 	}
 
@@ -319,7 +319,7 @@ $app->get('/team/{id}/location', function (Request $request, Response $response,
 
 // MISTER X
 $app->get('/mrx', function (Request $request, Response $response) use (&$DB, $config) {
-	if (!$config['game_is_running']) {
+	if (!$request->getAttribute('is_admin') && !$config['game_is_running']) {
 		return $response->withJson([]);
 	}
 
@@ -364,7 +364,7 @@ $app->post('/mrx/{id}/location', function (Request $request, Response $response,
 
 // TOM RIDDLE
 $app->get('/riddle', function (Request $request, Response $response) use (&$DB, $config) {
-	if (!$config['game_is_running']) {
+	if (!$request->getAttribute('is_admin') && !$config['game_is_running']) {
 		return $response->withJson([]);
 	}
 	if ($request->getAttribute('is_admin') == true) {
