@@ -1,4 +1,3 @@
-import {ErrorHandler} from "@angular/core";
 import {IonicErrorHandler} from "ionic-angular";
 
 export class PioxErrorHandler extends IonicErrorHandler {

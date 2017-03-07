@@ -1,6 +1,6 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { DatePipe } from '@angular/common';
-import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
+import { IonicApp, IonicModule } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { MyApp } from './app.component';
 import { TabsPage } from '../pages/tabs/tabs';
@@ -37,6 +37,9 @@ import {ImageUploader} from "../components/image-uploader/image-uploader";
 import { AgmCoreModule } from 'angular2-google-maps/core';
 
 import { ImageUploadModule } from 'ng2-imageupload';
+
+import 'intl';
+import 'intl/locale-data/jsonp/de-CH';
 
 @NgModule({
   declarations: [

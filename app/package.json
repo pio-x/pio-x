@@ -22,6 +22,7 @@
     "@ionic/storage": "^1.1.7",
     "angular2-google-maps": "0.16.0",
     "exif-js": "^2.1.1",
+    "intl": "^1.2.5",
     "ionic-angular": "2.0.0",
     "ionic-native": "2.2.11",
     "ionicons": "3.0.0",
