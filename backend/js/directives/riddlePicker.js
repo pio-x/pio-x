@@ -1,7 +1,7 @@
 backendApp.directive('riddlePicker', function(riddleService) {
   return {
       restrict: 'E',
-      templateUrl: 'js/view/riddle-picker.html',
+      templateUrl: 'js/templates/directives/riddle-picker.html',
       scope: {
           selected: '='
       },

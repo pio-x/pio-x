@@ -1,7 +1,7 @@
 backendApp.directive('teamPicker', function(teamService) {
   return {
       restrict: 'E',
-      templateUrl: 'js/view/team-picker.html',
+      templateUrl: 'js/templates/directives/team-picker.html',
       scope: {
           selected: '='
       },
