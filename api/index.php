@@ -541,15 +541,15 @@ $app->post('/riddle/{id}/solve',function (Request $request, Response $response, 
 
 	// riddle does not exist
 	if (!$riddle) {
-		return $response->withJson(["solved" => false, "message" => "Rätsel nicht gefunden"]);
+		return $response->withJson(["solved" => false, "message" => "Rätsel nicht gefunden", "points" => 0], 200, JSON_NUMERIC_CHECK);
 	}
 	// it can only be solved once
 	if ($riddle['state'] == 'SOLVED') {
-		return $response->withJson(["solved" => false, "message" => "Rätsel bereits gelöst"]);
+		return $response->withJson(["solved" => false, "message" => "Rätsel bereits gelöst", "points" => 0], 200, JSON_NUMERIC_CHECK);
 	}
 	// if there is a position, it must be unlocked first
 	if ($riddle['pos_lat'] && $riddle['state'] != 'UNLOCKED') {
-		return $response->withJson(["solved" => false, "message" => "Rätsel nicht entsperrt"]);
+		return $response->withJson(["solved" => false, "message" => "Rätsel nicht entsperrt", "points" => 0], 200, JSON_NUMERIC_CHECK);
 	}
 	// dependant riddle must be solved first
 	if ($riddle['dep_ID']) {
@@ -561,7 +561,7 @@ $app->post('/riddle/{id}/solve',function (Request $request, Response $response, 
 			WHERE r.r_ID = ?",
 			array($teamId, $riddle['dep_ID']));
 		if ($dep_riddle['state'] != 'SOLVED') {
-			return $response->withJson(["solved" => false, "message" => "Vorausgesetztes Rätsel muss zuerst gelöst werden"]);
+			return $response->withJson(["solved" => false, "message" => "Vorausgesetztes Rätsel muss zuerst gelöst werden", "points" => 0], 200, JSON_NUMERIC_CHECK);
 		}
 	}
 
@@ -581,7 +581,7 @@ $app->post('/riddle/{id}/solve',function (Request $request, Response $response, 
 	} else if ($riddle['image_required']) {
 		$body = (string) $request->getBody();
 		if (substr($body,0,10) != 'data:image') {
-			return $response->withJson(["solved" => false, "message" => "Kein Bild gesendet!"]);
+			return $response->withJson(["solved" => false, "message" => "Kein Bild gesendet!", "points" => 0], 200, JSON_NUMERIC_CHECK);
 		} else {
 			$qsa = $request->getQueryParams();
 			$id = 'riddle_r' . $riddle['r_ID'] . '_t' . $teamId . '_' . round(microtime(true) * 1000);
@@ -596,16 +596,16 @@ $app->post('/riddle/{id}/solve',function (Request $request, Response $response, 
 		if (!$updated) {
 			$DB->insert('r_team_riddle', $data);
 		}
-		// TODO: punkte geben
-		$score->riddle($teamId, $riddleId);
+		// punkte geben
+		$points = $score->riddle($teamId, $riddleId);
 		$log->riddle('Team '.$request->getAttribute('team_name').' hat Rätsel '.$riddleId.' richtig gelöst', $request->getAttribute('team_id'), $riddleId);
-		return $response->withJson(["solved" => true, "message" => "Richtige Antwort!"]);
+		return $response->withJson(["solved" => true, "message" => "Richtige Antwort!", "points" => $points], 200, JSON_NUMERIC_CHECK);
 	} else {
 		// answer is wrong
-		// TODO: punkte abziehen
-		$score->riddle($teamId, $riddleId, true);
+		// punkte abziehen
+		$points = $score->riddle($teamId, $riddleId, true);
 		$log->riddle('Team '.$request->getAttribute('team_name').' hat Rätsel '.$riddleId.' falsch gelöst', $request->getAttribute('team_id'), $riddleId);
-		return $response->withJson(["solved" => false, "message" => "Deine Antwort ist falsch."]);
+		return $response->withJson(["solved" => false, "message" => "Deine Antwort ist falsch.", "points" => $points], 200, JSON_NUMERIC_CHECK);
 	}
 });
 
@@ -706,7 +706,7 @@ $app->post('/passcode', function (Request $request, Response $response, $args) u
 	return $response->withJson("success");
 });
 
-$app->post('/passcode/solve', function (Request $request, Response $response, $args) use (&$DB, $config) {
+$app->post('/passcode/solve', function (Request $request, Response $response, $args) use (&$DB, $config, &$score) {
 	if (!$config['game_is_running']) {
 		return $response->withStatus(403)->withJson("Error: Game is not running");
 	}
@@ -728,29 +728,25 @@ $app->post('/passcode/solve', function (Request $request, Response $response, $a
 
 	// passcode does not exist
 	if (!$passcode) {
-		return $response->withJson(["solved" => false, "message" => "Passcode (" . $code . ") ist ungültig. "]);
+		return $response->withJson(["solved" => false, "message" => "Passcode (" . $code . ") ist ungültig. ", "points" => 0], 200, JSON_NUMERIC_CHECK);
 	}
 	// it can only be used once
-	if ($passcode['used'] == '1') {
-		return $response->withJson(["solved" => false, "message" => "Passcode bereits benutzt"]);
+	if ($passcode['used']) {
+		return $response->withJson(["solved" => false, "message" => "Passcode bereits benutzt", "points" => 0], 200, JSON_NUMERIC_CHECK);
 	}
 
 	// check if team already used a code for this mrx
 	if ($passcode['mrx_ID']) {
 		$mrx_catched = $DB->fetchAssoc("SELECT * from r_team_mrx where t_ID = ? AND x_ID = ?", array($teamId, $passcode['mrx_ID']));
 		if ($mrx_catched) {
-			return $response->withJson(["solved" => false, "message" => "Mr.X bereits gefangen."]);
+			return $response->withJson(["solved" => false, "message" => "Mr.X bereits gefangen.", "points" => 0], 200, JSON_NUMERIC_CHECK);
 		}
 	}
 
 	$DB->update('passcode', array('used' => '1'), array('p_ID' => $passcode['p_ID']));
 
 	// update points
-	$team_data = array('t_ID' => $teamId,
-						'points' => $passcode['points'],
-						'type' => 'PASSCODE',
-						'FK_ID' => $passcode['p_ID']);
-	$DB->insert('r_team_points', $team_data);
+	$points = $score->passcode($teamId, $passcode['p_ID']);
 
 	// update mrx found status
 	if ($passcode['mrx_ID']) {
@@ -758,7 +754,7 @@ $app->post('/passcode/solve', function (Request $request, Response $response, $a
 		$DB->insert('r_team_mrx', $team_mrx_data);
 	}
 
-	return $response->withJson(["solved" => true, "message" => "Passcode erfolgreich freigeschaltet!"]);
+	return $response->withJson(["solved" => true, "message" => "Passcode erfolgreich freigeschaltet!", "points" => $points], 200, JSON_NUMERIC_CHECK);
 });
 
 $app->put('/passcode/{id}', function (Request $request, Response $response, $args) use (&$DB) {

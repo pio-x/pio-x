@@ -17,13 +17,21 @@ class ScoreHelper {
 				$points = ceil(-0.5 * $points);
 			}
 			$this->addLog('RIDDLE', $teamId, $points, $riddleId);
+			return $points;
+		} else {
+			return 0;
 		}
 	}
 
 	public function passcode($teamId, $passcodeId) {
-		// TODO: implement
-		$points = 0;
-		$this->addLog('PASSCODE', $teamId, $points, $passcodeId);
+		$passcode = $this->DB->fetchAssoc("SELECT * from passcode where p_ID = ?", array($passcodeId));
+		if (isset($passcode['points'])) {
+			$points = $passcode['points'];
+			$this->addLog('PASSCODE', $teamId, $points, $passcodeId);
+			return $points;
+		} else {
+			return 0;
+		}
 	}
 
 	public function station($teamId, $stationId) {
@@ -31,6 +39,9 @@ class ScoreHelper {
 		if (isset($station['points'])) {
 			$points = $station['points'];
 			$this->addLog('STATION', $teamId, $points, $stationId);
+			return $points;
+		} else {
+			return 0;
 		}
 	}
 
