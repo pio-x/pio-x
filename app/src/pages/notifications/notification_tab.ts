@@ -4,7 +4,7 @@ import { Notification } from '../../interfaces/notification';
 import { NotificationService } from '../../services/notification.service';
 
 @Component({
-  selector: 'page-notifications',
+  selector: 'page-notifications-tab',
   templateUrl: 'notification_tab.html'
 })
 export class NotificationTabPage {

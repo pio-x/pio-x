@@ -10,11 +10,19 @@
       </button>
     </ion-buttons>
   </ion-navbar>
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="currentSegment" color="primary">
+      <ion-segment-button value="notifications">
+        Nachrichten
+      </ion-segment-button>
+      <ion-segment-button value="stream">
+        Foto Stream
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-tabs>
-    <ion-tab [root]="notificationsTab" tabTitle="Nachrichten" tabIcon="megaphone"></ion-tab>
-    <ion-tab [root]="gameFeedTab" tabTitle="Stream" tabIcon="list"></ion-tab>
-  </ion-tabs>
+  <page-notifications-tab *ngIf="currentSegment == 'notifications'"></page-notifications-tab>
+  <page-game_stream *ngIf="currentSegment == 'stream'"></page-game_stream>
 </ion-content>
