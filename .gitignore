@@ -13,3 +13,6 @@ composer.phar
 # PHP
 error_log
 /docs/administration/*
+/backend/img/font/*
+/backend/img/font/PNG/*
+!/backend/img/font/icomoon_46_icons/PNG/hipster2.png

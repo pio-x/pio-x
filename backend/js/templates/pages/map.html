@@ -15,16 +15,16 @@
 				scale: 8 }" ng-if="showRiddles && riddle.pos_lat">
 			</marker>
 			<span ng-repeat="(key, mrx) in mrxs track by $index"  ng-init="mrxIndex = $index">
-				<marker position="[{{ location.xpos_lat }},{{ location.xpos_long }}]"
+				<marker position="[{{ location.xpos_lat }}, {{ location.xpos_long }}]"
 					on-click="showTooltip($index, mrx, mrxIndex)"
 					ng-repeat="(key, location) in mrx.locations track by $index"
 					icon="{
-						path: 0,
-						strokeColor: 'lime',
-						strokeWeight: 2,
-						scale: 8
+						url:'img/font/icomoon_46_icons/PNG/hipster2.png',
+						scaledSize:[18,16],
+						origin: [0,0],
+						anchor: [9,8]
 					}"
-					ng-if="showMrxs">
+					ng-if="showMrxs && $index == 0">
 				</marker>
 				<shape name="polyline"
 					path="[
@@ -32,9 +32,9 @@
 						[{{ mrx.locations[$index + 1].xpos_lat }}, {{ mrx.locations[$index + 1].xpos_long }}]
 					]"
 					geodesic="true"
-					stroke-color="lime"
+					stroke-color="darkorange"
 					stroke-opacity="1.0"
-					stroke-weight="2"
+					stroke-weight="{{ 3 / ($index + 1) }}"
 					ng-repeat="(key, location) in mrx.locations track by $index"
 					ng-if="showMrxs && mrx.locations[$index + 1]">
 				</shape>
