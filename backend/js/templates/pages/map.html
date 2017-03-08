@@ -8,7 +8,7 @@
 				ng-repeat="station in stations track by $index" 
 				icon="{
 					path: 'M -5,-5 L -5,5 L 5,5 L 5,-5 L -5,-5',
-					fillColor: 'gold',
+					fillColor: '{{ !stationColors[station.team]?'gold':stationColors[station.team] }}',
 					fillOpacity: 0.8,
 					scale: 1,
 					strokeColor: 'darkgrey',
@@ -17,11 +17,6 @@
 					}" 
 				ng-if="showStations">
 			</marker>
-			<!--<custom-marker position="[{{ station.pos_lat }},{{ station.pos_long }}]"
-				ng-repeat="station in stations track by $index" 
-				ng-if="showStations">
-				<div>S</div>
-			</custom-marker>
 			<!-- RIDDLES -->
 			<marker position="[{{ riddle.pos_lat }},{{ riddle.pos_long }}]" 
 				on-click="showTooltip($index, riddles)" 
@@ -34,6 +29,7 @@
 					}"
 				ng-if="showRiddles && riddle.pos_lat">
 			</marker>
+			<!-- MRX -->
 			<span ng-repeat="(key, mrx) in mrxs track by $index"  ng-init="mrxIndex = $index">
 				<marker position="[{{ location.xpos_lat }}, {{ location.xpos_long }}]"
 					on-click="showTooltip($index, mrx, mrxIndex)"
@@ -59,6 +55,7 @@
 					ng-if="showMrxs && mrx.locations[$index + 1]">
 				</shape>
 			</span>
+			<!-- TEAMS -->
 			<span ng-repeat="(key, locations) in players"  ng-init="locationIndex = $index">
 				<!-- big red circle of the last position of every player from the selected team -->
 				<shape name="circle" ng-repeat="location in locations | limitTo: 1 track by $index"

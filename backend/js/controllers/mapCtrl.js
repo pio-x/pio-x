@@ -10,7 +10,14 @@ backendApp.controller('mapCtrl', function($scope, NgMap, apiService, riddleServi
     $scope.showTeams = false;
     $scope.showTeam = false;
     $scope.showTeamLocation = false;
-    $scope.playerColors = ["blue", "lime", "darkorange", "gold", "darkviolet", "brown", "darkgreen", "darkred", "olivedrab", "saddlebrown", "tomato", "darkcyan", "pink"]
+    $scope.playerColors = ["blue", "lime", "darkorange", "gold", "darkviolet", "brown", "darkgreen", "darkred", "olivedrab", "saddlebrown", "tomato", "darkcyan", "pink"];
+    $scope.stationColors = ["gold"];
+    $scope.resetStationColors = function() {
+        for(var i = 1; i < 100;i++) {
+            $scope.stationColors[i] = "lime";
+        }
+    };
+    $scope.resetStationColors();
     $scope.showNewObjectInput = 'station';
     $scope.newStation = {
         points: 10,
@@ -133,8 +140,10 @@ backendApp.controller('mapCtrl', function($scope, NgMap, apiService, riddleServi
             //console.log('/team/' + id + '/location');
             //console.log($scope.players);
         });
+        //Hebe Stationen von diesem hervor
+        $scope.resetStationColors();
+        $scope.stationColors[id] = 'red';
     };
-    $scope.getTeamLocations($scope.selectedTeam);
 
     //Aktualisiert die Stationen
     $scope.stations = [];
