@@ -13,6 +13,15 @@ composer.phar
 # PHP
 error_log
 /docs/administration/*
-/backend/img/font/*
-/backend/img/font/PNG/*
-!/backend/img/font/icomoon_46_icons/PNG/hipster2.png
+backend/img/font/*.zip
+backend/img/font/icomoon_46_icons/*.html
+backend/img/font/icomoon_46_icons/*.css
+backend/img/font/icomoon_46_icons/*.js
+backend/img/font/icomoon_46_icons/*.txt
+backend/img/font/icomoon_46_icons/*.json
+backend/img/font/icomoon_46_icons/*.svg
+backend/img/font/icomoon_46_icons/demo-files/*
+backend/img/font/icomoon_46_icons/PNG/*
+backend/img/font/icomoon_46_icons/SVG/*
+!backend/img/font/icomoon_46_icons/PNG/hipster2.png
+!backend/img/font/icomoon_46_icons/PNG/question.png
