@@ -17,6 +17,7 @@ import {NotificationTabPage} from "../pages/notifications/notification_tab";
 import {PasscodePage} from "../pages/passcode/passcode";
 import {ProfileImagePage} from "../pages/profile-image/profile-image";
 import {MrxPage} from "../pages/mrx/mrx";
+import {NativeLogin} from "../pages/native-login/native-login";
 
 import {PioxApiService} from "../services/pioxApi.service";
 import {TeamService} from "../services/team.service";
@@ -58,7 +59,8 @@ import 'intl/locale-data/jsonp/de-CH';
     PasscodePage,
     MrxPage,
     ProfileImagePage,
-    ImageUploader
+    ImageUploader,
+    NativeLogin
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -83,7 +85,8 @@ import 'intl/locale-data/jsonp/de-CH';
     NotificationTabPage,
     PasscodePage,
     ProfileImagePage,
-    MrxPage
+    MrxPage,
+    NativeLogin
   ],
   providers: [
     {provide: ErrorHandler, useClass: PioxErrorHandler},

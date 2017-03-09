@@ -3,13 +3,15 @@ import { Headers, Http, RequestOptions } from '@angular/http';
 
 import {LocationService} from "./location.service";
 
+import {Platform} from "ionic-angular";
+
 import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class PioxApiService {
 
   private get baseurl() {
-      if (window.location.hostname == 'app.pio-x.ch') {
+      if (this.platform.is('cordova') || window.location.hostname == 'app.pio-x.ch') {
           // on live, use real api url
           return 'https://api.pio-x.ch';
       } else {
@@ -23,7 +25,7 @@ export class PioxApiService {
       }
   }
 
-  constructor(private http: Http, private locationService: LocationService) {
+  constructor(private http: Http, private locationService: LocationService, public platform: Platform) {
   }
 
   private getOptions(): RequestOptions {

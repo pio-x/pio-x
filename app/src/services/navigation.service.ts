@@ -30,7 +30,11 @@ export class NavigationService {
             {
                 text: 'Abmelden',
                 handler: () => {
-                    window.location.href = 'login.html?logout=true';
+                    localStorage.removeItem('mrx');
+                    localStorage.removeItem('team');
+                    localStorage.removeItem('hash');
+                    localStorage.removeItem('player');
+                    window.location.reload(true);
                 }
             },
             {

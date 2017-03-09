@@ -30,7 +30,10 @@ export class TabsPage {
   isTeam: number = 0;
   isMrx: number = 0;
 
-  constructor(private notificationService:NotificationService, public platform: Platform) {
+  constructor(
+      private notificationService:NotificationService,
+      public platform: Platform
+  ) {
 
     this.platform.ready().then((readySource) => {
       // hide app loading

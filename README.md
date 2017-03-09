@@ -24,9 +24,9 @@ API Abhängigkeiten installieren:
 ### Android App
 
 Voraussetzungen:
- * Die Android Plattform hinzufügen: `ionic platform add android` (einmalig)
  * Android SDK installieren
  * Java 1.8 installieren
+ * Die Android Plattform hinzufügen: `ionic platform add android` (einmalig)
 
 Folgende Befehle alle im `/app` Verzeichnis ausführen
 
@@ -39,11 +39,17 @@ Test APK generieren und auf angeschlossenem Gerät starten:
 `ionic run android`
 
 
-Release Buld erstellen:
-
-`cordova build --release android`
+#### Release Build erstellen:
 
 TODO: sign apk
+
+#### Plugins installieren
+
+Wenn man ein neues Plugin oder eine Plattform installiert hat,
+dann muss man folgenden Befehl ausführen um alles ins package.json
+zu schreiben:
+
+`ionic state save`
 
 
 ## Allgemeine Regeln:

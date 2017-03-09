@@ -6,13 +6,14 @@ import { IntervalObservable} from "rxjs/observable/IntervalObservable";
 
 import { Team } from '../interfaces/team';
 import { PioxApiService } from './pioxApi.service';
+import {Platform} from "ionic-angular";
 
 @Injectable()
 export class TeamService {
 
   private _teams: BehaviorSubject<Array<Team>> = new BehaviorSubject([]);
 
-  constructor(private pioxApi: PioxApiService) {
+  constructor(private pioxApi: PioxApiService, public platform: Platform) {
     this.updateTeams();
 
     // autoupdate every 60sec
@@ -46,7 +47,7 @@ export class TeamService {
   }
 
   public imageUrl(img_ID: string) {
-      if (window.location.hostname == 'app.pio-x.ch') {
+      if (this.platform.is('cordova') || window.location.hostname == 'app.pio-x.ch') {
           // on live, use real api url
           return 'https://api.pio-x.ch/uploaded_images/' + img_ID + '.jpg';
       } else {
