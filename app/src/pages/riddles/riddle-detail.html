@@ -3,7 +3,7 @@
   <ion-card-header>
     {{riddle.title}}
     <ion-note>
-      <span *ngIf="riddle.state == 'SOLVED'" color="secondary">
+      <span *ngIf="riddle.state == 'SOLVED'" ion-text color="secondary">
         <ion-icon name="checkmark-circle"></ion-icon> Gelöst
       </span>
       <span *ngIf="riddle.pos_lat && (!riddle.state || riddle.state == 'LOCKED')">
