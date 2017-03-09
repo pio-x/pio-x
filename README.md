@@ -1,7 +1,9 @@
 # Pio X
 Der Pio X Source Code
 
-# Installation
+## Development
+
+### Installation
 
 App Abhängigkeiten installieren:
 
@@ -12,11 +14,6 @@ App Abhängigkeiten installieren:
  * NPM Pakete installieren: `npm install`
  * Ionic starten: `ionic serve` (Browser mit der App wird gestartet)
 
-App Plattformen hinzufügen (optional):
-
- * `ionic platform add ios`
- * `ionic platform add android`
-
 API Abhängigkeiten installieren:
 
  * Ins API Verzeichnis wechseln: `cd api`
@@ -24,7 +21,32 @@ API Abhängigkeiten installieren:
  * Composer ausführen: `php composer.phar install`
 
 
-# Allgemeine Regeln:
+### Android App
+
+Voraussetzungen:
+ * Die Android Plattform hinzufügen: `ionic platform add android` (einmalig)
+ * Android SDK installieren
+ * Java 1.8 installieren
+
+Folgende Befehle alle im `/app` Verzeichnis ausführen
+
+Test APK generieren:
+
+`ionic build android`
+
+Test APK generieren und auf angeschlossenem Gerät starten:
+
+`ionic run android`
+
+
+Release Buld erstellen:
+
+`cordova build --release android`
+
+TODO: sign apk
+
+
+## Allgemeine Regeln:
 
 Stationen:
  * Einnehmen gibt keine Punkte
