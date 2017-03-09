@@ -5,6 +5,8 @@ import {LatLngLocation} from "../../interfaces/LatLngLocation";
 import {Mrx} from "../../interfaces/mrx";
 import {LocationService} from "../../services/location.service";
 import {MrxService} from "../../services/mrx.service";
+import {NavigationService} from "../../services/navigation.service";
+
 
 @Component({
   selector: 'page-mrx',
@@ -24,7 +26,8 @@ export class MrxPage {
     constructor(
         private locationService: LocationService,
         private mrxService: MrxService,
-        public loadingCtrl: LoadingController
+        public loadingCtrl: LoadingController,
+        public navService: NavigationService
     ) {
         this.myname = decodeURIComponent(localStorage.getItem('player')).replace( /\+/g, ' ');
         this.mrxid = parseInt(localStorage.getItem('mrx'));
@@ -35,6 +38,10 @@ export class MrxPage {
         this.mrxService.mrxs.subscribe((mrxs: Mrx[]) => {
             this.mrxsUpdated(mrxs);
         });
+    }
+
+    presentActionSheet() {
+        this.navService.presentActionSheet()
     }
 
     userLocationUpdated(position) {
