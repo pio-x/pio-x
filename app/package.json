@@ -42,7 +42,8 @@
     "cordova-plugin-splashscreen",
     "ionic-plugin-keyboard",
     "phonegap-plugin-barcodescanner",
-    "cordova-plugin-compat"
+    "cordova-plugin-compat",
+    "cordova-plugin-geolocation"
   ],
   "cordovaPlatforms": [
     "ios",

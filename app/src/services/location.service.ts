@@ -1,7 +1,10 @@
 import {Injectable}    from '@angular/core';
 import {LatLngLocation} from "../interfaces/LatLngLocation";
 
+import { Geolocation } from 'ionic-native';
+
 import {BehaviorSubject, Observable} from "rxjs";
+import {Platform} from "ionic-angular";
 
 declare var google;
 
@@ -17,22 +20,34 @@ export class LocationService {
         maximumAge: 0
     };
 
-    constructor() {
-        // Try HTML5 geolocation
-        if (navigator.geolocation) {
-            this.locationWatch = navigator.geolocation.watchPosition(
-                (pos) => { this.userLocationUpdated(pos)} ,
-                (error) => {
-                    if (error.code == error.PERMISSION_DENIED) {
-                          alert("Du musst dieser App erlauben auf deinen Standort zuzugreifen.");
-                    }
-                    console.log('ERROR getting user location', error)
-                },
-                this.locationWatchOptions
-            );
+    constructor(public platform: Platform) {
+        if (this.platform.is('cordova')) {
+            // use position from plugin
+            this.locationWatch = Geolocation.watchPosition(this.locationWatchOptions);
+            this.locationWatch.subscribe((data) => {
+                if (data.coords !== undefined) {
+                    this.userLocationUpdated(data);
+                } else {
+                    console.log('ERROR getting user location', data)
+                }
+            });
         } else {
-            // Browser doesn't support Geolocation
-            alert('Keine GPS Position gefunden!');
+            // Try HTML5 geolocation
+            if (navigator.geolocation) {
+                this.locationWatch = navigator.geolocation.watchPosition(
+                    (pos) => { this.userLocationUpdated(pos)} ,
+                    (error) => {
+                        if (error.code == error.PERMISSION_DENIED) {
+                              alert("Du musst dieser App erlauben auf deinen Standort zuzugreifen.");
+                        }
+                        console.log('ERROR getting user location', error)
+                    },
+                    this.locationWatchOptions
+                );
+            } else {
+                // Browser doesn't support Geolocation
+                alert('Keine GPS Position gefunden!');
+            }
         }
     }
 
