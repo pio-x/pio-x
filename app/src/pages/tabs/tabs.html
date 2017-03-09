@@ -20,18 +20,13 @@
       DEV Tip: <a href="login.html">login.html</a>
       -->
 
-      <div *ngIf="platform.is('android')">
-        You are on an Android Device!
+      <div *ngIf="platform.is('android') && platform.is('mobileweb')">
+        <b>Du solltest die App herunterladen!</b>
       </div>
-      <div *ngIf="platform.is('core')">
-        You are on an Desktop Device!
+      <div *ngIf="platform.is('android') && platform.is('cordova')">
+        Du verwendest die Pio-X App auf Android
       </div>
-      <div *ngIf="platform.is('mobileweb')">
-        You are on an Mobile Device Browser!
-      </div>
-      <div *ngIf="platform.is('mobile')">
-        You are on an Mobile Device!
-      </div>
+
     </ion-card-content>
   </ion-card>
 </ion-content>
