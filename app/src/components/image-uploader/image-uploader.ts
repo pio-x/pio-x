@@ -1,7 +1,8 @@
 import {Component, ElementRef, Output, EventEmitter, Input} from '@angular/core';
 
-import { LoadingController } from 'ionic-angular';
+import { LoadingController, Platform } from 'ionic-angular';
 import { ImageResult, ResizeOptions } from 'ng2-imageupload';
+import { Camera } from 'ionic-native';
 
 import EXIF from "exif-js"
 
@@ -27,7 +28,8 @@ export class ImageUploader {
 
     constructor(
         private element: ElementRef,
-        public loadingCtrl: LoadingController
+        public loadingCtrl: LoadingController,
+        public platform: Platform
     ) {
         // nothing
     }
@@ -50,6 +52,27 @@ export class ImageUploader {
     set tags(value) {
         this._tags = value;
         this.tagsChange.emit(this._tags);
+    }
+
+    get isCordova(): boolean {
+        return this.platform.is('cordova');
+    }
+
+    takePictureNative() {
+        let options = {
+            destinationType: Camera.DestinationType.DATA_URL,
+            targetHeight: 1024,
+            correctOrientation: true
+        };
+        Camera.getPicture(options).then((imageData) => {
+         // imageData is either a base64 encoded string or a file URI
+         // If it's base64:
+         this.image = 'data:image/jpeg;base64,' + imageData;
+
+         this.element.nativeElement.querySelector('.uploaded-image').src = this.image;
+        }, (err) => {
+         // Handle error
+        });
     }
 
     imageChanged(event: any) {

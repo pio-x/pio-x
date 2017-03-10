@@ -1,18 +1,34 @@
 <div class="image-uploader">
-  <input type="file"
+  <!-- Native Image upload -->
+  <div *ngIf="isCordova">
+    <div class="uploaded-image-holder" (click)="takePictureNative()">
+      <img class="uploaded-image" id="uploaded-image" [attr.data-orientation]="imageOrientation" [hidden]="!image"/>
+      <div class="uploaded-image-placeholder" *ngIf="!image">
+        <ion-icon name="camera"></ion-icon>
+      </div>
+      <button *ngIf="!image" ion-button full color="secondary">Foto aufnehmen</button>
+    </div>
+  </div>
+
+  <!-- HTML5 Image upload -->
+  <div *ngIf="!isCordova">
+    <input type="file"
          accept="image/*"
          image-upload
          (change)="imageChanged($event)"
          (imageSelected)="imageSelected($event)"
          [resizeOptions]="resizeOptions"
          #imgupload
-  />
-  <br>
-  <div class="uploaded-image-holder" (click)="imgupload.click()">
-    <img class="uploaded-image" id="uploaded-image" [attr.data-orientation]="imageOrientation" [hidden]="!imageRaw"/>
-    <div class="uploaded-image-placeholder" *ngIf="!imageRaw">
-      <ion-icon name="camera"></ion-icon>
+    />
+    <br>
+    <div class="uploaded-image-holder" (click)="imgupload.click()">
+      <img class="uploaded-image" id="uploaded-image" [attr.data-orientation]="imageOrientation" [hidden]="!imageRaw"/>
+      <div class="uploaded-image-placeholder" *ngIf="!imageRaw">
+        <ion-icon name="camera"></ion-icon>
+      </div>
+      <button *ngIf="!imageRaw" ion-button full color="secondary">Foto aufnehmen</button>
     </div>
-    <button *ngIf="!imageRaw" ion-button full color="secondary">Foto aufnehmen</button>
   </div>
+
+
 </div>

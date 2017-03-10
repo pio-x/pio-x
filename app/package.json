@@ -43,7 +43,8 @@
     "ionic-plugin-keyboard",
     "phonegap-plugin-barcodescanner",
     "cordova-plugin-compat",
-    "cordova-plugin-geolocation"
+    "cordova-plugin-camera",
+    "cordova-plugin-locationservices"
   ],
   "cordovaPlatforms": [
     "ios",

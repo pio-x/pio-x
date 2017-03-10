@@ -1,12 +1,12 @@
 import {Injectable}    from '@angular/core';
 import {LatLngLocation} from "../interfaces/LatLngLocation";
 
-import { Geolocation } from 'ionic-native';
-
 import {BehaviorSubject, Observable} from "rxjs";
 import {Platform} from "ionic-angular";
 
 declare var google;
+
+declare var cordova;
 
 @Injectable()
 export class LocationService {
@@ -21,16 +21,27 @@ export class LocationService {
     };
 
     constructor(public platform: Platform) {
-        if (this.platform.is('cordova')) {
-            // use position from plugin
-            this.locationWatch = Geolocation.watchPosition(this.locationWatchOptions);
-            this.locationWatch.subscribe((data) => {
-                if (data.coords !== undefined) {
-                    this.userLocationUpdated(data);
-                } else {
-                    console.log('ERROR getting user location', data)
+        if (this.platform.is('cordova') && this.platform.is('android')) {
+            // Use position from a plugin on Android
+            // W3C positioning API does not return GPS data, only inaccurate Wifi/Cell Locations :/
+            this.locationWatch = cordova.plugins.locationServices.geolocation.watchPosition(
+                (position) => {
+                    if (position.coords !== undefined) {
+                        this.userLocationUpdated(position);
+                    }
+                },
+                (error) => {
+                    console.log(error);
+                },
+                {
+                  maximumAge: 3000,
+                  timeout: 5000,
+                  enableHighAccuracy: true,
+                  priority: 100, //cordova.plugins.locationServices.geolocation.priorities.PRIORITY_HIGH_ACCURACY,
+                  interval: 6000,
+                  fastInterval: 1000
                 }
-            });
+            );
         } else {
             // Try HTML5 geolocation
             if (navigator.geolocation) {
