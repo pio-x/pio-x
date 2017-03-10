@@ -41,7 +41,9 @@ Test APK generieren und auf angeschlossenem Gerät starten:
 
 #### Release Build erstellen:
 
-TODO: sign apk
+Commands um einen Release Build zu erstellen sind im release_android.sh zu finden.
+
+Um das APK zu signieren benötigst du zusätzlich den korrekten Keystore und das Passwort (nicht im GIT)
 
 #### Plugins installieren
 

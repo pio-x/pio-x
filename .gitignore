@@ -25,3 +25,4 @@ backend/img/font/icomoon_46_icons/PNG/*
 backend/img/font/icomoon_46_icons/SVG/*
 !backend/img/font/icomoon_46_icons/PNG/hipster2.png
 !backend/img/font/icomoon_46_icons/PNG/question.png
+/app/my-release-key.keystore
