@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# remove old file
+rm platforms/android/build/outputs/apk/PioX.apk
+
 # build latest sources
 ionic build android
 
