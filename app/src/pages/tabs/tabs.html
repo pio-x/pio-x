@@ -1,4 +1,4 @@
-<ion-tabs *ngIf="isLoggedIn">
+<ion-tabs *ngIf="isLoggedIn && locationService.getLocation()">
   <ion-tab [root]="tab1Root" tabTitle="Karte" tabIcon="map" *ngIf="isLoggedIn"></ion-tab>
   <ion-tab [root]="tab2Root" tabTitle="Rangliste" tabIcon="trophy" *ngIf="isLoggedIn"></ion-tab>
   <ion-tab [root]="tab3Root" tabTitle="Rätsel" tabIcon="key" *ngIf="isTeam"></ion-tab>
@@ -6,6 +6,27 @@
   <ion-tab [root]="tab5Root" tabTitle="Infos" tabIcon="book" *ngIf="isLoggedIn"></ion-tab>
   <ion-tab [root]="tab6Root" tabTitle="Nachrichten" tabIcon="megaphone" [tabBadge]="notificationCount" tabBadgeStyle="danger" *ngIf="isLoggedIn"></ion-tab>
 </ion-tabs>
+<ion-content *ngIf="isLoggedIn && !locationService.getLocation()">
+  <ion-card>
+    <ion-card-header>
+      <ion-icon name="navigate"></ion-icon> GPS Position suchen...
+    </ion-card-header>
+    <ion-card-content>
+      <div class="searching-gps">
+        <ion-spinner></ion-spinner> <br>
+        GPS Position wird gesucht...
+      </div>
+      Es ist keine GPS Position verfügbar. Ohne GPS kann dieses Spiel leider nicht gespielt werden.<br>
+      <br>Bitte überprüfe folgende Dinge:
+      <ul>
+        <li>Hast du dein GPS aktiviert?</li>
+        <li *ngIf="platform.is('cordova')">Hast du der App erlaubt, auf den Standort zuzugreifen?</li>
+        <li *ngIf="platform.is('mobileweb') || platform.is('core')">Hast du der Webseite erlaubt, auf den Standort zuzugreifen?</li>
+      </ul>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>
 <ion-content *ngIf="!isLoggedIn">
   <ion-card>
     <ion-card-header>
@@ -33,3 +54,5 @@
     </ion-card-content>
   </ion-card>
 </ion-content>
+
+

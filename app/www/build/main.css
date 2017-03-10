@@ -22335,3 +22335,10 @@ page-notifications .bold {
 .riddle-solved ion-icon {
   font-size: 50vmin;
 }
+
+.searching-gps {
+  background: #fafafa;
+  padding: 10px;
+  margin-bottom: 20px;
+  text-align: center;
+}

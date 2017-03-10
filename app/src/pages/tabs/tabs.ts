@@ -9,6 +9,7 @@ import {MrxPage} from "../mrx/mrx";
 
 import { NotificationService } from '../../services/notification.service';
 import {Platform} from "ionic-angular";
+import {LocationService} from "../../services/location.service";
 
 @Component({
   templateUrl: 'tabs.html'
@@ -32,7 +33,8 @@ export class TabsPage {
 
   constructor(
       private notificationService:NotificationService,
-      public platform: Platform
+      public platform: Platform,
+      public locationService: LocationService
   ) {
 
     this.platform.ready().then((readySource) => {
