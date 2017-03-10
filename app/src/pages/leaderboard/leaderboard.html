@@ -33,4 +33,11 @@
     <ion-icon name="person"></ion-icon> Angemeldet als {{myname}} <a (click)="openProfileImageModal()">Teambild ändern</a>
   </div>
 
+  <div padding>
+    <ion-note>
+      Location: {{userLocation.lat}} / {{userLocation.lng}}<br>
+      Accuracy: {{userLocation.accuracy}} Updated: {{userLocation.timestamp | date:'HH:mm:ss'}}
+    </ion-note>
+  </div>
+
 </ion-content>

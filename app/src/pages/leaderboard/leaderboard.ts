@@ -5,6 +5,8 @@ import { Component } from '@angular/core';
 import {NavigationService} from "../../services/navigation.service";
 import {ProfileImagePage} from "../profile-image/profile-image";
 import {ModalController} from "ionic-angular";
+import {LocationService} from "../../services/location.service";
+import {UserLatLngLocation} from "../../interfaces/LatLngLocation";
 
 
 @Component({
@@ -16,10 +18,13 @@ export class LeaderboardPage {
   myteam: number = 0;
   myname: string = '';
 
+  userLocation: UserLatLngLocation;
+
   constructor(
       private teamService:TeamService,
       public navService: NavigationService,
-      public modalCtrl: ModalController
+      public modalCtrl: ModalController,
+      private locationService: LocationService
   ) {
     this.myteam = parseInt(localStorage.getItem('team'));
     this.myname = decodeURIComponent(localStorage.getItem('player')).replace( /\+/g, ' ');
@@ -27,6 +32,10 @@ export class LeaderboardPage {
     this.updateLeaderboard();
     teamService.teams.subscribe((teams: Array<Team>) => {
         this.teams = this.sort(teams);
+    });
+
+    this.locationService.userLocation.subscribe((pos: UserLatLngLocation) => {
+        this.userLocation = pos;
     });
   }
 

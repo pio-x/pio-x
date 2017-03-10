@@ -1,5 +1,5 @@
 import {Injectable}    from '@angular/core';
-import {LatLngLocation} from "../interfaces/LatLngLocation";
+import {UserLatLngLocation} from "../interfaces/LatLngLocation";
 
 import {BehaviorSubject, Observable} from "rxjs";
 import {Platform} from "ionic-angular";
@@ -11,7 +11,7 @@ declare var cordova;
 @Injectable()
 export class LocationService {
 
-    private _userLocation: BehaviorSubject<LatLngLocation> = new BehaviorSubject(null);
+    private _userLocation: BehaviorSubject<UserLatLngLocation> = new BehaviorSubject(null);
 
     private locationWatch: any;
     private locationWatchOptions: {
@@ -55,6 +55,7 @@ export class LocationService {
                     console.log('[INFO] App paused');
                     if (this.locationWatch) {
                         cordova.plugins.locationServices.geolocation.clearWatch(this.locationWatch);
+                        this.locationWatch = null;
                     }
                 });
 
@@ -91,15 +92,17 @@ export class LocationService {
         //console.log('location updated', position);
         this._userLocation.next({
             lat: position.coords.latitude,
-            lng: position.coords.longitude
+            lng: position.coords.longitude,
+            accuracy: (position.coords.accuracy ? position.coords.accuracy : -1),
+            timestamp: (position.timestamp ? new Date(position.timestamp) : new Date()),
         });
     }
 
-    getLocation(): LatLngLocation {
+    getLocation(): UserLatLngLocation {
         return this._userLocation.getValue();
     }
 
-    get userLocation(): Observable<LatLngLocation> {
+    get userLocation(): Observable<UserLatLngLocation> {
         return this._userLocation.asObservable();
     }
 
