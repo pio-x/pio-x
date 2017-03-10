@@ -22,26 +22,51 @@ export class LocationService {
 
     constructor(public platform: Platform) {
         if (this.platform.is('cordova') && this.platform.is('android')) {
-            // Use position from a plugin on Android
-            // W3C positioning API does not return GPS data, only inaccurate Wifi/Cell Locations :/
-            this.locationWatch = cordova.plugins.locationServices.geolocation.watchPosition(
-                (position) => {
-                    if (position.coords !== undefined) {
-                        this.userLocationUpdated(position);
+
+            platform.ready().then(() => {
+                // Use position from a plugin on Android
+                // See: https://github.com/louisbl/cordova-plugin-locationservices
+                // W3C positioning API does not return GPS data, only inaccurate Wifi/Cell Locations :/
+                let startWatch = (): void => {
+                    this.locationWatch = cordova.plugins.locationServices.geolocation.watchPosition(
+                        (position) => {
+                            if (position.coords !== undefined) {
+                                this.userLocationUpdated(position);
+                            }
+                        },
+                        (error) => {
+                            console.log(error);
+                        },
+                        {
+                          maximumAge: 3000,
+                          timeout: 5000,
+                          enableHighAccuracy: true,
+                          priority: 100, //cordova.plugins.locationServices.geolocation.priorities.PRIORITY_HIGH_ACCURACY,
+                          interval: 6000,
+                          fastInterval: 1000
+                        }
+                    );
+                };
+
+                startWatch();
+
+                // disable gps if app is in background
+                this.platform.pause.subscribe(() => {
+                    console.log('[INFO] App paused');
+                    if (this.locationWatch) {
+                        cordova.plugins.locationServices.geolocation.clearWatch(this.locationWatch);
                     }
-                },
-                (error) => {
-                    console.log(error);
-                },
-                {
-                  maximumAge: 3000,
-                  timeout: 5000,
-                  enableHighAccuracy: true,
-                  priority: 100, //cordova.plugins.locationServices.geolocation.priorities.PRIORITY_HIGH_ACCURACY,
-                  interval: 6000,
-                  fastInterval: 1000
-                }
-            );
+                });
+
+                // resume gps watcher
+                this.platform.resume.subscribe(() => {
+                    console.log('[INFO] App resumed');
+                    if (!this.locationWatch) {
+                        startWatch();
+                    }
+                });
+            });
+
         } else {
             // Try HTML5 geolocation
             if (navigator.geolocation) {
