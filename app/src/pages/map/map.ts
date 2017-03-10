@@ -111,8 +111,10 @@ export class MapPage {
         riddleModal.present();
     }
 
+    // fired when the map tab comes into view
     ionViewDidEnter() {
         this.updateMap();
+        this.zoomToMyLocation();
     }
 
     updateMap() {
@@ -136,8 +138,13 @@ export class MapPage {
 
     zoomToMyLocation() {
         if (this.userLocation && this.userLocation.lat) {
-            this.default_lat = this.userLocation.lat;
-            this.default_lng = this.userLocation.lng;
+            // hackedyhack
+            // call internal map functions (reactivity is gone, but who cares...)
+            this.map['_mapsWrapper'].setCenter({
+                lat: this.userLocation.lat,
+                lng: this.userLocation.lng
+            });
+            this.map['_mapsWrapper'].setZoom(17);
         }
     }
 
