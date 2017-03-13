@@ -3,6 +3,8 @@ backendApp.controller('mapCtrl', function($scope, NgMap, apiService, riddleServi
         $scope.map = map;
     });
 
+    $scope.Math = window.Math;
+
     //Initiierung der Variablen und Vorselektion der Anzeige
     $scope.showStations = true;
     $scope.showRiddles = true;
@@ -39,8 +41,8 @@ backendApp.controller('mapCtrl', function($scope, NgMap, apiService, riddleServi
     $scope.changedStation = {};
     $scope.editStation = function(id) {
         $scope.showEditStation = true;
-        apiService.get('/station/' + id).then(function(articlesResponse) {
-            $scope.changedStation = articlesResponse.data;
+        apiService.get('/station/' + id).then(function(response) {
+            $scope.changedStation = response.data;
         });
     };
     $scope.saveStation = function() {
@@ -135,8 +137,9 @@ backendApp.controller('mapCtrl', function($scope, NgMap, apiService, riddleServi
 
     //Ruft die Positionen aller Spieler aus einem Team ab
     $scope.getTeamLocations = function(id) {
-        apiService.get('/team/' + id + '/location').then(function(articlesResponse) {
-            $scope.players = articlesResponse.data;
+        apiService.get('/team/' + id + '/location').then(function(response) {
+            $scope.players = response.data.players;
+            $scope.captures = response.data.captures;
             //console.log('/team/' + id + '/location');
             //console.log($scope.players);
         });

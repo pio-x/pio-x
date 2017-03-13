@@ -217,7 +217,18 @@ $app->get('/team', function (Request $request, Response $response) use (&$DB) {
 			(SELECT t_ID, COUNT(r_ID) as riddle_count from r_team_riddle WHERE state = 'SOLVED' GROUP BY t_ID) as trdl
 			ON trdl.t_ID = t.t_ID
 		");
-	if ($request->getAttribute('is_admin') == false) {
+	if ($request->getAttribute('is_admin')) {
+		foreach ($teams as $index => $team) {
+			$captures = $DB->fetchAll("
+				SELECT rts.s_ID, s.pos_lat as lat, s.pos_long as lng, UNIX_TIMESTAMP(timestamp)*1000 as timestamp
+				FROM r_team_station rts
+				LEFT JOIN station s ON s.s_ID = rts.s_ID
+				WHERE rts.t_ID = ?
+				ORDER BY rts.timestamp DESC
+			", array($team['t_ID']));
+			$teams[$index]['captures'] = $captures;
+		}
+	} else {
 		// do not send hashes to teams/mrx
 		$teams = APIHelper::removeAttribute($teams, 'hash');
 	}
@@ -303,25 +314,38 @@ $app->get('/team/{id}/location', function (Request $request, Response $response,
 	$teamId = $args['id'];
 	$players = $DB->fetchAll("SELECT DISTINCT player FROM teamposition WHERE t_ID = ?", array($teamId));
 
-	$data = [];
+	$player_data = [];
 	if (is_array($players) && count($players)) {
 		foreach ($players as $playerdata) {
 			$player = $playerdata['player'];
-			$data[$player] = [];
+			$player_data[$player] = [];
 			$locations = $DB->fetchAll("SELECT team_lat as lat, team_long as lng, UNIX_TIMESTAMP(timestamp)*1000 as timestamp FROM teamposition WHERE t_ID = ? AND player = ? ORDER BY timestamp DESC", array($teamId, $player));
 			foreach ($locations as $location) {
-				if (count($data[$player]) > 0) {
+				if (count($player_data[$player]) > 0) {
 					// remove duplicates: only add position if last added position is different
-					$lastElement = array_values(array_slice($data[$player], -1))[0];
+					$lastElement = array_values(array_slice($player_data[$player], -1))[0];
 					if ($lastElement['lat'] != $location['lat'] || $lastElement['lng'] != $location['lng']) {
-						$data[$player][] = $location;
+						$player_data[$player][] = $location;
 					}
 				} else {
-					$data[$player][] = $location;
+					$player_data[$player][] = $location;
 				}
 			}
 		}
 	}
+
+	$captures = $DB->fetchAll("
+		SELECT rts.s_ID, rts.img_ID, s.pos_lat as lat, s.pos_long as lng, UNIX_TIMESTAMP(timestamp)*1000 as timestamp
+		FROM r_team_station rts
+		LEFT JOIN station s ON s.s_ID = rts.s_ID
+		WHERE rts.t_ID = ?
+		ORDER BY rts.timestamp DESC
+	", array($teamId));
+
+	$data = [
+		'captures' => $captures,
+		'players' => $player_data
+	];
 
 	return $response->withJson($data, 200, JSON_NUMERIC_CHECK);
 });

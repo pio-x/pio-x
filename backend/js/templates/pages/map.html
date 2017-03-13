@@ -87,12 +87,25 @@
 					]"
 					geodesic="true"
 					stroke-color="{{ playerColors[locationIndex] }}"
-					stroke-opacity="1.0"
+					stroke-opacity="0.8"
 					stroke-weight="2"
 					ng-repeat="location in locations track by $index"
 					ng-if="showTeamLocation && locations[$index + 1]">
 				</shape>
 			</span>
+			<!-- TEAM CAPTURES PATH -->
+			<shape name="polyline"
+				ng-repeat="location in captures track by $index"
+				path="[
+					[{{ location.lat }}, {{ location.lng }}],
+					[{{ captures[$index + 1].lat }}, {{ captures[$index + 1].lng }}]
+				]"
+				geodesic="true"
+				stroke-color="red"
+				stroke-opacity="{{Math.max((20-$index)/20,0.3)}}"
+				stroke-weight="4"
+				ng-if="showTeamLocation && captures[$index + 1]">
+			</shape>
 			<marker position="{{newObjectPosition}}" title="Neues Objekt" on-dragend="showCreateNew($event)" animation="DROP" draggable="true" ng-if="newObjectPosition.length">
 			</marker>
 		</ng-map>
