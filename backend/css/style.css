@@ -98,6 +98,19 @@ footer {
 	height: 19px;
 }
 
+/* DASHBOARD */
+
+.dashboard {
+	margin-bottom: 0;
+}
+
+.dashboard-scroll {
+	height: calc(100vh - 64px);
+	overflow-y: auto;
+}
+
+/* Responsive */
+
 @media only screen and (max-width: 767px) {
 	.content {
 		padding: 0 10px 10px 10px;

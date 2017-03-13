@@ -12,7 +12,7 @@
         </div>
         <div class="row">
             <!-- Rangliste -->
-            <div class="col-xs-12 col-sm-4">
+            <div class="col-xs-12 col-sm-4 dashboard-scroll">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">Rangliste</h3>
@@ -38,7 +38,7 @@
             </div>
 
             <!-- Infos -->
-            <div class="col-xs-12 col-sm-4">
+            <div class="col-xs-12 col-sm-5 dashboard-scroll">
 
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -46,7 +46,7 @@
                     </div>
                     <div style="height: 300px">
                         <div map-lazy-load="https://maps.google.com/maps/api/js?key=AIzaSyAjEW54VdlWZT07n90oTjvaLIl3q27ZL4Y">
-                            <ng-map center="47.498934,8.728970" zoom="13" style="height: 300px" disable-default-u-i="true">
+                            <ng-map center="47.498934,8.728970" zoom="13" style="height: 300px">
                                 <!-- MRX -->
                                 <span ng-repeat="mrx in mrxs track by $index">
                                     <marker position="[{{ mrx.locations[0].xpos_lat }}, {{ mrx.locations[0].xpos_long }}]"
@@ -119,8 +119,8 @@
             </div>
 
             <!-- Stream -->
-            <div class="col-xs-12 col-sm-4">
-                <div class="thumbnail" ng-repeat="log in logs | orderBy:'-timestamp' | limitTo:20">
+            <div class="col-xs-12 col-sm-3 dashboard-scroll">
+                <div class="thumbnail" ng-repeat="log in logs | orderBy:'-timestamp' | limitTo:50">
                     <a href="{{apiService.imageUrl(log.image)}}" target="_blank"><img ng-src="{{apiService.imageUrl(log.image)}}" height="50" ng-if="log.image" /></a>
                     <div class="caption">
                         <b><time am-time-ago="log.timestamp"></time></b> <span class="text-muted">{{ log.timestamp | date:'HH:mm:ss' }}</span>
