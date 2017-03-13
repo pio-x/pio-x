@@ -1,0 +1,60 @@
+<div ng-controller="dashboardCtrl">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12">
+                <h3>
+                    Pio-x Dashboard
+                    <button ng-click="refresh()" class="btn btn-default">Aktualisieren</button>
+                </h3>
+            </div>
+        </div>
+        <div class="row">
+            <!-- Rangliste -->
+            <div class="col-xs-12 col-sm-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Rangliste</h3>
+                    </div>
+                    <div>
+                        <br>
+                        <table id="teamliste" class="table table-striped">
+                            <tr ng-repeat="team in teams | orderBy:'-score'">
+                                <td width="16">{{ $index + 1}}</td>
+                                <td width="30"><img ng-src="{{apiService.imageUrl(team.img_ID)}}" ng-if="team.img_ID" class="profile-image"></td>
+                                <td>{{ team.name }}</td>
+                                <td><span class="label label-primary">{{ team.score }}</span></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Infos -->
+            <div class="col-xs-12 col-sm-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Infos</h3>
+                    </div>
+                    <div class="panel-body">
+                        teams: anz. stationen, anz. rätsel, geschwindigkeit<br>
+                        mrx: letzte aktualisierung, anzahl teams gefunden<br>
+                        statistiken<br>
+                        server load<br>
+                        game_running status
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stream -->
+            <div class="col-xs-12 col-sm-4">
+                <div class="thumbnail" ng-repeat="log in logs | orderBy:'-timestamp' | limitTo:20">
+                    <a href="{{apiService.imageUrl(log.image)}}" target="_blank"><img ng-src="{{apiService.imageUrl(log.image)}}" height="50" ng-if="log.image" /></a>
+                    <div class="caption">
+                        <b><time am-time-ago="log.timestamp"></time></b> {{ log.timestamp | date:'HH:mm:ss' }}
+                        <div>{{ log.text }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

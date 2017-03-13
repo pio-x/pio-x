@@ -30,8 +30,9 @@
 						</a>
 					</div>
 					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-						<ul class="nav navbar-nav navbar-right">
-							<li><a ng-click="logout()" ng-if="loggedIn" href="#">Logout</a></li>
+						<ul class="nav navbar-nav navbar-right" ng-if="loggedIn">
+							<li><a href="dashboard.html" target="_blank">Dashboard</a></li>
+							<li><a ng-click="logout()" href="#">Logout</a></li>
 						</ul>
 					</div>
 				</div>
@@ -44,6 +45,7 @@
 				<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i> Backend Hash:</span>
 				<input class="form-control" type="text" ng-model="hash" ng-keyup="$event.keyCode == 13 && login(hash)"/>
 			</div>
+			<br>
 			<button ng-click="login(hash)" class="btn btn-default">Login</button>
 		</div>
 
