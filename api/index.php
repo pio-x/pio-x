@@ -217,8 +217,34 @@ $app->get('/team', function (Request $request, Response $response) use (&$DB) {
 			(SELECT t_ID, COUNT(r_ID) as riddle_count from r_team_riddle WHERE state = 'SOLVED' GROUP BY t_ID) as trdl
 			ON trdl.t_ID = t.t_ID
 		");
+
+	// admin has some more data
 	if ($request->getAttribute('is_admin')) {
+
+		// get station count
+		$station_count = [];
+		$team_stations = $DB->fetchAll("
+			SELECT ts2.t_id as team, count(*) as stations
+			FROM (
+				SELECT s_ID, MAX(timestamp) as timestamp FROM r_team_station GROUP BY s_ID
+			) as ts1
+			INNER JOIN r_team_station as ts2
+				ON ts1.s_ID = ts2.s_ID AND ts1.timestamp = ts2.timestamp
+				GROUP BY team");
+		foreach ($team_stations as $row) {
+			$station_count[$row['team']] = $row['stations'];
+		}
+
 		foreach ($teams as $index => $team) {
+
+			// add station count
+			if (isset($station_count[$team['t_ID']])) {
+				$teams[$index]['station_count'] = $station_count[$team['t_ID']];
+			} else {
+				$teams[$index]['station_count'] = 0;
+			}
+
+			// add captures
 			$captures = $DB->fetchAll("
 				SELECT rts.s_ID, s.pos_lat as lat, s.pos_long as lng, UNIX_TIMESTAMP(timestamp)*1000 as timestamp
 				FROM r_team_station rts

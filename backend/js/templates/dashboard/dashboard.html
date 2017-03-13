@@ -24,9 +24,10 @@
                                 <td width="16">{{ $index + 1}}</td>
                                 <td width="30"><img ng-src="{{apiService.imageUrl(team.img_ID)}}" ng-if="team.img_ID" class="profile-image profile-image--small"></td>
                                 <td><span class="color-blob" style="background: {{teamService.distinctColor(team.t_ID)}}"></span>{{ team.name }}</td>
-                                <td><span class="label label-primary">{{ team.score }}</span></td>
-                                <td><span class="label label-default">{{ team.riddle_count }}</span></td>
-                                <td>
+                                <td title="Punkte"><span class="label label-primary">{{ team.score }}</span></td>
+                                <td title="Rätsel gelöst"><span class="label label-default">{{ team.riddle_count }}</span></td>
+                                <td title="Stationen"><span class="label label-warning">{{ team.station_count }}</span></td>
+                                <td title="Mr.X gefangen">
                                     <span ng-repeat="n in [].constructor(team.mrx_count) track by $index">
                                         <img src="img/mrx.png" height="18"/>
                                     </span>
