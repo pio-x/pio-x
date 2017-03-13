@@ -201,21 +201,25 @@ $app->delete('/station/{id}',function (Request $request, Response $response, $ar
 // TEAM
 $app->get('/team', function (Request $request, Response $response) use (&$DB) {
 	$teams = $DB->fetchAll("
-		SELECT t.*, trp.score
-			FROM team t
+		SELECT 
+			t.*, 
+			IF (trp.score IS NOT NULL, trp.score, 0) AS score,
+			IF (tmrx.mrx_count IS NOT NULL, tmrx.mrx_count, 0) AS mrx_count,
+			IF (trdl.riddle_count IS NOT NULL, trdl.riddle_count, 0) AS riddle_count
+		FROM team t
 		LEFT JOIN
 			(SELECT t_ID, SUM(points) as score from r_team_points GROUP BY t_ID) as trp
 			ON trp.t_ID = t.t_ID
+		LEFT JOIN
+			(SELECT t_ID, COUNT(x_ID) as mrx_count from r_team_mrx GROUP BY t_ID) as tmrx
+			ON tmrx.t_ID = t.t_ID
+		LEFT JOIN
+			(SELECT t_ID, COUNT(r_ID) as riddle_count from r_team_riddle WHERE state = 'SOLVED' GROUP BY t_ID) as trdl
+			ON trdl.t_ID = t.t_ID
 		");
 	if ($request->getAttribute('is_admin') == false) {
 		// do not send hashes to teams/mrx
 		$teams = APIHelper::removeAttribute($teams, 'hash');
-	}
-
-	foreach ($teams as $key => $team) {
-		if (!$team['score']) {
-			$teams[$key]['score'] = 0;
-		}
 	}
 
 	return $response->withJson($teams, 200, JSON_NUMERIC_CHECK);
@@ -329,11 +333,20 @@ $app->get('/mrx', function (Request $request, Response $response) use (&$DB, $co
 		return $response->withJson([]);
 	}
 
-	$mrxs = $DB->fetchAll("SELECT * FROM mrx");
+	$mrxs = $DB->fetchAll("
+		SELECT 
+			mrx.*, 
+			IF (tmrx.team_count IS NOT NULL, tmrx.team_count, 0) AS catch_count
+		FROM mrx
+		LEFT JOIN
+			(SELECT x_ID, COUNT(x_ID) as team_count from r_team_mrx GROUP BY x_ID) as tmrx
+			ON tmrx.x_ID = mrx.x_ID
+	");
 
 	// do not send hashes to teams/mrx
 	if (!$request->getAttribute('is_admin')) {
 		$mrxs = APIHelper::removeAttribute($mrxs, 'x_hash');
+		$mrxs = APIHelper::removeAttribute($mrxs, 'catch_count');
 	}
 
 	$data = [];

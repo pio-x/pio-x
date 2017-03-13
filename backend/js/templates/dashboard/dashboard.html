@@ -3,7 +3,9 @@
         <div class="row">
             <div class="col-xs-12">
                 <h3>
-                    Pio-x Dashboard
+                    Pio-X Dashboard
+                    <span class="label label-success" ng-if="config.game_is_running > 0">Spiel läuft</span>
+                    <span class="label label-danger" ng-if="config.game_is_running == 0">Spiel läuft nicht</span>
                     <button ng-click="refresh()" class="btn btn-default">Aktualisieren</button>
                 </h3>
             </div>
@@ -23,6 +25,12 @@
                                 <td width="30"><img ng-src="{{apiService.imageUrl(team.img_ID)}}" ng-if="team.img_ID" class="profile-image"></td>
                                 <td>{{ team.name }}</td>
                                 <td><span class="label label-primary">{{ team.score }}</span></td>
+                                <td><span class="label label-default">{{ team.riddle_count }}</span></td>
+                                <td>
+                                    <span ng-repeat="n in [].constructor(team.mrx_count) track by $index">
+                                        <img src="img/mrx.png" height="18"/>
+                                    </span>
+                                </td>
                             </tr>
                         </table>
                     </div>
@@ -31,16 +39,26 @@
 
             <!-- Infos -->
             <div class="col-xs-12 col-sm-4">
+
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Infos</h3>
+                        <h3 class="panel-title">Mister X</h3>
                     </div>
                     <div class="panel-body">
-                        teams: anz. stationen, anz. rätsel, geschwindigkeit<br>
-                        mrx: letzte aktualisierung, anzahl teams gefunden<br>
-                        statistiken<br>
-                        server load<br>
-                        game_running status
+                        <div ng-repeat="mrx in mrxs" ng-if="mrx.locations.length">
+                            <b>{{mrx.name}} {{mrx.x_ID}}</b> - <i>{{mrx.catch_count}} mal gefangen</i><br>
+                            <span class="text-muted"><time am-time-ago="mrx.locations[0].timestamp"></time>:</span>
+                            {{mrx.locations[0].description}}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Statistiken</h3>
+                    </div>
+                    <div class="panel-body">
+                        {{stations_captured}} von {{stations.length}} Stationen eingenommen
                     </div>
                 </div>
             </div>
@@ -50,7 +68,7 @@
                 <div class="thumbnail" ng-repeat="log in logs | orderBy:'-timestamp' | limitTo:20">
                     <a href="{{apiService.imageUrl(log.image)}}" target="_blank"><img ng-src="{{apiService.imageUrl(log.image)}}" height="50" ng-if="log.image" /></a>
                     <div class="caption">
-                        <b><time am-time-ago="log.timestamp"></time></b> {{ log.timestamp | date:'HH:mm:ss' }}
+                        <b><time am-time-ago="log.timestamp"></time></b> <span class="text-muted">{{ log.timestamp | date:'HH:mm:ss' }}</span>
                         <div>{{ log.text }}</div>
                     </div>
                 </div>

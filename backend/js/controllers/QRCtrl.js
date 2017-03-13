@@ -1,4 +1,4 @@
-backendApp.controller('QRCtrl', function($scope, apiService, teamService){
+backendApp.controller('QRCtrl', function($scope, apiService, teamService, mrxService){
     $scope.apiService = apiService;
     //Initiiert die Basis URL, je nach Standort der Installation
     $scope.baseURL = 'https://api.pio-x.ch';
@@ -9,18 +9,17 @@ backendApp.controller('QRCtrl', function($scope, apiService, teamService){
         }
     }
 
+    //Aktualisiert die Teams
     $scope.groups = [];
     teamService.subscribe(function(teams) {
         $scope.groups = teams;
     });
 
     //Aktualisiert die Mr.X
-    $scope.getMrxs = function() {
-        apiService.get('/mrx').then(function(articlesResponse) {
-            $scope.mrxs = articlesResponse.data;
-        });
-    };
-    $scope.getMrxs();
+    $scope.mrxs = [];
+    mrxService.subscribe(function(mrxs) {
+        $scope.mrxs = mrxs;
+    });
 
     //Initiiert die QRCODE URL Variable
     $scope.qrUrl = {
@@ -37,6 +36,6 @@ backendApp.controller('QRCtrl', function($scope, apiService, teamService){
     //Aktualisiert die ganze Liste
     $scope.refresh = function() {
         teamService.update();
-        $scope.getMrxs();
+        mrxService.update();
     };
 });

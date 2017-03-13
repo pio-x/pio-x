@@ -1,15 +1,15 @@
-backendApp.controller('configCtrl', function($scope, apiService){
-    $scope.getConfig = function() {
-        apiService.get('/config').then(function(articlesResponse) {
-            $scope.config = articlesResponse.data;
-        });
-    };
-    $scope.getConfig();
+backendApp.controller('configCtrl', function($scope, apiService, configService){
+    $scope.configService = configService;
+    $scope.config = [];
+    configService.subscribe(function(config) {
+        $scope.config = config;
+    });
+
     $scope.saveConfig = function(key, value) {
       var data = {value: value, key: key};
         apiService.put('/config', data)
             .then(function(){
-                $scope.getConfig();
+                configService.update();
                 alert('Config erfolgreich gespeichert!');
             });
     };

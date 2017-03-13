@@ -1,19 +1,13 @@
 <div ng-controller="configCtrl">
-    <div class="input-group">
-        <span class="input-group-addon">Suche:</span>
-        <input type="text" ng-model="search" class="form-control input-sm">
-    </div>
-    <br>
     <table class="table table-striped">
         <tr ng-repeat="(key,conf) in config">
-                <td>
-                    <div class="input-group">
-                        <span class="input-group-addon">{{ key }}</span>
-                        <input type="text" class="form-control" ng-model="conf" id="{{key}}"/>
-                    </div>
-                </td>
-                <td><button ng-click="saveConfig(key,conf)" class="btn btn-default">&#128190;</button></td>
-
+            <td>
+                <div class="input-group">
+                    <span class="input-group-addon">{{ key }}</span>
+                    <input type="text" class="form-control" ng-model="conf" id="{{key}}"/>
+                </div>
+            </td>
+            <td><button ng-click="saveConfig(key,conf)" class="btn btn-default">&#128190;</button></td>
         </tr>
     </table>
 </div>

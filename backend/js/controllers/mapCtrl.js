@@ -1,4 +1,4 @@
-backendApp.controller('mapCtrl', function($scope, NgMap, apiService, riddleService, stationService, teamService, $window) {
+backendApp.controller('mapCtrl', function($scope, NgMap, apiService, riddleService, stationService, teamService, mrxService, $window) {
     NgMap.getMap().then(function(map) {
         $scope.map = map;
     });
@@ -152,12 +152,10 @@ backendApp.controller('mapCtrl', function($scope, NgMap, apiService, riddleServi
     });
 
     //Aktualisiert die Mr.X Positionen
-    $scope.getMrxs = function() {
-        apiService.get('/mrx').then(function(articlesResponse) {
-            $scope.mrxs = articlesResponse.data;
-        });
-    };
-    $scope.getMrxs();
+    $scope.mrxs = [];
+    mrxService.subscribe(function(mrxs) {
+        $scope.mrxs = mrxs;
+    });
 
     //Aktualisiert die Rätsel
     $scope.riddles = [];
@@ -168,7 +166,7 @@ backendApp.controller('mapCtrl', function($scope, NgMap, apiService, riddleServi
     //Ruft alle Aktualisierungsfunktionen in diesem Controller auf
     $scope.refreshData = function() {
         $scope.getTeamLocations(1);
-        $scope.getMrxs();
+        mrxService.update();
         teamService.update();
         riddleService.update();
         stationService.update();
