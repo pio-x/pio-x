@@ -212,6 +212,12 @@ $app->get('/team', function (Request $request, Response $response) use (&$DB) {
 		$teams = APIHelper::removeAttribute($teams, 'hash');
 	}
 
+	foreach ($teams as $key => $team) {
+		if (!$team['score']) {
+			$teams[$key]['score'] = 0;
+		}
+	}
+
 	return $response->withJson($teams, 200, JSON_NUMERIC_CHECK);
 });
 
