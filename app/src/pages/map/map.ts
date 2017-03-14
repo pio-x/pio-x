@@ -45,6 +45,8 @@ export class MapPage {
     riddles: Riddle[];
     config: Config;
 
+    isMrx: number = 0;
+
     lastInfowindow: any = null;
 
     fa: any;
@@ -67,6 +69,7 @@ export class MapPage {
         this.updateMap();
 
         this.myTeam = parseInt(localStorage.getItem('team'));
+        this.isMrx = parseInt(localStorage.getItem('mrx'));
 
         this.stationService.stations.subscribe((stations: Array<Station>) => {
             this.stationsUpdated(stations);

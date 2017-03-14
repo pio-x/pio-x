@@ -99,7 +99,7 @@
           Diese Station gehört noch keinem Team.
         </div>
         <br>
-        <div *ngIf="userLocation && station.team != myTeam" >
+        <div *ngIf="!isMrx && userLocation && station.team != myTeam" >
           <div *ngIf="inRange(station.pos_lat, station.pos_long)">
             <button ion-button full (click)="openCaptureModal(station)">Einnehmen</button>
           </div>
