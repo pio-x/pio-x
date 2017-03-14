@@ -33,23 +33,22 @@
       Pio X - Anmelden
     </ion-card-header>
     <ion-card-content>
+
       Wilkommen bei Pio X. Um diese App zu nutzen musst du dich zuerst anmelden.
       <br><br>
       Scanne den QR Code den du erhalten hast, dann wirst du automatisch angemeldet.
       <br><br>
+
+      <div *ngIf="platform.is('android') && platform.is('mobileweb')">
+        <b>Du solltest die Android App herunterladen! Sie ist schneller und genauer.</b>
+      </div>
+      <div *ngIf="platform.is('android') && platform.is('cordova')">
+        <native-login></native-login>
+      </div>
+
       <!--
       DEV Tip: <a href="login.html">login.html</a>
       -->
-
-      <div *ngIf="platform.is('android') && platform.is('mobileweb')">
-        <b>Du solltest die App herunterladen!</b>
-      </div>
-      <div *ngIf="platform.is('android') && platform.is('cordova')">
-        Du verwendest die Pio-X App auf Android
-
-        <native-login></native-login>
-
-      </div>
 
     </ion-card-content>
   </ion-card>
