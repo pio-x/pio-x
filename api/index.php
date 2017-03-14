@@ -9,6 +9,7 @@ require 'conf.php';
 
 require 'helpers/APIHelper.php';
 require 'helpers/ConfigHelper.php';
+require 'helpers/ImageHelper.php';
 require 'helpers/LogHelper.php';
 require 'helpers/Passcodes.php';
 require 'helpers/ScoreHelper.php';
@@ -115,7 +116,7 @@ $app->post('/station/{id}/capture',function (Request $request, Response $respons
 
 	$qsa = $request->getQueryParams();
 	$imageId = 'capture_s' . $stationId . '_t' . $teamId . '_' . round(microtime(true) * 1000);
-	process_and_save_image($imageId, $body, $qsa);
+	ImageHelper::process_and_save_image($imageId, $body, $qsa);
 
 	// TODO: location check
 
@@ -293,7 +294,7 @@ $app->put('/team/{id}/image', function (Request $request, Response $response, $a
 
 	$qsa = $request->getQueryParams();
 	$imageId = 'team_' . $teamId . '_' . round(microtime(true) * 1000);
-	process_and_save_image($imageId, $body, $qsa);
+	ImageHelper::process_and_save_image($imageId, $body, $qsa, true);
 
 	$DB->update('team', array('img_ID' => $imageId), array('t_ID' => $teamId));
 
@@ -660,7 +661,7 @@ $app->post('/riddle/{id}/solve',function (Request $request, Response $response, 
 		} else {
 			$qsa = $request->getQueryParams();
 			$id = 'riddle_r' . $riddle['r_ID'] . '_t' . $teamId . '_' . round(microtime(true) * 1000);
-			process_and_save_image($id, $body, $qsa);
+			ImageHelper::process_and_save_image($id, $body, $qsa);
 			$solved = true;
 			$data['img_ID'] = $id;
 		}
@@ -950,50 +951,3 @@ $app->get('/', function (Request $request, Response $response) {
 });
 
 $app->run();
-
-function process_and_save_image($imageId, $body, $qsa) {
-	if (isset($qsa['tags'])) {
-		$tags = json_decode($qsa['tags'], true);
-	} else {
-		$tags = [];
-	}
-	// process image
-	$file = file_get_contents($body);
-	$image = imagecreatefromstring($file);
-	if (isset($tags['Orientation'])) {
-		$or = $tags['Orientation'];
-		switch ($or) {
-			case 1:
-				break;
-			case 2:
-				imageflip($image, IMG_FLIP_HORIZONTAL);
-				break;
-			case 3:
-				$image = imagerotate($image, 180, 0);
-				break;
-			case 4:
-				imageflip($image, IMG_FLIP_HORIZONTAL);
-				$image = imagerotate($image, 180, 0);
-				break;
-			case 5:
-				imageflip($image, IMG_FLIP_HORIZONTAL);
-				$image = imagerotate($image, 90, 0);
-				break;
-			case 6:
-				$image = imagerotate($image, 90, 0);
-				break;
-			case 7:
-				imageflip($image, IMG_FLIP_HORIZONTAL);
-				$image = imagerotate($image, 270, 0);
-				break;
-			case 8:
-				$image = imagerotate($image, 270, 0);
-				break;
-		}
-	}
-
-	// save image
-	$filename = UPLOADED_IMAGE_FOLDER.$imageId.'.jpg';
-	imagejpeg($image, $filename, 75);
-	chmod($filename, 0766);
-}
