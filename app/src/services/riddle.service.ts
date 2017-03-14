@@ -6,19 +6,45 @@ import { IntervalObservable} from "rxjs/observable/IntervalObservable";
 
 import { Riddle } from '../interfaces/riddle';
 import { PioxApiService } from './pioxApi.service';
+import {Platform} from "ionic-angular";
 
 @Injectable()
 export class RiddleService {
 
   private _riddles: BehaviorSubject<Array<Riddle>> = new BehaviorSubject([]);
 
-  constructor(private pioxApi: PioxApiService) {
-    this.updateRiddles();
+  private intervalSubscription = null;
 
-    // autoupdate every 60sec
-    IntervalObservable.create(60000).subscribe((n) => {
-        this.updateRiddles();
+  constructor(private pioxApi: PioxApiService, public platform: Platform) {
+    this.updateRiddles();
+    this.startSync();
+
+    // disable sync if app is in background
+    this.platform.pause.subscribe(() => {
+      this.stopSync();
     });
+
+    // resume sync
+    this.platform.resume.subscribe(() => {
+      this.startSync();
+    });
+  }
+
+  private startSync(): void {
+     // autoupdate every 60sec
+    if (!this.intervalSubscription) {
+      let timer = IntervalObservable.create(60 * 1000);
+      this.intervalSubscription = timer.subscribe((n) => {
+        this.updateRiddles();
+      });
+    }
+  }
+
+  private stopSync(): void {
+    if (this.intervalSubscription) {
+      this.intervalSubscription.unsubscribe();
+      this.intervalSubscription = null;
+    }
   }
 
   get riddles(): Observable<Array<Riddle>> {

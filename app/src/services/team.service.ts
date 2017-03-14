@@ -13,13 +13,38 @@ export class TeamService {
 
   private _teams: BehaviorSubject<Array<Team>> = new BehaviorSubject([]);
 
+  private intervalSubscription = null;
+
   constructor(private pioxApi: PioxApiService, public platform: Platform) {
     this.updateTeams();
+    this.startSync();
 
-    // autoupdate every 60sec
-    IntervalObservable.create(60000).subscribe((n) => {
-        this.updateTeams();
+    // disable sync if app is in background
+    this.platform.pause.subscribe(() => {
+      this.stopSync();
     });
+
+    // resume sync
+    this.platform.resume.subscribe(() => {
+      this.startSync();
+    });
+  }
+
+  private startSync(): void {
+     // autoupdate every 60sec
+    if (!this.intervalSubscription) {
+      let timer = IntervalObservable.create(60 * 1000);
+      this.intervalSubscription = timer.subscribe((n) => {
+        this.updateTeams();
+      });
+    }
+  }
+
+  private stopSync(): void {
+    if (this.intervalSubscription) {
+      this.intervalSubscription.unsubscribe();
+      this.intervalSubscription = null;
+    }
   }
 
   get teams(): Observable<Array<Team>> {

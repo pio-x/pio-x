@@ -6,6 +6,7 @@ import { IntervalObservable} from "rxjs/observable/IntervalObservable";
 
 import { Notification } from '../interfaces/notification';
 import { PioxApiService } from './pioxApi.service';
+import {Platform} from "ionic-angular";
 
 @Injectable()
 export class NotificationService {
@@ -14,19 +15,44 @@ export class NotificationService {
   private _notificationsReadUntil: Date;
   private _unread: BehaviorSubject<number> = new BehaviorSubject(0);
 
-  constructor(private pioxApi: PioxApiService) {
-    this.updateNotifications();
+  private intervalSubscription = null;
 
-    // autoupdate every 60sec
-    IntervalObservable.create(60000).subscribe((n) => {
-        this.updateNotifications();
-    });
+  constructor(private pioxApi: PioxApiService, public platform: Platform) {
+    this.updateNotifications();
+    this.startSync();
 
     //subscribe to count unread notifications
     this._notificationsReadUntil = new Date(0);
     this.notifications.subscribe((notifications: Array<Notification>) => {
         this.countUnread();
     });
+
+    // disable sync if app is in background
+    this.platform.pause.subscribe(() => {
+      this.stopSync();
+    });
+
+    // resume sync
+    this.platform.resume.subscribe(() => {
+      this.startSync();
+    });
+  }
+
+  private startSync(): void {
+     // autoupdate every 60sec
+    if (!this.intervalSubscription) {
+      let timer = IntervalObservable.create(60 * 1000);
+      this.intervalSubscription = timer.subscribe((n) => {
+        this.updateNotifications();
+      });
+    }
+  }
+
+  private stopSync(): void {
+    if (this.intervalSubscription) {
+      this.intervalSubscription.unsubscribe();
+      this.intervalSubscription = null;
+    }
   }
 
   get notifications(): Observable<Array<Notification>> {

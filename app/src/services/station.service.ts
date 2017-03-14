@@ -5,19 +5,45 @@ import { IntervalObservable} from "rxjs/observable/IntervalObservable";
 
 import { Station } from '../interfaces/station';
 import { PioxApiService } from './pioxApi.service';
+import {Platform} from "ionic-angular";
 
 @Injectable()
 export class StationService {
 
   private _stations: BehaviorSubject<Array<Station>> = new BehaviorSubject([]);
 
-  constructor(private pioxApi: PioxApiService) {
-    this.updateStations();
+  private intervalSubscription = null;
 
-    // autoupdate every 15sec
-    IntervalObservable.create(15000).subscribe((n) => {
-        this.updateStations();
+  constructor(private pioxApi: PioxApiService, public platform: Platform) {
+    this.updateStations();
+    this.startSync();
+
+    // disable sync if app is in background
+    this.platform.pause.subscribe(() => {
+      this.stopSync();
     });
+
+    // resume sync
+    this.platform.resume.subscribe(() => {
+      this.startSync();
+    });
+  }
+
+  private startSync(): void {
+     // autoupdate every 15sec
+    if (!this.intervalSubscription) {
+      let timer = IntervalObservable.create(15 * 1000);
+      this.intervalSubscription = timer.subscribe((n) => {
+        this.updateStations();
+      });
+    }
+  }
+
+  private stopSync(): void {
+    if (this.intervalSubscription) {
+      this.intervalSubscription.unsubscribe();
+      this.intervalSubscription = null;
+    }
   }
 
   get stations(): Observable<Array<Station>> {

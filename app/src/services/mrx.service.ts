@@ -7,19 +7,45 @@ import { IntervalObservable} from "rxjs/observable/IntervalObservable";
 import { Mrx } from '../interfaces/mrx';
 import { PioxApiService } from './pioxApi.service';
 import {LatLngLocation} from "../interfaces/LatLngLocation";
+import {Platform} from "ionic-angular";
 
 @Injectable()
 export class MrxService {
 
   private _mrxs: BehaviorSubject<Array<Mrx>> = new BehaviorSubject([]);
 
-  constructor(private pioxApi: PioxApiService) {
-    this.updateMrxs();
+  private intervalSubscription = null;
 
-    // autoupdate every 60sec
-    IntervalObservable.create(15000).subscribe((n) => {
-        this.updateMrxs();
+  constructor(private pioxApi: PioxApiService, public platform: Platform) {
+    this.updateMrxs();
+    this.startSync();
+
+    // disable sync if app is in background
+    this.platform.pause.subscribe(() => {
+      this.stopSync();
     });
+
+    // resume sync
+    this.platform.resume.subscribe(() => {
+      this.startSync();
+    });
+  }
+
+  private startSync(): void {
+     // autoupdate every 15sec
+    if (!this.intervalSubscription) {
+      let timer = IntervalObservable.create(15 * 1000);
+      this.intervalSubscription = timer.subscribe((n) => {
+        this.updateMrxs();
+      });
+    }
+  }
+
+  private stopSync(): void {
+    if (this.intervalSubscription) {
+      this.intervalSubscription.unsubscribe();
+      this.intervalSubscription = null;
+    }
   }
 
   get mrxs(): Observable<Array<Mrx>> {

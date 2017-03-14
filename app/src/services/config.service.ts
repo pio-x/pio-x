@@ -6,19 +6,45 @@ import { IntervalObservable} from "rxjs/observable/IntervalObservable";
 
 import { Config } from '../interfaces/config';
 import { PioxApiService } from './pioxApi.service';
+import {Platform} from "ionic-angular";
 
 @Injectable()
 export class ConfigService {
 
   private _config: BehaviorSubject<Config> = new BehaviorSubject([]);
 
-  constructor(private pioxApi: PioxApiService) {
-    this.updateConfig();
+  private intervalSubscription = null;
 
-    // autoupdate every 10min
-    IntervalObservable.create(10 * 60 * 1000).subscribe((n) => {
-        this.updateConfig();
+  constructor(private pioxApi: PioxApiService, public platform: Platform) {
+    this.updateConfig();
+    this.startSync();
+
+    // disable sync if app is in background
+    this.platform.pause.subscribe(() => {
+      this.stopSync();
     });
+
+    // resume sync
+    this.platform.resume.subscribe(() => {
+      this.startSync();
+    });
+  }
+
+  private startSync(): void {
+    // autoupdate every 10min
+    if (!this.intervalSubscription) {
+      let timer = IntervalObservable.create(10 * 60 * 1000);
+      this.intervalSubscription = timer.subscribe((n) => {
+        this.updateConfig();
+      });
+    }
+  }
+
+  private stopSync(): void {
+    if (this.intervalSubscription) {
+      this.intervalSubscription.unsubscribe();
+      this.intervalSubscription = null;
+    }
   }
 
   get config(): Observable<Config> {
