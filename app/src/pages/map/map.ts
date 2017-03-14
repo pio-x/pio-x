@@ -114,7 +114,7 @@ export class MapPage {
     // fired when the map tab comes into view
     ionViewDidEnter() {
         this.updateMap();
-        this.zoomToMyLocation();
+        this.panToMyLocation();
     }
 
     updateMap() {
@@ -140,11 +140,19 @@ export class MapPage {
         if (this.userLocation && this.userLocation.lat) {
             // hackedyhack
             // call internal map functions (reactivity is gone, but who cares...)
+            this.panToMyLocation();
+            this.map['_mapsWrapper'].setZoom(17);
+        }
+    }
+
+    panToMyLocation() {
+        if (this.userLocation && this.userLocation.lat) {
+            // hackedyhack
+            // call internal map functions (reactivity is gone, but who cares...)
             this.map['_mapsWrapper'].setCenter({
                 lat: this.userLocation.lat,
                 lng: this.userLocation.lng
             });
-            this.map['_mapsWrapper'].setZoom(17);
         }
     }
 
