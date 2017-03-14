@@ -12,8 +12,8 @@ class LogHelper {
 		$this->addLog('RIDDLE', $text, $team, $fk, $img_ID);
 	}
 
-	public function mrx($text, $team, $fk = 0, $img_ID = '') {
-		$this->addLog('MRX', $text, $team, $fk, $img_ID);
+	public function mrx($text, $mrx, $fk = 0, $img_ID = '') {
+		$this->addLog('MRX', $text, $mrx, $fk, $img_ID);
 	}
 
 	public function station($text, $team, $fk = 0, $img_ID = '') {

@@ -5,11 +5,17 @@
   </ion-refresher>
 
   <ion-card *ngFor="let log of logs">
-    <ion-item>
+    <ion-item *ngIf="log.type != 'MRX'">
       <ion-avatar item-left *ngIf="teams[log.t_ID].img_ID">
         <img [src]="teamService.imageUrl(teams[log.t_ID].img_ID)">
       </ion-avatar>
       <h2>{{teams[log.t_ID].name}}</h2>
+    </ion-item>
+    <ion-item *ngIf="log.type == 'MRX'">
+      <ion-avatar item-left>
+        <img src="assets/mrx.png">
+      </ion-avatar>
+      <h2>{{mrxs[log.t_ID].name}}</h2>
     </ion-item>
     <img *ngIf="log.img_ID" [src]="teamService.imageUrl(log.img_ID)">
     <ion-card-content>

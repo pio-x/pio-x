@@ -426,7 +426,7 @@ $app->get('/mrx', function (Request $request, Response $response) use (&$DB, $co
 	return $response->withJson($data, 200, JSON_NUMERIC_CHECK);
 });
 
-$app->post('/mrx/{id}/location', function (Request $request, Response $response, $args) use (&$DB, $config) {
+$app->post('/mrx/{id}/location', function (Request $request, Response $response, $args) use (&$DB, &$log, $config) {
 	if ($request->getAttribute('is_mrx') == false) {
 		return $response->withStatus(403)->withJson("Error: not sent by a mrx");
 	}
@@ -438,6 +438,9 @@ $app->post('/mrx/{id}/location', function (Request $request, Response $response,
 				'mrx_ID' => $args['id']);
 
 	$DB->insert('mrx_position', $data);
+
+	$log->mrx($request->getAttribute('mrx_name') . ' sagt: ' . $data['description'], $data['mrx_ID']);
+
 	return $response->withJson($data, 200, JSON_NUMERIC_CHECK);
 });
 
