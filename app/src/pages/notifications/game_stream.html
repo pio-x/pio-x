@@ -27,4 +27,9 @@
       </ion-note>
     </ion-card-content>
   </ion-card>
+  <ion-card *ngIf="!logs.length">
+    <ion-card-content>
+      Beiträge werden geladen ...
+    </ion-card-content>
+  </ion-card>
 </ion-content>
