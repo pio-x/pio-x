@@ -124,4 +124,9 @@ footer {
 	input.form-control {
 		padding: 4px 1px;
 	}
+
+	.dashboard-scroll {
+		height: auto;
+		overflow-y: visible;
+	}
 }
