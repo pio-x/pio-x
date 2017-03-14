@@ -640,7 +640,7 @@ $app->post('/riddle/{id}/solve',function (Request $request, Response $response, 
 		'state' => 'SOLVED',
 		'r_ID' => $riddleId,
 		't_ID'=> $teamId,
-		'img_ID' => 0
+		'img_ID' => ''
 	);
 
 	$solved = false;
@@ -658,6 +658,7 @@ $app->post('/riddle/{id}/solve',function (Request $request, Response $response, 
 			$id = 'riddle_r' . $riddle['r_ID'] . '_t' . $teamId . '_' . round(microtime(true) * 1000);
 			process_and_save_image($id, $body, $qsa);
 			$solved = true;
+			$data['img_ID'] = $id;
 		}
 	}
 
@@ -869,6 +870,14 @@ $app->get('/log', function (Request $request, Response $response) use (&$DB) {
 		switch ($log['type']) {
 			case 'STATION':
 				$result = $DB->fetchAssoc("SELECT img_ID FROM r_team_station WHERE rts_ID = ?", array($log['FK_ID']));
+				if (isset($result['img_ID'])) {
+					$img = $result['img_ID'];
+				}
+				break;
+		}
+		switch ($log['type']) {
+			case 'RIDDLE':
+				$result = $DB->fetchAssoc("SELECT img_ID FROM r_team_riddle WHERE r_ID = ? AND t_ID = ?", array($log['FK_ID'], $log['t_ID']));
 				if (isset($result['img_ID'])) {
 					$img = $result['img_ID'];
 				}
