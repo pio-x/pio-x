@@ -11,7 +11,7 @@
       </ion-avatar>
       <h2>{{teams[log.t_ID].name}}</h2>
     </ion-item>
-    <img *ngIf="log.image" [src]="teamService.imageUrl(log.image)">
+    <img *ngIf="log.img_ID" [src]="teamService.imageUrl(log.img_ID)">
     <ion-card-content>
       <p>
         {{log.text}}

@@ -122,7 +122,7 @@
             <!-- Stream -->
             <div class="col-xs-12 col-sm-3 dashboard-scroll">
                 <div class="thumbnail" ng-repeat="log in logs | orderBy:'-timestamp' | limitTo:50">
-                    <a href="{{apiService.imageUrl(log.image)}}" target="_blank"><img ng-src="{{apiService.imageUrl(log.image)}}" height="50" ng-if="log.image" /></a>
+                    <a href="{{apiService.imageUrl(log.img_ID)}}" target="_blank"><img ng-src="{{apiService.imageUrl(log.img_ID)}}" height="50" ng-if="log.img_ID" /></a>
                     <div class="caption">
                         <b><time am-time-ago="log.timestamp"></time></b> <span class="text-muted">{{ log.timestamp | date:'HH:mm:ss' }}</span>
                         <div>{{ log.text }}</div>

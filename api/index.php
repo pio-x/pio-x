@@ -128,7 +128,7 @@ $app->post('/station/{id}/capture',function (Request $request, Response $respons
 	$DB->insert('r_team_station', $data);
 	$insertId = $DB->lastInsertId();
 
-	$log->station('Team '.$request->getAttribute('team_name').' hat die Station "'.$station['name'].'" eingenommen', $request->getAttribute('team_id'), $insertId);
+	$log->station('Team '.$request->getAttribute('team_name').' hat die Station "'.$station['name'].'" eingenommen', $request->getAttribute('team_id'), $insertId, $data['img_ID']);
 	if (isset($qsa['tags'])) {
 		$tags = json_decode($qsa['tags'], true);
 	} else {
@@ -277,7 +277,7 @@ $app->get('/team/{id}', function (Request $request, Response $response, $args) u
 	}
 });
 
-$app->put('/team/{id}/image', function (Request $request, Response $response, $args) use (&$DB, $config) {
+$app->put('/team/{id}/image', function (Request $request, Response $response, $args) use (&$DB, &$log, $config) {
 	$teamId = intval($args['id']);
 	if (!$request->getAttribute('is_team') && !$request->getAttribute('is_admin')) {
 		return $response->withStatus(403)->withJson("Error: not sent by a team");
@@ -295,8 +295,9 @@ $app->put('/team/{id}/image', function (Request $request, Response $response, $a
 	$imageId = 'team_' . $teamId . '_' . round(microtime(true) * 1000);
 	process_and_save_image($imageId, $body, $qsa);
 
-
 	$DB->update('team', array('img_ID' => $imageId), array('t_ID' => $teamId));
+
+	$log->profile('Team '.$request->getAttribute('team_name').' hat das Teambild geändert.', $teamId, $teamId, $imageId);
 
 	return $response->withJson("success");
 });
@@ -564,7 +565,7 @@ $app->post('/riddle/{id}/unlock',function (Request $request, Response $response,
 		'state' => 'UNLOCKED',
 		'r_ID' => $riddleId,
 		't_ID'=> $teamId,
-		'img_ID' => 0
+		'img_ID' => ''
 	);
 
 	$riddle = $DB->fetchAssoc("SELECT * FROM riddle WHERE r_ID = ?", array($riddleId));
@@ -670,13 +671,13 @@ $app->post('/riddle/{id}/solve',function (Request $request, Response $response, 
 		}
 		// punkte geben
 		$points = $score->riddle($teamId, $riddleId);
-		$log->riddle('Team '.$request->getAttribute('team_name').' hat Rätsel "'.$riddle['title'].'" richtig gelöst', $request->getAttribute('team_id'), $riddleId);
+		$log->riddle('Team '.$request->getAttribute('team_name').' hat Rätsel "'.$riddle['title'].'" richtig gelöst', $request->getAttribute('team_id'), $riddleId, $data['img_ID']);
 		return $response->withJson(["solved" => true, "message" => "Richtige Antwort!", "points" => $points], 200, JSON_NUMERIC_CHECK);
 	} else {
 		// answer is wrong
 		// punkte abziehen
 		$points = $score->riddle($teamId, $riddleId, true);
-		$log->riddle('Team '.$request->getAttribute('team_name').' hat Rätsel "'.$riddle['title'].'" falsch gelöst', $request->getAttribute('team_id'), $riddleId);
+		$log->riddle('Team '.$request->getAttribute('team_name').' hat Rätsel "'.$riddle['title'].'" falsch gelöst', $request->getAttribute('team_id'), $riddleId, $data['img_ID']);
 		return $response->withJson(["solved" => false, "message" => "Deine Antwort ist falsch.", "points" => $points], 200, JSON_NUMERIC_CHECK);
 	}
 });
@@ -862,32 +863,26 @@ $app->delete('/passcode/{id}', function (Request $request, Response $response, $
 
 // LOG
 $app->get('/log', function (Request $request, Response $response) use (&$DB) {
-	$logs = $DB->fetchAll("SELECT l_ID, text, UNIX_TIMESTAMP(timestamp)*1000 as timestamp, type, FK_ID, t_ID FROM log ORDER BY timestamp DESC");
+	$logs = $DB->fetchAll("SELECT l_ID, text, UNIX_TIMESTAMP(timestamp)*1000 as timestamp, type, FK_ID, t_ID, img_ID FROM log ORDER BY timestamp DESC");
 
-	$logs_with_img = [];
-	foreach ($logs as $log) {
-		$img = null;
-		switch ($log['type']) {
-			case 'STATION':
-				$result = $DB->fetchAssoc("SELECT img_ID FROM r_team_station WHERE rts_ID = ?", array($log['FK_ID']));
-				if (isset($result['img_ID'])) {
-					$img = $result['img_ID'];
-				}
-				break;
+	// keep that for compatibility reasons only - can be removed later
+	// img_ID should now be written to the log table
+	foreach ($logs as $index => $log) {
+		if (!$log['img_ID']) {
+			$img = null;
+			switch ($log['type']) {
+				case 'STATION':
+					$result = $DB->fetchAssoc("SELECT img_ID FROM r_team_station WHERE rts_ID = ?", array($log['FK_ID']));
+					if (isset($result['img_ID'])) {
+						$img = $result['img_ID'];
+					}
+					break;
+			}
+			$logs[$index]['img_ID'] = $img;
 		}
-		switch ($log['type']) {
-			case 'RIDDLE':
-				$result = $DB->fetchAssoc("SELECT img_ID FROM r_team_riddle WHERE r_ID = ? AND t_ID = ?", array($log['FK_ID'], $log['t_ID']));
-				if (isset($result['img_ID'])) {
-					$img = $result['img_ID'];
-				}
-				break;
-		}
-		$log['image'] = $img;
-		$logs_with_img[] = $log;
 	}
 
-	return $response->withJson($logs_with_img, 200, JSON_NUMERIC_CHECK);
+	return $response->withJson($logs, 200, JSON_NUMERIC_CHECK);
 });
 
 // STATISTICS
