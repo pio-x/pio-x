@@ -163,12 +163,14 @@
     >
       <sebm-google-map-info-window [disableAutoPan]="true" #infowindow>
         <h3>{{mrx.name}}</h3>
-        <div>
-          {{mrx.locations[0].description}}
+        <div *ngFor="let loc of mrx.locations; let i = index;">
+          <b *ngIf="i == 0">
+            <span class="mrx-timestamp">{{loc.timestamp | date:'HH:mm'}}</span> {{loc.description}}
+          </b>
+          <span *ngIf="i > 0">
+            <span class="mrx-timestamp">{{loc.timestamp | date:'HH:mm'}}</span> {{loc.description}}
+          </span>
         </div>
-        <ion-note>
-          {{mrx.locations[0].timestamp | date:'HH:mm'}}
-        </ion-note>
       </sebm-google-map-info-window>
     </sebm-google-map-marker>
 
