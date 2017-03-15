@@ -208,9 +208,9 @@ export class MapPage {
         if (!teamId) {
             return '#000';
         } else if (teamId == this.myTeam) {
-            return '#bf5900';
+            return '#00BD00';
         } else {
-            return '#4500b5';
+            return this.teamService.distinctColor(teamId);
         }
     }
 

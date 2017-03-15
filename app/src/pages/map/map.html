@@ -75,9 +75,9 @@
             [iconUrl]="{
                 path: 0,
                 fillColor: getStationColor(station.team),
-                fillOpacity: (station.team == myTeam ? 0.5 : 0),
-                strokeColor: getStationColor(station.team),
-                strokeWeight: 3,
+                fillOpacity: (station.team ? 0.5 : 0),
+                strokeColor: (station.team == myTeam ? '#008400' : '#000000'),
+                strokeWeight: (station.team == myTeam ? 3 : 1),
                 scale: 8
             }"
     >
@@ -90,7 +90,7 @@
           <h2>
               {{teams[station.team].name}}
           </h2>
-          <p *ngIf="station.team == myTeam"><i>Diese Station gehört deinem Team.</i></p>
+          <p *ngIf="station.team == myTeam"><i ion-text color="secondary">Gehört deinem Team</i></p>
           <p *ngIf="station.team != myTeam">
             Diese Station gehört {{teams[station.team].name}}<br>
           </p>
@@ -178,6 +178,7 @@
       <span *ngIf="riddle.pos_lat && riddle.state != 'SOLVED'">
 
         <!-- Riddle Radius -->
+        <!--
         <sebm-google-map-circle
                 [latitude]="riddle.pos_lat"
                 [longitude]="riddle.pos_long"
@@ -189,7 +190,7 @@
                 [clickable]="false"
         >
         </sebm-google-map-circle>
-
+        -->
 
         <!-- Riddle Icons -->
         <sebm-google-map-marker
