@@ -16,7 +16,16 @@ export class MyApp {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       StatusBar.styleDefault();
+      StatusBar.backgroundColorByHexString('#c1272d');
       Splashscreen.hide();
+
+      // In Mobile Browsern warnen wenn man Seite verlassen will (Back Button Problem)
+      if (platform.is('mobileweb')) {
+        window.onbeforeunload = function() {
+          return "Pio-x verlassen?";
+        };
+      }
     });
+
   }
 }
