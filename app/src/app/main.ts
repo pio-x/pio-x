@@ -3,8 +3,8 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { AppModule } from './app.module';
 import {enableProdMode} from "@angular/core";
 
-// dev mode only on localhost
-if (window.location.hostname != 'localhost') {
+// dev mode only when served at port 8100 (ionic serve)
+if (window.location.port != '8100') {
     enableProdMode()
 }
 

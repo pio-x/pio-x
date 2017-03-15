@@ -12,7 +12,6 @@ import {Platform} from "ionic-angular";
 export class NotificationService {
 
   private _notifications: BehaviorSubject<Array<Notification>> = new BehaviorSubject([]);
-  private _notificationsReadUntil: Date;
   private _unread: BehaviorSubject<number> = new BehaviorSubject(0);
 
   private intervalSubscription = null;
@@ -22,7 +21,6 @@ export class NotificationService {
     this.startSync();
 
     //subscribe to count unread notifications
-    this._notificationsReadUntil = new Date(0);
     this.notifications.subscribe((notifications: Array<Notification>) => {
         this.countUnread();
     });
@@ -53,6 +51,19 @@ export class NotificationService {
       this.intervalSubscription.unsubscribe();
       this.intervalSubscription = null;
     }
+  }
+
+  get _notificationsReadUntil(): Date {
+    let val = localStorage.getItem('notificationsReadUntil');
+    if (val && Date.parse(val)) {
+      return new Date(val);
+    } else {
+      return new Date(0);
+    }
+  }
+
+  set _notificationsReadUntil(date: Date) {
+    localStorage.setItem('notificationsReadUntil', date.toString());
   }
 
   get notifications(): Observable<Array<Notification>> {
