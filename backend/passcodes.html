@@ -20,7 +20,7 @@
 	<!-- QR CODES -->
 	<div id="qrcodes" ng-controller="QRCtrl">
 				<div ng-repeat="group in groups track by $index">
-					<img style="float:right; width:180px" src="img/logo2.png">
+					<img style="float:right; width:180px" src="img/logo2_small.png">
 						<h1>Gruppe {{group.name}} ({{group.t_ID}})</h1>
 						Scanne diesen QR-Code mit dem Handy, um ins Spiel einzusteigen:<br><br>
 						<div>
@@ -92,6 +92,9 @@
 	<script src="js/controllers/statsCtrl.js"></script>
 	<script src="js/controllers/teamCtrl.js"></script>
 	<script src="js/services/apiService.js"></script>
+	<script src="js/services/configService.js"></script>
+	<script src="js/services/logService.js"></script>
+	<script src="js/services/mrxService.js"></script>
 	<script src="js/services/riddleService.js"></script>
 	<script src="js/services/stationService.js"></script>
 	<script src="js/services/teamService.js"></script>
