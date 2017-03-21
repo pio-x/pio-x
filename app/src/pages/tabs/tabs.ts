@@ -28,6 +28,8 @@ export class TabsPage {
 
   notificationCount: number = 0;
 
+  androidWarningDismissed: boolean = false;
+
   isTeam: number = 0;
   isMrx: number = 0;
 
@@ -52,5 +54,9 @@ export class TabsPage {
     if ((this.isTeam || this.isMrx) && localStorage.getItem('hash')) {
         this.isLoggedIn = true;
     }
+  }
+
+  openAppLink() {
+    window.location.href = 'https://play.google.com/store/apps/details?id=com.ionicframework.app580766';
   }
 }
