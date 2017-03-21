@@ -46,7 +46,7 @@
         <ion-icon name="happy" color="secondary"></ion-icon>
         <div *ngIf="riddles[riddleId].answer_required">
           <h3>Korrekt!</h3>
-          Deine Antwort war richtig!
+          Deine Antwort war richtig! Du erhälst <strong>{{ response.points }} Punkte!</strong>
         </div>
         <div *ngIf="riddles[riddleId].image_required">
           <h3>Rätsel gelöst!</h3>
