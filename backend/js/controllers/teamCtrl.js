@@ -1,4 +1,4 @@
-backendApp.controller('teamCtrl', function($scope, apiService, teamService){
+backendApp.controller('teamCtrl', function($scope, $uibModal, apiService, teamService){
     $scope.apiService = apiService;
     $scope.groups = [];
     teamService.subscribe(function(teams) {
@@ -32,4 +32,19 @@ backendApp.controller('teamCtrl', function($scope, apiService, teamService){
                 $scope.emptyNewTeam();
             });
     };
+    $scope.pointModal = function(team_ID, team_name) {
+      var modalInstance = $uibModal.open({
+      templateUrl: 'js/templates/modals/teamPointModal.html',
+      controller: TeamPointModalCtrl,
+      size: 'lg',
+      resolve: {
+        team_ID: function () {
+          return team_ID;
+        },
+        team_name: function() {
+            return team_name;
+        }
+      }
+    });
+    }
 });
