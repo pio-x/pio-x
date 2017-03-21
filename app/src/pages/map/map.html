@@ -43,27 +43,77 @@
     >
     </sebm-google-map-circle>-->
 
-    <!-- Home Location -->
-    <sebm-google-map-marker
-            *ngIf="!config.game_is_running"
-            (markerClick)="onInfoWindowOpen(infowindow)"
-            [latitude]="config.home_location_lat"
-            [longitude]="config.home_location_long"
-            [iconUrl]="{
-                path: fa.markers.FLAG,
-                scale: 0.5,
-                anchor: {x: 20, y: -30},
-                strokeWeight: 2,
-                strokeColor: 'white',
-                strokeOpacity: 1,
-                fillColor: 'green',
-                fillOpacity: 1
-            }"
-    >
-      <sebm-google-map-info-window [disableAutoPan]="true" #infowindow>
-        <h3>{{config.home_location_title}}</h3>
-      </sebm-google-map-info-window>
-    </sebm-google-map-marker>
+    <div *ngIf="!config.game_is_running">
+      <!-- Home Location -->
+      <sebm-google-map-marker
+              *ngIf="!showTutorial()"
+              (markerClick)="onInfoWindowOpen(infowindow)"
+              [latitude]="config.home_location_lat"
+              [longitude]="config.home_location_long"
+              [iconUrl]="{
+                  path: fa.markers.FLAG,
+                  scale: 0.5,
+                  anchor: {x: 20, y: -30},
+                  strokeWeight: 2,
+                  strokeColor: '#000000',
+                  strokeOpacity: 1,
+                  fillColor: '#008400',
+                  fillOpacity: 1
+              }"
+      >
+        <sebm-google-map-info-window [disableAutoPan]="true" #infowindow>
+          <h3>{{config.home_location_title}}</h3>
+        </sebm-google-map-info-window>
+      </sebm-google-map-marker>
+
+      <!-- Tutorial Station -->
+      <sebm-google-map-marker
+              *ngIf="showTutorial()"
+              (markerClick)="onInfoWindowOpen(infowindow)"
+              [latitude]="tutorialStation.pos_lat"
+              [longitude]="tutorialStation.pos_long"
+              [iconUrl]="{
+                  path: 0,
+                  fillColor: '#008400',
+                  fillOpacity: (tutorialCompleted ? 0.5 : 0),
+                  strokeColor: (tutorialCompleted ? '#008400' : '#000000'),
+                  strokeWeight: (tutorialCompleted ? 3 : 1),
+                  scale: 8
+              }"
+      >
+        <sebm-google-map-info-window [disableAutoPan]="true" #infowindow>
+          <h3>Tutorial Station</h3>
+          <div *ngIf="tutorialStationCaptured">
+            <div>
+              Gratulation! Die Station gehört jetzt deinem Team.
+              <br><br>
+            </div>
+            <button ion-button full color="secondary" (click)="finishTutorial()">Tutorial abschliessen</button>
+          </div>
+          <div *ngIf="!tutorialStationCaptured">
+            <div>
+              Dies ist eine Station. Sie gehört noch keinem Team. Du kannst sie für dein Team einnehmen und ihr erhaltet dafür alle 5min Punkte wenn sie euch gehört.
+              <br><br>
+            </div>
+            <br>
+            <div *ngIf="userLocation">
+              <div *ngIf="inRange(tutorialStation.pos_lat, tutorialStation.pos_long)">
+                <button ion-button full (click)="openCaptureModal(tutorialStation)">Einnehmen</button>
+              </div>
+              <div *ngIf="!inRange(tutorialStation.pos_lat, tutorialStation.pos_long)">
+                <button ion-button full disabled (click)="openCaptureModal(tutorialStation)">zu weit weg</button>
+              </div>
+
+            </div>
+          </div>
+          <div *ngIf="!userLocation">
+            <b>Kein Standort gefunden</b><br>
+            Station kann nicht eingenommen werden.
+          </div>
+        </sebm-google-map-info-window>
+      </sebm-google-map-marker>
+    </div>
+
 
 
     <!-- Station Icons -->

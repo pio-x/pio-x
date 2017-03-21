@@ -91,12 +91,15 @@ $app->get('/station/{id}',function (Request $request, Response $response, $args)
 });
 
 // images must be sent as body in data url format
+// station id = -1 is used for the tutorial (nothing is written to the database)
 $app->post('/station/{id}/capture',function (Request $request, Response $response, $args) use (&$DB, &$log, $config) {
 	if ($request->getAttribute('is_team') == false) {
 		return $response->withStatus(403)->withJson("Error: not sent by a team");
 	}
 
-	if (!$config['game_is_running']) {
+	$stationId = $args['id'];
+
+	if ($stationId > 0 && !$config['game_is_running']) {
 		return $response->withStatus(403)->withJson("Game is not running");
 	}
 
@@ -105,20 +108,11 @@ $app->post('/station/{id}/capture',function (Request $request, Response $respons
 		return $response->withStatus(403)->withJson("Error: no valid image data sent");
 	}
 
-	$stationId = $args['id'];
 	$teamId = $request->getAttribute('team_id');
-
-	$station = $DB->fetchAssoc("SELECT name, enabled FROM station WHERE s_ID = ?", array($stationId));
-
-	if (!$station['enabled']) {
-		return $response->withStatus(403)->withJson("Error: this station is not enabled");
-	}
 
 	$qsa = $request->getQueryParams();
 	$imageId = 'capture_s' . $stationId . '_t' . $teamId . '_' . round(microtime(true) * 1000);
 	ImageHelper::process_and_save_image($imageId, $body, $qsa);
-
-	// TODO: location check
 
 	$data = array(
 		's_ID' => $stationId,
@@ -126,10 +120,19 @@ $app->post('/station/{id}/capture',function (Request $request, Response $respons
 		'img_ID' => $imageId
 	);
 
-	$DB->insert('r_team_station', $data);
-	$insertId = $DB->lastInsertId();
+	if ($stationId > 0) {
+		$station = $DB->fetchAssoc("SELECT name, enabled FROM station WHERE s_ID = ?", array($stationId));
 
-	$log->station('Team '.$request->getAttribute('team_name').' hat die Station "'.$station['name'].'" eingenommen', $request->getAttribute('team_id'), $insertId, $data['img_ID']);
+		if (!$station['enabled']) {
+			return $response->withStatus(403)->withJson("Error: this station is not enabled");
+		}
+
+		$DB->insert('r_team_station', $data);
+		$insertId = $DB->lastInsertId();
+
+		$log->station('Team '.$request->getAttribute('team_name').' hat die Station "'.$station['name'].'" eingenommen', $request->getAttribute('team_id'), $insertId, $data['img_ID']);
+	}
+
 	if (isset($qsa['tags'])) {
 		$tags = json_decode($qsa['tags'], true);
 	} else {

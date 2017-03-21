@@ -53,6 +53,19 @@ export class MapPage {
 
     userLocation: LatLngLocation;
 
+    tutorialCompleted: boolean = false;
+    tutorialStationCaptured: boolean = false;
+    tutorialStation: Station = {
+        s_ID: -1,
+        pos_lat: 0,
+        pos_long: 0,
+        points: 0,
+        name: 'Tutorial Station',
+        description: 'Tutorial',
+        team: 0,
+        captured_timestamp: '0'
+    };
+
     @ViewChild('gmap') map: SebmGoogleMap;
 
     constructor(
@@ -70,6 +83,7 @@ export class MapPage {
 
         this.myTeam = parseInt(localStorage.getItem('team'));
         this.isMrx = parseInt(localStorage.getItem('mrx'));
+        this.tutorialCompleted = (localStorage.getItem('tutorialCompleted') == 'true');
 
         this.stationService.stations.subscribe((stations: Array<Station>) => {
             this.stationsUpdated(stations);
@@ -86,11 +100,15 @@ export class MapPage {
         this.riddleService.riddles.subscribe((riddles: Riddle[]) => {
             this.riddlesUpdated(riddles);
         });
-        this.configService.config.subscribe((config: Riddle[]) => {
+        this.configService.config.subscribe((config: Config) => {
             this.configUpdated(config);
         });
         // bind icons into local scope
         this.fa = fontawesome;
+    }
+
+    showTutorial(): boolean {
+        return !this.tutorialCompleted && this.config.game_is_running == 0 && !this.isMrx;
     }
 
     inRange(pos_lat, pos_long) {
@@ -105,6 +123,11 @@ export class MapPage {
         let modal = this.modalCtrl.create(CaptureModal, { station: station });
         modal.onDidDismiss(data => {
             this.updateMap();
+
+            // tutorial station captured
+            if (station.s_ID == -1) {
+                this.tutorialStationCaptured = true;
+            }
         });
         modal.present();
     }
@@ -192,6 +215,9 @@ export class MapPage {
     configUpdated(config: Config): void {
         if (JSON.stringify(this.config) != JSON.stringify(config)) {
             this.config = config;
+            this.tutorialStation.pos_lat = config.home_location_lat;
+            this.tutorialStation.pos_long = config.home_location_long;
+            this.cd.markForCheck();
         }
     }
 
@@ -215,15 +241,23 @@ export class MapPage {
     }
 
     onInfoWindowOpen(infoWindow) {
-      if (this.lastInfowindow && this.lastInfowindow !== infoWindow){
-         this.lastInfowindow.close();
-      }
-      this.lastInfowindow = infoWindow;
-      this.cd.markForCheck();
+        try {
+            if (this.lastInfowindow && this.lastInfowindow !== infoWindow){
+                this.lastInfowindow.close();
+            }
+            this.lastInfowindow = infoWindow;
+        } catch (err) {}
+        this.cd.markForCheck();
     }
 
     trackByStationId(index,item){
       return item.s_ID;
+    }
+
+    finishTutorial() {
+        this.tutorialCompleted = true;
+        localStorage.setItem('tutorialCompleted', 'true');
+        this.cd.markForCheck();
     }
 
 }
