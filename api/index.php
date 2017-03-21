@@ -892,6 +892,21 @@ $app->get('/log', function (Request $request, Response $response) use (&$DB) {
 	return $response->withJson($logs, 200, JSON_NUMERIC_CHECK);
 });
 
+// POINTS
+$app->post('/points/{id}', function (Request $request, Response $response, $args) use (&$DB) {
+	if ($request->getAttribute('is_admin') == false) {
+		return $response->withStatus(403)->withJson("Error: not sent by admin");
+	}
+
+	$body = json_decode($request->getBody(), true);
+
+	$team_point_data = array('t_ID' => $args['id'], 'points' => $body['points'], 'type' => 'ADMIN');
+	$DB->insert('r_team_points', $team_point_data);
+
+	return $response->withJson("", 200, JSON_NUMERIC_CHECK);
+});
+
+
 // STATISTICS
 $app->get('/statistics/points', function (Request $request, Response $response) use (&$DB) {
 	if ($request->getAttribute('is_admin') == false) {
