@@ -520,6 +520,25 @@ $app->post('/riddle',function (Request $request, Response $response) use (&$DB) 
 	return $response->withJson("success");
 });
 
+$app->get('/riddle/solved', function (Request $request, Response $response) use (&$DB, $config) {
+	if ($request->getAttribute('is_admin') == false) {
+		return $response->withStatus(403)->withJson("Error: not sent by an admin");
+	}
+
+	$res = $DB->fetchAll("SELECT * FROM riddle");
+
+	$riddles = array();
+	foreach ($res as $riddle) {
+		$r = $riddle;
+		$r['solutions'] = $DB->fetchAll("SELECT * FROM r_team_riddle WHERE r_ID = ? AND img_ID > 0", array($r['r_ID']));
+		if (count($r['solutions']) > 0 ) {
+			$riddles[] = $r;
+		}
+	}
+
+	return $response->withJson($riddles, 200, JSON_NUMERIC_CHECK);
+});
+
 $app->put('/riddle/{id}',function (Request $request, Response $response, $args) use (&$DB) {
 	if ($request->getAttribute('is_admin') == false) {
 		return $response->withStatus(403)->withJson("Error: not sent by an admin");
