@@ -22,7 +22,7 @@ backendApp.controller('solvedRiddleCtrl', function ($scope, apiService, solvedRi
         data = { "points": points };
         apiService.post('/points/' + String(team), data)
             .then(function () {
-                $scope.addAlert({ type: 'success', msg: 'Du hast Team ' + String(team) + ' wurde für ein schlechtes Bild bestraft: ' + String(points) + ' Punkte' });
+                $scope.addAlert({ type: 'success', msg: 'Du hast Team ' + String(team) + ' für ein schlechtes Bild bestraft: ' + String(points) + ' Punkte' });
                 $scope.teamService.update();
             });
     };
