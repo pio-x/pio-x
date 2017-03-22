@@ -1,0 +1,7 @@
+1. Adminhash in config/prometheus.yml anpassen
+2. Docker-compose installieren
+3. sudo docker-compose up in diesem directory
+
+Auf localhost:9090 läuft dann der prometheus, der Server der die Daten holt und eine primitve Visualisierung bietet. 
+
+Das Dashboard Grafana läuft auf localhost:3000, Login ist admin:piox und kann in docker-compose.yml angepasst werden.
