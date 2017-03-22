@@ -63,7 +63,7 @@ export class RiddleService {
   public solveRiddle(riddleId, answer, imageData, tags): Promise<any> {
     let promise;
     if (imageData) {
-        promise = this.pioxApi.post('/riddle/' + riddleId + '/solve?tags=' + JSON.stringify(tags), imageData);
+        promise = this.pioxApi.post('/riddle/' + riddleId + '/solve', imageData);
     } else {
       promise = this.pioxApi.post('/riddle/' + riddleId + '/solve', {'answer': answer});
     }
