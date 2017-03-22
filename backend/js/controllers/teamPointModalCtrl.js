@@ -9,12 +9,9 @@ var TeamPointModalCtrl = function ($scope, $uibModalInstance, $http, apiService,
 
     $scope.addTeamPoints = function(points) {
         data = {"points": points};
-        console.log(data);
         apiService.post('/points/' + parseInt($scope.team_ID), data)
             .then(function(){
-                console.log("then");
                 teamService.update();
             });
-        console.log("tralala");
     }
 };
