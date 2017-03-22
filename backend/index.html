@@ -60,6 +60,7 @@
 				<li role="presentation"><a href="#notifications" aria-controls="notifications" role="tab" data-toggle="tab">Notifications</a></li>
 				<li role="presentation"><a href="#passcodes" aria-controls="passcodes" role="tab" data-toggle="tab">Passcodes</a></li>
 				<li role="presentation"><a href="#raetsel" aria-controls="raetsel" role="tab" data-toggle="tab">Rätsel</a></li>
+				<li role="presentation"><a href="#geloesteraetsel" aria-controls="geloesteraetsel" role="tab" data-toggle="tab">Gelöste Rätsel</a></li>
 				<li role="presentation"><a href="#qrcodes" aria-controls="qrcodes" role="tab" data-toggle="tab">QR codes</a></li>
 				<li role="presentation"><a href="#config" aria-controls="config" role="tab" data-toggle="tab">Config</a></li>
 				<li role="presentation"><a href="#stats" aria-controls="stats" role="tab" data-toggle="tab">Stats</a></li>
@@ -93,7 +94,10 @@
 				<div role="tabpanel" class="tab-pane" id="raetsel">
 					<ng-include src="'js/templates/pages/riddles.html'"></ng-include>
 				</div>
-				<!-- QR CODES -->
+				<!-- RIDDLES -->
+				<div role="tabpanel" class="tab-pane" id="geloesteraetsel">
+					<ng-include src="'js/templates/pages/solvedriddles.html'"></ng-include>
+				</div>				<!-- QR CODES -->
 				<div role="tabpanel" class="tab-pane" id="qrcodes">
 					<ng-include src="'js/templates/pages/qrcodes.html'"></ng-include>
 				</div>
@@ -129,6 +133,7 @@
 	<script src="js/controllers/passcodeCtrl.js"></script>
 	<script src="js/controllers/QRCtrl.js"></script>
 	<script src="js/controllers/riddleCtrl.js"></script>
+	<script src="js/controllers/solvedRiddleCtrl.js"></script>
 	<script src="js/controllers/stationCtrl.js"></script>
 	<script src="js/controllers/statsCtrl.js"></script>
 	<script src="js/controllers/teamCtrl.js"></script>
@@ -138,6 +143,7 @@
 	<script src="js/services/logService.js"></script>
 	<script src="js/services/mrxService.js"></script>
 	<script src="js/services/riddleService.js"></script>
+	<script src="js/services/solvedRiddleService.js"></script>
 	<script src="js/services/stationService.js"></script>
 	<script src="js/services/teamService.js"></script>
 	<script src="js/vendor/qrcode.js"></script>
