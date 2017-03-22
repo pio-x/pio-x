@@ -213,10 +213,12 @@ class MetricHelper
 		}
 		
 		foreach ($velocities as $team=>$value) {
-			echo 'team_dist' . $this->teamTag($team) . ' ' . $distTotal[$team] . "\n";
-			echo 'team_time' . $this->teamTag($team) . ' ' . $timeTotal[$team] . "\n";
-			echo 'team_velocitiy' . $this->teamTag($team) . ' ' . $distTotal[$team] / ($timeTotal[$team] / 3600) . "\n";
-			
+			if ($timeTotal[$team] > 0) {
+				echo 'team_dist' . $this->teamTag($team) . ' ' . $distTotal[$team] . "\n";
+				echo 'team_time' . $this->teamTag($team) . ' ' . $timeTotal[$team] . "\n";
+				echo 'team_velocitiy' . $this->teamTag($team) . ' ' . $distTotal[$team] / ($timeTotal[$team] / 3600) . "\n";
+			}
+
 			if ($time15m[$team] > 0) {
 				echo 'team_dist15m' . $this->teamTag($team) . ' ' . $dist15m[$team] . "\n";
 				echo 'team_time15m' . $this->teamTag($team) . ' ' . $time15m[$team] . "\n";
