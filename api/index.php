@@ -11,6 +11,7 @@ require 'helpers/APIHelper.php';
 require 'helpers/ConfigHelper.php';
 require 'helpers/ImageHelper.php';
 require 'helpers/LogHelper.php';
+require 'helpers/MetricHelper.php';
 require 'helpers/Passcodes.php';
 require 'helpers/ScoreHelper.php';
 
@@ -945,6 +946,15 @@ $app->get('/statistics/points', function (Request $request, Response $response) 
 	}
 
 	return $response->withJson($teams, 200, JSON_NUMERIC_CHECK);
+});
+
+$app->get('/statistics/metrics', function (Request $request, Response $response) use (&$DB) {
+	if ($request->getAttribute('is_admin') == false) {
+		return $response->withStatus(403)->withJson("Error: not sent by admin");
+	}
+
+	$metrics = new MetricHelper($DB);
+	return $response->getBody()->write($metrics->get());
 });
 
 // CONFIG
