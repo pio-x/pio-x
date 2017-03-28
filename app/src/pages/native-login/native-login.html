@@ -10,9 +10,12 @@
 
   <div *ngIf="loginTeam">
     <ion-card-title>Dein Pfadiname</ion-card-title>
-    <ion-item>
-      <ion-input type="text" [(ngModel)]="loginPlayer" placeholder="Dein Pfadiname"></ion-input>
-    </ion-item>
+    <ion-list>
+      <ion-item>
+        <ion-label floating>Pfadiname eingeben</ion-label>
+        <ion-input type="text" [(ngModel)]="loginPlayer"></ion-input>
+      </ion-item>
+    </ion-list>
     <br>
     <p>
       <button ion-button full color="secondary" (click)="login()" [disabled]="!loginPlayer">Los geht's!</button>
