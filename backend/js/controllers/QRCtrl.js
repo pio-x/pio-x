@@ -1,7 +1,7 @@
 backendApp.controller('QRCtrl', function($scope, apiService, teamService, mrxService){
     $scope.apiService = apiService;
     //Initiiert die Basis URL, je nach Standort der Installation
-    $scope.baseURL = 'https://api.pio-x.ch';
+    $scope.baseURL = 'https://app.pio-x.ch';
     if(window.location.host == "localhost") {
         $scope.baseURL = 'http://localhost' + window.location.pathname + '../api';
         if(window.location.pathname.substr("passcodes.html")) {
