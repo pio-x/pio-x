@@ -18,8 +18,19 @@ export class NavigationService {
 
   presentActionSheet() {
     let actionSheet = this.actionSheetCtrl.create({
-        title: 'Optionen',
         buttons: [
+            {
+                text: 'Passcode einlösen',
+                handler: () => {
+                    this.openPasscodeModal();
+                }
+            },
+            {
+                text: 'Teambild ändern',
+                handler: () => {
+                    this.openProfileImageModal();
+                }
+            },
             {
                 text: 'Cache löschen',
                 handler: () => {
@@ -36,23 +47,6 @@ export class NavigationService {
                     localStorage.removeItem('player');
                     window.location.reload(true);
                 }
-            },
-            {
-                text: 'Passcode einlösen',
-                handler: () => {
-                    this.openPasscodeModal();
-                }
-            },
-            {
-                text: 'Teambild ändern',
-                handler: () => {
-                    this.openProfileImageModal();
-                }
-            },
-            {
-                text: 'Abbrechen',
-                role: 'cancel',
-                handler: () => {}
             }
         ]
     });
