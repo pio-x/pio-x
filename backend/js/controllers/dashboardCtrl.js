@@ -54,5 +54,5 @@ backendApp.controller('dashboardCtrl', function($scope, $interval, apiService, t
     };
 
     // auto-refresh every 10 sec.
-    //$interval($scope.refresh, 10000);
+    $interval($scope.refresh, 10000);
 });
