@@ -16,25 +16,24 @@ export class PioxErrorHandler extends IonicErrorHandler {
       //alert(error);
       document.getElementById('js-error').style.display = 'block';
       document.getElementById('js-error-text').innerHTML = 'Ein Fehler ist aufgetreten: ' + error;
-    }
 
-    // Report error to sentry.io
-    try {
-      let myteam = 'unknown';
-      let myname = 'unknown';
+      // Report Error to sentry.io
       try {
-        myteam = localStorage.getItem('team');
-        myname = decodeURIComponent(localStorage.getItem('player')).replace( /\+/g, ' ');
-      } catch(e) {}
+        let myteam = 'unknown';
+        let myname = 'unknown';
+        try {
+          myteam = localStorage.getItem('team');
+          myname = decodeURIComponent(localStorage.getItem('player')).replace( /\+/g, ' ');
+        } catch(e) {}
 
-      Raven.setUserContext({
-        username: myteam + '-' + myname
-      });
-      Raven.captureException(error.originalError || error);
-    }
-
-    catch(e) {
-      console.error(e);
+        Raven.setUserContext({
+          username: myteam + '-' + myname
+        });
+        Raven.captureException(error.originalError || error);
+      }
+      catch(e) {
+        console.error(e);
+      }
     }
   }
 }

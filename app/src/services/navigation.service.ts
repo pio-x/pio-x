@@ -39,12 +39,6 @@ export class NavigationService {
                 }
             },
             {
-                text: 'Throw Error',
-                handler: () => {
-                    throw new Error('I am a bug...');
-                }
-            },
-            {
                 text: 'Abmelden',
                 handler: () => {
                     localStorage.removeItem('mrx');
