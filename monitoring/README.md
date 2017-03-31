@@ -26,4 +26,4 @@ Um das Dashboard nach aussen freizugeben muss man noch eine Nginx Config erstell
         }
     }
 
-Das Grafana Dashboard ist nun via http://<deine-domain>:3001 erreichbar :)
+Das Grafana Dashboard ist nun via http://your-domain:3001 erreichbar :)
