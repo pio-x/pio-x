@@ -530,7 +530,7 @@ $app->get('/riddle/solved', function (Request $request, Response $response) use 
 	$riddles = array();
 	foreach ($res as $riddle) {
 		$r = $riddle;
-		$r['solutions'] = $DB->fetchAll("SELECT * FROM r_team_riddle WHERE r_ID = ? AND img_ID > 0", array($r['r_ID']));
+		$r['solutions'] = $DB->fetchAll("SELECT * FROM r_team_riddle WHERE r_ID = ? AND img_ID != ''", array($r['r_ID']));
 		if (count($r['solutions']) > 0 ) {
 			$riddles[] = $r;
 		}
