@@ -1,4 +1,5 @@
-nputs": [
+{
+  "__inputs": [
     {
       "name": "DS_PROMETHEUS",
       "label": "Prometheus",
@@ -214,10 +215,10 @@ nputs": [
           "steppedLine": false,
           "targets": [
             {
-              "expr": "apache2_procs",
+              "expr": "nginx_procs",
               "intervalFactor": 2,
               "legendFormat": "Instanzen",
-              "metric": "apache2_procs",
+              "metric": "nginx_procs",
               "refId": "A",
               "step": 60
             }
@@ -225,7 +226,7 @@ nputs": [
           "thresholds": [],
           "timeFrom": null,
           "timeShift": null,
-          "title": "Apache Instanzen",
+          "title": "Nginx Instanzen",
           "tooltip": {
             "shared": true,
             "sort": 0,
@@ -300,7 +301,7 @@ nputs": [
             {
               "expr": "scrape_duration_seconds",
               "intervalFactor": 2,
-              "legendFormat": "Abfragezeit fÃ¼r Metrics",
+              "legendFormat": "Abfragezeit für Metrics",
               "metric": "scrape_duration_seconds",
               "refId": "A",
               "step": 20
@@ -309,7 +310,7 @@ nputs": [
           "thresholds": [],
           "timeFrom": null,
           "timeShift": null,
-          "title": "Abfragezeit fÃ¼r Metrics",
+          "title": "Abfragezeit für Metrics",
           "tooltip": {
             "shared": true,
             "sort": 0,
@@ -387,5 +388,5 @@ nputs": [
   },
   "timezone": "browser",
   "title": "System",
-  "version": 2
+  "version": 3
 }
