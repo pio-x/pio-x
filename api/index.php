@@ -889,7 +889,11 @@ $app->delete('/passcode/{id}', function (Request $request, Response $response, $
 });
 
 // LOG
-$app->get('/log', function (Request $request, Response $response) use (&$DB) {
+$app->get('/log', function (Request $request, Response $response) use (&$DB, &$config) {
+	if (!$request->getAttribute('is_admin') && !$config['game_is_running']) {
+		return $response->withJson([]);
+	}
+
 	$logs = $DB->fetchAll("SELECT l_ID, text, UNIX_TIMESTAMP(timestamp)*1000 as timestamp, type, FK_ID, t_ID, img_ID FROM log ORDER BY timestamp DESC");
 
 	// keep that for compatibility reasons only - can be removed later
