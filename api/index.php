@@ -74,8 +74,6 @@ $app->get('/station',function (Request $request, Response $response) use (&$DB, 
 		";
 	}
 
-
-
 	$stations = $DB->fetchAll($sql);
 	return $response->withJson($stations, 200, JSON_NUMERIC_CHECK);
 });
@@ -351,7 +349,7 @@ $app->get('/team/{id}/location', function (Request $request, Response $response,
 		foreach ($players as $playerdata) {
 			$player = $playerdata['player'];
 			$player_data[$player] = [];
-			$locations = $DB->fetchAll("SELECT team_lat as lat, team_long as lng, UNIX_TIMESTAMP(timestamp)*1000 as timestamp FROM teamposition WHERE t_ID = ? AND player = ? ORDER BY timestamp DESC", array($teamId, $player));
+			$locations = $DB->fetchAll("SELECT team_lat as lat, team_long as lng, UNIX_TIMESTAMP(timestamp)*1000 as timestamp FROM teamposition WHERE t_ID = ? AND player = ? ORDER BY teamposition.timestamp DESC", array($teamId, $player));
 			foreach ($locations as $location) {
 				if (count($player_data[$player]) > 0) {
 					// remove duplicates: only add position if last added position is different
@@ -407,7 +405,7 @@ $app->get('/mrx', function (Request $request, Response $response) use (&$DB, $co
 
 	$data = [];
 	foreach ($mrxs as $mrx) {
-		$locations = $DB->fetchAll("SELECT xpos_lat, xpos_long, UNIX_TIMESTAMP(timestamp)*1000 as timestamp, description FROM mrx_position WHERE mrx_ID = ? ORDER BY timestamp desc LIMIT 3", array($mrx['x_ID']));
+		$locations = $DB->fetchAll("SELECT xpos_lat, xpos_long, UNIX_TIMESTAMP(timestamp)*1000 as timestamp, description FROM mrx_position WHERE mrx_ID = ? ORDER BY mrx_position.timestamp desc LIMIT 3", array($mrx['x_ID']));
 
 		// nur senden wenn noch nicht gefangen
 		if ($request->getAttribute('is_team')) {
@@ -714,14 +712,14 @@ $app->post('/riddle/{id}/solve',function (Request $request, Response $response, 
 $app->get('/notification', function (Request $request, Response $response) use (&$DB) {
 	if ($request->getAttribute('is_admin') == true) {
 		// admin sees all notifications
-		$notifications = $DB->fetchAll("SELECT n_ID, title, text, UNIX_TIMESTAMP(timestamp)*1000 as timestamp, t_ID FROM notification ORDER BY timestamp DESC");
+		$notifications = $DB->fetchAll("SELECT n_ID, title, text, UNIX_TIMESTAMP(timestamp)*1000 as timestamp, t_ID FROM notification ORDER BY notification.timestamp DESC");
 	} else {
 		if ($request->getAttribute('is_team') == true) {
 			// teams see their own notifications and the "all"-notifications
-			$notifications = $DB->fetchAll("SELECT n_ID, title, text, UNIX_TIMESTAMP(timestamp)*1000 as timestamp, t_ID FROM notification WHERE t_ID = ? OR t_ID IS NULL ORDER BY timestamp DESC", array($request->getAttribute('team_id')));
+			$notifications = $DB->fetchAll("SELECT n_ID, title, text, UNIX_TIMESTAMP(timestamp)*1000 as timestamp, t_ID FROM notification WHERE t_ID = ? OR t_ID IS NULL ORDER BY notification.timestamp DESC", array($request->getAttribute('team_id')));
 		} else {
 			// mrx only see the "all"-notifications
-			$notifications = $DB->fetchAll("SELECT n_ID, title, text, UNIX_TIMESTAMP(timestamp)*1000 as timestamp, t_ID FROM notification WHERE t_ID IS NULL ORDER BY timestamp DESC");
+			$notifications = $DB->fetchAll("SELECT n_ID, title, text, UNIX_TIMESTAMP(timestamp)*1000 as timestamp, t_ID FROM notification WHERE t_ID IS NULL ORDER BY notification.timestamp DESC");
 		}
 	}
 	return $response->withJson($notifications, 200, JSON_NUMERIC_CHECK);
@@ -894,24 +892,7 @@ $app->get('/log', function (Request $request, Response $response) use (&$DB, &$c
 		return $response->withJson([]);
 	}
 
-	$logs = $DB->fetchAll("SELECT l_ID, text, UNIX_TIMESTAMP(timestamp)*1000 as timestamp, type, FK_ID, t_ID, img_ID FROM log ORDER BY timestamp DESC");
-
-	// keep that for compatibility reasons only - can be removed later
-	// img_ID should now be written to the log table
-	foreach ($logs as $index => $log) {
-		if (!$log['img_ID']) {
-			$img = null;
-			switch ($log['type']) {
-				case 'STATION':
-					$result = $DB->fetchAssoc("SELECT img_ID FROM r_team_station WHERE rts_ID = ?", array($log['FK_ID']));
-					if (isset($result['img_ID'])) {
-						$img = $result['img_ID'];
-					}
-					break;
-			}
-			$logs[$index]['img_ID'] = $img;
-		}
-	}
+	$logs = $DB->fetchAll("SELECT l_ID, text, UNIX_TIMESTAMP(timestamp)*1000 as timestamp, type, FK_ID, t_ID, img_ID FROM log ORDER BY log.timestamp DESC");
 
 	return $response->withJson($logs, 200, JSON_NUMERIC_CHECK);
 });
@@ -950,7 +931,7 @@ $app->get('/statistics/points', function (Request $request, Response $response) 
 	$rows = $DB->fetchAll("SELECT t_ID, sum(points) as points, UNIX_TIMESTAMP(timestamp)*1000 as timestamp 
 			FROM r_team_points 
 			GROUP BY t_ID, timestamp 
-			ORDER BY timestamp ASC");
+			ORDER BY r_team_points.timestamp ASC");
 
 	foreach ($rows as $row) {
 		$lastpoints = 0;
