@@ -2,7 +2,7 @@ import {Component, ElementRef, Output, EventEmitter, Input} from '@angular/core'
 
 import { LoadingController, Platform } from 'ionic-angular';
 import { ImageResult, ResizeOptions } from 'ng2-imageupload';
-import { Camera } from 'ionic-native';
+import { Camera, CameraOptions } from '@ionic-native/camera';
 
 import EXIF from "exif-js"
 
@@ -29,7 +29,8 @@ export class ImageUploader {
     constructor(
         private element: ElementRef,
         public loadingCtrl: LoadingController,
-        public platform: Platform
+        public platform: Platform,
+        private camera: Camera
     ) {
         // nothing
     }
@@ -59,12 +60,12 @@ export class ImageUploader {
     }
 
     takePictureNative() {
-        let options = {
-            destinationType: Camera.DestinationType.DATA_URL,
+        let options: CameraOptions = {
+            destinationType: this.camera.DestinationType.DATA_URL,
             targetHeight: 1024,
             correctOrientation: true
         };
-        Camera.getPicture(options).then((imageData) => {
+        this.camera.getPicture(options).then((imageData) => {
          // imageData is either a base64 encoded string or a file URI
          // If it's base64:
          this.image = 'data:image/jpeg;base64,' + imageData;

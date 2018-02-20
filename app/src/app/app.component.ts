@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Platform } from 'ionic-angular';
-import { StatusBar, Splashscreen } from 'ionic-native';
+import { SplashScreen } from '@ionic-native/splash-screen';
+import { StatusBar } from '@ionic-native/status-bar';
 
 import { TabsPage } from '../pages/tabs/tabs';
 
@@ -11,13 +12,17 @@ import { TabsPage } from '../pages/tabs/tabs';
 export class MyApp {
   rootPage = TabsPage;
 
-  constructor(platform: Platform) {
+  constructor(
+      private platform: Platform,
+      private splashScreen: SplashScreen,
+      private statusBar: StatusBar
+  ) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
-      StatusBar.styleDefault();
-      StatusBar.backgroundColorByHexString('#c1272d');
-      Splashscreen.hide();
+      statusBar.styleDefault();
+      statusBar.backgroundColorByHexString('#c1272d');
+      this.splashScreen.hide();
 
       // In Mobile Browsern warnen wenn man Seite verlassen will (Back Button Problem)
       if (platform.is('mobileweb')) {

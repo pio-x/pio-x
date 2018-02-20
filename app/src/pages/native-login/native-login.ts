@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { BarcodeScanner } from 'ionic-native';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 
 @Component({
@@ -15,7 +15,7 @@ export class NativeLogin {
     loginHash: string = null;
     loginPlayer: string = '';
 
-    constructor() {}
+    constructor(private barcodeScanner: BarcodeScanner) {}
 
     login() {
         localStorage.setItem('team', this.loginTeam);
@@ -25,7 +25,7 @@ export class NativeLogin {
     }
 
     scan() {
-        BarcodeScanner.scan().then((barcodeData) => {
+        this.barcodeScanner.scan().then((barcodeData) => {
             if (barcodeData.text) {
                 this.data = this.parseURL(barcodeData.text);
                 if (this.data['team']) {

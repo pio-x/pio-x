@@ -32,11 +32,11 @@ Folgende Befehle alle im `/app` Verzeichnis ausführen
 
 Test APK generieren:
 
-`ionic build android`
+`ionic cordova build android`
 
 Test APK generieren und auf angeschlossenem Gerät starten:
 
-`ionic run android`
+`ionic cordova run android`
 
 
 #### Release Build erstellen:

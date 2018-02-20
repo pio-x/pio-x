@@ -42,6 +42,10 @@ import 'intl';
 import 'intl/locale-data/jsonp/de-CH';
 import {AgmCoreModule} from "@agm/core";
 import {HttpModule} from "@angular/http";
+import {SplashScreen} from "@ionic-native/splash-screen";
+import {Camera} from "@ionic-native/camera";
+import {BarcodeScanner} from "@ionic-native/barcode-scanner";
+import {StatusBar} from "@ionic-native/status-bar";
 
 @NgModule({
   declarations: [
@@ -107,7 +111,11 @@ import {HttpModule} from "@angular/http";
     ConfigService,
     NavigationService,
     GameStreamService,
-    PasscodeService
+    PasscodeService,
+      SplashScreen,
+      Camera,
+      BarcodeScanner,
+      StatusBar
   ]
 })
 export class AppModule {}
