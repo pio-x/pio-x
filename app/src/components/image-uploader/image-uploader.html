@@ -14,7 +14,7 @@
   <div *ngIf="!isCordova">
     <input type="file"
          accept="image/*"
-         image-upload
+         imageUpload
          (change)="imageChanged($event)"
          (imageSelected)="imageSelected($event)"
          [resizeOptions]="resizeOptions"

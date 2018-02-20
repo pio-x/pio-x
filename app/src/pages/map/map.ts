@@ -14,11 +14,11 @@ import {Mrx} from "../../interfaces/mrx";
 import {RiddleService} from "../../services/riddle.service";
 import {Riddle} from "../../interfaces/riddle";
 
-import { SebmGoogleMap } from 'angular2-google-maps/core/directives';
 import {RiddlesSolveModalPage} from "../riddles/riddlesSolveModal";
 import {ConfigService} from "../../services/config.service";
 import {Config} from "../../interfaces/config";
 import {NavigationService} from "../../services/navigation.service";
+import {GoogleMap} from "@agm/core/services/google-maps-types";
 
 declare var fontawesome: any;
 declare var google: any;
@@ -66,7 +66,7 @@ export class MapPage {
         captured_timestamp: '0'
     };
 
-    @ViewChild('gmap') map: SebmGoogleMap;
+    @ViewChild('gmap') map: GoogleMap;
 
     constructor(
         private configService: ConfigService,
@@ -148,7 +148,8 @@ export class MapPage {
         this.cd.markForCheck();
         if (this.map) {
             // attempt to fix map offset that happen sometimes
-            this.map.triggerResize();
+            // TODO: either it has fixed itself with the new map, or we need a new workaround
+            //this.map.triggerResize();
         }
         Promise.all([
             this.stationService.updateStations(),

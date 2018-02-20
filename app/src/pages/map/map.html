@@ -19,7 +19,7 @@
 </ion-header>
 
 <ion-content>
-  <sebm-google-map
+  <agm-map
           #gmap
           [latitude]="default_lat"
           [longitude]="default_lng"
@@ -30,7 +30,7 @@
   >
 
     <!-- Station Radius
-    <sebm-google-map-circle
+    <agm-circle
             *ngFor="let station of stations"
             [latitude]="station.pos_lat"
             [longitude]="station.pos_long"
@@ -41,11 +41,11 @@
             [editable]="false"
             [clickable]="false"
     >
-    </sebm-google-map-circle>-->
+    </agm-circle>-->
 
     <div *ngIf="!config.game_is_running">
       <!-- Home Location -->
-      <sebm-google-map-marker
+      <agm-marker
               *ngIf="!showTutorial()"
               (markerClick)="onInfoWindowOpen(infowindow)"
               [latitude]="config.home_location_lat"
@@ -61,13 +61,13 @@
                   fillOpacity: 1
               }"
       >
-        <sebm-google-map-info-window [disableAutoPan]="true" #infowindow>
+        <agm-info-window [disableAutoPan]="true" #infowindow>
           <h3>{{config.home_location_title}}</h3>
-        </sebm-google-map-info-window>
-      </sebm-google-map-marker>
+        </agm-info-window>
+      </agm-marker>
 
       <!-- Tutorial Station -->
-      <sebm-google-map-marker
+      <agm-marker
               *ngIf="showTutorial()"
               (markerClick)="onInfoWindowOpen(infowindow)"
               [latitude]="tutorialStation.pos_lat"
@@ -81,7 +81,7 @@
                   scale: 8
               }"
       >
-        <sebm-google-map-info-window [disableAutoPan]="true" #infowindow>
+        <agm-info-window [disableAutoPan]="true" #infowindow>
           <h3>Tutorial Station</h3>
           <div *ngIf="tutorialStationCaptured">
             <div>
@@ -110,14 +110,14 @@
             <b>Kein Standort gefunden</b><br>
             Station kann nicht eingenommen werden.
           </div>
-        </sebm-google-map-info-window>
-      </sebm-google-map-marker>
+        </agm-info-window>
+      </agm-marker>
     </div>
 
 
 
     <!-- Station Icons -->
-    <sebm-google-map-marker
+    <agm-marker
             *ngFor="let station of stations; trackBy:trackByStationId"
             (markerClick)="onInfoWindowOpen(infowindow)"
             [latitude]="station.pos_lat"
@@ -131,7 +131,7 @@
                 scale: 8
             }"
     >
-      <sebm-google-map-info-window [disableAutoPan]="true" #infowindow>
+      <agm-info-window [disableAutoPan]="true" #infowindow>
         <h3>{{station.name}}</h3>
         <ion-item *ngIf="teams[station.team]">
           <ion-avatar item-left *ngIf="teams[station.team].img_ID">
@@ -162,11 +162,11 @@
           <b>Kein Standort gefunden</b><br>
           Station kann nicht eingenommen werden.
         </div>
-      </sebm-google-map-info-window>
-    </sebm-google-map-marker>
+      </agm-info-window>
+    </agm-marker>
 
     <!-- User Location Icon -->
-    <sebm-google-map-marker
+    <agm-marker
             *ngIf="userLocation"
             [latitude]="userLocation.lat"
             [longitude]="userLocation.lng"
@@ -177,11 +177,11 @@
                 scaledSize: {width: 16, height: 16}
             }"
     >
-    </sebm-google-map-marker>
+    </agm-marker>
 
     <!-- Mrx Paths -->
     <span *ngFor="let mrx of mrxs">
-      <sebm-google-map-polyline
+      <agm-polyline
               [editable]="false"
               [clickable]="false"
               [polylineDraggable]="false"
@@ -189,17 +189,17 @@
               strokeWeight="3"
               strokeOpacity="0.7"
       >
-         <sebm-google-map-polyline-point
+         <agm-polyline-point
                  *ngFor="let location of mrx.locations"
                  [latitude]="location.xpos_lat"
                  [longitude]="location.xpos_long"
          >
-         </sebm-google-map-polyline-point>
-       </sebm-google-map-polyline>
+         </agm-polyline-point>
+       </agm-polyline>
     </span>
 
     <!-- Mrx Icons -->
-    <sebm-google-map-marker
+    <agm-marker
             *ngFor="let mrx of mrxs"
             (markerClick)="onInfoWindowOpen(infowindow)"
             [latitude]="mrx.locations[0].xpos_lat"
@@ -211,7 +211,7 @@
                 scaledSize: {width: 27, height: 30}
             }"
     >
-      <sebm-google-map-info-window [disableAutoPan]="true" #infowindow>
+      <agm-info-window [disableAutoPan]="true" #infowindow>
         <h3>{{mrx.name}}</h3>
         <div *ngFor="let loc of mrx.locations; let i = index;">
           <b *ngIf="i == 0">
@@ -221,8 +221,8 @@
             <span class="mrx-timestamp">{{loc.timestamp | date:'HH:mm'}}</span> {{loc.description}}
           </span>
         </div>
-      </sebm-google-map-info-window>
-    </sebm-google-map-marker>
+      </agm-info-window>
+    </agm-marker>
 
 
     <!-- Riddles -->
@@ -231,7 +231,7 @@
 
         <!-- Riddle Radius -->
         <!--
-        <sebm-google-map-circle
+        <agm-circle
                 [latitude]="riddle.pos_lat"
                 [longitude]="riddle.pos_long"
                 [radius]="config.riddle_radius"
@@ -241,11 +241,11 @@
                 [editable]="false"
                 [clickable]="false"
         >
-        </sebm-google-map-circle>
+        </agm-circle>
         -->
 
         <!-- Riddle Icons -->
-        <sebm-google-map-marker
+        <agm-marker
                 (markerClick)="onInfoWindowOpen(infowindow)"
                 [latitude]="riddle.pos_lat"
                 [longitude]="riddle.pos_long"
@@ -260,11 +260,11 @@
                     fillOpacity: 1
                 }"
         >
-          <sebm-google-map-info-window [disableAutoPan]="true" #infowindow>
+          <agm-info-window [disableAutoPan]="true" #infowindow>
             <page-riddle-detail [riddle]="riddle"></page-riddle-detail>
-          </sebm-google-map-info-window>
-        </sebm-google-map-marker>
+          </agm-info-window>
+        </agm-marker>
       </span>
     </span>
-  </sebm-google-map>
+  </agm-map>
 </ion-content>

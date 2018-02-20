@@ -1,7 +1,8 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { IonicApp, IonicModule } from 'ionic-angular';
-import { Storage } from '@ionic/storage';
+import {IonicStorageModule} from '@ionic/storage';
+import { BrowserModule } from '@angular/platform-browser';
 import { MyApp } from './app.component';
 import { TabsPage } from '../pages/tabs/tabs';
 import {MapPage} from "../pages/map/map";
@@ -35,12 +36,12 @@ import {PioxErrorHandler} from "./PioxErrorHandler"
 
 import {ImageUploader} from "../components/image-uploader/image-uploader";
 
-import { AgmCoreModule } from 'angular2-google-maps/core';
-
 import { ImageUploadModule } from 'ng2-imageupload';
 
 import 'intl';
 import 'intl/locale-data/jsonp/de-CH';
+import {AgmCoreModule} from "@agm/core";
+import {HttpModule} from "@angular/http";
 
 @NgModule({
   declarations: [
@@ -64,10 +65,15 @@ import 'intl/locale-data/jsonp/de-CH';
   ],
   imports: [
     IonicModule.forRoot(MyApp),
+    BrowserModule,
+    HttpModule,
+    IonicStorageModule.forRoot({
+      driverOrder: ['indexeddb', 'localstorage', 'websql']
+    }),
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyBYAjZ-QKEPlDFLPsLcxR5fFRM2LckyZ6o'
     }),
-    ImageUploadModule
+    ImageUploadModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -91,7 +97,6 @@ import 'intl/locale-data/jsonp/de-CH';
   providers: [
     {provide: ErrorHandler, useClass: PioxErrorHandler},
     DatePipe,
-    Storage,
     TeamService,
     RiddleService,
     StationService,

@@ -14,7 +14,7 @@
 <ion-content>
 
   <div *ngIf="userLocation">
-    <sebm-google-map
+    <agm-map
           #gmap
           [latitude]="userLocation.lat"
           [longitude]="userLocation.lng"
@@ -25,7 +25,7 @@
 
       <!-- Mrx Paths -->
       <span *ngFor="let mrx of mrxs">
-        <sebm-google-map-polyline
+        <agm-polyline
                 *ngIf="mrx.x_ID == mrxid"
                 [editable]="false"
                 [clickable]="false"
@@ -34,17 +34,17 @@
                 strokeWeight="3"
                 strokeOpacity="0.7"
         >
-           <sebm-google-map-polyline-point
+           <agm-polyline-point
                    *ngFor="let location of mrx.locations"
                    [latitude]="location.xpos_lat"
                    [longitude]="location.xpos_long"
            >
-           </sebm-google-map-polyline-point>
-         </sebm-google-map-polyline>
+           </agm-polyline-point>
+         </agm-polyline>
       </span>
 
       <!-- User Location Icon -->
-      <sebm-google-map-marker
+      <agm-marker
               [latitude]="userLocation.lat"
               [longitude]="userLocation.lng"
               [iconUrl]="{
@@ -54,9 +54,9 @@
                   scaledSize: {width: 16, height: 16}
               }"
       >
-      </sebm-google-map-marker>
+      </agm-marker>
 
-    </sebm-google-map>
+    </agm-map>
     <div padding>
       <h2>Standort senden</h2>
       <div>Gib hier einen kurzen Hinweis an, was du vorhast:</div>
