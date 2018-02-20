@@ -5,4 +5,5 @@ export interface Config {
   home_location_lat?: number;
   home_location_long?: number;
   home_location_title?: string;
+  info_text?: string;
 }
