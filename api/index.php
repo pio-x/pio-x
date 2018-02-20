@@ -886,6 +886,15 @@ $app->delete('/passcode/{id}', function (Request $request, Response $response, $
 	}
 });
 
+// PW GENERATOR
+$app->get('/pwgen', function (Request $request, Response $response) use (&$DB) {
+	if ($request->getAttribute('is_admin') == false) {
+		return $response->withStatus(403)->withJson("Error: not sent by admin");
+	}
+
+	return $response->withJson(passcode(3), 200);
+});
+
 // LOG
 $app->get('/log', function (Request $request, Response $response) use (&$DB, &$config) {
 	if (!$request->getAttribute('is_admin') && !$config['game_is_running']) {
