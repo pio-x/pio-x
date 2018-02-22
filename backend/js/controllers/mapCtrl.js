@@ -1,4 +1,4 @@
-backendApp.controller('mapCtrl', function($scope, NgMap, apiService, riddleService, stationService, teamService, mrxService, $window) {
+backendApp.controller('mapCtrl', function($scope, NgMap, apiService, riddleService, stationService, teamService, mrxService, $window, configService) {
     NgMap.getMap().then(function(map) {
         $scope.map = map;
     });
@@ -6,6 +6,7 @@ backendApp.controller('mapCtrl', function($scope, NgMap, apiService, riddleServi
     $scope.Math = window.Math;
 
     //Initiierung der Variablen und Vorselektion der Anzeige
+    $scope.defaultMapPosition = '47.498934,8.728970';
     $scope.showStations = true;
     $scope.showRiddles = true;
     $scope.showMrxs = true;
@@ -164,6 +165,15 @@ backendApp.controller('mapCtrl', function($scope, NgMap, apiService, riddleServi
     $scope.riddles = [];
     riddleService.subscribe(function(riddles) {
         $scope.riddles = riddles;
+    });
+
+    //Aktualisiert die Config
+    $scope.config = [];
+    configService.subscribe(function(config) {
+        $scope.config = config;
+        if (config.map_center_lat && config.map_center_long) {
+            $scope.defaultMapPosition = config.map_center_lat + ',' + config.map_center_long;
+        }
     });
 
     //Ruft alle Aktualisierungsfunktionen in diesem Controller auf

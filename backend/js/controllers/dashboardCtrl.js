@@ -1,11 +1,11 @@
 backendApp.controller('dashboardCtrl', function($scope, $interval, apiService, teamService, logService, configService, stationService, mrxService){
-    $scope.apiService = apiService;
 
-    /*
-    TODO:
-     - Teams: anz. stationen, geschwindigkeit<br>
-     - Map
+    /* TODO:
+     - Teams: anz. stationen, geschwindigkeit
      */
+
+    $scope.apiService = apiService;
+    $scope.defaultMapPosition = '47.498934,8.728970';
 
     //Aktualisiert die Teams
     $scope.teams = [];
@@ -24,6 +24,9 @@ backendApp.controller('dashboardCtrl', function($scope, $interval, apiService, t
     $scope.config = [];
     configService.subscribe(function(config) {
         $scope.config = config;
+        if (config.map_center_lat && config.map_center_long) {
+            $scope.defaultMapPosition = config.map_center_lat + ',' + config.map_center_long;
+        }
     });
 
     //Aktualisiert die MrX's
