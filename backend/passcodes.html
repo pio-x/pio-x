@@ -20,11 +20,10 @@
 	<!-- QR CODES -->
 	<div id="qrcodes" ng-controller="QRCtrl">
 				<div ng-repeat="group in groups track by $index">
-					<qrcode version="6" error-correction-level="M" size="200" style="float:right;"
-								data="https://app.pio-x.ch/login.html?team={{group.t_ID}}&hash={{group.hash}}" ></qrcode>
-						<h1>Gruppe {{group.t_ID}}: ({{group.name}})</h1>
-
-						<div style="margin-left: 285px; padding: 4px; margin-top: 150px; width: 200px; border: 0px solid black; font-size: 0.8em;">
+					<qrcode version="6" error-correction-level="M" size="200" style="float:right; margin-top: -25px;"
+								data="https://app.pio-x.ch/login.html?team={{group.t_ID}}&hash={{group.hash}}"></qrcode>
+						<div style="margin-left: 283px; padding: 4px; margin-top: 140px; width: 210px; border: 0px solid black; font-size: 2em;">{{group.t_ID}}: {{group.name}}</div>
+						<div style="margin-left: 283px; padding: 4px; margin-top: 20px; width: 210px; border: 0px solid black; font-size: 0.8em;">
 							{{ baseURL }}/login.html?team={{group.t_ID}}&hash=<br/>{{group.hash}}
 						</div>
 
