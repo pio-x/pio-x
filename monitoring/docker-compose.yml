@@ -3,8 +3,8 @@ prometheus:
   ports:
     - "127.0.0.1:9090:9090"
   volumes:
-    - $PWD/config:/etc/prometheus
-    - $PWD/data:/prometheus
+    - ./config:/etc/prometheus
+    - ./data:/prometheus
 
 grafana:
   image: grafana/grafana
