@@ -7,6 +7,10 @@
 	padding-top: 10px;
 }
 
+.nav-tabs a {
+	cursor: pointer;
+}
+
 body {
 	margin-bottom: 30px;
 }

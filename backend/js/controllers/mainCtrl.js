@@ -2,6 +2,7 @@ backendApp.controller('mainCtrl', function($scope, apiService){
     $scope.loggedIn = false;
     $scope.showLogin = false;
     $scope.hash = 'admin'; //TODO empty string on production
+    $scope.selectedTab = 'map';
     $scope.checkLogin = function(){
         apiService.get('/team').then(function(success) {
             $scope.loggedIn = true;

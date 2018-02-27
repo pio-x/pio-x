@@ -52,61 +52,62 @@
 
 		<!-- Tabs -->
 		<div class="content" ng-if="loggedIn == true">
-			<ul class="nav nav-tabs" role="tablist">
-				<li role="presentation" class="active"><a href="#karte" aria-controls="karte" role="tab" data-toggle="tab">Karte</a></li>
-				<li role="presentation"><a href="#teams" aria-controls="teams" role="tab" data-toggle="tab">Teams</a></li>
-				<li role="presentation"><a href="#stationen" aria-controls="stationen" role="tab" data-toggle="tab">Stationen</a></li>
-				<li role="presentation"><a href="#stream" aria-controls="stream" role="tab" data-toggle="tab">Stream</a></li>
-				<li role="presentation"><a href="#notifications" aria-controls="notifications" role="tab" data-toggle="tab">Notifications</a></li>
-				<li role="presentation"><a href="#passcodes" aria-controls="passcodes" role="tab" data-toggle="tab">Passcodes</a></li>
-				<li role="presentation"><a href="#raetsel" aria-controls="raetsel" role="tab" data-toggle="tab">Rätsel</a></li>
-				<li role="presentation"><a href="#geloesteraetsel" aria-controls="geloesteraetsel" role="tab" data-toggle="tab">Gelöste Rätsel</a></li>
-				<li role="presentation"><a href="#qrcodes" aria-controls="qrcodes" role="tab" data-toggle="tab">QR codes</a></li>
-				<li role="presentation"><a href="#config" aria-controls="config" role="tab" data-toggle="tab">Config</a></li>
-				<li role="presentation"><a href="#stats" aria-controls="stats" role="tab" data-toggle="tab">Stats</a></li>
+			<ul class="nav nav-tabs">
+				<li role="presentation" ng-class="{active: selectedTab == 'map'}"><a ng-click="selectedTab = 'map'">Karte</a></li>
+				<li role="presentation" ng-class="{active: selectedTab == 'teams'}"><a ng-click="selectedTab = 'teams'">Teams</a></li>
+				<li role="presentation" ng-class="{active: selectedTab == 'stations'}"><a ng-click="selectedTab = 'stations'">Stationen</a></li>
+				<li role="presentation" ng-class="{active: selectedTab == 'log'}"><a ng-click="selectedTab = 'log'">Stream</a></li>
+				<li role="presentation" ng-class="{active: selectedTab == 'notifications'}"><a ng-click="selectedTab = 'notifications'">Notifications</a></li>
+				<li role="presentation" ng-class="{active: selectedTab == 'passcodes'}"><a ng-click="selectedTab = 'passcodes'">Passcodes</a></li>
+				<li role="presentation" ng-class="{active: selectedTab == 'riddles'}"><a ng-click="selectedTab = 'riddles'">Rätsel</a></li>
+				<li role="presentation" ng-class="{active: selectedTab == 'solvedriddles'}"><a ng-click="selectedTab = 'solvedriddles'">Gelöste Rätsel</a></li>
+				<li role="presentation" ng-class="{active: selectedTab == 'qrcodes'}"><a ng-click="selectedTab = 'qrcodes'">QR codes</a></li>
+				<li role="presentation" ng-class="{active: selectedTab == 'config'}"><a ng-click="selectedTab = 'config'">Config</a></li>
+				<li role="presentation" ng-class="{active: selectedTab == 'stats'}"><a ng-click="selectedTab = 'stats'">Stats</a></li>
 			</ul>
-			<div class="tab-content actual-content">
+			<div class="actual-content">
 				<!-- MAP -->
-				<div role="tabpanel" class="tab-pane active" id="karte">
+				<div ng-if="selectedTab == 'map'">
 					<ng-include src="'js/templates/pages/map.html'"></ng-include>
 				</div>
 				<!-- TEAMS -->
-				<div role="tabpanel" class="tab-pane" id="teams">
+				<div ng-if="selectedTab == 'teams'">
 					<ng-include src="'js/templates/pages/teams.html'"></ng-include>
 				</div>
 				<!-- STATIONS -->
-				<div role="tabpanel" class="tab-pane" id="stationen">
+				<div ng-if="selectedTab == 'stations'">
 					<ng-include src="'js/templates/pages/stations.html'"></ng-include>
 				</div>
 				<!-- LOG / IMAGES / STREAM -->
-				<div role="tabpanel" class="tab-pane" id="stream">
+				<div ng-if="selectedTab == 'log'">
 					<ng-include src="'js/templates/pages/log.html'"></ng-include>
 				</div>
 				<!-- NOTIFICATIONS -->
-				<div role="tabpanel" class="tab-pane" id="notifications">
+				<div ng-if="selectedTab == 'notifications'">
 					<ng-include src="'js/templates/pages/notifications.html'"></ng-include>
 				</div>
 				<!-- PASSCODES -->
-				<div role="tabpanel" class="tab-pane" id="passcodes">
+				<div ng-if="selectedTab == 'passcodes'">
 					<ng-include src="'js/templates/pages/passcodes.html'"></ng-include>
 				</div>
 				<!-- RIDDLES -->
-				<div role="tabpanel" class="tab-pane" id="raetsel">
+				<div ng-if="selectedTab == 'riddles'">
 					<ng-include src="'js/templates/pages/riddles.html'"></ng-include>
 				</div>
 				<!-- RIDDLES -->
-				<div role="tabpanel" class="tab-pane" id="geloesteraetsel">
+				<div ng-if="selectedTab == 'solvedriddles'">
 					<ng-include src="'js/templates/pages/solvedriddles.html'"></ng-include>
-				</div>				<!-- QR CODES -->
-				<div role="tabpanel" class="tab-pane" id="qrcodes">
+				</div>
+				<!-- QR CODES -->
+				<div ng-if="selectedTab == 'qrcodes'">
 					<ng-include src="'js/templates/pages/qrcodes.html'"></ng-include>
 				</div>
 				<!-- CONFIG -->
-				<div role="tabpanel" class="tab-pane" id="config">
+				<div ng-if="selectedTab == 'config'">
 					<ng-include src="'js/templates/pages/config.html'"></ng-include>
 				</div>
 				<!-- STATS -->
-				<div role="tabpanel" class="tab-pane" id="stats">
+				<div ng-if="selectedTab == 'stats'">
 					<ng-include src="'js/templates/pages/stats.html'"></ng-include>
 				</div>
 			</div>
