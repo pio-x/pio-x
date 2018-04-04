@@ -78,16 +78,7 @@ export class TeamService {
   };
 
   public imageUrl(img_ID: string) {
-      if (this.platform.is('cordova') || window.location.hostname == 'app.pio-x.ch') {
-          // on live, use real api url
-          return 'https://api.pio-x.ch/uploaded_images/' + img_ID + '.jpg';
-      } else {
-          // if local_config.js was loaded, use that domain config
-          if (window['pioxApiDomain']) {
-            return window['pioxApiDomain'] + '/uploaded_images/' + img_ID + '.jpg';
-          } else {
-            return '';
-          }
-      }
+      var baseURL = localStorage.getItem('api');
+      return baseURL + '/uploaded_images/' + img_ID + '.jpg';
   }
 }

@@ -26,7 +26,6 @@ export class PioxApiService {
     headers.append('X-Piox-Team', localStorage.getItem('team'));
     headers.append('X-Piox-Player', localStorage.getItem('player'));
     headers.append('X-Piox-Hash', localStorage.getItem('hash'));
-    headers.append('X-Piox-API', localStorage.getItem('api'));
     headers.append('X-Piox-Location', JSON.stringify(this.locationService.getLocation()));
     return new RequestOptions({ headers: headers });
   }
