@@ -26,7 +26,7 @@
         <ion-icon name="pin"></ion-icon>
         {{locationService.getDistanceToUser(riddle.pos_lat, riddle.pos_long)}}m entfernt
         <button ion-button color="secondary" full
-                (click)="riddleService.unlockRiddle(riddle.r_ID)"
+                (click)="unlockRiddle(riddle.r_ID)"
                 *ngIf="riddle.state != 'SOLVED' && locationService.getDistanceToUser(riddle.pos_lat, riddle.pos_long) <= configService.getConfig().riddle_radius"
         >
           Freischalten
