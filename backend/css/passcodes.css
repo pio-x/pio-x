@@ -1,0 +1,80 @@
+h1 {
+    color: #C1272D;
+    font-size: 2em;
+    font-weight: bold;
+}
+
+h2 {
+    color: #8C6239;
+}
+
+div .pxlogo {
+    float: left;
+    border: 0px solid black;
+}
+
+div .pxlogininfo {
+    float: left;
+    border: 0px solid black;
+    margin-left: 15px;
+    margin-top: -20px;
+}
+
+div .pxlabel {
+    float: right;
+    border: 0px solid black;
+    font-size: 2em;
+    color: #8C6239;
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+div .pxgroupname {
+    float: right;
+    width: 210px;
+    border: 0px solid #8C6239;
+    font-size: 2em;
+    padding-left: 5px;
+}
+
+div .pxloginurl {
+    float: right;
+    width: 210px;
+    border: 2px solid #8C6239;
+    font-size: 0.8em;
+    padding: 5px;
+}
+
+div .pxqrcode {
+    float: left;
+    border: 0px solid black;
+    margin-top: 5px;
+    margin-left: 15px;
+}
+
+div .pxbody1 {
+    float: left;
+    width: 100%;
+    border: 0px solid black;
+}
+
+div .pxbody2 {
+    float: left;
+    width: 100%;
+    border: 0px solid black;
+}
+
+@media print {
+    h1 {
+        color: rgba(193, 39, 45, 1);
+        text-shadow: 0 0 0 #ccc;
+    }
+
+    @media print and (-webkit-min-device-pixel-ratio:0) {
+        h1 {
+            color: rgba(193, 39, 45, 1);
+            -webkit-print-color-adjust: exact;
+        }
+    }
+}
+

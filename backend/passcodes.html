@@ -8,6 +8,7 @@
 	<script src="node_modules/jquery/dist/jquery.min.js"></script>
 	<link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/passcodes.css">
 
 		<style type="text/css">
 		.body {
@@ -19,18 +20,122 @@
 <body>
 	<!-- QR CODES -->
 	<div id="qrcodes" ng-controller="QRCtrl">
-				<div ng-repeat="group in groups track by $index">
-					<qrcode version="6" error-correction-level="M" size="200" style="float:right; margin-top: -25px;"
-								data="{{ baseURL }}/login.html?team={{group.t_ID}}&hash={{group.hash}}"></qrcode>
-						<div style="margin-left: 283px; padding: 4px; margin-top: 140px; width: 210px; border: 0px solid black; font-size: 2em;">{{group.t_ID}}: {{group.name}}</div>
-						<div style="margin-left: 283px; padding: 4px; margin-top: 20px; width: 210px; border: 0px solid black; font-size: 0.8em;">
-							{{ baseURL }}/login.html?team={{group.t_ID}}&hash=<br/>{{group.hash}}
-						</div>
-
-
-						<p style="page-break-after:always;"></p>
+		<!-- page -->
+		<div ng-repeat="group in groups track by $index">
+			<!-- pagehead -->
+			<div class="pxlogo">
+				<img src="img/logo2_small.png"/>
+			</div>
+			<div class="pxlogininfo">
+				<h1>Pio – X 2018 (Winterthur)</h1>
+				<p style="color: #8C6239; font-weight: bold;">Der etwas andere Pio Wettkampf!</p>
+				<div>
+					<div class="pxgroupname">{{group.t_ID}}: {{group.name}}</div>
+					<div class="pxlabel">Gruppe: </div>
+				</div>
+				<div>
+					<div class="pxloginurl">
+						{{ baseURL }}/login.html?team={{group.t_ID}}&hash=<br/>{{group.hash}}
+					</div>
+					<div class="pxlabel">Ohne QR: </div>
+				</div>
+			</div>
+			<div id="pxqrcode" class="pxqrcode">
+				<qrcode version="6" error-correction-level="M" size="160"
+						data="{{ baseURL }}/login.html?team={{group.t_ID}}&hash={{group.hash}}"></qrcode>
+			</div>
+			<!-- end pagehead -->
+			<!-- pagebody -->
+			<div class="pxbody1">
+				<h2>Was muss ich als Erstes tun?</h2>
+				<p>
+					Wenn dein Team diesen Zettel erhalten hat, habt ihr bereits den Checkin hinter euch. So geht’s weiter:
+				</p>
+				<ol>
+					<li>
+						App herunterladen/öffnen:
+						<ol>
+							<li>
+								Android (Google): App im Play Store herunterladen und den Code oben rechts scannen.
+								Sucht im Google Play nach „Pio-X“ oder tippt folgenden Link ein: http://bit.ly/2mUFWPJ
+							</li>
+							<li>
+								iPhone (Apple): Handycode (QR) oben rechts scannen oder mit dem Link einloggen. Fürs iPhone gibt es keine App, es wird direkt im Webbrowser gespielt. (Ab iOS 11 kann der QR Code direkt mit der Kamera gescannt werden. Ältere iPhones verwenden dafür die App „Scanbot“.)
+							</li>
+						</ol>
+					</li>
+					<li>
+						Tutorial: In der App hat es eine erste Station die als Tutorial dient. Klickt diese an und folge den Anweisungen. Dies dient auch als „Technik-Check“ um zu testen ob auf deinem Telefon alles wie gewünscht funktioniert. Falls etwas nicht klappt, melde dich beim Infostand.
+					</li>
+					<li>
+						Teambild: Klickt in der App auf „Rangliste“, dann ganz unten auf „Teambild ändern“ und macht ein Foto eurer Gruppe und ladet das Foto hoch.
+					</li>
+				</ol>
+				<p>
+					Wenn das geklappt hat, sind du und deine Gruppe startbereit. Lest euch die Regeln durch und besprecht eure Team-Strategie. Es funktioniert etwas nicht? Probiert es nochmals und kommt sonst zum Infostand, wir helfen euch dort weiter. Der Infostand ist beim Checkin.
+				</p>
+				<h2>Zeitplan</h2>
+				<p>
+					Das Spiel beginnt, sobald alle bereit sind, als circa 15:30 Uhr und endet um 17:00 Uhr. Um 17:15 Uhr ist die Rangverkündigung. Nach der Rangverkündigung ist Schluss. Tipp: Wenn ihr den Checkin gemacht und das Tutorial durchgespielt habt, dann könnt ihr euch schon vorher auf den Weg machen um eine bessere Startposition zu finden.
+				</p>
+				<h2>Regeln</h2>
+				<ul>
+					<li>Man darf nur zu Fuss unterwegs sein. Velos sind ausdrücklich nicht erlaubt.</li>
+					<li>Auf dem Foto muss immer die ganze Gruppe (ausser der Fotograf) und die Station/Objekt im Bild sein.</li>
+					<li>Die Gruppe darf sich nicht trennen.</li>
+					<li>Wir sind Pfadi und verhalten uns auch so.</li>
+				</ul>
+			</div>
+			<!-- end pagebody 1 -->
+			<p style="page-break-after:always;"></p>
+			<!-- pagebody 2 -->
+			<div class="pxbody2" >
+				<h2>Wie funktioniert das Spiel?</h2>
+				<p>Wer am Ende am meisten Punkte hat, gewinnt. Punkte könnt ihr auf drei Arten machen:</p>
+				<ol>
+					<li>
+						Stationen erobern<br/>
+						Überall in der Stadt gibt es Stationen die deine Gruppe einnehmen kann. Klickt auf die Station, macht ein Foto eurer ganzen Gruppe und ladet das Foto hoch. Damit gehört die Station euch! Zumindest solange Sie euch kein anderes Team wegschnappt. Alle 5 Minuten bekommt ihr Punkte für jede Station in eurem Besitz.
+					</li>
+					<li>
+						Mister X fangen<br/>
+						In der Stadt sind Mister X unterwegs. Ihr seht sie anhand vom Pio-X Logo auf der Karte. Sobald ihr einen gefangen habt, bekommt ihr einen Passcode, welche euch viele Bonuspunkte bringt. Der Passcode kann in der App eingegeben und damit eingelöst werden.
+					</li>
+					<li>
+						Rätsel lösen<br/>
+						Auf der Karte gibt es einige Fragezeichen. Wenn ihr bei einem Fragezeichen seid, könnt ihr die Frage freischalten und danach lösen. Es gibt Einzelfragen, aber auch Rätselserien. Rätselserien geben komplett gelöst deutlich mehr Punkte als Einzelrätsel.
+					</li>
+				</ol>
+				<h2>Häufige Fragen / Tipps & Tricks</h2>
+				<ul>
+					<li>
+						Schaltet den Bildschirm vom Handy aus, wenn ihr unterwegs seid und die Karte nicht braucht. Das Spiel braucht viel Akku und ihr wollt nicht nach dem halben Spiel aufgeben müssen.
+					</li>
+					<li>
+						Standortbestimmung einschalten: (Falls der Standort nicht richtig angezeigt wird)
+						<ul>
+							<li>
+								Android / Google Handy<br/>
+								In den Einstellungen auf „Standort“. Der Modus muss dort auf „Hohe Genauigkeit“ gestellt werden. Der Energiesparmodus muss ausgeschaltet sein.
+							</li>
+							<li>iPhone / Apple Handy<br/>
+								In den Einstellungen auf „Datenschutz“ und dort auf „Ortungsdienste“.
+							</li>
+						</ul>
+					</li>
+					<li>Es können mehrere Personen pro Team gleichzeitig eingeloggt sein.</li>
+				</ul>
+				<h2>Hilfe!</h2>
+				<p>Wenn ihr Probleme irgendwelcher Art habt, meldet euch per Whatsapp oder SMS auf der Notfallnummer. Meldet euch immer per Chat, Anrufe nur bei einem Notfall! Die Notfallnummer lautet 079 542 79 35. Bei medizinischen Notfällen direkt die Ambulanz (144) anrufen und anschliessend die Notfallnummer.</p>
+				<p>Notfallnummer: 079 542 79 35</p>
+			</div>
+			<p style="page-break-after:always; clear: both;"></p>
+			<!-- end pagebody 2 -->
 		</div>
+		<!-- end page -->
 	</div>
+
+
 	<script src="node_modules/angular/angular.min.js"></script>
 	<script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 	<script src="node_modules/angular-animate/angular-animate.min.js"></script>
