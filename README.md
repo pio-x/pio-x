@@ -5,6 +5,28 @@ Der Pio X Source Code
 
 ### Installation
 
+API Abhängigkeiten installieren:
+
+ * Ins API Verzeichnis wechseln: `cd api`
+ * composer.phar herunterladen: `curl -sS https://getcomposer.org/installer | php`
+ * Composer ausführen: `php composer.phar install`
+
+Backend starten:
+
+ * Konfigurationsfiles anlegen
+    * `cp api/conf.local.php api/conf.local`
+    * `cp backend/js/local_config.new.js backend/js/local_config.js`
+ * Die Datei `backend/js/local_config.js` muss für die lokale Verwendung wie folgt editiert werden:
+
+```js
+window.pioxFrontend = 'http://localhost:81';
+window.pioxAPI = 'http://localhost:83';
+```
+
+ * Docker Compose [installieren](https://docs.docker.com/compose/install/), falls nicht vorhanden
+ * `docker-compose up`
+ * Das Backend ist nun unter http://localhost:82/ erreichbar. Auf dem Default-DB-Dump lautet das Passwort `Adressen5Ostafrikas`
+ 
 App Abhängigkeiten installieren:
 
  * Install [Node.js](https://nodejs.org/en/)
@@ -13,13 +35,6 @@ App Abhängigkeiten installieren:
  * Ins App Verzeichnis wechseln: `cd app`
  * NPM Pakete installieren: `npm install`
  * Ionic starten: `ionic serve` (Browser mit der App wird gestartet)
-
-API Abhängigkeiten installieren:
-
- * Ins API Verzeichnis wechseln: `cd api`
- * composer.phar herunterladen: `curl -sS https://getcomposer.org/installer | php`
- * Composer ausführen: `php composer.phar install`
-
 
 ### Android App
 

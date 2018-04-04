@@ -2,8 +2,8 @@
 $SQL_CREDENTIALS = array(
 	'dbname' => 'piox',
 	'user' => 'root',
-	'password' => '',
-	'host' => '127.0.0.1',
+	'password' => 'mysecretpioXdbpassword',
+	'host' => 'mysql:3306',
 	'driver' => 'pdo_mysql',
 	'charset' => 'utf8',
 	'driverOptions' => array(
