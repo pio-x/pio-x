@@ -1,13 +1,7 @@
 backendApp.controller('QRCtrl', function($scope, apiService, teamService, mrxService){
     $scope.apiService = apiService;
     //Initiiert die Basis URL, je nach Standort der Installation
-    $scope.baseURL = 'https://app.pio-x.ch';
-    if(window.location.host == "localhost") {
-        $scope.baseURL = 'http://localhost' + window.location.pathname + '../api';
-        if(window.location.pathname.substr("passcodes.html")) {
-            $scope.baseURL = 'http://localhost' + window.location.pathname.substr(0, window.location.pathname.lastIndexOf('/')) + '/../app/www';
-        }
-    }
+    $scope.baseURL = window.pioxFrontend;
 
     //Aktualisiert die Teams
     $scope.groups = [];
@@ -30,7 +24,7 @@ backendApp.controller('QRCtrl', function($scope, apiService, teamService, mrxSer
     //zeigt den QR CODE für den Login vom gewählten Team/MrX an
     $scope.showQR = function(id, name, hash, type) {
         $scope.qrUrl.team = name;
-        $scope.qrUrl.link = 'https://app.pio-x.ch/login.html?' + type +'=' + id + '&hash=' + hash;
+        $scope.qrUrl.link = $scope.baseURL + '/login.html?' + type +'=' + id + '&hash=' + hash;
     };
 
     //Aktualisiert die ganze Liste
