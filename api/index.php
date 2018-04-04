@@ -970,6 +970,17 @@ $app->get('/statistics/metrics', function (Request $request, Response $response)
 	return $response->getBody()->write($metrics->get());
 });
 
+// DIASHOW
+$app->get('/diashow', function (Request $request, Response $response) use (&$DB) {
+	// returns all image file names to make a diashow
+	if ($request->getAttribute('is_admin') == false) {
+		return $response->withStatus(403)->withJson("Error: not sent by admin");
+	}
+
+	$data = $DB->fetchAll("select log.*, team.name from log left join team USING(t_ID) where log.img_ID != '' ORDER BY timestamp ASC");
+	return $response->withJson($data);
+});
+
 // CONFIG
 $app->get('/config', function (Request $request, Response $response) use (&$DB, $config) {
 	return $response->withJson($config, 200, JSON_NUMERIC_CHECK);

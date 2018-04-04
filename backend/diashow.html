@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+
+<html ng-app="backendApp">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>PIO-X Diashow</title>
+	<script src="node_modules/jquery/dist/jquery.min.js"></script>
+	<link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/style.css">
+	<style>
+		html, body {
+			background: black;
+			margin-bottom: 0;
+		}
+
+		.diashow__caption {
+			color: white;
+			position: fixed;
+			bottom: 10px;
+			text-align: center;
+			width: 100%;
+			background: rgba(0,0,0,0.5);
+			font-size: 4vmin;
+		}
+	</style>
+</head>
+
+<body class="diashow">
+	<div ng-controller="mainCtrl" ng-cloak>
+
+		<!-- Login -->
+		<div class="content" ng-if="loggedIn == false && showLogin == true">
+			<br><br>
+			<div class="input-group">
+				<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i> Backend Hash:</span>
+				<input class="form-control" type="text" ng-model="hash" ng-keyup="$event.keyCode == 13 && login(hash)"/>
+			</div>
+			<br>
+			<button ng-click="login(hash)" class="btn btn-default">Login</button>
+		</div>
+
+		<!-- the actual dashboard -->
+		<div ng-if="loggedIn">
+			<ng-include src="'js/templates/diashow/diashow.html'"></ng-include>
+		</div>
+
+	</div>
+	<script src="node_modules/angular/angular.min.js"></script>
+	<script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="node_modules/angular-animate/angular-animate.min.js"></script>
+	<script src="node_modules/angular-touch/angular-touch.min.js"></script>
+	<script src="node_modules/highcharts/highcharts.src.js"></script>
+	<script src="node_modules/highcharts-ng/dist/highcharts-ng.min.js"></script>
+	<script src="js/app.js"></script>
+	<script src="js/controllers/mainCtrl.js"></script>
+	<script src="js/controllers/diashowCtrl.js"></script>
+	<script src="js/services/apiService.js"></script>
+	<script src="js/services/configService.js"></script>
+	<script src="js/services/logService.js"></script>
+	<script src="js/services/mrxService.js"></script>
+	<script src="js/services/riddleService.js"></script>
+	<script src="js/services/stationService.js"></script>
+	<script src="js/services/teamService.js"></script>
+	<script src="js/vendor/qrcode.js"></script>
+	<script src="js/vendor/angular-qrcode.js"></script>
+	<script src="node_modules/ngmap/build/scripts/ng-map.min.js"></script>
+	<script src="node_modules/moment/moment.js"></script>
+	<script src="node_modules/moment/locale/de.js"></script>
+	<script src="node_modules/angular-moment/angular-moment.js"></script>
+	<script src="node_modules/angular-ui-bootstrap/dist/ui-bootstrap.js"></script>
+	<script src="node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js"></script>
+</body>
+
+</html>
