@@ -11,17 +11,10 @@ import 'rxjs/add/operator/toPromise';
 export class PioxApiService {
 
   private get baseurl() {
-      if (this.platform.is('cordova') || window.location.hostname == 'app.pio-x.ch') {
-          // on live, use real api url
-          return 'https://api.pio-x.ch';
+      if (localStorage.getItem('api') === null) {
+          return null;
       } else {
-          // if local_config.js was loaded, use that domain config
-          if (window['pioxApiDomain']) {
-            return window['pioxApiDomain'];
-          } else {
-            // use static files on localhost
-            return '/api_dummy';
-          }
+          return localStorage.getItem('api');
       }
   }
 
@@ -33,6 +26,7 @@ export class PioxApiService {
     headers.append('X-Piox-Team', localStorage.getItem('team'));
     headers.append('X-Piox-Player', localStorage.getItem('player'));
     headers.append('X-Piox-Hash', localStorage.getItem('hash'));
+    headers.append('X-Piox-API', localStorage.getItem('api'));
     headers.append('X-Piox-Location', JSON.stringify(this.locationService.getLocation()));
     return new RequestOptions({ headers: headers });
   }
@@ -44,16 +38,24 @@ export class PioxApiService {
                .catch(this.handleError);
   }
   post(url, data): Promise<any> {
-    return this.http.post(this.baseurl + url, data, this.getOptions())
-                    .toPromise()
-                    .then(response => response.json())
-                    .catch(this.handleError);
+    if (this.baseurl === null) {
+        return new Promise((resolve) => { resolve(); });
+    } else {
+        return this.http.post(this.baseurl + url, data, this.getOptions())
+            .toPromise()
+            .then(response => response.json())
+            .catch(this.handleError);
+    }
   }
   put(url, data): Promise<any> {
-    return this.http.put(this.baseurl + url, data, this.getOptions())
-                    .toPromise()
-                    .then(response => response.json())
-                    .catch(this.handleError);
+      if (this.baseurl === null) {
+          return new Promise((resolve) => { resolve(); });
+      } else {
+          return this.http.put(this.baseurl + url, data, this.getOptions())
+              .toPromise()
+              .then(response => response.json())
+              .catch(this.handleError);
+      }
   }
 
   private handleError(error: any): Promise<any> {

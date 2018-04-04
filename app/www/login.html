@@ -41,6 +41,7 @@
     <form action="?" method="GET">
       <input type="hidden" name="hash" id="input_hash">
       <input type="hidden" name="team" id="input_team">
+      <input type="hidden" name="api" id="input_api">
       <div class="form-group">
         <label for="input_player">Wie ist dein Name?</label>
         <input type="text" class="form-control" name="player" id="input_player" placeholder="Pfadiname" required>
@@ -56,30 +57,35 @@
       var team = $.urlParam('team');
       var hash = $.urlParam('hash');
       var player = $.urlParam('player');
-      if (team && hash && player) {
+      var api = $.urlParam('api');
+      if (team && hash && player && api) {
           localStorage.setItem('team', team);
           localStorage.setItem('mrx', 0);
           localStorage.setItem('hash', hash);
           localStorage.setItem('player', player);
-          console.log('Eingeloggt mit ' + team + ':' + hash + ' als ' + player);
+          localStorage.setItem('api', decodeURIComponent(api));
+          console.log('Eingeloggt mit ' + team + ':' + hash + ' als ' + player +' auf ' + decodeURIComponent(api));
           window.location.href = "/";
-      } else if (team && hash) {
+      } else if (team && hash && api) {
           $('#loginlinks').hide();
           $('#loginform').show();
           $('#input_team').val(team);
           $('#input_hash').val(hash);
-      } else if (mrx && hash) {
+          $('#input_api').val(api);
+      } else if (mrx && hash && api) {
           localStorage.setItem('team', 0);
           localStorage.setItem('mrx', mrx);
           localStorage.setItem('hash', hash);
           localStorage.setItem('player', 'Mister X ' + mrx);
-          console.log('Eingeloggt mit Mister X ' + mrx + ':' + hash);
+          localStorage.setItem('api', decodeURIComponent(api));
+          console.log('Eingeloggt mit Mister X ' + mrx + ':' + hash +' auf ' + decodeURIComponent(api));
           window.location.href = "/";
       } else {
           if ($.urlParam('logout')) {
             localStorage.removeItem('team');
             localStorage.removeItem('mrx');
             localStorage.removeItem('hash');
+            localStorage.removeItem('api');
             console.log('Ausgeloggt');
             window.location.href = "/";
           } else {

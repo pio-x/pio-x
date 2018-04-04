@@ -14,6 +14,7 @@ export class NativeLogin {
     loginTeam: string = null;
     loginHash: string = null;
     loginPlayer: string = '';
+    loginAPI: string = null;
 
     constructor(private barcodeScanner: BarcodeScanner) {}
 
@@ -21,6 +22,7 @@ export class NativeLogin {
         localStorage.setItem('team', this.loginTeam);
         localStorage.setItem('hash', this.loginHash);
         localStorage.setItem('player', this.loginPlayer);
+        localStorage.setItem('api', this.loginAPI);
         window.location.reload(true);
     }
 
@@ -32,12 +34,14 @@ export class NativeLogin {
                     // team: save data for later login when username is set
                     this.loginTeam = this.data['team'];
                     this.loginHash = this.data['hash'];
+                    this.loginAPI = this.data['api'];
                 }
                 if (this.data['mrx']) {
                     // mrx: direct login
                     localStorage.setItem('mrx', this.data['mrx']);
                     localStorage.setItem('hash', this.data['hash']);
                     localStorage.setItem('player', 'Mister X ' + this.data['mrx']);
+                    localStorage.setItem('api', this.data['api']);
                     window.location.reload(true);
                 }
             }
@@ -58,6 +62,5 @@ export class NativeLogin {
         }
         return query;
     }
-
 
 }

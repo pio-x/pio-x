@@ -2,6 +2,7 @@ backendApp.controller('QRCtrl', function($scope, apiService, teamService, mrxSer
     $scope.apiService = apiService;
     //Initiiert die Basis URL, je nach Standort der Installation
     $scope.baseURL = window.pioxFrontend;
+    $scope.apiURL = window.pioxAPI;
 
     //Aktualisiert die Teams
     $scope.groups = [];
@@ -24,7 +25,7 @@ backendApp.controller('QRCtrl', function($scope, apiService, teamService, mrxSer
     //zeigt den QR CODE für den Login vom gewählten Team/MrX an
     $scope.showQR = function(id, name, hash, type) {
         $scope.qrUrl.team = name;
-        $scope.qrUrl.link = $scope.baseURL + '/login.html?' + type +'=' + id + '&hash=' + hash;
+        $scope.qrUrl.link = $scope.baseURL + '/login.html?' + type +'=' + id + '&hash=' + hash + '&api=' + $scope.apiURL;
     };
 
     //Aktualisiert die ganze Liste
