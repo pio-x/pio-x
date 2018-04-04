@@ -1,11 +1,5 @@
 backendApp.factory('apiService', ['$http', '$rootScope', function($http, $rootScope) {
-    var baseURL = 'https://api.pio-x.ch';
-    if(window.location.host == "localhost") {
-        baseURL = '../api';
-        if(window.location.pathname.substr("passcodes.html")) {
-            baseURL = window.location.pathname.substr(0, window.location.pathname.lastIndexOf('/')) + '/../api';
-        }
-    }
+    var baseURL = window.pioxApiDomain;
     return {
         get:function(url) {
             var config = {
