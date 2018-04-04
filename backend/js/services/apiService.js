@@ -1,5 +1,5 @@
 backendApp.factory('apiService', ['$http', '$rootScope', function($http, $rootScope) {
-    var baseURL = window.pioxBackend;
+    var baseURL = window.pioxAPI;
     return {
         get:function(url) {
             var config = {
