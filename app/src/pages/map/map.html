@@ -200,30 +200,32 @@
     </span>
 
     <!-- Mrx Icons -->
-    <agm-marker
-            *ngFor="let mrx of mrxs"
-            (markerClick)="onInfoWindowOpen(infowindow)"
-            [latitude]="mrx.locations[0].xpos_lat"
-            [longitude]="mrx.locations[0].xpos_long"
-            [iconUrl]="{
-                url: 'assets/mrx.png',
-                anchor: {x: 13, y: 15},
-                size: {width: 27, height: 30},
-                scaledSize: {width: 27, height: 30}
-            }"
-    >
-      <agm-info-window [disableAutoPan]="true" #infowindow>
-        <h3>{{mrx.name}}</h3>
-        <div *ngFor="let loc of mrx.locations; let i = index;">
-          <b *ngIf="i == 0">
-            <span class="mrx-timestamp">{{loc.timestamp | date:'HH:mm'}}</span> {{loc.description}}
-          </b>
-          <span *ngIf="i > 0">
-            <span class="mrx-timestamp">{{loc.timestamp | date:'HH:mm'}}</span> {{loc.description}}
-          </span>
-        </div>
-      </agm-info-window>
-    </agm-marker>
+    <ng-container *ngFor="let mrx of mrxs">
+      <agm-marker
+              *ngIf="mrx.locations.length > 0"
+              (markerClick)="onInfoWindowOpen(infowindow)"
+              [latitude]="mrx.locations[0].xpos_lat"
+              [longitude]="mrx.locations[0].xpos_long"
+              [iconUrl]="{
+                  url: 'assets/mrx.png',
+                  anchor: {x: 13, y: 15},
+                  size: {width: 27, height: 30},
+                  scaledSize: {width: 27, height: 30}
+              }"
+      >
+        <agm-info-window [disableAutoPan]="true" #infowindow>
+          <h3>{{mrx.name}}</h3>
+          <div *ngFor="let loc of mrx.locations; let i = index;">
+            <b *ngIf="i == 0">
+              <span class="mrx-timestamp">{{loc.timestamp | date:'HH:mm'}}</span> {{loc.description}}
+            </b>
+            <span *ngIf="i > 0">
+              <span class="mrx-timestamp">{{loc.timestamp | date:'HH:mm'}}</span> {{loc.description}}
+            </span>
+          </div>
+        </agm-info-window>
+      </agm-marker>
+    </ng-container>
 
 
     <!-- Riddles -->

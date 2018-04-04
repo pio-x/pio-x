@@ -383,10 +383,6 @@ $app->get('/team/{id}/location', function (Request $request, Response $response,
 
 // MISTER X
 $app->get('/mrx', function (Request $request, Response $response) use (&$DB, $config) {
-	if (!$request->getAttribute('is_admin') && !$config['game_is_running']) {
-		return $response->withJson([]);
-	}
-
 	$mrxs = $DB->fetchAll("
 		SELECT 
 			mrx.*, 
@@ -416,12 +412,17 @@ $app->get('/mrx', function (Request $request, Response $response) use (&$DB, $co
 		}
 
 		// an teams/mrx nur senden wenn mind. 1 location vorhanden
-		if ($request->getAttribute('is_admin')) {
+		if ($request->getAttribute('is_admin') || $request->getAttribute('is_mrx')) {
 			$mrx['locations'] = $locations;
 			$data[] = $mrx;
 		} else {
 			if (is_array($locations) && count($locations) > 0) {
-				$mrx['locations'] = $locations;
+				// locations an teams nur senden, wenn game läuft
+				if ($config['game_is_running']) {
+					$mrx['locations'] = $locations;
+				} else {
+					$mrx['locations'] = [];
+				}
 				$data[] = $mrx;
 			}
 		}
@@ -897,9 +898,6 @@ $app->get('/pwgen', function (Request $request, Response $response) use (&$DB) {
 
 // LOG
 $app->get('/log', function (Request $request, Response $response) use (&$DB, &$config) {
-	if (!$request->getAttribute('is_admin') && !$config['game_is_running']) {
-		return $response->withJson([]);
-	}
 
 	$logs = $DB->fetchAll("SELECT l_ID, text, UNIX_TIMESTAMP(timestamp)*1000 as timestamp, type, FK_ID, t_ID, img_ID FROM log ORDER BY log.timestamp DESC");
 
