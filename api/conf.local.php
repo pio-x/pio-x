@@ -1,9 +1,10 @@
 <?php
+
 $SQL_CREDENTIALS = array(
-	'dbname' => 'piox',
-	'user' => 'root',
-	'password' => 'mysecretpioXdbpassword',
-	'host' => 'mysql:3306',
+	'dbname' => getenv('PIOX_DBNAME') === false ? 'piox': getenv('PIOX_DBNAME'),
+	'user' => getenv('PIOX_DBUSER') === false ? 'root': getenv('PIOX_DBUSER'),
+	'password' => getenv('PIOX_DBPASS') === false ? 'mysecretpioXdbpassword': getenv('PIOX_DBPASS'),
+	'host' => getenv('PIOX_DBHOST') === false ? 'mysql:3306': getenv('PIOX_DBHOST'),
 	'driver' => 'pdo_mysql',
 	'charset' => 'utf8',
 	'driverOptions' => array(

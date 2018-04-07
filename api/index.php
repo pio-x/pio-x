@@ -5,7 +5,11 @@ use Doctrine\DBAL\DriverManager;
 
 
 require 'vendor/autoload.php';
-require 'conf.php';
+if (file_exists('conf.php')) {
+    require 'conf.php';
+} else {
+    require 'conf.local.php';
+}
 
 require 'helpers/APIHelper.php';
 require 'helpers/ConfigHelper.php';

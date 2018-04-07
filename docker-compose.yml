@@ -16,6 +16,11 @@ services:
       - ./api/dbdumps/piox_dbdump_20170403_1006_piox_after_game.sql:/www/dbdump.sql
     links:
       - mysql
+    environment:
+      PIOX_DBNAME: piox
+      PIOX_DBUSER: root
+      PIOX_DBPASS: mysecretpioXdbpassword
+      PIOX_DBHOST: mysql:3306
 
   mysql:
     image: mysql:5.7
