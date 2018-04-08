@@ -1,13 +1,19 @@
 version: '2'
 
 services:
-  piox:
-    image: laurenzgamper/piox
+  nginx:
+    build: .
     restart: always
     ports:
       - 81:81
       - 82:82
       - 83:83
+    volumes:
+      - ./container/nginx.conf:/etc/nginx/nginx.conf
+      - ./api:/www/api
+      - ./app/www:/www/app/www
+      - ./backend:/www/backend
+      - ./api/dbdumps/piox_dbdump_20170403_1006_piox_after_game.sql:/www/dbdump.sql
     links:
       - mysql
     environment:
