@@ -2,7 +2,7 @@ version: '2'
 
 services:
   nginx:
-    build: .
+    build: piox/piox
     restart: always
     ports:
       - 8081:8081
