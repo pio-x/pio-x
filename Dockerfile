@@ -19,7 +19,7 @@ COPY api /www/api
 COPY app/www /www/app/www
 COPY backend /www/backend
 
-EXPOSE 80 81 83
+EXPOSE 8080 8081 8082
 
 ADD container/setup.sh /www/setup.sh
 ADD container/start.sh /www/start.sh

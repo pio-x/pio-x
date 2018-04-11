@@ -45,10 +45,20 @@
 		<div class="content" ng-if="loggedIn == false && showLogin == true">
 			<div class="input-group">
 				<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i> Backend Hash:</span>
-				<input class="form-control" type="text" ng-model="hash" ng-keyup="$event.keyCode == 13 && login(hash)"/>
+				<input class="form-control" type="text" ng-model="hash" ng-keyup="$event.keyCode == 13 && login(hash,api,frontend)"/>
 			</div>
 			<br>
-			<button ng-click="login(hash)" class="btn btn-default">Login</button>
+			<div class="input-group">
+				<span class="input-group-addon"><i class="glyphicon glyphicon-home"></i> API:</span>
+				<input class="form-control" type="text" ng-model="api" ng-keyup="$event.keyCode == 13 && login(hash,api,frontend)"/>
+			</div>
+			<br>
+			<div class="input-group">
+				<span class="input-group-addon"><i class="glyphicon glyphicon-picture"></i> Frontend:</span>
+				<input class="form-control" type="text" ng-model="frontend" ng-keyup="$event.keyCode == 13 && login(hash,api,frontend)"/>
+			</div>
+			<br>
+			<button ng-click="login(hash,api,frontend)" class="btn btn-default">Login</button>
 		</div>
 
 		<!-- Tabs -->
