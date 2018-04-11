@@ -41,7 +41,7 @@ App Abhängigkeiten installieren:
 Voraussetzungen:
  * Android SDK installieren
  * Java 1.8 installieren
- * Die Android Plattform hinzufügen: `ionic platform add android` (einmalig)
+ * Die Android Plattform hinzufügen: `ionic cordova platform add android` (einmalig)
 
 Folgende Befehle alle im `/app` Verzeichnis ausführen
 
