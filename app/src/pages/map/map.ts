@@ -18,7 +18,7 @@ import {RiddlesSolveModalPage} from "../riddles/riddlesSolveModal";
 import {ConfigService} from "../../services/config.service";
 import {Config} from "../../interfaces/config";
 import {NavigationService} from "../../services/navigation.service";
-import {GoogleMap} from "@agm/core/services/google-maps-types";
+import {AgmMap} from "@agm/core";
 
 declare var fontawesome: any;
 declare var google: any;
@@ -66,7 +66,7 @@ export class MapPage {
         captured_timestamp: '0'
     };
 
-    @ViewChild('gmap') map: GoogleMap;
+    @ViewChild('gmap') map: AgmMap;
 
     constructor(
         private configService: ConfigService,
@@ -148,8 +148,7 @@ export class MapPage {
         this.cd.markForCheck();
         if (this.map) {
             // attempt to fix map offset that happen sometimes
-            // TODO: either it has fixed itself with the new map, or we need a new workaround
-            //this.map.triggerResize();
+            this.map.triggerResize(true);
         }
         Promise.all([
             this.stationService.updateStations(),
