@@ -41,7 +41,7 @@ App Abhängigkeiten installieren:
 Voraussetzungen:
  * Android SDK installieren
  * Java 1.8 installieren
- * Die Android Plattform hinzufügen: `ionic cordova platform add android` (einmalig)
+ * Die Android Plattform und Plugins installieren: `ionic cordova prepare` (einmalig)
 
 Folgende Befehle alle im `/app` Verzeichnis ausführen
 
@@ -66,7 +66,11 @@ Wenn man ein neues Plugin oder eine Plattform installiert hat,
 dann muss man folgenden Befehl ausführen um alles ins package.json
 zu schreiben:
 
-`ionic state save`
+`ionic cordova plugin save`
+
+oder
+
+`ionic cordova platform save`
 
 
 ## Allgemeine Regeln:
