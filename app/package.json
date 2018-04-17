@@ -38,7 +38,6 @@
     "exif-js": "^2.1.1",
     "intl": "^1.2.5",
     "ionic-angular": "3.4.1",
-    "ionic-plugin-keyboard": "^2.2.1",
     "ionicons": "3.0.0",
     "ng2-imageupload": "^1.4.2",
     "phonegap-plugin-barcodescanner": "^7.0.2",
@@ -57,7 +56,6 @@
     "cordova-plugin-statusbar",
     "cordova-plugin-device",
     "cordova-plugin-splashscreen",
-    "ionic-plugin-keyboard",
     "phonegap-plugin-barcodescanner",
     "cordova-plugin-compat",
     "cordova-plugin-camera",
@@ -79,7 +77,6 @@
   "description": "A mister X game",
   "cordova": {
     "plugins": {
-      "ionic-plugin-keyboard": {},
       "cordova-plugin-whitelist": {},
       "cordova-plugin-console": {},
       "cordova-plugin-statusbar": {},
