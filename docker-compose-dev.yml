@@ -13,7 +13,7 @@ services:
       - ./api:/www/api
       - ./app/www:/www/app/www
       - ./backend:/www/backend
-      - ./api/dbdumps/piox_dbdump_20170403_1006_piox_after_game.sql:/www/dbdump.sql
+      - ./api/dbdumps/piox_dbdump_default.sql:/www/dbdump.sql
     links:
       - mysql
     environment:
