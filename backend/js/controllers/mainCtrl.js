@@ -23,10 +23,10 @@ backendApp.controller('mainCtrl', function($scope, apiService){
         });
     };
     $scope.checkLogin();
-    $scope.login = function(hash, host) {
+    $scope.login = function(hash, api, frontend) {
         localStorage.setItem('hash', hash);
-        localStorage.setItem('api', host);
-        localStorage.setItem('frontend', host);
+        localStorage.setItem('api', api);
+        localStorage.setItem('frontend', frontend);
         $scope.checkLogin();
     };
     $scope.logout = function() {
