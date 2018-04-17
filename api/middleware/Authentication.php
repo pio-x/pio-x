@@ -38,7 +38,7 @@ class Authentication
 
 		// no hash provided
 		if (!$hash) {
-			return $response->withStatus(401)->withJson('No hash provided');
+			return $response->withStatus(401)->withJson('Not authorized: no access hash provided');
 		}
 
 		// TEAM: check if hash is valid
