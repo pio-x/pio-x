@@ -1,8 +1,8 @@
 backendApp.controller('QRCtrl', function($scope, apiService, teamService, mrxService){
     $scope.apiService = apiService;
     //Initiiert die Basis URL, je nach Standort der Installation
-    $scope.baseURL = window.pioxFrontend;
-    $scope.apiURL = window.pioxAPI;
+    $scope.baseURL = localStorage.getItem('frontend');
+    $scope.apiURL = localStorage.getItem('api');
 
     //Aktualisiert die Teams
     $scope.groups = [];

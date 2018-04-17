@@ -13,16 +13,7 @@ API Abhängigkeiten installieren:
 
 Backend starten:
 
- * Konfigurationsfiles anlegen
-    * `cp api/conf.local.php api/conf.local`
-    * `cp backend/js/local_config.new.js backend/js/local_config.js`
- * Die Datei `backend/js/local_config.js` muss für die lokale Verwendung wie folgt editiert werden:
-
-```js
-window.pioxFrontend = 'http://localhost:81';
-window.pioxAPI = 'http://localhost:83';
-```
-
+ * Konfigurationsfiles anlegen: `cp api/conf.local.php api/conf.php`
  * Docker Compose [installieren](https://docs.docker.com/compose/install/), falls nicht vorhanden
  * `docker-compose up`
  * Das Backend ist nun unter http://localhost:82/ erreichbar. Auf dem Default-DB-Dump lautet das Passwort `Adressen5Ostafrikas`
