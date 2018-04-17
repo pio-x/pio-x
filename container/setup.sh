@@ -1,10 +1,19 @@
 #!/usr/bin/env bash
 
-#if [ ! -f /www/setup_done ]; then
-#    exit 0;
-#fi
-sleep 20;
-mysql -h mysql -u root --password=$PIOX_DBPASS -e "create database $PIOX_DBNAME"
-mysql -h mysql -u root --password=$PIOX_DBPASS $PIOX_DBNAME < /www/dbdump.sql
+MAXSLEEP=60
+SLEEPCNT=0
+DBEXISTS=`mysql -h mysql -u root --password=$PIOX_DBPASS -e "SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = '$PIOX_DBNAME'"`
 
-touch /www/setup_done
+res=$?
+until [ "$res" -eq 0 ] || [ "$SLEEPCNT" -eq "$MAXSLEEP" ]
+do
+    sleep 1
+    SLEEPCNT=$(($SLEEPCNT+1))
+    DBEXISTS=`mysql -h mysql -u root --password=$PIOX_DBPASS -e "SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = '$PIOX_DBNAME'"`
+    res=$?
+done
+
+if [[ $DBEXISTS != *"SCHEMA_NAME"* ]]; then
+  mysql -h mysql -u root --password=$PIOX_DBPASS -e "create database $PIOX_DBNAME"
+  mysql -h mysql -u root --password=$PIOX_DBPASS $PIOX_DBNAME < /www/dbdump.sql
+fi
