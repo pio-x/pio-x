@@ -31,20 +31,24 @@ export class PioxApiService {
   }
 
   get(url): Promise<any> {
-    return this.http.get(this.baseurl + url, this.getOptions())
-               .toPromise()
-               .then(response => response.json())
-               .catch(this.handleError);
+      if (this.baseurl === null) {
+          return new Promise((resolve) => {resolve(); });
+      } else {
+          return this.http.get(this.baseurl + url, this.getOptions())
+              .toPromise()
+              .then(response => response.json())
+              .catch(this.handleError);
+      }
   }
   post(url, data): Promise<any> {
-    if (this.baseurl === null) {
-        return new Promise((resolve) => { resolve(); });
-    } else {
-        return this.http.post(this.baseurl + url, data, this.getOptions())
-            .toPromise()
-            .then(response => response.json())
-            .catch(this.handleError);
-    }
+      if (this.baseurl === null) {
+          return new Promise((resolve) => {resolve(); });
+      } else {
+          return this.http.post(this.baseurl + url, data, this.getOptions())
+              .toPromise()
+              .then(response => response.json())
+              .catch(this.handleError);
+      }
   }
   put(url, data): Promise<any> {
       if (this.baseurl === null) {
@@ -58,8 +62,7 @@ export class PioxApiService {
   }
 
   private handleError(error: any): Promise<any> {
-
-    console.error('An error occurred', error); // for demo purposes only
+    console.error('A http error occurred', error); // for demo purposes only
     return Promise.reject(error.message || error);
   }
 }
