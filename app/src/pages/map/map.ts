@@ -168,6 +168,10 @@ export class MapPage {
             // call internal map functions (reactivity is gone, but who cares...)
             this.panToMyLocation();
             this.map['_mapsWrapper'].setZoom(17);
+            if (this.map) {
+                // attempt to fix map offset that happen sometimes
+                this.map.triggerResize(true);
+            }
         }
     }
 
