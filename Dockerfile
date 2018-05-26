@@ -13,7 +13,7 @@ env[PIOX_DBHOST]=\$PIOX_DBHOST \n\
 clear_env = no\n\
 catch_workers_output = yes\n" >> /etc/php/7.0/fpm/pool.d/www.conf
 
-COPY api/dbdumps/piox_dbdump_20170403_1006_piox_after_game.sql /www/dbdump.sql
+COPY api/dbdumps/piox_dbdump_default.sql /www/dbdump.sql
 COPY container/nginx.conf /etc/nginx/nginx.conf
 COPY api /www/api
 COPY app/www /www/app/www

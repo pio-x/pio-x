@@ -62,6 +62,7 @@ CREATE TABLE `log` (
   `type` enum('RIDDLE','STATION','MRX','OTHER') NOT NULL DEFAULT 'OTHER' COMMENT 'log type',
   `FK_ID` int(11) NOT NULL COMMENT 'FK ID of type',
   `t_ID` int(11) DEFAULT NULL COMMENT 'team ID',
+  `img_ID` varchar(255) NOT NULL DEFAULT 'image filename',
   PRIMARY KEY (`l_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
