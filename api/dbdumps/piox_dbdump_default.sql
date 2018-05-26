@@ -44,7 +44,8 @@ VALUES
 	('map_center_lat','47.497422'),
 	('map_center_long','8.722104'),
 	('riddle_radius','100'),
-	('station_radius','100');
+	('station_radius','100'),
+	('passcode_page_text', 'Spielinfos auf der Passcode Seite');
 
 /*!40000 ALTER TABLE `config` ENABLE KEYS */;
 UNLOCK TABLES;

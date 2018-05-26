@@ -1,13 +1,37 @@
 <div ng-controller="configCtrl">
+    <h3>Konfiguration</h3>
+    <div ng-if="messages">
+        <div ng-repeat="msg in messages" class="alert alert-success">
+            {{msg}}
+        </div>
+    </div>
+    <button ng-click="saveConfigAll()" class="btn btn-primary">Speichern</button>
+    <br><br>
     <table class="table table-striped">
         <tr ng-repeat="(key,conf) in config">
-            <td>
-                <div class="input-group">
-                    <span class="input-group-addon">{{ key }}</span>
-                    <input type="text" class="form-control" ng-model="conf" id="{{key}}"/>
+            <td>{{ key }}</td>
+            <td width="80%">
+                <div ng-switch on="key">
+                    <div ng-switch-when="game_is_running">
+                        <input type="checkbox"
+                           ng-model="config[key]"
+                           id="{{key}}"
+                           ng-true-value="1"
+                           ng-false-value="0"
+                           >
+                    </div>
+                    <div ng-switch-when="info_text">
+                        <textarea class="form-control" ng-model="config[key]" id="{{key}}" rows="5"></textarea>
+                    </div>
+                    <div ng-switch-when="passcode_page_text">
+                        <textarea class="form-control" ng-model="config[key]" id="{{key}}" rows="5"></textarea>
+                    </div>
+                    <div ng-switch-default>
+                        <input type="text" class="form-control" ng-model="config[key]" id="{{key}}"/>
+                    </div>
                 </div>
             </td>
-            <td><button ng-click="saveConfig(key,conf)" class="btn btn-default">&#128190;</button></td>
         </tr>
     </table>
+    <button ng-click="saveConfigAll()" class="btn btn-primary">Speichern</button>
 </div>
