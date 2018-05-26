@@ -18,8 +18,8 @@
 </head>
 
 <body>
-	<!-- QR CODES -->
-	<div id="qrcodes" ng-controller="QRCtrl">
+	<!-- Passcode Pages -->
+	<div id="passcode_print" ng-controller="passcodePrintCtrl">
 		<!-- page -->
 		<div ng-repeat="group in groups track by $index">
 			<!-- pagehead -->
@@ -27,8 +27,8 @@
 				<img src="img/logo2_small.png"/>
 			</div>
 			<div class="pxlogininfo">
-				<h1>Pio – X 2018 (Winterthur)</h1>
-				<p style="color: #8C6239; font-weight: bold;">Der etwas andere Pio Wettkampf!</p>
+				<h1>{{config.passcode_page_title}}</h1>
+				<p style="color: #8C6239; font-weight: bold;">{{config.passcode_page_subtitle}}</p>
 				<div>
 					<div class="pxgroupname">{{group.t_ID}}: {{group.name}}</div>
 					<div class="pxlabel">Gruppe: </div>
@@ -85,11 +85,11 @@
 					<li>Die Gruppe darf sich nicht trennen.</li>
 					<li>Wir sind Pfadi und verhalten uns auch so.</li>
 				</ul>
-			</div>
-			<!-- end pagebody 1 -->
-			<p style="page-break-after:always;"></p>
-			<!-- pagebody 2 -->
-			<div class="pxbody2" >
+
+				<br>
+				<br>
+				<br>
+				<br>
 				<h2>Wie funktioniert das Spiel?</h2>
 				<p>Wer am Ende am meisten Punkte hat, gewinnt. Punkte könnt ihr auf drei Arten machen:</p>
 				<ol>
@@ -129,8 +129,8 @@
 				<p>Wenn ihr Probleme irgendwelcher Art habt, meldet euch per Whatsapp oder SMS auf der Notfallnummer. Meldet euch immer per Chat, Anrufe nur bei einem Notfall! Die Notfallnummer lautet 079 542 79 35. Bei medizinischen Notfällen direkt die Ambulanz (144) anrufen und anschliessend die Notfallnummer.</p>
 				<p>Notfallnummer: 079 542 79 35</p>
 			</div>
-			<p style="page-break-after:always; clear: both;"></p>
-			<!-- end pagebody 2 -->
+			<!-- end pagebody 1 -->
+			<p style="page-break-after:always;"></p>
 		</div>
 		<!-- end page -->
 	</div>
@@ -157,6 +157,7 @@
 	<script src="js/controllers/mapCtrl.js"></script>
 	<script src="js/controllers/notificationCtrl.js"></script>
 	<script src="js/controllers/passcodeCtrl.js"></script>
+	<script src="js/controllers/passcodePrintCtrl.js"></script>
 	<script src="js/controllers/QRCtrl.js"></script>
 	<script src="js/controllers/riddleCtrl.js"></script>
 	<script src="js/controllers/solvedRiddleCtrl.js"></script>

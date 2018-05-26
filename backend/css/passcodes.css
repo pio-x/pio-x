@@ -53,13 +53,8 @@ div .pxqrcode {
 }
 
 div .pxbody1 {
-    float: left;
-    width: 100%;
-    border: 0px solid black;
-}
-
-div .pxbody2 {
-    float: left;
+    padding-top: 10px;
+    clear: both;
     width: 100%;
     border: 0px solid black;
 }
