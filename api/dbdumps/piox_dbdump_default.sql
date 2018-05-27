@@ -37,6 +37,7 @@ LOCK TABLES `config` WRITE;
 INSERT INTO `config` (`key`, `value`)
 VALUES
 	('game_is_running','1'),
+	('show_team_points','1'),
 	('home_location_lat','47.499163'),
 	('home_location_long','8.721871'),
 	('home_location_title','Startpunkt'),
@@ -299,7 +300,7 @@ CREATE TABLE `r_team_points` (
   `rtp_ID` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `t_ID` int(11) NOT NULL,
   `points` int(11) NOT NULL,
-  `type` enum('STATION','RIDDLE','PASSCODE') NOT NULL DEFAULT 'STATION',
+  `type` enum('STATION','RIDDLE','PASSCODE','ADMIN') NOT NULL DEFAULT 'STATION',
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `FK_ID` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`rtp_ID`)
