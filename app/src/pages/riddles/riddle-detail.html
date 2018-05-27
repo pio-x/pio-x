@@ -21,7 +21,7 @@
       </button>
     </span>
     <span *ngIf="!riddle.question">
-      <i>Frage versteckt. Das Rätsel kann nur vor Ort entsperrt werden.</i>
+      <i>Frage versteckt. <br>Das Rätsel kann nur vor Ort entsperrt werden.</i>
       <div *ngIf="riddle.pos_lat">
         <ion-icon name="pin"></ion-icon>
         {{locationService.getDistanceToUser(riddle.pos_lat, riddle.pos_long)}}m entfernt

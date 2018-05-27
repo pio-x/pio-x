@@ -62,7 +62,7 @@
                   fillOpacity: 1
               }"
       >
-        <agm-info-window [disableAutoPan]="true" #infowindow>
+        <agm-info-window [disableAutoPan]="true" [maxWidth]="300" #infowindow>
           <h3>{{config.home_location_title}}</h3>
         </agm-info-window>
       </agm-marker>
@@ -82,7 +82,7 @@
                   scale: 8
               }"
       >
-        <agm-info-window [disableAutoPan]="true" #infowindow>
+        <agm-info-window [disableAutoPan]="true" [maxWidth]="300" #infowindow>
           <h3>Tutorial Station</h3>
           <div *ngIf="tutorialStationCaptured">
             <div>
@@ -93,7 +93,11 @@
           </div>
           <div *ngIf="!tutorialStationCaptured">
             <div>
-              Dies ist eine Station. Sie gehört noch keinem Team. Du kannst sie für dein Team einnehmen und ihr erhaltet dafür alle 5min Punkte wenn sie euch gehört.
+              Dies ist eine Station. Sie gehört noch keinem Team.<br>
+              Du kannst sie für dein Team einnehmen.<br>
+              <br>
+              Alle 5 Minuten erhaltet ihr Punkte für jede Station,<br>
+              die eurem Team gehört.
               <br><br>
             </div>
             <br>
@@ -132,7 +136,7 @@
                 scale: 8
             }"
     >
-      <agm-info-window [disableAutoPan]="true" #infowindow>
+      <agm-info-window [disableAutoPan]="true" [maxWidth]="300" #infowindow>
         <h3>{{station.name}}</h3>
         <ion-item *ngIf="teams[station.team]">
           <ion-avatar item-left *ngIf="teams[station.team].img_ID">
@@ -213,9 +217,9 @@
                   scaledSize: {width: 27, height: 30}
               }"
       >
-        <agm-info-window [disableAutoPan]="true" #infowindow>
+        <agm-info-window [disableAutoPan]="true" [maxWidth]="300" #infowindow>
           <h3>{{mrx.name}}</h3>
-          <div *ngFor="let loc of mrx.locations; let i = index;">
+          <div *ngFor="let loc of mrx.locations; let i = index;" class="mrx-location-description">
             <b *ngIf="i == 0">
               <span class="mrx-timestamp">{{loc.timestamp | date:'HH:mm'}}</span> {{loc.description}}
             </b>
@@ -263,7 +267,7 @@
                     fillOpacity: 1
                 }"
         >
-          <agm-info-window [disableAutoPan]="true" #infowindow>
+          <agm-info-window [disableAutoPan]="true" [maxWidth]="300" #infowindow>
             <page-riddle-detail [riddle]="riddle"></page-riddle-detail>
           </agm-info-window>
         </agm-marker>
