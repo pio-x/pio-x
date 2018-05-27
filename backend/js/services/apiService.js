@@ -35,6 +35,9 @@ backendApp.factory('apiService', ['$http', '$rootScope', function($http, $rootSc
         },
         imageUrl: function (image_ID) {
             return baseURL + '/image/' + image_ID + '.jpg?hash=' + localStorage.getItem('hash');
+        },
+        refreshApiUrl: function () {
+            baseURL = localStorage.getItem('api');
         }
     }
 }]);

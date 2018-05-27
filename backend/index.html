@@ -43,6 +43,9 @@
 
 		<!-- Login -->
 		<div class="content" ng-if="loggedIn == false && showLogin == true">
+			<div ng-if="showLoginError" class="alert alert-danger">
+				Login fehlgeschlagen!
+			</div>
 			<div class="input-group">
 				<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i> Backend Hash:</span>
 				<input class="form-control" type="text" ng-model="hash" ng-keyup="$event.keyCode == 13 && login(hash,api,frontend)"/>
