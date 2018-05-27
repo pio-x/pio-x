@@ -206,7 +206,7 @@ $app->delete('/station/{id}',function (Request $request, Response $response, $ar
 
 
 // TEAM
-$app->get('/team', function (Request $request, Response $response) use (&$DB) {
+$app->get('/team', function (Request $request, Response $response) use (&$DB, $config) {
 	$teams = $DB->fetchAll("
 		SELECT 
 			t.*, 
@@ -264,6 +264,13 @@ $app->get('/team', function (Request $request, Response $response) use (&$DB) {
 	} else {
 		// do not send hashes to teams/mrx
 		$teams = APIHelper::removeAttribute($teams, 'hash');
+
+		// if points are hidden for teams, set them to 0
+		if (!$config['show_team_points']) {
+			foreach ($teams as $index => $team) {
+				$teams[$index]['score'] = 0;
+			}
+		}
 	}
 
 	return $response->withJson($teams, 200, JSON_NUMERIC_CHECK);

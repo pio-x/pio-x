@@ -12,7 +12,7 @@
             <td>{{ key }}</td>
             <td width="80%">
                 <div ng-switch on="key">
-                    <div ng-switch-when="game_is_running">
+                    <div ng-switch-when="game_is_running|show_team_points" ng-switch-when-separator="|">
                         <input type="checkbox"
                            ng-model="config[key]"
                            id="{{key}}"
@@ -20,10 +20,7 @@
                            ng-false-value="0"
                            >
                     </div>
-                    <div ng-switch-when="info_text">
-                        <textarea class="form-control" ng-model="config[key]" id="{{key}}" rows="5"></textarea>
-                    </div>
-                    <div ng-switch-when="passcode_page_text">
+                    <div ng-switch-when="info_text|passcode_page_text" ng-switch-when-separator="|">
                         <textarea class="form-control" ng-model="config[key]" id="{{key}}" rows="5"></textarea>
                     </div>
                     <div ng-switch-default>
