@@ -1,12 +1,12 @@
 <div class="image-uploader">
   <!-- Native Image upload -->
   <div *ngIf="isCordova">
-    <div class="uploaded-image-holder" (click)="takePictureNative()">
+    <div class="uploaded-image-holder">
       <img class="uploaded-image" id="uploaded-image" [attr.data-orientation]="imageOrientation" [hidden]="!image"/>
-      <div class="uploaded-image-placeholder" *ngIf="!image">
+      <div class="uploaded-image-placeholder" *ngIf="!image" (click)="takePictureNative()">
         <ion-icon name="camera"></ion-icon>
       </div>
-      <button *ngIf="!image" ion-button full color="secondary">Foto aufnehmen</button>
+      <button *ngIf="!image" ion-button full color="secondary" (click)="takePictureNative()">Foto aufnehmen</button>
     </div>
   </div>
 
@@ -21,12 +21,12 @@
          #imgupload
     />
     <br>
-    <div class="uploaded-image-holder" (click)="imgupload.click()">
+    <div class="uploaded-image-holder">
       <img class="uploaded-image" id="uploaded-image" [attr.data-orientation]="imageOrientation" [hidden]="!imageRaw"/>
-      <div class="uploaded-image-placeholder" *ngIf="!imageRaw">
+      <div class="uploaded-image-placeholder" *ngIf="!imageRaw" (click)="imgupload.click()">
         <ion-icon name="camera"></ion-icon>
       </div>
-      <button *ngIf="!imageRaw" ion-button full color="secondary">Foto aufnehmen</button>
+      <button *ngIf="!imageRaw" ion-button full color="secondary" (click)="imgupload.click()">Foto aufnehmen</button>
     </div>
   </div>
 
