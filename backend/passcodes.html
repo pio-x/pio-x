@@ -35,14 +35,14 @@
 				</div>
 				<div>
 					<div class="pxloginurl">
-						{{ baseURL }}/login.html?team={{group.t_ID}}&hash=<br/>{{group.hash}}
+						{{ baseURL }}/login.html?team={{group.t_ID}}&hash=<br/>{{group.hash}}<br>&api={{apiURL}}
 					</div>
 					<div class="pxlabel">Ohne QR: </div>
 				</div>
 			</div>
 			<div id="pxqrcode" class="pxqrcode">
 				<qrcode version="6" error-correction-level="M" size="160"
-						data="{{ baseURL }}/login.html?team={{group.t_ID}}&hash={{group.hash}}"></qrcode>
+						data="{{ baseURL }}/login.html?team={{group.t_ID}}&hash={{group.hash}}&api={{apiURL}}"></qrcode>
 			</div>
 			<!-- end pagehead -->
 			<!-- pagebody -->
