@@ -17,7 +17,15 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <ion-list no-border>
+  <div padding *ngIf="!configService.getConfig().show_team_points">
+    <br>
+    <h4>Die Rangliste ist deaktiviert</h4>
+    <br>
+    Das Schlussresultat erfahrt ihr bei der Rangverkündigung.
+    <br><br><br><br><br><br><br>
+  </div>
+
+  <ion-list no-border *ngIf="configService.getConfig().show_team_points">
     <ion-item *ngFor="let team of teams">
       <ion-avatar item-left *ngIf="team.img_ID">
         <img [src]="teamService.imageUrl(team.img_ID)">

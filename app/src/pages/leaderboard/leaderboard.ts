@@ -7,6 +7,7 @@ import {ProfileImagePage} from "../profile-image/profile-image";
 import {ModalController} from "ionic-angular";
 import {LocationService} from "../../services/location.service";
 import {UserLatLngLocation} from "../../interfaces/LatLngLocation";
+import {ConfigService} from "../../services/config.service";
 
 
 @Component({
@@ -24,7 +25,8 @@ export class LeaderboardPage {
       private teamService:TeamService,
       public navService: NavigationService,
       public modalCtrl: ModalController,
-      private locationService: LocationService
+      private locationService: LocationService,
+      private configService: ConfigService
   ) {
     this.myteam = parseInt(localStorage.getItem('team'));
     this.myname = decodeURIComponent(localStorage.getItem('player')).replace( /\+/g, ' ');
@@ -57,6 +59,7 @@ export class LeaderboardPage {
       }).catch(() => {
           refresher.complete();
       });
+      this.configService.updateConfig();
   }
 
   openProfileImageModal() {
