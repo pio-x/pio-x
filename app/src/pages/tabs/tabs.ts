@@ -35,6 +35,7 @@ export class TabsPage {
   isMrx: number = 0;
 
   hasLocation: boolean = false;
+  location: LatLngLocation = null;
 
   constructor(
       private notificationService:NotificationService,
@@ -61,6 +62,7 @@ export class TabsPage {
     // try if location already available
     let location = this.locationService.getLocation();
     if (location && location.lat) {
+      this.location = location;
       this.hasLocation = true;
     }
 
@@ -68,6 +70,7 @@ export class TabsPage {
     if (!this.hasLocation) {
       this.locationService.userLocation.subscribe((pos: LatLngLocation) => {
         if (pos && pos.lat) {
+          this.location = location;
           this.hasLocation = true;
         }
       });

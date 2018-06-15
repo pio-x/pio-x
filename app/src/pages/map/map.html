@@ -44,7 +44,7 @@
     >
     </agm-circle>-->
 
-    <div *ngIf="!config.game_is_running">
+    <div *ngIf="config && !config.game_is_running">
       <!-- Home Location -->
       <agm-marker
               *ngIf="!showTutorial()"

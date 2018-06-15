@@ -28,6 +28,16 @@
     }
   </script>-->
 
+  <script>
+    function logoutAfterError() {
+      localStorage.removeItem('mrx');
+      localStorage.removeItem('team');
+      localStorage.removeItem('hash');
+      localStorage.removeItem('player');
+      window.location.reload(true);
+    }
+  </script>
+
   <link href="build/main.css" rel="stylesheet">
 
 </head>
@@ -56,9 +66,11 @@
     border-radius: 4px;
     font-family: 'Roboto', 'Helvetica Neue', sans-serif;"
   >
-    <div id="js-error-text">wief wehfjkwhekfjwhkejfhw ekjfhwkjefh wkjehf kjwehfk jwehf kwjehf</div>
+    <div id="js-error-text">...</div>
+    <br>
     <div>
       <b><a style="color: white;" onclick="document.getElementById('js-error').style.display = 'none'">Schliessen</a></b>
+      <b><a style="color: white;" onclick="logoutAfterError()">Abmelden</a></b>
     </div>
   </div>
 

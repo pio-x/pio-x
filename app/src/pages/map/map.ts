@@ -41,9 +41,9 @@ export class MapPage {
 
     stations: Station[] = [];
     teams: { [id: number]: Team; } = { };
-    mrxs: Mrx[];
-    riddles: Riddle[];
-    config: Config;
+    mrxs: Mrx[] = [];
+    riddles: Riddle[] = [];
+    config: Config = {};
 
     isMrx: number = 0;
 
@@ -218,10 +218,12 @@ export class MapPage {
 
     configUpdated(config: Config): void {
         if (JSON.stringify(this.config) != JSON.stringify(config)) {
-            this.config = config;
-            this.tutorialStation.pos_lat = config.home_location_lat;
-            this.tutorialStation.pos_long = config.home_location_long;
-            this.cd.markForCheck();
+            if (config) {
+                this.config = config;
+                this.tutorialStation.pos_lat = config.home_location_lat;
+                this.tutorialStation.pos_long = config.home_location_long;
+                this.cd.markForCheck();
+            }
         }
     }
 
