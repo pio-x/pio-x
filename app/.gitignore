@@ -29,7 +29,6 @@ www/build/main.js.map
 $RECYCLE.BIN/
 team.json
 www/local_config.js
-www/assets/fonts/*
 
 .DS_Store
 Thumbs.db
