@@ -10,6 +10,7 @@ import {MrxPage} from "../mrx/mrx";
 import { NotificationService } from '../../services/notification.service';
 import {Platform} from "ionic-angular";
 import {LocationService} from "../../services/location.service";
+import {LatLngLocation} from "../../interfaces/LatLngLocation";
 
 @Component({
   templateUrl: 'tabs.html'
@@ -33,6 +34,8 @@ export class TabsPage {
   isTeam: number = 0;
   isMrx: number = 0;
 
+  hasLocation: boolean = false;
+
   constructor(
       private notificationService:NotificationService,
       public platform: Platform,
@@ -53,6 +56,21 @@ export class TabsPage {
 
     if ((this.isTeam || this.isMrx) && localStorage.getItem('hash')) {
         this.isLoggedIn = true;
+    }
+
+    // try if location already available
+    let location = this.locationService.getLocation();
+    if (location && location.lat) {
+      this.hasLocation = true;
+    }
+
+    // or wait for location get available
+    if (!this.hasLocation) {
+      this.locationService.userLocation.subscribe((pos: LatLngLocation) => {
+        if (pos && pos.lat) {
+          this.hasLocation = true;
+        }
+      });
     }
   }
 

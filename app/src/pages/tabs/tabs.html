@@ -1,4 +1,4 @@
-<ion-tabs *ngIf="isLoggedIn && locationService.getLocation()">
+<ion-tabs *ngIf="isLoggedIn && hasLocation">
   <ion-tab [root]="tab1Root" tabTitle="Karte" tabIcon="map" *ngIf="isLoggedIn"></ion-tab>
   <ion-tab [root]="tab2Root" tabTitle="Rangliste" tabIcon="trophy" *ngIf="isLoggedIn"></ion-tab>
   <ion-tab [root]="tab3Root" tabTitle="Rätsel" tabIcon="key" *ngIf="isTeam"></ion-tab>
@@ -6,7 +6,7 @@
   <ion-tab [root]="tab5Root" tabTitle="Infos" tabIcon="book" *ngIf="isLoggedIn"></ion-tab>
   <ion-tab [root]="tab6Root" tabTitle="Nachrichten" tabIcon="megaphone" [tabBadge]="notificationCount" tabBadgeStyle="danger" *ngIf="isLoggedIn"></ion-tab>
 </ion-tabs>
-<ion-content *ngIf="isLoggedIn && !locationService.getLocation()">
+<ion-content *ngIf="isLoggedIn && !hasLocation">
   <ion-card>
     <ion-card-header>
       <ion-icon name="navigate"></ion-icon> GPS Position suchen...
