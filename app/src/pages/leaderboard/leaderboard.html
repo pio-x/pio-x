@@ -38,7 +38,7 @@
   </ion-list>
 
   <div padding>
-    <ion-icon name="person"></ion-icon> Angemeldet als {{myname}} <a (click)="openProfileImageModal()">Teambild ändern</a>
+    <ion-icon name="person"></ion-icon> Angemeldet als {{myname}} <a (click)="openProfileImageModal()" *ngIf="myteam">Teambild ändern</a>
   </div>
 
   <div padding>

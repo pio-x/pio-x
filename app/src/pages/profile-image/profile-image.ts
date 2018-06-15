@@ -15,12 +15,14 @@ export class ProfileImagePage {
     imageData: string = null;
     tags = {};
 
+    public isTeam: number = 0;
+
     constructor(private teamService:TeamService,
                 public params: NavParams,
                 public viewCtrl: ViewController,
                 public loadingCtrl: LoadingController
     ) {
-
+        this.isTeam = parseInt(localStorage.getItem('team'));
     }
 
     uploadImage() {

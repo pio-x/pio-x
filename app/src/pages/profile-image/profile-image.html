@@ -6,13 +6,22 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content padding *ngIf="isTeam">
   <image-uploader [(tags)]="tags" [(image)]="imageData"></image-uploader>
   <br>
   <br>
   <p>
     <button ion-button full color="secondary" (click)="uploadImage()" [disabled]="!imageData">Bild hochladen</button>
     <br>
+    <button ion-button full color="danger" (click)="dismiss()">Abbrechen</button>
+  </p>
+</ion-content>
+
+<ion-content padding *ngIf="!isTeam">
+  Nur Teams können das Teambild ändern.
+  <br>
+  <br>
+  <p>
     <button ion-button full color="danger" (click)="dismiss()">Abbrechen</button>
   </p>
 </ion-content>

@@ -51,6 +51,12 @@ Commands um einen Release Build zu erstellen sind im release_android.sh zu finde
 
 Um das APK zu signieren benötigst du zusätzlich den korrekten Keystore und das Passwort (nicht im GIT)
 
+#### Ionic updaten
+
+Ionic (CLI) auf die neuste Version updaten:
+
+`sudo npm update -g cordova ionic`
+
 #### Plugins installieren
 
 Wenn man ein neues Plugin oder eine Plattform installiert hat,
