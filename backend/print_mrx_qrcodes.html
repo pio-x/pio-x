@@ -1,0 +1,105 @@
+<!DOCTYPE HTML>
+
+<html ng-app="backendApp">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>PIO-X Backend</title>
+	<script src="node_modules/jquery/dist/jquery.min.js"></script>
+	<link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/passcodes.css">
+
+		<style type="text/css">
+		.body {
+				font-size: 12px;
+		}
+		</style>
+</head>
+
+<body>
+	<div ng-controller="mrxQrCodePrintCtrl">
+		<!-- page -->
+		<div ng-repeat="mrx in mrxs track by $index">
+			<!-- pagehead -->
+			<table width="100%">
+				<tr>
+					<td>
+						<img src="img/logo2_small.png"/>
+					</td>
+					<td>
+						<h1>Mister X Checkin</h1>
+						<h2>Name: {{mrx.name}} ({{mrx.x_ID}})</h2>
+						<br>
+						<div>URL ohne QR Code:<br>
+							{{ baseURL }}/login.html?mrx={{mrx.x_ID}}&hash=<br/>{{mrx.x_hash}}<br>&api={{apiURL}}
+						</div>
+					</td>
+					<td align="right">
+						<qrcode
+								version="8"
+								error-correction-level="M"
+								size="160"
+								data="{{ baseURL }}/login.html?mrx={{mrx.x_ID}}&hash=<br/>{{mrx.x_hash}}<br>&api={{apiURL}}"
+						></qrcode>
+					</td>
+				</tr>
+			</table>
+			<div class="pxbody1">
+				<div ng-bind-html="config.mrx_qrcode_page_text | to_trusted"></div>
+			</div>
+			<p style="page-break-after:always;"></p>
+		</div>
+		<!-- end page -->
+	</div>
+
+
+	<script src="node_modules/angular/angular.min.js"></script>
+	<script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="node_modules/angular-animate/angular-animate.min.js"></script>
+	<script src="node_modules/angular-touch/angular-touch.min.js"></script>
+	<script src="node_modules/angular-sanitize/angular-sanitize.min.js"></script>
+	<script src="node_modules/highcharts/highcharts.src.js"></script>
+	<script src="node_modules/highcharts-ng/dist/highcharts-ng.min.js"></script>
+	<script src="node_modules/ngmap/build/scripts/ng-map.min.js"></script>
+	<script src="node_modules/moment/moment.js"></script>
+	<script src="node_modules/moment/locale/de.js"></script>
+	<script src="node_modules/angular-moment/angular-moment.js"></script>
+	<script src="node_modules/angular-ui-bootstrap/dist/ui-bootstrap.js"></script>
+	<script src="node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js"></script>
+	<script src="js/app.js"></script>
+	<script src="js/controllers/mainCtrl.js"></script>
+	<script src="js/controllers/dashboardCtrl.js"></script>
+	<script src="js/controllers/diashowCtrl.js"></script>
+	<script src="js/controllers/configCtrl.js"></script>
+	<script src="js/controllers/logCtrl.js"></script>
+	<script src="js/controllers/mapCtrl.js"></script>
+	<script src="js/controllers/notificationCtrl.js"></script>
+	<script src="js/controllers/passcodeCtrl.js"></script>
+	<script src="js/controllers/mrxQrCodePrintCtrl.js"></script>
+	<script src="js/controllers/passcodePrintCtrl.js"></script>
+	<script src="js/controllers/QRCtrl.js"></script>
+	<script src="js/controllers/riddleCtrl.js"></script>
+	<script src="js/controllers/solvedRiddleCtrl.js"></script>
+	<script src="js/controllers/stationCtrl.js"></script>
+	<script src="js/controllers/statsCtrl.js"></script>
+	<script src="js/controllers/teamCtrl.js"></script>
+	<script src="js/controllers/teamPointModalCtrl.js"></script>
+	<script src="js/services/apiService.js"></script>
+	<script src="js/services/configService.js"></script>
+	<script src="js/services/logService.js"></script>
+	<script src="js/services/mrxService.js"></script>
+	<script src="js/services/riddleService.js"></script>
+	<script src="js/services/solvedRiddleService.js"></script>
+	<script src="js/services/stationService.js"></script>
+	<script src="js/services/teamService.js"></script>
+	<script src="js/vendor/qrcode.js"></script>
+	<script src="js/vendor/angular-qrcode.js"></script>
+	<script src="js/directives/ngConfirmClick.js"></script>
+	<script src="js/directives/mapInfo.js"></script>
+	<script src="js/directives/riddlePicker.js"></script>
+	<script src="js/directives/teamPicker.js"></script>
+
+</body>
+
+</html>
