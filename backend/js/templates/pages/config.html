@@ -1,12 +1,12 @@
 <div ng-controller="configCtrl">
-    <h3>Konfiguration</h3>
     <div ng-if="messages">
         <div ng-repeat="msg in messages" class="alert alert-success">
             {{msg}}
         </div>
     </div>
+    <button ng-click="configService.update()" class="btn btn-default">Aktualisieren</button>
     <button ng-click="saveConfigAll()" class="btn btn-primary">Speichern</button>
-    <br><br>
+    <h3>Konfiguration</h3>
     <table class="table table-striped">
         <tr ng-repeat="(key,conf) in config">
             <td>{{ key }}</td>
@@ -30,5 +30,6 @@
             </td>
         </tr>
     </table>
+    <button ng-click="configService.update()" class="btn btn-default">Aktualisieren</button>
     <button ng-click="saveConfigAll()" class="btn btn-primary">Speichern</button>
 </div>

@@ -1,5 +1,6 @@
 backendApp.controller('teamCtrl', function($scope, $uibModal, apiService, teamService){
     $scope.apiService = apiService;
+    $scope.teamService = teamService;
     $scope.groups = [];
     teamService.subscribe(function(teams) {
         $scope.groups = teams;

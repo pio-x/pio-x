@@ -1,18 +1,15 @@
 <div ng-controller="QRCtrl">
+    <div>
+        <button ng-click="refresh()" class="btn btn-default">Aktualisieren</button>
+        <a type="button" href="./passcodes.html" value="Passcodes" target="_blank" class="btn btn-default button">Öffne neues Fenster um Checkin Karten zu drucken</a>
+        <a type="button" href="./print_mrx_qrcodes.html" value="QR Codes" target="_blank" class="btn btn-default button">Mr. X QR Codes drucken</a>
+    </div>
+    <br>
     <div class="input-group">
         <span class="input-group-addon">Suche:</span>
         <input type="text" ng-model="search" class="form-control">
     </div>
-    <table>
-        <tr>
-            <td class="col-sm-6"><h3>{{ search ? 'Gefilterte' : 'Alle' }} QR Codes</h3></td>
-            <td><button ng-click="refresh()" class="btn btn-default">Liste Aktualisieren</button></td>
-            <td>
-                <a type="button" href="./passcodes.html" value="Passcodes" target="_blank" class="btn btn-default button">Öffne neues Fenster um Checkin Karten zu drucken</a>
-                <a type="button" href="./print_mrx_qrcodes.html" value="QR Codes" target="_blank" class="btn btn-default button">Mr. X QR Codes drucken</a>
-            </td>
-        </tr>
-    </table>
+    <h3>{{ search ? 'Gefilterte' : 'Alle' }} QR Codes</h3>
     <table class="table"><tr><td class="col-md-8">
         <table class="table table-striped">
             <tr>
