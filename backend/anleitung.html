@@ -1,0 +1,91 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>PIO-X Anleitung</title>
+	<link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+</head>
+
+<body class="anleitung">
+<div class="container">
+
+	<img src="/img/logo2_small.png" align="right" style="margin: 40px; width: 60px">
+	<h1>Admin Anleitung</h1>
+
+	<h2>Was ist zu tun?</h2>
+	<h3>Vorbereitungen (ein paar Tage vorher)</h3>
+	<ul>
+		<li>Stationen erfassen und allenfalls anpassen (wenn noch vorhanden von vorherigem Spiel). Um eine Station hinzuzufügen auf den gewünschten Ort auf der Karte klicken. Gelöscht werden können sie nur in der Liste der Stationen.</li>
+		<li>Teams anpassen: Teams erfassen/anpassen und weitere Teams hinzufügen falls nötig</li>
+		<li>Rätsel erfassen/anpassen. Die Optionen/Kombinationen sind vielleicht nicht ganz verständlich, am besten einfach ein bisschen ausprobieren und in der App ausprobieren wies aussieht. Um ein Rätsel hinzuzufügen auf den gewünschten Ort auf der Karte klicken.</li>
+		<li>Unter "Passcodes" die Mr. X Passcodes generieren (mind. 1 Passcode pro erfasstem Team pro Mr.X damit es genug hat). Die Mr.X ID's findest du unter "QR Codes"</li>
+		<li>
+			Konfiguration unter "Config" anpassen:
+			<ul>
+				<li><code>home_location_*</code> und <code>map_center_*</code> Koordinaten setzen (Im Zweifelsfall die gleichen Koordinaten nehmen). Die Koordinaten kann man z.B herausfinden indem man am gewünschten Ort auf die Übersichtskarte klickt und die Werte Lat/Lng kopiert.</li>
+				<li>Alle Texte in der Config anpassen: Vorallem <code>home_location_title</code>, <code>info_text</code>, <code>passcode_page_subtitle</code>, <code>passcode_page_text</code>, <code>passcode_page_title</code> (HTML Formatierung erlaubt)</li>
+			</ul>
+		</li>
+	</ul>
+
+	<h3>Vor dem Spiel (wenn alles eingerichtet)</h3>
+	<ul>
+		<li>!VORHER TESTEN! ob die QR Codes funktionieren</li>
+		<li>Team QR Code Seiten drucken ("QR Codes" > "Öffne neues Fenster um Checkin Karten zu drucken"). Am besten gehts direkt mit der Google Chrome Druckfunktion.</li>
+		<li>Mr. X QR Code Seiten drucken ("QR Codes" > "Mr. X QR Codes drucken")</li>
+		<li>Mr. X Passcodes drucken ("Passcodes" > "Mr.X Passcodes drucken") und ausschneiden (am besten in ein Couvert verpacken)</li>
+		<li>Spiel deaktivieren indem die Config Checkbox "game_is_running" deaktiviert wird</li>
+	</ul>
+
+	<h3>Beim Check-In</h3>
+	<ul>
+		<li>QR Codes an Mr.X verteilen und prüfen ob es bei ihnen funktioniert.</li>
+		<li>Mr. X Passcodes an Mr.X übergeben</li>
+		<li>QR Codes an Teams verteilen</li>
+		<li>Bei allen Teams prüfen, ob sie die Tutorial Station einnehmen konnten</li>
+		<li>Prüfen dass bei jedem Team genug Akku vorhanden ist, das Spiel braucht viel Akku!</li>
+		<li>Prüfen dass jedes Team Internetzugang hat (100MB Daten sollten gut ausreichen. Wenn man den Stream nicht anschaut kann man Daten sparen)</li>
+	</ul>
+
+	<h3>Bei Spielstart</h3>
+	<ul>
+		<li>Sicherstellen, dass Server genug Leistung hat (direkt auf dem Server)</li>
+		<li>Datenbank Backup erstellen zur Sicherheit (direkt auf dem Server)</li>
+		<li>Spiel starten, indem die Config Checkbox "game_is_running" aktiviert wird</li>
+	</ul>
+
+	<h3>Während dem Spiel</h3>
+	<ul>
+		<li>Spiel auf dem <a href="dashboard.html" target="_blank">Dashboard</a> mitverfolgen</li>
+		<li>Laufend die gelösten Rätsel überprüfen und ggf. Punkte korrigieren</li>
+		<li>Ab und zu eine Notification senden, die über das Spielgeschehen informiert</li>
+		<li>Optional: Rangliste eine halbe Stunde vor Ende deaktivieren um es spannender zu machen (Checkbox "show_team_points" deaktivieren)</li>
+	</ul>
+
+	<h3>Bei Spielende</h3>
+	<ul>
+		<li>Spiel deaktivieren indem die Config Checkbox "game_is_running" deaktiviert wird</li>
+	</ul>
+
+	<h3>Nach dem Spiel</h3>
+	<ul>
+		<li><a href="diashow.html" target="_blank">Diashow</a> zeigen wenn Beamer vorhanden</li>
+		<li>Server Leistung wieder zurückfahren (direkt auf dem Server)</li>
+		<li>Datenbank Backup erstellen (direkt auf dem Server)</li>
+	</ul>
+
+	<h2>Weitere Tipps</h2>
+	<h3>Tipps um das Spiel zu testen</h3>
+	Am besten ein eigenes Team machen das man dann vor Spielbeginn löscht damit es nicht in der Rangliste auftaucht.
+	Dann das Spiel aktivieren ("game_is_running") damit es in der App Live getestet werden kann.
+	Nicht vergessen vor dem Check-In das Spiel wieder zu deaktivieren!<br>
+	Um nicht immer rausgehen zu müssen kann man bei sich Zuhause ein paar Test-Stationen und Rätsel erfassen.
+
+	<br>
+	<br>
+</div>
+
+</body>
+
+</html>
