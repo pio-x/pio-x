@@ -1,11 +1,16 @@
 <div class="modal-header">
     <button type="button" class="close" ng-click="cancel()"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-    <h3 class="modal-title" id="modal-title">Team {{team_name}} ({{team_ID}}) Punkte geben/wegnehmen</h3>
+    <h3 class="modal-title" id="modal-title">Team {{team_ID}} {{team_name}} Punkte geben/wegnehmen</h3>
 </div>
 <div class="modal-body" id="modal-body">
-    Punkte: <input type="text" class="form-control input-sm" value="0" ng-model="points">
+    <div class="form-inline">
+        <div class="form-group">
+            <label for="pointsInput">Punkte</label>
+            <input type="number" class="form-control" id="pointsInput" value="0" ng-model="points">
+        </div>
+    </div>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-primary" type="button" ng-click="addTeamPoints(points)">Team {{team_name}} ({{team_ID}}) {{points}} Punkte geben</button>
-    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+    <button class="btn btn-primary" type="button" ng-click="addTeamPoints(points)">Team {{team_name}} {{points}} Punkte geben</button>
+    <button class="btn btn-default" type="button" ng-click="cancel()">Abbrechen</button>
 </div>

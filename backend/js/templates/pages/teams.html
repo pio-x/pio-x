@@ -23,11 +23,11 @@
         <tr ng-repeat="group in groups | filter:search">
             <td>{{ group.t_ID }}</td>
             <td><img ng-src="{{apiService.imageUrl(group.img_ID)}}" ng-if="group.img_ID" class="profile-image"></td>
-            <td><input type="text" class="form-control input-sm" value="{{ group.name }}" ng-model="group.name"/></td>
+            <td><input type="text" class="form-control input-sm" ng-model="group.name"/></td>
             <td>{{ group.score }}</td>
             <td>{{ group.hash }}</td>
             <td><button ng-click="updateTeam(group, group.t_ID)" class="btn btn-default input-sm">&#128190;</button></td>
-            <td><button ng-click="deleteTeam(group.t_ID)" class="btn btn-default input-sm" disabled>&#9003;</button></td>
+            <td><button ng-click="deleteTeam(group.t_ID)" class="btn btn-default input-sm" disabled title="Teams können zur Sicherheit nicht via Admin GUI gelöscht werden">&#9003;</button></td>
             <td><button ng-click="pointModal(group.t_ID, group.name)" class="btn btn-default input-sm"><span class="glyphicon glyphicon-ice-lolly" aria-hidden="true"></span></button></td>
         </tr>
         <tr>

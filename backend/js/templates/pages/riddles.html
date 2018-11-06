@@ -11,11 +11,11 @@
     <table class="table table-striped">
         <tr>
             <td>ID</td>
-            <td class="col-xs-1">Latitude</td>
-            <td class="col-xs-1">Longitude</td>
+            <td class="col-xs-1">Lat</td>
+            <td class="col-xs-1">Lng</td>
             <td class="col-xs-1">Titel</td>
             <td>Frage</td>
-            <td class="col-xs-1">Abhängig</td>
+            <td class="col-xs-1">Abhängig von</td>
             <td>Antwort</td>
             <td>Typ</td>
             <td>Antwort?</td>
@@ -26,20 +26,20 @@
         </tr>
         <tr ng-repeat="riddle in riddles | filter:search">
             <td>{{ riddle.r_ID }}</td>
-            <td class="col-xs-1"><input type="text" class="form-control input-sm" value="{{ riddle.pos_lat }}" ng-model="riddle.pos_lat"/></td>
-            <td class="col-xs-1"><input type="text" class="form-control input-sm" value="{{ riddle.pos_long }}" ng-model="riddle.pos_long"/></td>
-            <td class="col-xs-1"><input type="text" class="form-control input-sm" value="{{ riddle.title }}" ng-model="riddle.title"/></td>
+            <td class="col-xs-1"><input type="text" class="form-control input-sm" ng-model="riddle.pos_lat"/></td>
+            <td class="col-xs-1"><input type="text" class="form-control input-sm" ng-model="riddle.pos_long"/></td>
+            <td class="col-xs-1"><input type="text" class="form-control input-sm" ng-model="riddle.title"/></td>
             <td><textarea class="form-control input-sm" ng-model="riddle.question" rows="1"></textarea></td>
-            <td class="col-xs-1"><riddle-picker selected="riddle.dep_ID"></riddle-picker></td>
-            <td><input type="text" class="form-control input-sm" value="{{ riddle.answer }}" ng-model="riddle.answer" ng-if="riddle.answer_required"/></td>
+            <td class="col-xs-1"><riddle-picker selected="riddle.dep_ID" ng-if="riddle.type == 'MULTI'"></riddle-picker></td>
+            <td><input type="text" class="form-control input-sm" ng-model="riddle.answer" ng-if="riddle.answer_required"/></td>
             <td><select class="form-control input-sm" ng-model="riddle.type">
                     <option>MULTI</option>
                     <option>SINGLE</option>
                 </select>
             </td>
-            <td><input type="checkbox" class="form-control input-sm" ng-model="riddle.answer_required" ng-true-value="1" ng-false-value="0"/></td>
-            <td><input type="checkbox" class="form-control input-sm" ng-model="riddle.image_required" ng-true-value="1" ng-false-value="0"/></td>
-            <td class="col-xs-1"><input type="text" class="form-control input-sm" value="{{ riddle.points }}" ng-model="riddle.points"/></td>
+            <td><input type="checkbox" ng-model="riddle.answer_required" ng-true-value="1" ng-false-value="0"/></td>
+            <td><input type="checkbox" ng-model="riddle.image_required" ng-true-value="1" ng-false-value="0"/></td>
+            <td class="col-xs-1"><input type="number" class="form-control input-sm" ng-model="riddle.points"/></td>
             <td><button ng-click="updateRiddle(riddle.r_ID, riddle)" class="btn btn-default">&#128190;</button></td>
             <td><button ng-click="deleteRiddle(riddle.r_ID)" class="btn btn-default" ng-confirm-click="ACHTUNG: Willst du das Rätsel wirklich löschen?">&#9003;</button></td>
         </tr>
@@ -49,17 +49,30 @@
             <td class="col-xs-1"><input type="text" ng-model="newRiddle.pos_long" class="form-control input-sm"/></td>
             <td class="col-xs-1"><input type="text" ng-model="newRiddle.title" class="form-control input-sm"/></td>
             <td><textarea class="form-control input-sm" ng-model="newRiddle.question" rows="1"></textarea></td>
-            <td class="col-xs-1"><riddle-picker selected="newRiddle.dep_ID"></riddle-picker></td>
+            <td class="col-xs-1"><riddle-picker selected="newRiddle.dep_ID" ng-if="newRiddle.type == 'MULTI'"></riddle-picker></td>
             <td><input type="text" ng-model="newRiddle.answer" ng-if="newRiddle.answer_required" class="form-control input-sm"/></td>
             <td><select ng-model="newRiddle.type" class="form-control input-sm">
                     <option selected>MULTI</option>
                     <option>SINGLE</option>
                 </select>
             </td>
-            <td><input type="checkbox" class="form-control input-sm" ng-model="newRiddle.answer_required" ng-true-value="1" ng-false-value="0"/></td>
-            <td><input type="checkbox" class="form-control input-sm" ng-model="newRiddle.image_required" ng-true-value="1" ng-false-value="0"/></td>
-            <td class="col-xs-1"><input type="text" ng-model="newRiddle.points" class="form-control input-sm"/></td>
+            <td><input type="checkbox" ng-model="newRiddle.answer_required" ng-true-value="1" ng-false-value="0"/></td>
+            <td><input type="checkbox" ng-model="newRiddle.image_required" ng-true-value="1" ng-false-value="0"/></td>
+            <td class="col-xs-1"><input type="number" ng-model="newRiddle.points" class="form-control input-sm"/></td>
             <td colspan="2"><button ng-click="addNewRiddle(newRiddle)" class="btn btn-default" ng-disabled="!newRiddle.question">&#128190; Erstellen</button></td>
         </tr>
     </table>
+
+    <h4>Hinweise</h4>
+    <ul class="text-muted">
+        <li>Der Titel ist immer sichtbar in der Liste im Rätsel Tab oder wenn man es auf der Karte anwählt</li>
+        <li>Die Frage ist erst sichtbar nachdem das Rätsel vor Ort freigeschaltet wurde</li>
+        <li>"Antwort?" = Es muss eine korrekte Antwort gegeben werden um das Rätsel zu lösen. Keine komplizierten Antworten verwenden oder solche die Interpretationsfreiraum lassen (falsche Antworten geben Abzug!)</li>
+        <li>"Bild?" = Es muss ein Bild hochgeladen werden um das Rätsel zu lösen</li>
+        <li>Entweder "Antwort?" oder "Bild?" muss ausgewählt sein damit das Rätsel funktioniert.</li>
+        <li>Typ "SINGLE" = Einzelnes, unabhängiges Rätsel</li>
+        <li>Typ "MULTI" = Rätsel einer Rätselserie. Ein Rätsel einer Serie wird erst auf der Karte sichtbar, wenn das "Abhängig von" Rätsel gelöst wurde.<br>
+            Das erste Rätsel einer Serie sollte deshalb kein abhängiges Rätsel haben.</li>
+    </ul>
+
 </div>
