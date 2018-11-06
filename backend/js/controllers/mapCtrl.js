@@ -33,15 +33,20 @@ backendApp.controller('mapCtrl', function($scope, NgMap, apiService, riddleServi
         points: 50
     };
     $scope.newObjectPosition = [];
+    $scope.hideNew = function() {
+        $scope.newlat = null;
+        $scope.newlng = null;
+    };
     $scope.showEditStation = false;
     $scope.hideEditStation = function() {
         $scope.showEditStation = false;
-    }
+    };
 
     //Zum Station bearbeiten
     $scope.changedStation = {};
     $scope.editStation = function(id) {
         $scope.showEditStation = true;
+        $scope.hideNew();
         apiService.get('/station/' + id).then(function(response) {
             $scope.changedStation = response.data;
         });

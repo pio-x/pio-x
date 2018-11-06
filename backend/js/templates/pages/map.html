@@ -121,104 +121,160 @@
 		</span>
 		<hr/>
 		<div ng-if="showEditStation">
-			Station editieren:<br/>
-			<div class="input-group">
-				<span class="input-group-addon">LAT:</span>
-				<input class="form-control" type="text" ng-model="changedStation.pos_lat"/>
+			<h3>Station editieren</h3>
+			<div class="form-group">
+				<div class="input-group">
+					<span class="input-group-addon">Lat:</span>
+					<input class="form-control" type="text" ng-model="changedStation.pos_lat"/>
+				</div>
 			</div>
-			<div class="input-group">
-				<span class="input-group-addon">LNG:</span>
-				<input class="form-control" type="text" ng-model="changedStation.pos_long"/>
+			<div class="form-group">
+				<div class="input-group">
+					<span class="input-group-addon">Lng:</span>
+					<input class="form-control" type="text" ng-model="changedStation.pos_long"/>
+				</div>
 			</div>
-			<div class="input-group">
-				<span class="input-group-addon">Name:</span>
-				<input class="form-control" type="text" ng-model="changedStation.name"/>
+			<div class="form-group">
+				<div class="input-group">
+					<span class="input-group-addon">Name:</span>
+					<input class="form-control" type="text" ng-model="changedStation.name"/>
+				</div>
 			</div>
-			<div class="input-group">
-				<span class="input-group-addon">Beschreibung:</span>
-				<input class="form-control" type="text" ng-model="changedStation.description"/>
+			<div class="form-group">
+				<div class="input-group">
+					<span class="input-group-addon">Beschreibung:</span>
+					<input class="form-control" type="text" ng-model="changedStation.description"/>
+				</div>
 			</div>
-			<div class="input-group">
-				<span class="input-group-addon">Punkte:</span>
-				<input class="form-control" type="text" ng-model="changedStation.points"/>
+			<div class="form-group">
+				<div class="input-group">
+					<span class="input-group-addon">Punkte:</span>
+					<input class="form-control" type="text" ng-model="changedStation.points"/>
+				</div>
 			</div>
-			<div class="input-group">
-				<span class="input-group-addon">Aktiviert?</span>
-				<input type="checkbox" class="form-control input-sm" ng-model="changedStation.enabled" ng-true-value="1" ng-false-value="0"/>
+			<div class="form-group">
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" ng-model="changedStation.enabled" ng-true-value="1" ng-false-value="0"/>
+						Aktiviert
+					</label>
+				</div>
 			</div>
-			<button ng-click="saveStation()" class="btn btn-default">Speichern</button>
-			<button ng-click="hideEditStation()" class="btn btn-default">Abbrechen</button>
+			<div class="form-group">
+				<button ng-click="saveStation()" class="btn btn-primary">Speichern</button>
+				<button ng-click="hideEditStation()" class="btn btn-default">Abbrechen</button>
+			</div>
 			<hr />
 		</div>
 		<div ng-if="newlat">
-			Neu erstellen:<br/>
-			<label><input type="radio" name="newobjSelect" value="station" ng-model="showNewObjectInput" checked/> Station</label><br />
+			Neu erfassen:<br/>
+			<label><input type="radio" name="newobjSelect" value="station" ng-model="showNewObjectInput" checked/> Station</label>&nbsp;&nbsp;
 			<label><input type="radio" name="newobjSelect" value="riddle" ng-model="showNewObjectInput"/> Rätsel</label><br />
 			<hr />
-			<div class="input-group">
-				<span class="input-group-addon">Lat:</span>
-				<input class="form-control" type="text" ng-model="newlat"/>
-				<span class="input-group-addon">Lng:</span>
-				<input class="form-control" type="text" ng-model="newlng"/>
+			<div ng-if="showNewObjectInput == 'station'">
+				<h3>Neue Station</h3>
 			</div>
-			<span ng-if="showNewObjectInput == 'station'">
-				Neue Station:<br/>
-				<div class="input-group">
-					<span class="input-group-addon">Name:</span>
-					<input class="form-control" type="text" ng-model="newStation.name"/>
-				</div>
-				<div class="input-group">
-					<span class="input-group-addon">Beschreibung:</span>
-					<input class="form-control" type="text" ng-model="newStation.description" placeholder="optional"/>
-				</div>
-				<div class="input-group">
-					<span class="input-group-addon">Punkte:</span>
-					<input class="form-control" type="text" ng-model="newStation.points"/>
-				</div>
-				<div class="input-group">
-					<span class="input-group-addon">Aktiviert?</span>
-					<input type="checkbox" class="form-control input-sm" ng-model="newStation.enabled" ng-true-value="1" ng-false-value="0"/>
-				</div>
-				<button ng-click="createNewStation()" class="btn btn-default">Station erstellen</button>
-			</span>
 			<div ng-if="showNewObjectInput == 'riddle'">
-				Neues Rätsel:<br/>
+				<h3>Neues Rätsel</h3>
+			</div>
+			<div class="form-group">
 				<div class="input-group">
-					<span class="input-group-addon">Titel:</span>
-					<input class="form-control" type="text" ng-model="newRiddle.title"/>
+					<span class="input-group-addon">Lat:</span>
+					<input class="form-control" type="text" ng-model="newlat"/>
+					<span class="input-group-addon">Lng:</span>
+					<input class="form-control" type="text" ng-model="newlng"/>
 				</div>
-				<div class="input-group">
-					<span class="input-group-addon">Frage:</span>
-					<input class="form-control" type="text" ng-model="newRiddle.question"/>
+			</div>
+			<div ng-if="showNewObjectInput == 'station'">
+				<div class="form-group">
+					<div class="input-group">
+						<span class="input-group-addon">Name:</span>
+						<input class="form-control" type="text" ng-model="newStation.name"/>
+					</div>
 				</div>
-				<div class="input-group">
-					<span class="input-group-addon">Anhängig:</span>
-					<riddle-picker selected="newRiddle.dep_ID"></riddle-picker>
+				<div class="form-group">
+					<div class="input-group">
+						<span class="input-group-addon">Beschreibung:</span>
+						<input class="form-control" type="text" ng-model="newStation.description" placeholder="optional"/>
+					</div>
 				</div>
-				<div class="input-group">
-					<span class="input-group-addon">Antwort:</span>
-					<input class="form-control" type="text" ng-model="newRiddle.answer"/>
+				<div class="form-group">
+					<div class="input-group">
+						<span class="input-group-addon">Punkte:</span>
+						<input class="form-control" type="text" ng-model="newStation.points"/>
+					</div>
 				</div>
-				<div class="input-group">
-					<span class="input-group-addon">Typ:</span>
-					<select class="form-control" ng-model="newRiddle.type">
-						<option value="MULTI">MULTI</option>
-						<option value="SINGLE" selected>SINGLE</option>
-					</select>
+				<div class="form-group">
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" ng-model="newStation.enabled" ng-true-value="1" ng-false-value="0"/>
+							Aktiviert?
+						</label>
+					</div>
 				</div>
-				<div class="input-group">
-					<span class="input-group-addon">Punkte:</span>
-					<input class="form-control" type="text" ng-model="newRiddle.points"/>
+				<div class="form-group">
+					<button ng-click="createNewStation()" class="btn btn-primary">Station erfassen</button>
+					<button ng-click="hideNew()" class="btn btn-default">Abbrechen</button>
 				</div>
-				<div class="input-group">
-					<span class="input-group-addon">Antwort zum lösen?:</span>
-					<input type="checkbox" class="form-control" ng-model="newRiddle.answer_required" ng-true-value="1" ng-false-value="0"/>
+			</div>
+			<div ng-if="showNewObjectInput == 'riddle'">
+				<div class="form-group">
+					<div class="input-group">
+						<span class="input-group-addon">Titel:</span>
+						<input class="form-control" type="text" ng-model="newRiddle.title"/>
+					</div>
 				</div>
-				<div class="input-group">
-					<span class="input-group-addon">Bild zum lösen?:</span>
-					<input type="checkbox" class="form-control" ng-model="newRiddle.image_required" ng-true-value="1" ng-false-value="0"/>
+				<div class="form-group">
+					<div class="input-group">
+						<span class="input-group-addon">Frage:</span>
+						<input class="form-control" type="text" ng-model="newRiddle.question"/>
+					</div>
 				</div>
-				<button ng-click="createNewRiddle()" class="btn btn-default">Rätsel speichern</button>
+				<div class="form-group">
+					<div class="input-group">
+						<span class="input-group-addon">Anhängig:</span>
+						<riddle-picker selected="newRiddle.dep_ID"></riddle-picker>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="input-group">
+						<span class="input-group-addon">Antwort:</span>
+						<input class="form-control" type="text" ng-model="newRiddle.answer"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="input-group">
+						<span class="input-group-addon">Typ:</span>
+						<select class="form-control input-sm" ng-model="newRiddle.type">
+							<option value="MULTI">MULTI</option>
+							<option value="SINGLE" selected>SINGLE</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="input-group">
+						<span class="input-group-addon">Punkte:</span>
+						<input class="form-control" type="text" ng-model="newRiddle.points"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" ng-model="newRiddle.answer_required" ng-true-value="1" ng-false-value="0"/>
+							Antwort zum lösen benötigt
+						</label>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" ng-model="newRiddle.image_required" ng-true-value="1" ng-false-value="0"/>
+							Bild zum lösen benötigt
+						</label>
+					</div>
+				</div>
+				<button ng-click="createNewRiddle()" class="btn btn-primary">Rätsel speichern</button>
+				<button ng-click="hideNew()" class="btn btn-default">Abbrechen</button>
 			</div>
 
 		</div>
