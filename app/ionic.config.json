@@ -1,6 +1,5 @@
 {
-  "name": "app",
-  "app_id": "",
+  "name": "Pio-X App",
   "integrations": {
     "cordova": {}
   },
