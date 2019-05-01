@@ -522,6 +522,8 @@ $app->post('/riddle',function (Request $request, Response $response) use (&$DB) 
 				'type' => $body['type'],
 				'points' => $body['points'],
 				'answer_required' => $body['answer_required'],
+				'answer_options' => $body['answer_options'] ? json_encode($body['answer_options']) : null,
+				'answer_options_enabled' => ($body['answer_options_enabled'] ? 1 : 0),
 				'image_required' => $body['image_required'],
 				'dep_ID' => isset($body['dep_ID']) ? $body['dep_ID'] : NULL);
 
@@ -564,6 +566,8 @@ $app->put('/riddle/{id}',function (Request $request, Response $response, $args) 
 				'type' => $body['type'],
 				'points' => $body['points'],
 				'answer_required' => $body['answer_required'],
+				'answer_options' => $body['answer_options'] ? json_encode($body['answer_options']) : null,
+				'answer_options_enabled' => ($body['answer_options_enabled'] ? 1 : 0),
 				'image_required' => $body['image_required'],
 				'dep_ID' => isset($body['dep_ID']) ? $body['dep_ID'] : NULL);
 
