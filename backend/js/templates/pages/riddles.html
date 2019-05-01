@@ -17,6 +17,7 @@
             <td>Frage</td>
             <td class="col-xs-1">Abhängig von</td>
             <td>Antwort</td>
+            <td>Optionen</td>
             <td>Typ</td>
             <td>Antwort?</td>
             <td>Bild?</td>
@@ -31,7 +32,21 @@
             <td class="col-xs-1"><input type="text" class="form-control input-sm" ng-model="riddle.title"/></td>
             <td><textarea class="form-control input-sm" ng-model="riddle.question" rows="1"></textarea></td>
             <td class="col-xs-1"><riddle-picker selected="riddle.dep_ID" ng-if="riddle.type == 'MULTI'"></riddle-picker></td>
-            <td><input type="text" class="form-control input-sm" ng-model="riddle.answer" ng-if="riddle.answer_required"/></td>
+            <td>
+                <div ng-if="riddle.answer_required">
+                    <div ng-if="!riddle.answer_options_enabled">
+                        <input type="text" class="form-control input-sm" ng-model="riddle.answer"/>
+                    </div>
+                    <div ng-if="riddle.answer_options_enabled">
+                        <riddle-options answer="riddle.answer" options="riddle.answer_options"></riddle-options>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div ng-if="riddle.answer_required">
+                    <input type="checkbox" ng-model="riddle.answer_options_enabled" ng-true-value="1" ng-false-value="0">
+                </div>
+            </td>
             <td><select class="form-control input-sm" ng-model="riddle.type">
                     <option>MULTI</option>
                     <option>SINGLE</option>
@@ -51,6 +66,7 @@
             <td><textarea class="form-control input-sm" ng-model="newRiddle.question" rows="1"></textarea></td>
             <td class="col-xs-1"><riddle-picker selected="newRiddle.dep_ID" ng-if="newRiddle.type == 'MULTI'"></riddle-picker></td>
             <td><input type="text" ng-model="newRiddle.answer" ng-if="newRiddle.answer_required" class="form-control input-sm"/></td>
+            <td></td>
             <td><select ng-model="newRiddle.type" class="form-control input-sm">
                     <option selected>MULTI</option>
                     <option>SINGLE</option>
