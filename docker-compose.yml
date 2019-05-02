@@ -1,25 +1,25 @@
-    version: '2'
+version: '2'
 
-    services:
-      piox:
-        image: piox/piox
-        restart: always
-        ports:
-          - 8081:8081
-          - 8082:8082
-          - 8083:8083
-        links:
-          - mysql
-        environment:
-          PIOX_DBNAME: piox
-          PIOX_DBUSER: root
-          PIOX_DBPASS: mysecretpioXdbpassword
-          PIOX_DBHOST: mysql:3306
+services:
+  piox:
+    image: piox/piox
+    restart: always
+    ports:
+      - 8081:8081
+      - 8082:8082
+      - 8083:8083
+    links:
+      - mysql
+    environment:
+      PIOX_DBNAME: piox
+      PIOX_DBUSER: root
+      PIOX_DBPASS: mysecretpioXdbpassword
+      PIOX_DBHOST: mysql:3306
 
-      mysql:
-        image: mysql:5.7
-        restart: always
-        ports:
-          - 127.0.0.1:33061:3306
-        environment:
-          MYSQL_ROOT_PASSWORD: mysecretpioXdbpassword
+  mysql:
+    image: mysql:5.7
+    restart: always
+    ports:
+      - 127.0.0.1:33061:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: mysecretpioXdbpassword
