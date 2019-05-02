@@ -3,7 +3,7 @@ FROM nginx:1.12
 #install chrome
 RUN apt-get update -qqy \
   && apt-get -qqy install \
-  && apt-get -qqy install php7.0-fpm php7.0-mysql mysql-client  \
+  && apt-get -qqy install php7.0-fpm php7.0-mysql php7.0-gd mysql-client  \
   && rm -rf /var/lib/apt/lists/* /var/cache/apt/*
 
 RUN echo "env[PIOX_DBNAME]=\$PIOX_DBNAME \n\
