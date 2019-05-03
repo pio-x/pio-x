@@ -41,6 +41,14 @@ export class LeaderboardPage {
     });
   }
 
+  teamColor(teamId: number) {
+    if (teamId == this.myteam) {
+        return '#00BD00';
+    } else {
+        return this.teamService.distinctColor(teamId);
+    }
+  }
+
   sort(teams): Team[] {
     //sort descending
     return teams.sort((e1,e2) => e2.score - e1.score);

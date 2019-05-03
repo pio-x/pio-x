@@ -31,6 +31,7 @@
         <img [src]="teamService.imageUrl(team.img_ID)">
       </ion-avatar>
       <ion-icon name='people' item-left *ngIf="!team.img_ID"></ion-icon>
+      <span class="team-color" [style.background-color]="teamColor(team.t_ID)"></span>
       <span *ngIf="team.t_ID == myteam"><b>{{team.name}}</b></span>
       <span *ngIf="team.t_ID != myteam">{{team.name}}</span>
       <ion-badge item-right>{{team.score}}</ion-badge>

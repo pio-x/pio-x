@@ -26235,6 +26235,13 @@ image-uploader .uploaded-image-holder .uploaded-image-placeholder {
   font-size: 35vmin;
 }
 
+page-leaderboard .team-color {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  border-radius: 10px;
+}
+
 page-map .sebm-google-map-container {
   width: 100%;
   height: 100%;
