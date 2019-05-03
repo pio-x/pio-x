@@ -1,10 +1,17 @@
-FROM nginx:1.12
+FROM nginx:1.16
 
-#install chrome
+RUN apt-get update && apt-cache search php
+
+
 RUN apt-get update -qqy \
-  && apt-get -qqy install \
-  && apt-get -qqy install php7.3-fpm php7.3-mysql php7.3-gd mysql-client  \
-  && rm -rf /var/lib/apt/lists/* /var/cache/apt/*
+    && apt-get install -qqy --no-install-recommends curl apt-transport-https lsb-release ca-certificates \
+    && curl -Lo /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg \
+    && sh -c 'echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/php.list' \
+    && apt-get update -qqy \
+    && apt-get -qqy install php7.3-fpm php7.3-mysql php7.3-gd mysql-client  \
+    && rm -rf /var/lib/apt/lists/* \
+    && apt-get autoclean \
+    && apt-get autoremove -y
 
 RUN echo "env[PIOX_DBNAME]=\$PIOX_DBNAME \n\
 env[PIOX_DBUSER]=\$PIOX_DBUSER \n\
