@@ -1,0 +1,103 @@
+---
+- hosts: piox
+  remote_user: root
+  become: yes
+  tasks:
+    - name: include local config
+      include_vars: config.yml
+
+    - name: install ondrej repo
+      apt_repository:
+        repo: ppa:ondrej/php
+        state: present
+
+    - name: install packages
+      apt:
+        update_cache: yes
+        name: "{{ packages }}"
+      vars:
+        packages:
+          - php7.3-fpm
+          - php7.3-mysql
+          - php7.3-gd
+          - php7.3-zip
+          - mysql-client
+          - mysql-server-5.7
+          - python3-mysqldb
+          - nginx
+          - certbot
+          - python3-certbot-nginx
+
+    - name: Set mysql root password
+      mysql_user:
+        name=root
+        host=localhost
+        password={{ mysqlRootPassword }}
+
+    - name: Save mysql root password for next runs (copy)
+      copy:
+        src: config/my.cnf
+        dest: /root/.my.cnf
+        owner: root
+        group: root
+        mode: "u=rw,g=,o="
+
+    - name: Save mysql root password for next runs (replace)
+      replace:
+        path: /root/.my.cnf
+        regexp: 'REPLACE_PASS'
+        replace: "{{ mysqlRootPassword }}"
+
+    - name: Copy nginx.conf
+      copy:
+        src: config/nginx.conf
+        dest: /etc/nginx/nginx.conf
+        owner: root
+        group: root
+        mode: "u=rw,g=r,o=r"
+      notify: reload nginx
+
+    - name: Copy nginx-piox.conf
+      copy:
+        src: config/01-nginx-piox.conf
+        dest: /etc/nginx/sites-enabled
+        owner: root
+        group: root
+        mode: "u=rw,g=r,o=r"
+      notify: reload nginx
+
+    #need to install letsencrypt before copying the nginx config with ssl
+    - name: Install Letsencrypt
+      shell: certbot --nginx --agree-tos -n -d "app.pio-x.ch, api.pio-x.ch, backend.pio-x.ch" -m "{{ contactEmail }}"
+
+    - name: Install Letsencrypt cronjob
+      cron:
+        name: "lets encrypt"
+        minute: "10"
+        hour: "0"
+        job: "certbot --nginx -n"
+
+    - name: Copy nginx-piox.conf
+      copy:
+        src: config/02-nginx-piox-ssl.conf
+        dest: /etc/nginx/sites-enabled
+        owner: root
+        group: root
+        mode: "u=rw,g=r,o=r"
+      notify: reload nginx
+
+    - name: Copy php pool config
+      copy:
+        src: config/www.conf
+        dest: /etc/php/7.3/fpm/pool.d
+        owner: root
+        group: root
+        mode: "u=rw,g=r,o=r"
+      notify: reload php
+
+  handlers:
+    - name: reload nginx
+      service: name=nginx state=reloaded
+
+    - name: reload php
+      service: name=php7.3-fpm state=reloaded
