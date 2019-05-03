@@ -65,8 +65,21 @@
             <td class="col-xs-1"><input type="text" ng-model="newRiddle.title" class="form-control input-sm"/></td>
             <td><textarea class="form-control input-sm" ng-model="newRiddle.question" rows="1"></textarea></td>
             <td class="col-xs-1"><riddle-picker selected="newRiddle.dep_ID" ng-if="newRiddle.type == 'MULTI'"></riddle-picker></td>
-            <td><input type="text" ng-model="newRiddle.answer" ng-if="newRiddle.answer_required" class="form-control input-sm"/></td>
-            <td></td>
+            <td>
+                <div ng-if="newRiddle.answer_required">
+                    <div ng-if="!newRiddle.answer_options_enabled">
+                        <input type="text" class="form-control input-sm" ng-model="newRiddle.answer"/>
+                    </div>
+                    <div ng-if="newRiddle.answer_options_enabled">
+                        <riddle-options answer="newRiddle.answer" options="newRiddle.answer_options"></riddle-options>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div ng-if="newRiddle.answer_required">
+                    <label><input type="checkbox" ng-model="newRiddle.answer_options_enabled" ng-true-value="1" ng-false-value="0"> &colone;</label>
+                </div>
+            </td>
             <td><select ng-model="newRiddle.type" class="form-control input-sm">
                     <option selected>MULTI</option>
                     <option>SINGLE</option>
