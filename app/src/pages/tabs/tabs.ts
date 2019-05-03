@@ -38,7 +38,7 @@ export class TabsPage {
   location: LatLngLocation = null;
 
   constructor(
-      private notificationService:NotificationService,
+      private notificationService: NotificationService,
       public platform: Platform,
       public locationService: LocationService
   ) {
@@ -51,7 +51,7 @@ export class TabsPage {
     this.isTeam = parseInt(localStorage.getItem('team'));
     this.isMrx = parseInt(localStorage.getItem('mrx'));
 
-    notificationService.notificationsUnread.subscribe((notificationsUnread: number) => { 
+    notificationService.notificationsUnread.subscribe((notificationsUnread: number) => {
         this.notificationCount = notificationsUnread;
     });
 
