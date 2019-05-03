@@ -15,5 +15,5 @@ done
 
 if [[ $DBEXISTS != *"SCHEMA_NAME"* ]]; then
   mysql -h mysql -u root --password=$PIOX_DBPASS -e "create database $PIOX_DBNAME"
-  mysql -h mysql -u root --password=$PIOX_DBPASS $PIOX_DBNAME < /www/dbdump.sql
+  mysql -h mysql -u root --password=$PIOX_DBPASS $PIOX_DBNAME < /www/api/dbdumps/piox_dbdump_default.sql
 fi
