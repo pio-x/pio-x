@@ -1,8 +1,5 @@
 FROM nginx:1.16
 
-RUN apt-get update && apt-cache search php
-
-
 RUN apt-get update -qqy \
     && apt-get install -qqy --no-install-recommends curl apt-transport-https lsb-release ca-certificates \
     && curl -Lo /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg \
