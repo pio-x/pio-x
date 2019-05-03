@@ -57,6 +57,11 @@ export class RiddlesSolveModalPage {
             })
     }
 
+    solveRiddleWithOption(answer: number): void {
+        this.answer = answer + "";
+        this.solveRiddle();
+    }
+
     dismiss() {
         this.viewCtrl.dismiss();
     }
