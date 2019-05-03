@@ -497,6 +497,10 @@ $app->get('/riddle', function (Request $request, Response $response) use (&$DB, 
 						$riddle['question'] = '';
 					}
 				}
+
+				if ($riddle['answer_options']) {
+					$riddle['answer_options'] = json_decode($riddle['answer_options']);
+				}
 				$filtered[] = $riddle;
 			}
 
