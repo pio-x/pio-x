@@ -27,11 +27,25 @@
           - certbot
           - python3-certbot-nginx
 
-    - name:  Set mysql root password
+    - name: Set mysql root password
       mysql_user:
         name=root
         host=localhost
         password={{ mysqlRootPassword }}
+
+    - name: Save mysql root password for next runs (copy)
+      copy:
+        src: config/my.cnf
+        dest: /root/.my.cnf
+        owner: root
+        group: root
+        mode: "u=rw,g=,o="
+
+    - name: Save mysql root password for next runs (replace)
+      replace:
+        path: /root/.my.cnf
+        regexp: 'REPLACE_PASS'
+        replace: "{{ mysqlRootPassword }}"
 
     - name: Copy nginx.conf
       copy:

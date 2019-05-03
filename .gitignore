@@ -36,3 +36,5 @@ monitoring/config/prometheus.yml
 setup/ansible/inventory\.yml
 
 setup/ansible/config\.yml
+
+setup/ansible/piox\.retry
