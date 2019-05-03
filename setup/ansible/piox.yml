@@ -1,0 +1,20 @@
+---
+- hosts: piox
+  remote_user: root
+  become: yes
+  tasks:
+    - name: install ondrej repo
+      apt_repository:
+        repo: ppa:ondrej/php
+        state: present
+    - name: install packages
+      apt:
+        update_cache: yes
+        name: "{{ packages }}"
+      vars:
+        packages:
+          - php7.3-fpm
+          - php7.3-mysql
+          - php7.3-gd
+          - mysql-client
+          -
