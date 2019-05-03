@@ -525,7 +525,7 @@ $app->post('/riddle',function (Request $request, Response $response) use (&$DB) 
 				'answer_options' => $body['answer_options'] ? json_encode($body['answer_options']) : null,
 				'answer_options_enabled' => ($body['answer_options_enabled'] ? 1 : 0),
 				'image_required' => $body['image_required'],
-				'dep_ID' => isset($body['dep_ID']) ? $body['dep_ID'] : NULL);
+				'dep_ID' => $body['dep_ID'] ? intval($body['dep_ID']) : NULL);
 
 	$DB->insert('riddle', $data);
 
