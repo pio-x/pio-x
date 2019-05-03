@@ -8,15 +8,26 @@
 
 <ion-content padding>
 
-  <h3>Rästel {{riddleId}} lösen</h3>
+  <h3>Rätsel "{{riddles[riddleId].title}}" lösen</h3>
   <p>
     {{riddles[riddleId].question}}
   </p>
 
   <span *ngIf="!answered">
-    <ion-item *ngIf="riddles[riddleId].answer_required">
-      <ion-input type="text" [(ngModel)]="answer" placeholder="Antwort"></ion-input>
-    </ion-item>
+    <div *ngIf="riddles[riddleId].answer_required">
+      <div *ngIf="riddles[riddleId].answer_options_enabled">
+        <div *ngFor="let option of riddles[riddleId].answer_options; let idx = index;">
+          <button ion-button
+                  full
+                  color="light"
+                  (click)="solveRiddleWithOption(idx)"
+          >{{option}}</button>
+        </div>
+      </div>
+      <ion-item *ngIf="!riddles[riddleId].answer_options_enabled">
+        <ion-input type="text" [(ngModel)]="answer" placeholder="Antwort"></ion-input>
+      </ion-item>
+    </div>
     <div *ngIf="riddles[riddleId].image_required"><i>Um dieses Rätsel zu lösen musst du ein Bild machen.</i></div>
     <div *ngIf="riddles[riddleId].image_required">
       <image-uploader [(tags)]="tags" [(image)]="imageData"></image-uploader>
@@ -26,7 +37,7 @@
       Hinweis: Falsche Antworten geben Abzug!
     </div>
 
-    <p>
+    <p *ngIf="!riddles[riddleId].answer_options_enabled">
       <button ion-button
               full
               color="secondary"
@@ -42,14 +53,20 @@
   </span>
   <span *ngIf="answered">
     <div *ngIf="riddles[riddleId].answer_required">
-      Deine Antwort: <b>{{answer}}</b>
+      <div *ngIf="riddles[riddleId].answer_options_enabled">
+        Deine Antwort: <b>{{riddles[riddleId].answer_options[answer]}}</b>
+      </div>
+      <div *ngIf="!riddles[riddleId].answer_options_enabled">
+        Deine Antwort: <b>{{answer}}</b>
+      </div>
     </div>
     <div *ngIf="response.solved">
       <div class="riddle-solved">
         <ion-icon name="happy" color="secondary"></ion-icon>
         <div *ngIf="riddles[riddleId].answer_required">
           <h3>Korrekt!</h3>
-          Deine Antwort war richtig! Du erhälst <strong>{{ response.points }} Punkte!</strong>
+          Deine Antwort war richtig!<br>
+          Du erhältst <ion-badge color="secondary">{{ response.points }} Punkte!</ion-badge>
         </div>
         <div *ngIf="riddles[riddleId].image_required">
           <h3>Rätsel gelöst!</h3>
@@ -60,8 +77,10 @@
     <div *ngIf="!response.solved">
       <div class="riddle-solved">
         <ion-icon name="sad" color="danger"></ion-icon>
-        <h3>Falsch</h3>
-        {{response.message}} <br /><strong>{{ response.points }} Punkte!</strong>
+        <h3>Oh nein!</h3>
+        {{response.message}} <br />
+        <br>
+        <ion-badge color="danger">{{ response.points }} Punkte!</ion-badge>
       </div>
     </div>
     <br>

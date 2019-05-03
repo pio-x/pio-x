@@ -1,0 +1,8 @@
+<div>
+    <div ng-repeat="(key, value) in options track by $index" class="form-inline" style="min-width: 200px">
+        <input type="radio" ng-value="key" ng-model="$parent.answer">
+        <input type="text" class="form-control input-sm" ng-model="options[key]"/>
+        <button type="button" class="btn btn-default btn-sm" ng-click="removeOption(key)">&cross;</button>
+    </div>
+    <a ng-click="addOption()">Antwort hinzufügen</a>
+</div>

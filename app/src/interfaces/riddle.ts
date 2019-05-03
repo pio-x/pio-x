@@ -8,6 +8,8 @@ export interface Riddle {
     question: string;
     dep_ID: number;
     answer: string;
+    answer_options: null | string[];
+    answer_options_enabled: number;
     image_required: number;
     answer_required: number
     type: string;
