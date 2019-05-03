@@ -470,7 +470,7 @@ $app->get('/riddle', function (Request $request, Response $response) use (&$DB, 
 		return $response->withJson($riddles, 200, JSON_NUMERIC_CHECK);
 	} else {
 		if ($request->getAttribute('is_team') == true) {
-			$riddles = $DB->fetchAll("SELECT r.*, tr.state FROM riddle r LEFT JOIN r_team_riddle tr ON r.r_ID = tr.r_ID AND tr.t_ID = ?", array($request->getAttribute('team_id')));
+			$riddles = $DB->fetchAll("SELECT r.*, tr.state FROM riddle r LEFT JOIN r_team_riddle tr ON r.r_ID = tr.r_ID AND tr.t_ID = ? ORDER BY state ASC, title ASC", array($request->getAttribute('team_id')));
 
 			// do not send answers to teams
 			$riddles = APIHelper::removeAttribute($riddles, 'answer');
@@ -497,6 +497,10 @@ $app->get('/riddle', function (Request $request, Response $response) use (&$DB, 
 						$riddle['question'] = '';
 					}
 				}
+
+				if ($riddle['answer_options']) {
+					$riddle['answer_options'] = json_decode($riddle['answer_options']);
+				}
 				$filtered[] = $riddle;
 			}
 
@@ -522,8 +526,10 @@ $app->post('/riddle',function (Request $request, Response $response) use (&$DB) 
 				'type' => $body['type'],
 				'points' => $body['points'],
 				'answer_required' => $body['answer_required'],
+				'answer_options' => $body['answer_options'] ? json_encode($body['answer_options']) : null,
+				'answer_options_enabled' => ($body['answer_options_enabled'] ? 1 : 0),
 				'image_required' => $body['image_required'],
-				'dep_ID' => isset($body['dep_ID']) ? $body['dep_ID'] : NULL);
+				'dep_ID' => $body['dep_ID'] ? intval($body['dep_ID']) : NULL);
 
 	$DB->insert('riddle', $data);
 
@@ -564,6 +570,8 @@ $app->put('/riddle/{id}',function (Request $request, Response $response, $args) 
 				'type' => $body['type'],
 				'points' => $body['points'],
 				'answer_required' => $body['answer_required'],
+				'answer_options' => $body['answer_options'] ? json_encode($body['answer_options']) : null,
+				'answer_options_enabled' => ($body['answer_options_enabled'] ? 1 : 0),
 				'image_required' => $body['image_required'],
 				'dep_ID' => isset($body['dep_ID']) ? $body['dep_ID'] : NULL);
 

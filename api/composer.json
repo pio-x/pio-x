@@ -1,6 +1,7 @@
 {
     "require": {
         "slim/slim": "^3.7",
-        "doctrine/dbal": "^2.5"
+        "doctrine/dbal": "^2.5",
+        "ext-json": "*"
     }
 }

@@ -14,7 +14,9 @@ backendApp.controller('riddleCtrl', function($scope, apiService, riddleService){
             question: "",
             dep_ID: "",
             answer: "",
-            type: "MULTI",
+            answer_options: [],
+            answer_options_enabled: 0,
+            type: "SINGLE",
             points: 50,
             answer_required: 1,
             image_required: 0
