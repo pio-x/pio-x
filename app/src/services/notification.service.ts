@@ -6,7 +6,7 @@ import { IntervalObservable} from "rxjs/observable/IntervalObservable";
 
 import { Notification } from '../interfaces/notification';
 import { PioxApiService } from './pioxApi.service';
-import {Platform} from "ionic-angular";
+import {AlertController, Platform} from "ionic-angular";
 
 @Injectable()
 export class NotificationService {
@@ -16,7 +16,9 @@ export class NotificationService {
 
   private intervalSubscription = null;
 
-  constructor(private pioxApi: PioxApiService, public platform: Platform) {
+  private shownNotifications: number[] = [];
+
+  constructor(private pioxApi: PioxApiService, public platform: Platform, public alertController: AlertController) {
     this.updateNotifications();
     this.startSync();
 
@@ -76,8 +78,17 @@ export class NotificationService {
 
   public updateNotifications(): Promise<any> {
     let promise: Promise<any> = this.pioxApi.get('/notification');
-    promise.then((response) => {
+    promise.then((response: Notification[]) => {
         this._notifications.next(response);
+
+        response.forEach((notification) => {
+          if (notification.timestamp > this._notificationsReadUntil.getTime()) {
+            if (this.shownNotifications.indexOf(notification.n_ID) < 0) {
+              this.shownNotifications.push(notification.n_ID);
+              this.presentNotification(notification);
+            }
+          }
+        });
     })
     .catch(() => {
       console.log('an error occured, but we ignore it because its probably a 401 Unauthorized');
@@ -99,5 +110,20 @@ export class NotificationService {
       }
     }
     this._unread.next(count);
+  }
+
+  async presentNotification(notification: Notification) {
+    const alert = await this.alertController.create({
+      title: notification.title,
+      message: notification.text,
+      buttons: [{
+          text: 'Okay',
+          handler: () => {
+            this.notificationsRead();
+          }
+        }]
+    });
+
+    await alert.present();
   }
 }

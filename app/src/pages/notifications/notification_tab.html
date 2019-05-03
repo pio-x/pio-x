@@ -6,12 +6,13 @@
 
   <ion-card *ngFor="let notification of notifications">
 
-    <ion-card-header>
-      {{notification.title}}
-    </ion-card-header>
+    <ion-card-header [innerHTML]="notification.title"></ion-card-header>
 
     <ion-card-content>
       <p [innerHTML]="notification.text"></p>
+      <p *ngIf="notification.t_ID !== null">
+        <i style="color: #c1272d">Nachricht an dein Team</i>
+      </p>
       <ion-note>
         {{notification.timestamp | date:'HH:mm'}}
       </ion-note>
