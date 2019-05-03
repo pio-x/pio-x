@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
-cd /www/
+cd /www/api
 
-api/vendor/bin/doctrine-migrations migrate
+vendor/bin/doctrine-migrations migrate
