@@ -34,3 +34,5 @@ monitoring/config/prometheus.yml
 ~WRL0003.tmp
 ~*
 setup/ansible/inventory\.yml
+
+setup/ansible/config\.yml

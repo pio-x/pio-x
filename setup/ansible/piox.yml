@@ -3,10 +3,14 @@
   remote_user: root
   become: yes
   tasks:
+    - name: include local config
+      include_vars: config.yml
+
     - name: install ondrej repo
       apt_repository:
         repo: ppa:ondrej/php
         state: present
+
     - name: install packages
       apt:
         update_cache: yes
@@ -17,4 +21,17 @@
           - php7.3-mysql
           - php7.3-gd
           - mysql-client
-          -
+          - mysql-server-5.7
+          - nginx
+          - certbot
+          - python3-certbot-nginx
+
+    - name: Install Letsencrypt
+      shell: certbot --nginx -m "{{ contactEmail }}"
+
+    - name: Install Letsencrypt cronjob
+      cron:
+        name: "lets encrypt"
+        minute: "10"
+        hour: "0"
+        job: "certbot --nginx -m {{ contactEmail }}"
