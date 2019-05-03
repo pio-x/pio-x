@@ -470,7 +470,7 @@ $app->get('/riddle', function (Request $request, Response $response) use (&$DB, 
 		return $response->withJson($riddles, 200, JSON_NUMERIC_CHECK);
 	} else {
 		if ($request->getAttribute('is_team') == true) {
-			$riddles = $DB->fetchAll("SELECT r.*, tr.state FROM riddle r LEFT JOIN r_team_riddle tr ON r.r_ID = tr.r_ID AND tr.t_ID = ?", array($request->getAttribute('team_id')));
+			$riddles = $DB->fetchAll("SELECT r.*, tr.state FROM riddle r LEFT JOIN r_team_riddle tr ON r.r_ID = tr.r_ID AND tr.t_ID = ? ORDER BY state ASC, title ASC", array($request->getAttribute('team_id')));
 
 			// do not send answers to teams
 			$riddles = APIHelper::removeAttribute($riddles, 'answer');
