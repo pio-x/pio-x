@@ -26,3 +26,4 @@ Konfigurationsfiles anlegen und anpassen: cp api/conf.local.php api/conf.php
 
 php composer.phar install --no-dev -o
 
+DB anlegen und einspielen
