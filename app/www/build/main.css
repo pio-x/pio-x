@@ -26236,8 +26236,8 @@ image-uploader .uploaded-image-holder .uploaded-image-placeholder {
 }
 
 page-leaderboard .team-color {
-  width: 20px;
-  height: 20px;
+  width: 10px;
+  height: 10px;
   display: inline-block;
   border-radius: 10px;
 }
