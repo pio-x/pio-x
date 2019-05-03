@@ -20,6 +20,7 @@
           - php7.3-fpm
           - php7.3-mysql
           - php7.3-gd
+          - php7.3-zip
           - mysql-client
           - mysql-server-5.7
           - python3-mysqldb
