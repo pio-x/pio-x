@@ -1,0 +1,9 @@
+{
+  "name": "piox",
+  "version": "1.0.0",
+  "description": "Der Pio X Source Code",
+  "scripts": {
+    "migrate": "docker-compose exec piox /www/setup/migrate.sh",
+    "bash": "docker-compose exec piox /bin/bash"
+  }
+}
