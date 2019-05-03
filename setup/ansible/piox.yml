@@ -77,6 +77,12 @@
         hour: "0"
         job: "certbot --nginx -n"
 
+    - name: Install Pio-X cronjob
+      cron:
+        name: "piox points cron"
+        minute: "*/5"
+        job: "/usr/bin/php /var/www/piox/api/cron.php"
+
     - name: Copy nginx-piox.conf
       copy:
         src: config/02-nginx-piox-ssl.conf
