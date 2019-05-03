@@ -20,15 +20,11 @@ env[PIOX_DBHOST]=\$PIOX_DBHOST \n\
 clear_env = no\n\
 catch_workers_output = yes\n" >> /etc/php/7.3/fpm/pool.d/www.conf
 
-COPY api/dbdumps/piox_dbdump_default.sql /www/dbdump.sql
-COPY container/nginx.conf /etc/nginx/nginx.conf
-COPY api /www/api
-COPY app/www /www/app/www
-COPY backend /www/backend
+COPY ./ /www
 
 EXPOSE 8080 8081 8082
 
 ADD container/setup.sh /www/setup.sh
 ADD container/start.sh /www/start.sh
 
-ENTRYPOINT ["/www/start.sh"]
+ENTRYPOINT ["/www/container/start.sh"]
