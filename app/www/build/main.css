@@ -4789,12 +4789,16 @@ ion-action-sheet {
 }
 
 .action-sheet-container {
+  display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
   -webkit-flex-flow: column;
   -ms-flex-flow: column;
   flex-flow: column;
+  -webkit-box-pack: end;
   -webkit-justify-content: flex-end;
   -ms-flex-pack: end;
   justify-content: flex-end;
@@ -4935,6 +4939,7 @@ ion-action-sheet {
 }
 
 .action-sheet-md .action-sheet-group .button-inner {
+  -webkit-box-pack: start;
   -webkit-justify-content: flex-start;
   -ms-flex-pack: start;
   justify-content: flex-start;
@@ -4981,6 +4986,7 @@ ion-action-sheet {
 
 .action-sheet-wp .action-sheet-group:first-child {
   padding-top: 0.8rem;
+  -webkit-box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
   box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
 }
 
@@ -4989,6 +4995,7 @@ ion-action-sheet {
 }
 
 .action-sheet-wp .action-sheet-group .button-inner {
+  -webkit-box-pack: start;
   -webkit-justify-content: flex-start;
   -ms-flex-pack: start;
   justify-content: flex-start;
@@ -5009,12 +5016,15 @@ ion-alert {
   bottom: 0;
   position: absolute;
   z-index: 1000;
+  display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
+  -webkit-box-pack: center;
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
@@ -5023,6 +5033,7 @@ ion-alert {
 
 ion-alert.alert-top {
   padding-top: 50px;
+  -webkit-box-align: start;
   -webkit-align-items: flex-start;
   -ms-flex-align: start;
   align-items: flex-start;
@@ -5034,9 +5045,12 @@ ion-alert input {
 
 .alert-wrapper {
   z-index: 10;
+  display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
@@ -5082,15 +5096,20 @@ ion-alert input {
 }
 
 .alert-button-group {
+  display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
   -webkit-flex-direction: row;
   -ms-flex-direction: row;
   flex-direction: row;
 }
 
 .alert-button-group-vertical {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
@@ -5127,6 +5146,7 @@ ion-alert input {
   overflow: hidden;
   max-width: 270px;
   background-color: #f8f8f8;
+  -webkit-box-shadow: none;
   box-shadow: none;
 }
 
@@ -5183,6 +5203,7 @@ ion-alert input {
 }
 
 .alert-ios .alert-tappable {
+  display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
@@ -5191,9 +5212,11 @@ ion-alert input {
 
 .alert-ios .alert-radio-label {
   overflow: hidden;
+  -webkit-box-flex: 1;
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
+  -webkit-box-ordinal-group: 1;
   -webkit-order: 0;
   -ms-flex-order: 0;
   order: 0;
@@ -5209,6 +5232,7 @@ ion-alert input {
 
 .alert-ios .alert-radio-icon {
   position: relative;
+  -webkit-box-ordinal-group: 2;
   -webkit-order: 1;
   -ms-flex-order: 1;
   order: 1;
@@ -5232,6 +5256,7 @@ ion-alert input {
 
 .alert-ios .alert-checkbox-label {
   overflow: hidden;
+  -webkit-box-flex: 1;
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
@@ -5288,6 +5313,7 @@ ion-alert input {
   margin: 0;
   border-radius: 0;
   overflow: hidden;
+  -webkit-box-flex: 1;
   -webkit-flex: 1 1 auto;
   -ms-flex: 1 1 auto;
   flex: 1 1 auto;
@@ -5313,6 +5339,7 @@ ion-alert input {
   border-radius: 2px;
   max-width: 280px;
   background-color: #fafafa;
+  -webkit-box-shadow: 0 16px 20px rgba(0, 0, 0, 0.4);
   box-shadow: 0 16px 20px rgba(0, 0, 0, 0.4);
 }
 
@@ -5367,6 +5394,7 @@ ion-alert input {
 
 .alert-md .alert-tappable {
   position: relative;
+  display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
@@ -5376,6 +5404,7 @@ ion-alert input {
 
 .alert-md .alert-radio-label {
   overflow: hidden;
+  -webkit-box-flex: 1;
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
@@ -5408,6 +5437,7 @@ ion-alert input {
   background-color: #c1272d;
   -webkit-transform: scale3d(0, 0, 0);
   transform: scale3d(0, 0, 0);
+  -webkit-transition: -webkit-transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
   transition: -webkit-transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
   transition: transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
   transition: transform 280ms cubic-bezier(0.4, 0, 0.2, 1), -webkit-transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -5428,6 +5458,7 @@ ion-alert input {
 
 .alert-md .alert-checkbox-label {
   overflow: hidden;
+  -webkit-box-flex: 1;
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
@@ -5477,6 +5508,7 @@ ion-alert input {
   -webkit-flex-wrap: wrap-reverse;
   -ms-flex-wrap: wrap-reverse;
   flex-wrap: wrap-reverse;
+  -webkit-box-pack: end;
   -webkit-justify-content: flex-end;
   -ms-flex-pack: end;
   justify-content: flex-end;
@@ -5502,6 +5534,7 @@ ion-alert input {
 }
 
 .alert-md .alert-button .button-inner {
+  -webkit-box-pack: end;
   -webkit-justify-content: flex-end;
   -ms-flex-pack: end;
   justify-content: flex-end;
@@ -5570,6 +5603,7 @@ ion-alert input {
 
 .alert-wp .alert-tappable {
   position: relative;
+  display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
@@ -5579,6 +5613,7 @@ ion-alert input {
 
 .alert-wp .alert-radio-label {
   overflow: hidden;
+  -webkit-box-flex: 1;
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
@@ -5627,6 +5662,7 @@ ion-alert input {
 
 .alert-wp .alert-checkbox-label {
   overflow: hidden;
+  -webkit-box-flex: 1;
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
@@ -5677,6 +5713,7 @@ ion-alert input {
   -webkit-flex-wrap: wrap-reverse;
   -ms-flex-wrap: wrap-reverse;
   flex-wrap: wrap-reverse;
+  -webkit-box-pack: end;
   -webkit-justify-content: flex-end;
   -ms-flex-pack: end;
   justify-content: flex-end;
@@ -5743,6 +5780,7 @@ figure {
 hr {
   height: 1px;
   border-width: 0;
+  -webkit-box-sizing: content-box;
   box-sizing: content-box;
 }
 
@@ -5774,6 +5812,10 @@ textarea {
 }
 
 textarea::-webkit-input-placeholder {
+  padding-left: 2px;
+}
+
+textarea::-moz-placeholder {
   padding-left: 2px;
 }
 
@@ -5857,6 +5899,7 @@ input::-moz-focus-inner {
 input[type="checkbox"],
 input[type="radio"] {
   padding: 0;
+  -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
 
@@ -5906,6 +5949,7 @@ template {
 .focus-outline [ion-button]:focus {
   border-color: #51a7e8;
   outline: 2px solid #51a7e8;
+  -webkit-box-shadow: 0 0 8px 1px #51a7e8;
   box-shadow: 0 0 8px 1px #51a7e8;
 }
 
@@ -5937,6 +5981,7 @@ ion-input :focus {
 }
 
 * {
+  -webkit-box-sizing: border-box;
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
   -webkit-tap-highlight-color: transparent;
@@ -5948,6 +5993,7 @@ html {
   height: 100%;
   font-size: 62.5%;
   -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
   text-size-adjust: 100%;
 }
@@ -5970,6 +6016,7 @@ body {
   touch-action: manipulation;
   word-wrap: break-word;
   -webkit-text-size-adjust: none;
+  -moz-text-size-adjust: none;
   -ms-text-size-adjust: none;
   text-size-adjust: none;
   -webkit-user-select: none;
@@ -6582,6 +6629,7 @@ ion-badge:empty {
   cursor: pointer;
   vertical-align: top;
   vertical-align: -webkit-baseline-middle;
+  -webkit-transition: background-color, opacity 100ms linear;
   transition: background-color, opacity 100ms linear;
   -webkit-font-kerning: none;
   font-kerning: none;
@@ -6593,18 +6641,23 @@ ion-badge:empty {
 }
 
 .button-inner {
+  display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
   -webkit-flex-flow: row nowrap;
   -ms-flex-flow: row nowrap;
   flex-flow: row nowrap;
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
+  -webkit-box-align: center;
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
+  -webkit-box-pack: center;
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
@@ -6942,8 +6995,12 @@ button[disabled],
   text-transform: uppercase;
   color: #fff;
   background-color: #c1272d;
+  -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+  -webkit-transition: background-color 300ms cubic-bezier(0.4, 0, 0.2, 1), color 300ms cubic-bezier(0.4, 0, 0.2, 1), -webkit-box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: background-color 300ms cubic-bezier(0.4, 0, 0.2, 1), color 300ms cubic-bezier(0.4, 0, 0.2, 1), -webkit-box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1);
   transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1), background-color 300ms cubic-bezier(0.4, 0, 0.2, 1), color 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1), background-color 300ms cubic-bezier(0.4, 0, 0.2, 1), color 300ms cubic-bezier(0.4, 0, 0.2, 1), -webkit-box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1);
   margin: 0.4rem 0.2rem;
   padding: 0 1.1em;
 }
@@ -6954,6 +7011,7 @@ button[disabled],
 
 .button-md.activated {
   background-color: #c6383e;
+  -webkit-box-shadow: 0 3px 5px rgba(0, 0, 0, 0.14), 0 3px 5px rgba(0, 0, 0, 0.21), 0 0 0 0 transparent;
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.14), 0 3px 5px rgba(0, 0, 0, 0.21), 0 0 0 0 transparent;
 }
 
@@ -6996,6 +7054,7 @@ button[disabled],
   border-color: #c1272d;
   color: #c1272d;
   background-color: transparent;
+  -webkit-box-shadow: none;
   box-shadow: none;
 }
 
@@ -7005,6 +7064,7 @@ button[disabled],
 
 .button-outline-md.activated {
   background-color: transparent;
+  -webkit-box-shadow: none;
   box-shadow: none;
   opacity: 1;
 }
@@ -7017,12 +7077,14 @@ button[disabled],
   border-color: transparent;
   color: #c1272d;
   background-color: transparent;
+  -webkit-box-shadow: none;
   box-shadow: none;
   opacity: 1;
 }
 
 .button-clear-md.activated {
   background-color: rgba(158, 158, 158, 0.2);
+  -webkit-box-shadow: none;
   box-shadow: none;
 }
 
@@ -7052,6 +7114,7 @@ button[disabled],
   display: none;
   background-color: #555;
   opacity: .2;
+  -webkit-transition-timing-function: ease-in-out;
   transition-timing-function: ease-in-out;
   pointer-events: none;
   top: 0;
@@ -7106,6 +7169,7 @@ button[disabled],
 
 .button-clear-md-primary.activated {
   background-color: rgba(158, 158, 158, 0.2);
+  -webkit-box-shadow: none;
   box-shadow: none;
 }
 
@@ -7157,6 +7221,7 @@ button[disabled],
 
 .button-clear-md-secondary.activated {
   background-color: rgba(158, 158, 158, 0.2);
+  -webkit-box-shadow: none;
   box-shadow: none;
 }
 
@@ -7208,6 +7273,7 @@ button[disabled],
 
 .button-clear-md-danger.activated {
   background-color: rgba(158, 158, 158, 0.2);
+  -webkit-box-shadow: none;
   box-shadow: none;
 }
 
@@ -7259,6 +7325,7 @@ button[disabled],
 
 .button-clear-md-light.activated {
   background-color: rgba(158, 158, 158, 0.2);
+  -webkit-box-shadow: none;
   box-shadow: none;
 }
 
@@ -7310,6 +7377,7 @@ button[disabled],
 
 .button-clear-md-dark.activated {
   background-color: rgba(158, 158, 158, 0.2);
+  -webkit-box-shadow: none;
   box-shadow: none;
 }
 
@@ -7649,6 +7717,7 @@ ion-card-content {
   width: calc(100% - 24px);
   font-size: 1.4rem;
   background: #fff;
+  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
@@ -8019,6 +8088,7 @@ ion-card-content {
   width: calc(100% - 20px);
   font-size: 1.4rem;
   background: #fff;
+  -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
 }
 
@@ -8423,6 +8493,7 @@ ion-card-content {
   width: calc(100% - 16px);
   font-size: 1.4rem;
   background: #fff;
+  -webkit-box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.2);
   box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.2);
 }
 
@@ -8933,8 +9004,11 @@ ion-card-content {
   border-style: solid;
   border-color: #787878;
   background-color: #fff;
+  -webkit-transition-duration: 280ms;
   transition-duration: 280ms;
+  -webkit-transition-property: background;
   transition-property: background;
+  -webkit-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -9127,6 +9201,7 @@ ion-card-content {
 }
 
 ion-chip {
+  display: -webkit-inline-box;
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
   display: inline-flex;
@@ -9135,6 +9210,7 @@ ion-chip {
   align-self: center;
   font-weight: normal;
   vertical-align: middle;
+  -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
 
@@ -9956,6 +10032,7 @@ ion-app.wp [margin-horizontal] .scroll-content {
 }
 
 ion-datetime {
+  display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
@@ -9964,6 +10041,7 @@ ion-datetime {
 
 .datetime-text {
   overflow: hidden;
+  -webkit-box-flex: 1;
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
@@ -10043,6 +10121,7 @@ ion-datetime {
   text-transform: none;
   white-space: nowrap;
   cursor: pointer;
+  -webkit-transition: background-color, opacity 100ms linear;
   transition: background-color, opacity 100ms linear;
   background-clip: padding-box;
   -webkit-font-kerning: none;
@@ -10055,6 +10134,7 @@ ion-datetime {
 }
 
 .fab ion-icon {
+  -webkit-box-flex: 1;
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
@@ -10132,9 +10212,12 @@ ion-fab-list {
   position: absolute;
   top: 0;
   display: none;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
+  -webkit-box-align: center;
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
@@ -10167,6 +10250,8 @@ ion-fab-list[side=right] .fab-in-list {
 ion-fab-list[side=top] {
   top: auto;
   bottom: 0;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: reverse;
   -webkit-flex-direction: column-reverse;
   -ms-flex-direction: column-reverse;
   flex-direction: column-reverse;
@@ -10175,6 +10260,8 @@ ion-fab-list[side=top] {
 ion-fab-list[side=left] {
   margin: 0 66px;
   right: 0;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: reverse;
   -webkit-flex-direction: row-reverse;
   -ms-flex-direction: row-reverse;
   flex-direction: row-reverse;
@@ -10183,12 +10270,15 @@ ion-fab-list[side=left] {
 ion-fab-list[side=right] {
   margin: 0 66px;
   left: 0;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
   -webkit-flex-direction: row;
   -ms-flex-direction: row;
   flex-direction: row;
 }
 
 .fab-list-active {
+  display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
@@ -10203,14 +10293,18 @@ ion-fab-list[side=right] {
   opacity: 0;
   -webkit-transform: scale(0.4) rotateZ(-45deg);
   transform: scale(0.4) rotateZ(-45deg);
+  -webkit-transition: all ease-in-out 300ms;
   transition: all ease-in-out 300ms;
+  -webkit-transition-property: opacity, -webkit-transform;
   transition-property: opacity, -webkit-transform;
   transition-property: transform, opacity;
   transition-property: transform, opacity, -webkit-transform;
 }
 
 .fab .button-inner {
+  -webkit-transition: all ease-in-out 300ms;
   transition: all ease-in-out 300ms;
+  -webkit-transition-property: opacity, -webkit-transform;
   transition-property: opacity, -webkit-transform;
   transition-property: transform, opacity;
   transition-property: transform, opacity, -webkit-transform;
@@ -10240,6 +10334,7 @@ ion-fab-list[side=right] {
 .fab-ios-in-list {
   color: #000;
   background-color: #f4f4f4;
+  -webkit-transition: opacity 200ms ease 10ms, -webkit-transform 200ms ease 10ms;
   transition: opacity 200ms ease 10ms, -webkit-transform 200ms ease 10ms;
   transition: transform 200ms ease 10ms, opacity 200ms ease 10ms;
   transition: transform 200ms ease 10ms, opacity 200ms ease 10ms, -webkit-transform 200ms ease 10ms;
@@ -10297,21 +10392,27 @@ ion-fab-list[side=right] {
 .fab-md {
   color: #fff;
   background-color: #c1272d;
+  -webkit-box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.14), 0 4px 5px rgba(0, 0, 0, 0.1);
   box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.14), 0 4px 5px rgba(0, 0, 0, 0.1);
+  -webkit-transition: background-color 300ms cubic-bezier(0.4, 0, 0.2, 1), color 300ms cubic-bezier(0.4, 0, 0.2, 1), -webkit-box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: background-color 300ms cubic-bezier(0.4, 0, 0.2, 1), color 300ms cubic-bezier(0.4, 0, 0.2, 1), -webkit-box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1);
   transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1), background-color 300ms cubic-bezier(0.4, 0, 0.2, 1), color 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1), background-color 300ms cubic-bezier(0.4, 0, 0.2, 1), color 300ms cubic-bezier(0.4, 0, 0.2, 1), -webkit-box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .fab-md.activated {
   background-color: #c6383e;
+  -webkit-box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.4), 0 4px 7px 0 rgba(0, 0, 0, 0.1);
   box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.4), 0 4px 7px 0 rgba(0, 0, 0, 0.1);
 }
 
 .fab-md-in-list {
   color: #000;
   background-color: #f4f4f4;
-  transition: opacity 200ms ease 10ms, box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1), background-color 300ms cubic-bezier(0.4, 0, 0.2, 1), color 300ms cubic-bezier(0.4, 0, 0.2, 1), -webkit-transform 200ms ease 10ms;
+  -webkit-transition: opacity 200ms ease 10ms, background-color 300ms cubic-bezier(0.4, 0, 0.2, 1), color 300ms cubic-bezier(0.4, 0, 0.2, 1), -webkit-transform 200ms ease 10ms, -webkit-box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: opacity 200ms ease 10ms, background-color 300ms cubic-bezier(0.4, 0, 0.2, 1), color 300ms cubic-bezier(0.4, 0, 0.2, 1), -webkit-transform 200ms ease 10ms, -webkit-box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1);
   transition: transform 200ms ease 10ms, opacity 200ms ease 10ms, box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1), background-color 300ms cubic-bezier(0.4, 0, 0.2, 1), color 300ms cubic-bezier(0.4, 0, 0.2, 1);
-  transition: transform 200ms ease 10ms, opacity 200ms ease 10ms, box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1), background-color 300ms cubic-bezier(0.4, 0, 0.2, 1), color 300ms cubic-bezier(0.4, 0, 0.2, 1), -webkit-transform 200ms ease 10ms;
+  transition: transform 200ms ease 10ms, opacity 200ms ease 10ms, box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1), background-color 300ms cubic-bezier(0.4, 0, 0.2, 1), color 300ms cubic-bezier(0.4, 0, 0.2, 1), -webkit-transform 200ms ease 10ms, -webkit-box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .fab-md-in-list.activated {
@@ -10399,6 +10500,7 @@ ion-fab-list[side=right] {
 .fab-wp-in-list {
   color: #000;
   background-color: #f4f4f4;
+  -webkit-transition: opacity 200ms ease 10ms, -webkit-transform 200ms ease 10ms;
   transition: opacity 200ms ease 10ms, -webkit-transform 200ms ease 10ms;
   transition: transform 200ms ease 10ms, opacity 200ms ease 10ms;
   transition: transform 200ms ease 10ms, opacity 200ms ease 10ms, -webkit-transform 200ms ease 10ms;
@@ -10458,9 +10560,12 @@ ion-fab-list[side=right] {
   margin-left: auto;
   margin-right: auto;
   width: 100%;
+  display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
@@ -10503,6 +10608,7 @@ ion-fab-list[side=right] {
 }
 
 .row {
+  display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
@@ -10524,48 +10630,56 @@ ion-fab-list[side=right] {
 }
 
 .row[align-items-start] {
+  -webkit-box-align: start;
   -webkit-align-items: flex-start;
   -ms-flex-align: start;
   align-items: flex-start;
 }
 
 .row[align-items-center] {
+  -webkit-box-align: center;
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
 }
 
 .row[align-items-end] {
+  -webkit-box-align: end;
   -webkit-align-items: flex-end;
   -ms-flex-align: end;
   align-items: flex-end;
 }
 
 .row[align-items-stretch] {
+  -webkit-box-align: stretch;
   -webkit-align-items: stretch;
   -ms-flex-align: stretch;
   align-items: stretch;
 }
 
 .row[align-items-baseline] {
+  -webkit-box-align: baseline;
   -webkit-align-items: baseline;
   -ms-flex-align: baseline;
   align-items: baseline;
 }
 
 .row[justify-content-start] {
+  -webkit-box-pack: start;
   -webkit-justify-content: flex-start;
   -ms-flex-pack: start;
   justify-content: flex-start;
 }
 
 .row[justify-content-center] {
+  -webkit-box-pack: center;
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
 }
 
 .row[justify-content-end] {
+  -webkit-box-pack: end;
   -webkit-justify-content: flex-end;
   -ms-flex-pack: end;
   justify-content: flex-end;
@@ -10578,6 +10692,7 @@ ion-fab-list[side=right] {
 }
 
 .row[justify-content-between] {
+  -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
   justify-content: space-between;
@@ -10592,6 +10707,7 @@ ion-fab-list[side=right] {
   -webkit-flex-basis: 0;
   -ms-flex-preferred-size: 0;
   flex-basis: 0;
+  -webkit-box-flex: 1;
   -webkit-flex-grow: 1;
   -ms-flex-positive: 1;
   flex-grow: 1;
@@ -10613,14 +10729,12 @@ ion-fab-list[side=right] {
 .col[align-self-center] {
   -webkit-align-self: center;
   -ms-flex-item-align: center;
-  -ms-grid-row-align: center;
   align-self: center;
 }
 
 .col[align-self-stretch] {
   -webkit-align-self: stretch;
   -ms-flex-item-align: stretch;
-  -ms-grid-row-align: stretch;
   align-self: stretch;
 }
 
@@ -10998,6 +11112,7 @@ ion-fab-list[side=right] {
   -webkit-flex-basis: 0;
   -ms-flex-preferred-size: 0;
   flex-basis: 0;
+  -webkit-box-flex: 1;
   -webkit-flex-grow: 1;
   -ms-flex-positive: 1;
   flex-grow: 1;
@@ -11005,6 +11120,7 @@ ion-fab-list[side=right] {
 }
 
 [col-auto] {
+  -webkit-box-flex: 0;
   -webkit-flex: 0 0 auto;
   -ms-flex: 0 0 auto;
   flex: 0 0 auto;
@@ -11012,6 +11128,7 @@ ion-fab-list[side=right] {
 }
 
 [col-1] {
+  -webkit-box-flex: 0;
   -webkit-flex: 0 0 8.33333%;
   -ms-flex: 0 0 8.33333%;
   flex: 0 0 8.33333%;
@@ -11020,6 +11137,7 @@ ion-fab-list[side=right] {
 }
 
 [col-2] {
+  -webkit-box-flex: 0;
   -webkit-flex: 0 0 16.66667%;
   -ms-flex: 0 0 16.66667%;
   flex: 0 0 16.66667%;
@@ -11028,6 +11146,7 @@ ion-fab-list[side=right] {
 }
 
 [col-3] {
+  -webkit-box-flex: 0;
   -webkit-flex: 0 0 25%;
   -ms-flex: 0 0 25%;
   flex: 0 0 25%;
@@ -11036,6 +11155,7 @@ ion-fab-list[side=right] {
 }
 
 [col-4] {
+  -webkit-box-flex: 0;
   -webkit-flex: 0 0 33.33333%;
   -ms-flex: 0 0 33.33333%;
   flex: 0 0 33.33333%;
@@ -11044,6 +11164,7 @@ ion-fab-list[side=right] {
 }
 
 [col-5] {
+  -webkit-box-flex: 0;
   -webkit-flex: 0 0 41.66667%;
   -ms-flex: 0 0 41.66667%;
   flex: 0 0 41.66667%;
@@ -11052,6 +11173,7 @@ ion-fab-list[side=right] {
 }
 
 [col-6] {
+  -webkit-box-flex: 0;
   -webkit-flex: 0 0 50%;
   -ms-flex: 0 0 50%;
   flex: 0 0 50%;
@@ -11060,6 +11182,7 @@ ion-fab-list[side=right] {
 }
 
 [col-7] {
+  -webkit-box-flex: 0;
   -webkit-flex: 0 0 58.33333%;
   -ms-flex: 0 0 58.33333%;
   flex: 0 0 58.33333%;
@@ -11068,6 +11191,7 @@ ion-fab-list[side=right] {
 }
 
 [col-8] {
+  -webkit-box-flex: 0;
   -webkit-flex: 0 0 66.66667%;
   -ms-flex: 0 0 66.66667%;
   flex: 0 0 66.66667%;
@@ -11076,6 +11200,7 @@ ion-fab-list[side=right] {
 }
 
 [col-9] {
+  -webkit-box-flex: 0;
   -webkit-flex: 0 0 75%;
   -ms-flex: 0 0 75%;
   flex: 0 0 75%;
@@ -11084,6 +11209,7 @@ ion-fab-list[side=right] {
 }
 
 [col-10] {
+  -webkit-box-flex: 0;
   -webkit-flex: 0 0 83.33333%;
   -ms-flex: 0 0 83.33333%;
   flex: 0 0 83.33333%;
@@ -11092,6 +11218,7 @@ ion-fab-list[side=right] {
 }
 
 [col-11] {
+  -webkit-box-flex: 0;
   -webkit-flex: 0 0 91.66667%;
   -ms-flex: 0 0 91.66667%;
   flex: 0 0 91.66667%;
@@ -11100,6 +11227,7 @@ ion-fab-list[side=right] {
 }
 
 [col-12] {
+  -webkit-box-flex: 0;
   -webkit-flex: 0 0 100%;
   -ms-flex: 0 0 100%;
   flex: 0 0 100%;
@@ -11624,18 +11752,21 @@ ion-fab-list[side=right] {
     -webkit-flex-basis: 0;
     -ms-flex-preferred-size: 0;
     flex-basis: 0;
+    -webkit-box-flex: 1;
     -webkit-flex-grow: 1;
     -ms-flex-positive: 1;
     flex-grow: 1;
     max-width: 100%;
   }
   [col-sm-auto] {
+    -webkit-box-flex: 0;
     -webkit-flex: 0 0 auto;
     -ms-flex: 0 0 auto;
     flex: 0 0 auto;
     width: auto;
   }
   [col-sm-1] {
+    -webkit-box-flex: 0;
     -webkit-flex: 0 0 8.33333%;
     -ms-flex: 0 0 8.33333%;
     flex: 0 0 8.33333%;
@@ -11643,6 +11774,7 @@ ion-fab-list[side=right] {
     max-width: 8.33333%;
   }
   [col-sm-2] {
+    -webkit-box-flex: 0;
     -webkit-flex: 0 0 16.66667%;
     -ms-flex: 0 0 16.66667%;
     flex: 0 0 16.66667%;
@@ -11650,6 +11782,7 @@ ion-fab-list[side=right] {
     max-width: 16.66667%;
   }
   [col-sm-3] {
+    -webkit-box-flex: 0;
     -webkit-flex: 0 0 25%;
     -ms-flex: 0 0 25%;
     flex: 0 0 25%;
@@ -11657,6 +11790,7 @@ ion-fab-list[side=right] {
     max-width: 25%;
   }
   [col-sm-4] {
+    -webkit-box-flex: 0;
     -webkit-flex: 0 0 33.33333%;
     -ms-flex: 0 0 33.33333%;
     flex: 0 0 33.33333%;
@@ -11664,6 +11798,7 @@ ion-fab-list[side=right] {
     max-width: 33.33333%;
   }
   [col-sm-5] {
+    -webkit-box-flex: 0;
     -webkit-flex: 0 0 41.66667%;
     -ms-flex: 0 0 41.66667%;
     flex: 0 0 41.66667%;
@@ -11671,6 +11806,7 @@ ion-fab-list[side=right] {
     max-width: 41.66667%;
   }
   [col-sm-6] {
+    -webkit-box-flex: 0;
     -webkit-flex: 0 0 50%;
     -ms-flex: 0 0 50%;
     flex: 0 0 50%;
@@ -11678,6 +11814,7 @@ ion-fab-list[side=right] {
     max-width: 50%;
   }
   [col-sm-7] {
+    -webkit-box-flex: 0;
     -webkit-flex: 0 0 58.33333%;
     -ms-flex: 0 0 58.33333%;
     flex: 0 0 58.33333%;
@@ -11685,6 +11822,7 @@ ion-fab-list[side=right] {
     max-width: 58.33333%;
   }
   [col-sm-8] {
+    -webkit-box-flex: 0;
     -webkit-flex: 0 0 66.66667%;
     -ms-flex: 0 0 66.66667%;
     flex: 0 0 66.66667%;
@@ -11692,6 +11830,7 @@ ion-fab-list[side=right] {
     max-width: 66.66667%;
   }
   [col-sm-9] {
+    -webkit-box-flex: 0;
     -webkit-flex: 0 0 75%;
     -ms-flex: 0 0 75%;
     flex: 0 0 75%;
@@ -11699,6 +11838,7 @@ ion-fab-list[side=right] {
     max-width: 75%;
   }
   [col-sm-10] {
+    -webkit-box-flex: 0;
     -webkit-flex: 0 0 83.33333%;
     -ms-flex: 0 0 83.33333%;
     flex: 0 0 83.33333%;
@@ -11706,6 +11846,7 @@ ion-fab-list[side=right] {
     max-width: 83.33333%;
   }
   [col-sm-11] {
+    -webkit-box-flex: 0;
     -webkit-flex: 0 0 91.66667%;
     -ms-flex: 0 0 91.66667%;
     flex: 0 0 91.66667%;
@@ -11713,6 +11854,7 @@ ion-fab-list[side=right] {
     max-width: 91.66667%;
   }
   [col-sm-12] {
+    -webkit-box-flex: 0;
     -webkit-flex: 0 0 100%;
     -ms-flex: 0 0 100%;
     flex: 0 0 100%;
@@ -12204,18 +12346,21 @@ ion-fab-list[side=right] {
     -webkit-flex-basis: 0;
     -ms-flex-preferred-size: 0;
     flex-basis: 0;
+    -webkit-box-flex: 1;
     -webkit-flex-grow: 1;
     -ms-flex-positive: 1;
     flex-grow: 1;
     max-width: 100%;
   }
   [col-md-auto] {
+    -webkit-box-flex: 0;
     -webkit-flex: 0 0 auto;
     -ms-flex: 0 0 auto;
     flex: 0 0 auto;
     width: auto;
   }
   [col-md-1] {
+    -webkit-box-flex: 0;
     -webkit-flex: 0 0 8.33333%;
     -ms-flex: 0 0 8.33333%;
     flex: 0 0 8.33333%;
@@ -12223,6 +12368,7 @@ ion-fab-list[side=right] {
     max-width: 8.33333%;
   }
   [col-md-2] {
+    -webkit-box-flex: 0;
     -webkit-flex: 0 0 16.66667%;
     -ms-flex: 0 0 16.66667%;
     flex: 0 0 16.66667%;
@@ -12230,6 +12376,7 @@ ion-fab-list[side=right] {
     max-width: 16.66667%;
   }
   [col-md-3] {
+    -webkit-box-flex: 0;
     -webkit-flex: 0 0 25%;
     -ms-flex: 0 0 25%;
     flex: 0 0 25%;
@@ -12237,6 +12384,7 @@ ion-fab-list[side=right] {
     max-width: 25%;
   }
   [col-md-4] {
+    -webkit-box-flex: 0;
     -webkit-flex: 0 0 33.33333%;
     -ms-flex: 0 0 33.33333%;
     flex: 0 0 33.33333%;
@@ -12244,6 +12392,7 @@ ion-fab-list[side=right] {
     max-width: 33.33333%;
   }
   [col-md-5] {
+    -webkit-box-flex: 0;
     -webkit-flex: 0 0 41.66667%;
     -ms-flex: 0 0 41.66667%;
     flex: 0 0 41.66667%;
@@ -12251,6 +12400,7 @@ ion-fab-list[side=right] {
     max-width: 41.66667%;
   }
   [col-md-6] {
+    -webkit-box-flex: 0;
     -webkit-flex: 0 0 50%;
     -ms-flex: 0 0 50%;
     flex: 0 0 50%;
@@ -12258,6 +12408,7 @@ ion-fab-list[side=right] {
     max-width: 50%;
   }
   [col-md-7] {
+    -webkit-box-flex: 0;
     -webkit-flex: 0 0 58.33333%;
     -ms-flex: 0 0 58.33333%;
     flex: 0 0 58.33333%;
@@ -12265,6 +12416,7 @@ ion-fab-list[side=right] {
     max-width: 58.33333%;
   }
   [col-md-8] {
+    -webkit-box-flex: 0;
     -webkit-flex: 0 0 66.66667%;
     -ms-flex: 0 0 66.66667%;
     flex: 0 0 66.66667%;
@@ -12272,6 +12424,7 @@ ion-fab-list[side=right] {
     max-width: 66.66667%;
   }
   [col-md-9] {
+    -webkit-box-flex: 0;
     -webkit-flex: 0 0 75%;
     -ms-flex: 0 0 75%;
     flex: 0 0 75%;
@@ -12279,6 +12432,7 @@ ion-fab-list[side=right] {
     max-width: 75%;
   }
   [col-md-10] {
+    -webkit-box-flex: 0;
     -webkit-flex: 0 0 83.33333%;
     -ms-flex: 0 0 83.33333%;
     flex: 0 0 83.33333%;
@@ -12286,6 +12440,7 @@ ion-fab-list[side=right] {
     max-width: 83.33333%;
   }
   [col-md-11] {
+    -webkit-box-flex: 0;
     -webkit-flex: 0 0 91.66667%;
     -ms-flex: 0 0 91.66667%;
     flex: 0 0 91.66667%;
@@ -12293,6 +12448,7 @@ ion-fab-list[side=right] {
     max-width: 91.66667%;
   }
   [col-md-12] {
+    -webkit-box-flex: 0;
     -webkit-flex: 0 0 100%;
     -ms-flex: 0 0 100%;
     flex: 0 0 100%;
@@ -12784,18 +12940,21 @@ ion-fab-list[side=right] {
     -webkit-flex-basis: 0;
     -ms-flex-preferred-size: 0;
     flex-basis: 0;
+    -webkit-box-flex: 1;
     -webkit-flex-grow: 1;
     -ms-flex-positive: 1;
     flex-grow: 1;
     max-width: 100%;
   }
   [col-lg-auto] {
+    -webkit-box-flex: 0;
     -webkit-flex: 0 0 auto;
     -ms-flex: 0 0 auto;
     flex: 0 0 auto;
     width: auto;
   }
   [col-lg-1] {
+    -webkit-box-flex: 0;
     -webkit-flex: 0 0 8.33333%;
     -ms-flex: 0 0 8.33333%;
     flex: 0 0 8.33333%;
@@ -12803,6 +12962,7 @@ ion-fab-list[side=right] {
     max-width: 8.33333%;
   }
   [col-lg-2] {
+    -webkit-box-flex: 0;
     -webkit-flex: 0 0 16.66667%;
     -ms-flex: 0 0 16.66667%;
     flex: 0 0 16.66667%;
@@ -12810,6 +12970,7 @@ ion-fab-list[side=right] {
     max-width: 16.66667%;
   }
   [col-lg-3] {
+    -webkit-box-flex: 0;
     -webkit-flex: 0 0 25%;
     -ms-flex: 0 0 25%;
     flex: 0 0 25%;
@@ -12817,6 +12978,7 @@ ion-fab-list[side=right] {
     max-width: 25%;
   }
   [col-lg-4] {
+    -webkit-box-flex: 0;
     -webkit-flex: 0 0 33.33333%;
     -ms-flex: 0 0 33.33333%;
     flex: 0 0 33.33333%;
@@ -12824,6 +12986,7 @@ ion-fab-list[side=right] {
     max-width: 33.33333%;
   }
   [col-lg-5] {
+    -webkit-box-flex: 0;
     -webkit-flex: 0 0 41.66667%;
     -ms-flex: 0 0 41.66667%;
     flex: 0 0 41.66667%;
@@ -12831,6 +12994,7 @@ ion-fab-list[side=right] {
     max-width: 41.66667%;
   }
   [col-lg-6] {
+    -webkit-box-flex: 0;
     -webkit-flex: 0 0 50%;
     -ms-flex: 0 0 50%;
     flex: 0 0 50%;
@@ -12838,6 +13002,7 @@ ion-fab-list[side=right] {
     max-width: 50%;
   }
   [col-lg-7] {
+    -webkit-box-flex: 0;
     -webkit-flex: 0 0 58.33333%;
     -ms-flex: 0 0 58.33333%;
     flex: 0 0 58.33333%;
@@ -12845,6 +13010,7 @@ ion-fab-list[side=right] {
     max-width: 58.33333%;
   }
   [col-lg-8] {
+    -webkit-box-flex: 0;
     -webkit-flex: 0 0 66.66667%;
     -ms-flex: 0 0 66.66667%;
     flex: 0 0 66.66667%;
@@ -12852,6 +13018,7 @@ ion-fab-list[side=right] {
     max-width: 66.66667%;
   }
   [col-lg-9] {
+    -webkit-box-flex: 0;
     -webkit-flex: 0 0 75%;
     -ms-flex: 0 0 75%;
     flex: 0 0 75%;
@@ -12859,6 +13026,7 @@ ion-fab-list[side=right] {
     max-width: 75%;
   }
   [col-lg-10] {
+    -webkit-box-flex: 0;
     -webkit-flex: 0 0 83.33333%;
     -ms-flex: 0 0 83.33333%;
     flex: 0 0 83.33333%;
@@ -12866,6 +13034,7 @@ ion-fab-list[side=right] {
     max-width: 83.33333%;
   }
   [col-lg-11] {
+    -webkit-box-flex: 0;
     -webkit-flex: 0 0 91.66667%;
     -ms-flex: 0 0 91.66667%;
     flex: 0 0 91.66667%;
@@ -12873,6 +13042,7 @@ ion-fab-list[side=right] {
     max-width: 91.66667%;
   }
   [col-lg-12] {
+    -webkit-box-flex: 0;
     -webkit-flex: 0 0 100%;
     -ms-flex: 0 0 100%;
     flex: 0 0 100%;
@@ -13364,18 +13534,21 @@ ion-fab-list[side=right] {
     -webkit-flex-basis: 0;
     -ms-flex-preferred-size: 0;
     flex-basis: 0;
+    -webkit-box-flex: 1;
     -webkit-flex-grow: 1;
     -ms-flex-positive: 1;
     flex-grow: 1;
     max-width: 100%;
   }
   [col-xl-auto] {
+    -webkit-box-flex: 0;
     -webkit-flex: 0 0 auto;
     -ms-flex: 0 0 auto;
     flex: 0 0 auto;
     width: auto;
   }
   [col-xl-1] {
+    -webkit-box-flex: 0;
     -webkit-flex: 0 0 8.33333%;
     -ms-flex: 0 0 8.33333%;
     flex: 0 0 8.33333%;
@@ -13383,6 +13556,7 @@ ion-fab-list[side=right] {
     max-width: 8.33333%;
   }
   [col-xl-2] {
+    -webkit-box-flex: 0;
     -webkit-flex: 0 0 16.66667%;
     -ms-flex: 0 0 16.66667%;
     flex: 0 0 16.66667%;
@@ -13390,6 +13564,7 @@ ion-fab-list[side=right] {
     max-width: 16.66667%;
   }
   [col-xl-3] {
+    -webkit-box-flex: 0;
     -webkit-flex: 0 0 25%;
     -ms-flex: 0 0 25%;
     flex: 0 0 25%;
@@ -13397,6 +13572,7 @@ ion-fab-list[side=right] {
     max-width: 25%;
   }
   [col-xl-4] {
+    -webkit-box-flex: 0;
     -webkit-flex: 0 0 33.33333%;
     -ms-flex: 0 0 33.33333%;
     flex: 0 0 33.33333%;
@@ -13404,6 +13580,7 @@ ion-fab-list[side=right] {
     max-width: 33.33333%;
   }
   [col-xl-5] {
+    -webkit-box-flex: 0;
     -webkit-flex: 0 0 41.66667%;
     -ms-flex: 0 0 41.66667%;
     flex: 0 0 41.66667%;
@@ -13411,6 +13588,7 @@ ion-fab-list[side=right] {
     max-width: 41.66667%;
   }
   [col-xl-6] {
+    -webkit-box-flex: 0;
     -webkit-flex: 0 0 50%;
     -ms-flex: 0 0 50%;
     flex: 0 0 50%;
@@ -13418,6 +13596,7 @@ ion-fab-list[side=right] {
     max-width: 50%;
   }
   [col-xl-7] {
+    -webkit-box-flex: 0;
     -webkit-flex: 0 0 58.33333%;
     -ms-flex: 0 0 58.33333%;
     flex: 0 0 58.33333%;
@@ -13425,6 +13604,7 @@ ion-fab-list[side=right] {
     max-width: 58.33333%;
   }
   [col-xl-8] {
+    -webkit-box-flex: 0;
     -webkit-flex: 0 0 66.66667%;
     -ms-flex: 0 0 66.66667%;
     flex: 0 0 66.66667%;
@@ -13432,6 +13612,7 @@ ion-fab-list[side=right] {
     max-width: 66.66667%;
   }
   [col-xl-9] {
+    -webkit-box-flex: 0;
     -webkit-flex: 0 0 75%;
     -ms-flex: 0 0 75%;
     flex: 0 0 75%;
@@ -13439,6 +13620,7 @@ ion-fab-list[side=right] {
     max-width: 75%;
   }
   [col-xl-10] {
+    -webkit-box-flex: 0;
     -webkit-flex: 0 0 83.33333%;
     -ms-flex: 0 0 83.33333%;
     flex: 0 0 83.33333%;
@@ -13446,6 +13628,7 @@ ion-fab-list[side=right] {
     max-width: 83.33333%;
   }
   [col-xl-11] {
+    -webkit-box-flex: 0;
     -webkit-flex: 0 0 91.66667%;
     -ms-flex: 0 0 91.66667%;
     flex: 0 0 91.66667%;
@@ -13453,6 +13636,7 @@ ion-fab-list[side=right] {
     max-width: 91.66667%;
   }
   [col-xl-12] {
+    -webkit-box-flex: 0;
     -webkit-flex: 0 0 100%;
     -ms-flex: 0 0 100%;
     flex: 0 0 100%;
@@ -13654,6 +13838,7 @@ ion-img {
 }
 
 ion-img img {
+  -o-object-fit: cover;
   object-fit: cover;
 }
 
@@ -13672,12 +13857,16 @@ ion-infinite-scroll {
 
 ion-infinite-scroll-content {
   text-align: center;
+  display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
+  -webkit-box-pack: center;
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
@@ -13720,6 +13909,7 @@ ion-input,
 ion-textarea {
   position: relative;
   display: block;
+  -webkit-box-flex: 1;
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
@@ -13732,6 +13922,7 @@ ion-textarea {
 }
 
 .item.item-textarea {
+  -webkit-box-align: stretch;
   -webkit-align-items: stretch;
   -ms-flex-align: stretch;
   align-items: stretch;
@@ -13744,6 +13935,7 @@ ion-textarea {
   appearance: none;
   border-radius: 0;
   display: inline-block;
+  -webkit-box-flex: 1;
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
@@ -13893,48 +14085,57 @@ input.text-input:-webkit-autofill {
 .item-md.item-input.item-input-has-focus .item-inner,
 .item-md.item-input.input-has-focus .item-inner {
   border-bottom-color: #c1272d;
+  -webkit-box-shadow: inset 0 -1px 0 0 #c1272d;
   box-shadow: inset 0 -1px 0 0 #c1272d;
 }
 
 .list-md .item-input.item-input-has-focus:last-child,
 .list-md .item-input.input-has-focus:last-child {
   border-bottom-color: #c1272d;
+  -webkit-box-shadow: inset 0 -1px 0 0 #c1272d;
   box-shadow: inset 0 -1px 0 0 #c1272d;
 }
 
 .list-md .item-input.item-input-has-focus:last-child .item-inner,
 .list-md .item-input.input-has-focus:last-child .item-inner {
+  -webkit-box-shadow: none;
   box-shadow: none;
 }
 
 .item-md.item-input.ng-valid.item-input-has-value:not(.input-has-focus):not(.item-input-has-focus) .item-inner,
 .item-md.item-input.ng-valid.input-has-value:not(.input-has-focus):not(.item-input-has-focus) .item-inner {
   border-bottom-color: #32db64;
+  -webkit-box-shadow: inset 0 -1px 0 0 #32db64;
   box-shadow: inset 0 -1px 0 0 #32db64;
 }
 
 .list-md .item-input.ng-valid.item-input-has-value:not(.input-has-focus):not(.item-input-has-focus):last-child,
 .list-md .item-input.ng-valid.input-has-value:not(.input-has-focus):not(.item-input-has-focus):last-child {
   border-bottom-color: #32db64;
+  -webkit-box-shadow: inset 0 -1px 0 0 #32db64;
   box-shadow: inset 0 -1px 0 0 #32db64;
 }
 
 .list-md .item-input.ng-valid.item-input-has-value:not(.input-has-focus):not(.item-input-has-focus):last-child .item-inner,
 .list-md .item-input.ng-valid.input-has-value:not(.input-has-focus):not(.item-input-has-focus):last-child .item-inner {
+  -webkit-box-shadow: none;
   box-shadow: none;
 }
 
 .item-md.item-input.ng-invalid.ng-touched:not(.input-has-focus):not(.item-input-has-focus) .item-inner {
   border-bottom-color: #f53d3d;
+  -webkit-box-shadow: inset 0 -1px 0 0 #f53d3d;
   box-shadow: inset 0 -1px 0 0 #f53d3d;
 }
 
 .list-md .item-input.ng-invalid.ng-touched:not(.input-has-focus):not(.item-input-has-focus):last-child {
   border-bottom-color: #f53d3d;
+  -webkit-box-shadow: inset 0 -1px 0 0 #f53d3d;
   box-shadow: inset 0 -1px 0 0 #f53d3d;
 }
 
 .list-md .item-input.ng-invalid.ng-touched:not(.input-has-focus):not(.item-input-has-focus):last-child .item-inner {
+  -webkit-box-shadow: none;
   box-shadow: none;
 }
 
@@ -14037,13 +14238,16 @@ input.text-input:-webkit-autofill {
   margin: 0;
   padding: 0;
   text-align: initial;
+  display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
   overflow: hidden;
+  -webkit-box-align: center;
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
+  -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
   justify-content: space-between;
@@ -14059,16 +14263,21 @@ input.text-input:-webkit-autofill {
 .item-inner {
   margin: 0;
   padding: 0;
+  display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
   overflow: hidden;
+  -webkit-box-flex: 1;
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
   -webkit-flex-direction: inherit;
   -ms-flex-direction: inherit;
   flex-direction: inherit;
+  -webkit-box-align: inherit;
   -webkit-align-items: inherit;
   -ms-flex-align: inherit;
   align-items: inherit;
@@ -14080,16 +14289,21 @@ input.text-input:-webkit-autofill {
 }
 
 .input-wrapper {
+  display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
   overflow: hidden;
+  -webkit-box-flex: 1;
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
   -webkit-flex-direction: inherit;
   -ms-flex-direction: inherit;
   flex-direction: inherit;
+  -webkit-box-align: inherit;
   -webkit-align-items: inherit;
   -ms-flex-align: inherit;
   align-items: inherit;
@@ -14112,13 +14326,16 @@ ion-item-divider {
   margin: 0;
   padding: 0;
   z-index: 100;
+  display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
   overflow: hidden;
+  -webkit-box-align: center;
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
+  -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
   justify-content: space-between;
@@ -14134,6 +14351,7 @@ ion-item-divider[sticky] {
 
 [vertical-align-top],
 ion-input.item {
+  -webkit-box-align: start;
   -webkit-align-items: flex-start;
   -ms-flex-align: start;
   align-items: flex-start;
@@ -14194,12 +14412,15 @@ ion-reorder {
   -webkit-transform: translate3d(300%,  0,  0);
   transform: translate3d(300%,  0,  0);
   display: none;
+  -webkit-box-flex: 1;
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
+  -webkit-box-align: center;
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
+  -webkit-box-pack: center;
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
@@ -14207,6 +14428,7 @@ ion-reorder {
   height: 100%;
   font-size: 1.7em;
   opacity: .25;
+  -webkit-transition: -webkit-transform 140ms ease-in;
   transition: -webkit-transform 140ms ease-in;
   transition: transform 140ms ease-in;
   transition: transform 140ms ease-in, -webkit-transform 140ms ease-in;
@@ -14218,6 +14440,7 @@ ion-reorder {
 .reorder-side-start ion-reorder {
   -webkit-transform: translate3d(-300%,  0,  0);
   transform: translate3d(-300%,  0,  0);
+  -webkit-box-ordinal-group: 0;
   -webkit-order: -1;
   -ms-flex-order: -1;
   order: -1;
@@ -14228,6 +14451,7 @@ ion-reorder ion-icon {
 }
 
 .reorder-enabled ion-reorder {
+  display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
@@ -14240,6 +14464,7 @@ ion-reorder ion-icon {
 
 .reorder-list-active .item,
 .reorder-list-active .item-wrapper {
+  -webkit-transition: -webkit-transform 300ms;
   transition: -webkit-transform 300ms;
   transition: transform 300ms;
   transition: transform 300ms, -webkit-transform 300ms;
@@ -14254,8 +14479,10 @@ ion-reorder ion-icon {
 .item.reorder-active,
 .reorder-active {
   z-index: 4;
+  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
   opacity: .8;
+  -webkit-transition: none;
   transition: none;
   pointer-events: none;
 }
@@ -14280,6 +14507,7 @@ ion-item-options {
   visibility: hidden;
   top: 0;
   right: 0;
+  -webkit-box-pack: end;
   -webkit-justify-content: flex-end;
   -ms-flex-pack: end;
   justify-content: flex-end;
@@ -14288,6 +14516,7 @@ ion-item-options {
 ion-item-options[side=left] {
   right: auto;
   left: 0;
+  -webkit-box-pack: start;
   -webkit-justify-content: flex-start;
   -ms-flex-pack: start;
   justify-content: flex-start;
@@ -14298,7 +14527,9 @@ ion-item-options .button {
   padding: 0 0.7em;
   border-radius: 0;
   height: 100%;
+  -webkit-box-shadow: none;
   box-shadow: none;
+  -webkit-box-sizing: content-box;
   box-sizing: content-box;
 }
 
@@ -14315,6 +14546,8 @@ ion-item-options .button:last-child {
 
 ion-item-options:not([icon-left]) .button:not([icon-only]) .button-inner,
 ion-item-options:not([icon-start]) .button:not([icon-only]) .button-inner {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
@@ -14332,6 +14565,7 @@ ion-item-sliding.active-slide .item.activated {
   position: relative;
   z-index: 2;
   opacity: 1;
+  -webkit-transition: -webkit-transform 500ms cubic-bezier(0.36, 0.66, 0.04, 1);
   transition: -webkit-transform 500ms cubic-bezier(0.36, 0.66, 0.04, 1);
   transition: transform 500ms cubic-bezier(0.36, 0.66, 0.04, 1);
   transition: transform 500ms cubic-bezier(0.36, 0.66, 0.04, 1), -webkit-transform 500ms cubic-bezier(0.36, 0.66, 0.04, 1);
@@ -14340,6 +14574,7 @@ ion-item-sliding.active-slide .item.activated {
 }
 
 ion-item-sliding.active-slide ion-item-options {
+  display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
@@ -14355,24 +14590,33 @@ button[expandable] {
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
+  -webkit-transition-duration: 0;
   transition-duration: 0;
+  -webkit-transition-property: none;
   transition-property: none;
+  -webkit-transition-timing-function: cubic-bezier(0.65, 0.05, 0.36, 1);
   transition-timing-function: cubic-bezier(0.65, 0.05, 0.36, 1);
 }
 
 ion-item-sliding.active-swipe-right button[expandable] {
+  -webkit-transition-duration: .6s;
   transition-duration: .6s;
+  -webkit-transition-property: padding-left;
   transition-property: padding-left;
   padding-left: 90%;
+  -webkit-box-ordinal-group: 2;
   -webkit-order: 1;
   -ms-flex-order: 1;
   order: 1;
 }
 
 ion-item-sliding.active-swipe-left button[expandable] {
+  -webkit-transition-duration: .6s;
   transition-duration: .6s;
+  -webkit-transition-property: padding-right;
   transition-property: padding-right;
   padding-right: 90%;
+  -webkit-box-ordinal-group: 0;
   -webkit-order: -1;
   -ms-flex-order: -1;
   order: -1;
@@ -14386,6 +14630,7 @@ ion-item-sliding.active-swipe-left button[expandable] {
   font-size: 1.7rem;
   color: #000;
   background-color: #fff;
+  -webkit-transition: background-color 200ms linear;
   transition: background-color 200ms linear;
 }
 
@@ -14398,6 +14643,7 @@ ion-item-sliding.active-swipe-left button[expandable] {
 
 .item-ios.activated {
   background-color: #d9d9d9;
+  -webkit-transition-duration: 0ms;
   transition-duration: 0ms;
 }
 
@@ -14670,7 +14916,9 @@ ion-item-group .item-wrapper:last-child .item-ios .item-inner {
   text-transform: none;
   color: #000;
   background-color: #fff;
+  -webkit-box-shadow: none;
   box-shadow: none;
+  -webkit-transition: background-color 300ms cubic-bezier(0.4, 0, 0.2, 1);
   transition: background-color 300ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -14925,6 +15173,7 @@ ion-item-group .item-md .item-wrapper:last-child .item-inner {
   text-transform: none;
   color: #000;
   background-color: #fff;
+  -webkit-box-shadow: none;
   box-shadow: none;
 }
 
@@ -15165,6 +15414,7 @@ ion-label {
   margin: 0;
   display: block;
   overflow: hidden;
+  -webkit-box-flex: 1;
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
@@ -15174,6 +15424,7 @@ ion-label {
 }
 
 .item-input ion-label {
+  -webkit-box-flex: initial;
   -webkit-flex: initial;
   -ms-flex: initial;
   flex: initial;
@@ -15186,6 +15437,7 @@ ion-label {
 }
 
 ion-label[fixed] {
+  -webkit-box-flex: 0;
   -webkit-flex: 0 0 100px;
   -ms-flex: 0 0 100px;
   flex: 0 0 100px;
@@ -15198,7 +15450,6 @@ ion-label[fixed] {
 .item-label-floating ion-label {
   -webkit-align-self: stretch;
   -ms-flex-item-align: stretch;
-  -ms-grid-row-align: stretch;
   align-self: stretch;
   width: auto;
   max-width: 100%;
@@ -15211,9 +15462,12 @@ ion-label[floating] {
 
 .item-label-stacked .input-wrapper,
 .item-label-floating .input-wrapper {
+  -webkit-box-flex: 1;
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
@@ -15223,7 +15477,6 @@ ion-label[floating] {
 .item-label-floating ion-select {
   -webkit-align-self: stretch;
   -ms-flex-item-align: stretch;
-  -ms-grid-row-align: stretch;
   align-self: stretch;
   max-width: 100%;
 }
@@ -15250,6 +15503,7 @@ ion-label[floating] {
   transform: translate3d(0,  27px,  0);
   -webkit-transform-origin: left top;
   transform-origin: left top;
+  -webkit-transition: -webkit-transform 150ms ease-in-out;
   transition: -webkit-transform 150ms ease-in-out;
   transition: transform 150ms ease-in-out;
   transition: transform 150ms ease-in-out, -webkit-transform 150ms ease-in-out;
@@ -15330,6 +15584,7 @@ ion-label[floating] {
   transform: translate3d(0,  27px,  0);
   -webkit-transform-origin: left top;
   transform-origin: left top;
+  -webkit-transition: -webkit-transform 150ms ease-in-out;
   transition: -webkit-transform 150ms ease-in-out;
   transition: transform 150ms ease-in-out;
   transition: transform 150ms ease-in-out, -webkit-transform 150ms ease-in-out;
@@ -15487,13 +15742,16 @@ ion-label[floating] {
 ion-list-header {
   margin: 0;
   padding: 0;
+  display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
   overflow: hidden;
+  -webkit-box-align: center;
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
+  -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
   justify-content: space-between;
@@ -15548,15 +15806,18 @@ ion-list[inset] {
 .list-ios ion-item-options .button {
   margin: 0;
   border-radius: 0;
+  display: -webkit-inline-box;
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
   display: inline-flex;
+  -webkit-box-align: center;
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
   height: 100%;
   min-height: 100%;
   border: 0;
+  -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
 
@@ -15678,15 +15939,19 @@ ion-list[inset] {
 .list-md ion-item-options .button {
   margin: 0;
   border-radius: 0;
+  display: -webkit-inline-box;
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
   display: inline-flex;
+  -webkit-box-align: center;
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
   height: 100%;
   border: 0;
+  -webkit-box-shadow: none;
   box-shadow: none;
+  -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
 
@@ -15809,15 +16074,19 @@ ion-list[inset] {
 .list-wp ion-item-options .button {
   margin: 1px 0;
   border-radius: 0;
+  display: -webkit-inline-box;
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
   display: inline-flex;
+  -webkit-box-align: center;
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
   height: calc(100% - 2px);
   border: 0;
+  -webkit-box-shadow: none;
   box-shadow: none;
+  -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
 
@@ -15909,12 +16178,15 @@ ion-loading {
   bottom: 0;
   position: absolute;
   z-index: 1000;
+  display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
+  -webkit-box-pack: center;
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
@@ -15923,9 +16195,11 @@ ion-loading {
 
 .loading-wrapper {
   z-index: 10;
+  display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
@@ -15976,6 +16250,7 @@ ion-loading {
   max-height: 90%;
   color: rgba(0, 0, 0, 0.5);
   background: #fafafa;
+  -webkit-box-shadow: 0 16px 20px rgba(0, 0, 0, 0.4);
   box-shadow: 0 16px 20px rgba(0, 0, 0, 0.4);
   padding: 24px;
 }
@@ -16139,14 +16414,17 @@ ion-menu[type=overlay] .show-backdrop {
 }
 
 .ios .menu-content-reveal {
+  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
 }
 
 .ios .menu-content-push {
+  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
 }
 
 .ios ion-menu[type=overlay] .menu-inner {
+  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
 }
 
@@ -16155,14 +16433,17 @@ ion-menu[type=overlay] .show-backdrop {
 }
 
 .md .menu-content-reveal {
+  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
 }
 
 .md .menu-content-push {
+  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
 }
 
 .md ion-menu[type=overlay] .menu-inner {
+  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
 }
 
@@ -16234,6 +16515,7 @@ ion-modal {
   .md .modal-wrapper {
     border-radius: 2px;
     overflow: hidden;
+    -webkit-box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);
     box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);
   }
 }
@@ -16342,10 +16624,13 @@ ion-picker-cmp {
   transform: translate3d(0,  100%,  0);
   position: absolute;
   z-index: 10;
+  display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
   overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
@@ -16358,10 +16643,12 @@ ion-picker-cmp {
   margin-bottom: constant(safe-area-inset-bottom);
   margin-bottom: env(safe-area-inset-bottom);
   position: relative;
+  display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
   overflow: hidden;
+  -webkit-box-pack: center;
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
@@ -16370,22 +16657,27 @@ ion-picker-cmp {
 
 .picker-col {
   position: relative;
+  display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-flex: 1;
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
+  -webkit-box-pack: center;
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
   height: 100%;
+  -webkit-box-sizing: content-box;
   box-sizing: content-box;
   contain: content;
 }
 
 .picker-opts {
   position: relative;
+  -webkit-box-flex: 1;
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
@@ -16396,6 +16688,7 @@ ion-picker-cmp {
   text-align: right;
   text-align: end;
   position: relative;
+  -webkit-box-flex: 2;
   -webkit-flex: 2;
   -ms-flex: 2;
   flex: 2;
@@ -16408,6 +16701,7 @@ ion-picker-cmp {
   text-align: left;
   text-align: start;
   position: relative;
+  -webkit-box-flex: 2;
   -webkit-flex: 2;
   -ms-flex: 2;
   flex: 2;
@@ -16439,12 +16733,14 @@ ion-picker-cmp {
 }
 
 .picker-opts-left {
+  -webkit-box-pack: start;
   -webkit-justify-content: flex-start;
   -ms-flex-pack: start;
   justify-content: flex-start;
 }
 
 .picker-opts-right {
+  -webkit-box-pack: end;
   -webkit-justify-content: flex-end;
   -ms-flex-pack: end;
   justify-content: flex-end;
@@ -16463,6 +16759,7 @@ ion-picker-cmp {
 }
 
 .picker-ios .picker-toolbar {
+  display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
@@ -16474,6 +16771,7 @@ ion-picker-cmp {
 .picker-ios .picker-toolbar-button {
   text-align: right;
   text-align: end;
+  -webkit-box-flex: 1;
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
@@ -16532,6 +16830,7 @@ ion-picker-cmp {
   background: transparent;
   -webkit-transform-style: preserve-3d;
   transform-style: preserve-3d;
+  -webkit-transition-timing-function: ease-out;
   transition-timing-function: ease-out;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
@@ -16550,6 +16849,7 @@ ion-picker-cmp {
   width: 100%;
   height: 81px;
   border-bottom: 1px solid #c8c7cc;
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(20%, white), to(rgba(255, 255, 255, 0.7)));
   background: linear-gradient(to bottom, white 20%, rgba(255, 255, 255, 0.7) 100%);
 }
 
@@ -16564,6 +16864,7 @@ ion-picker-cmp {
   width: 100%;
   height: 119px;
   border-top: 1px solid #c8c7cc;
+  background: -webkit-gradient(linear, left bottom, left top, color-stop(30%, white), to(rgba(255, 255, 255, 0.7)));
   background: linear-gradient(to top, white 30%, rgba(255, 255, 255, 0.7) 100%);
 }
 
@@ -16574,9 +16875,11 @@ ion-picker-cmp {
 }
 
 .picker-md .picker-toolbar {
+  display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-pack: end;
   -webkit-justify-content: flex-end;
   -ms-flex-pack: end;
   justify-content: flex-end;
@@ -16590,6 +16893,7 @@ ion-picker-cmp {
   height: 44px;
   color: #c1272d;
   background: transparent;
+  -webkit-box-shadow: none;
   box-shadow: none;
 }
 
@@ -16624,6 +16928,7 @@ ion-picker-cmp {
   line-height: 42px;
   color: #000;
   background: transparent;
+  -webkit-transition-timing-function: ease-out;
   transition-timing-function: ease-out;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
@@ -16647,6 +16952,7 @@ ion-picker-cmp {
   width: 100%;
   height: 81px;
   border-bottom: 1px solid #dedede;
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(20%, white), to(rgba(255, 255, 255, 0.7)));
   background: linear-gradient(to bottom, white 20%, rgba(255, 255, 255, 0.7) 100%);
 }
 
@@ -16660,6 +16966,7 @@ ion-picker-cmp {
   width: 100%;
   height: 119px;
   border-top: 1px solid #dedede;
+  background: -webkit-gradient(linear, left bottom, left top, color-stop(30%, white), to(rgba(255, 255, 255, 0.7)));
   background: linear-gradient(to top, white 30%, rgba(255, 255, 255, 0.7) 100%);
 }
 
@@ -16670,9 +16977,11 @@ ion-picker-cmp {
 }
 
 .picker-wp .picker-toolbar {
+  display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-pack: end;
   -webkit-justify-content: flex-end;
   -ms-flex-pack: end;
   justify-content: flex-end;
@@ -16684,6 +16993,7 @@ ion-picker-cmp {
 .picker-wp .picker-toolbar-button {
   text-align: right;
   text-align: end;
+  -webkit-box-flex: 1;
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
@@ -16701,6 +17011,7 @@ ion-picker-cmp {
   height: 44px;
   color: #c1272d;
   background: transparent;
+  -webkit-box-shadow: none;
   box-shadow: none;
 }
 
@@ -16735,6 +17046,7 @@ ion-picker-cmp {
   line-height: 42px;
   color: #000;
   background: transparent;
+  -webkit-transition-timing-function: ease-out;
   transition-timing-function: ease-out;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
@@ -16758,6 +17070,7 @@ ion-picker-cmp {
   width: 100%;
   height: 81px;
   border-bottom: 1px solid transparent;
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(20%, white), to(rgba(255, 255, 255, 0.7)));
   background: linear-gradient(to bottom, white 20%, rgba(255, 255, 255, 0.7) 100%);
 }
 
@@ -16771,6 +17084,7 @@ ion-picker-cmp {
   width: 100%;
   height: 119px;
   border-top: 1px solid transparent;
+  background: -webkit-gradient(linear, left bottom, left top, color-stop(30%, white), to(rgba(255, 255, 255, 0.7)));
   background: linear-gradient(to top, white 30%, rgba(255, 255, 255, 0.7) 100%);
 }
 
@@ -16781,12 +17095,15 @@ ion-popover {
   bottom: 0;
   position: absolute;
   z-index: 1000;
+  display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
+  -webkit-box-pack: center;
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
@@ -16800,10 +17117,13 @@ ion-popover {
 .popover-content {
   position: absolute;
   z-index: 10;
+  display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
   overflow: auto;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
@@ -16879,11 +17199,13 @@ ion-popover {
   max-height: 90%;
   color: #000;
   background: #fff;
+  -webkit-box-shadow: 0 3px 12px 2px rgba(0, 0, 0, 0.3);
   box-shadow: 0 3px 12px 2px rgba(0, 0, 0, 0.3);
 }
 
 .popover-md .popover-viewport {
   opacity: 0;
+  -webkit-transition-delay: 100ms;
   transition-delay: 100ms;
 }
 
@@ -16902,6 +17224,7 @@ ion-popover {
 
 .popover-wp .popover-viewport {
   opacity: 0;
+  -webkit-transition-delay: 100ms;
   transition-delay: 100ms;
 }
 
@@ -17045,6 +17368,7 @@ ion-popover {
   background-color: #c1272d;
   -webkit-transform: scale3d(0, 0, 0);
   transform: scale3d(0, 0, 0);
+  -webkit-transition: -webkit-transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
   transition: -webkit-transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
   transition: transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
   transition: transform 280ms cubic-bezier(0.4, 0, 0.2, 1), -webkit-transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -17190,6 +17514,7 @@ ion-popover {
 .item-wp .radio-wp {
   position: static;
   display: block;
+  -webkit-box-ordinal-group: 0;
   -webkit-order: -1;
   -ms-flex-order: -1;
   order: -1;
@@ -17197,6 +17522,7 @@ ion-popover {
 }
 
 .item-wp .radio-wp[item-right], .item-wp .radio-wp[item-end] {
+  -webkit-box-ordinal-group: 1;
   -webkit-order: 0;
   -ms-flex-order: 0;
   order: 0;
@@ -17234,6 +17560,8 @@ ion-popover {
 
 .item-range .input-wrapper {
   overflow: visible;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
@@ -17247,21 +17575,23 @@ ion-popover {
 .item-range ion-range ion-label {
   -webkit-align-self: center;
   -ms-flex-item-align: center;
-  -ms-grid-row-align: center;
   align-self: center;
 }
 
 ion-range {
   position: relative;
+  display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
 }
 
 ion-range ion-label {
+  -webkit-box-flex: initial;
   -webkit-flex: initial;
   -ms-flex: initial;
   flex: initial;
@@ -17275,6 +17605,7 @@ ion-range ion-icon {
 
 .range-slider {
   position: relative;
+  -webkit-box-flex: 1;
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
@@ -17345,6 +17676,7 @@ ion-range ion-icon {
   width: 28px;
   height: 28px;
   background: #fff;
+  -webkit-box-shadow: 0 3px 1px rgba(0, 0, 0, 0.1), 0 4px 8px rgba(0, 0, 0, 0.13), 0 0 0 1px rgba(0, 0, 0, 0.02);
   box-shadow: 0 3px 1px rgba(0, 0, 0, 0.1), 0 4px 8px rgba(0, 0, 0, 0.13), 0 0 0 1px rgba(0, 0, 0, 0.02);
   pointer-events: none;
 }
@@ -17376,6 +17708,7 @@ ion-range ion-icon {
   font-size: 12px;
   color: #000;
   background: transparent;
+  -webkit-transition: -webkit-transform 120ms ease;
   transition: -webkit-transform 120ms ease;
   transition: transform 120ms ease;
   transition: transform 120ms ease, -webkit-transform 120ms ease;
@@ -17482,10 +17815,13 @@ ion-range ion-icon {
   background: #c1272d;
   -webkit-transform: scale(0.67);
   transform: scale(0.67);
+  -webkit-transition-duration: 120ms;
   transition-duration: 120ms;
+  -webkit-transition-property: background-color, border, -webkit-transform;
   transition-property: background-color, border, -webkit-transform;
   transition-property: transform, background-color, border;
   transition-property: transform, background-color, border, -webkit-transform;
+  -webkit-transition-timing-function: ease;
   transition-timing-function: ease;
   pointer-events: none;
 }
@@ -17520,6 +17856,7 @@ ion-range ion-icon {
   font-size: 12px;
   color: #fff;
   background: #c1272d;
+  -webkit-transition: background-color 120ms ease, -webkit-transform 120ms ease;
   transition: background-color 120ms ease, -webkit-transform 120ms ease;
   transition: transform 120ms ease, background-color 120ms ease;
   transition: transform 120ms ease, background-color 120ms ease, -webkit-transform 120ms ease;
@@ -17541,6 +17878,7 @@ ion-range ion-icon {
   content: "";
   -webkit-transform: rotate(-45deg);
   transform: rotate(-45deg);
+  -webkit-transition: background-color 120ms ease;
   transition: background-color 120ms ease;
 }
 
@@ -17759,6 +18097,7 @@ ion-range ion-icon {
   font-size: 12px;
   color: #fff;
   background: #c1272d;
+  -webkit-transition: -webkit-transform 120ms ease;
   transition: -webkit-transform 120ms ease;
   transition: transform 120ms ease;
   transition: transform 120ms ease, -webkit-transform 120ms ease;
@@ -17826,18 +18165,23 @@ ion-refresher.refresher-active {
 .has-refresher > .scroll-content {
   margin-top: -1px;
   border-top: 1px solid #ddd;
+  -webkit-transition: -webkit-transform 320ms cubic-bezier(0.36, 0.66, 0.04, 1);
   transition: -webkit-transform 320ms cubic-bezier(0.36, 0.66, 0.04, 1);
   transition: transform 320ms cubic-bezier(0.36, 0.66, 0.04, 1);
   transition: transform 320ms cubic-bezier(0.36, 0.66, 0.04, 1), -webkit-transform 320ms cubic-bezier(0.36, 0.66, 0.04, 1);
 }
 
 ion-refresher-content {
+  display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
+  -webkit-box-pack: center;
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
@@ -17857,6 +18201,7 @@ ion-refresher-content {
   transform-origin: center;
   font-size: 30px;
   color: #000;
+  -webkit-transition: 200ms;
   transition: 200ms;
 }
 
@@ -17928,12 +18273,15 @@ ion-scroll.scroll-y .scroll-content {
 }
 
 ion-scroll[center] .scroll-content {
+  display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
+  -webkit-box-pack: center;
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
@@ -17953,9 +18301,11 @@ ion-scroll .scroll-content {
 
 ion-searchbar {
   position: relative;
+  display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
@@ -18292,6 +18642,7 @@ ion-searchbar {
 
 .searchbar-ios.searchbar-animated .searchbar-search-icon,
 .searchbar-ios.searchbar-animated .searchbar-input {
+  -webkit-transition: all 300ms ease;
   transition: all 300ms ease;
 }
 
@@ -18305,6 +18656,7 @@ ion-searchbar {
   -webkit-transform: translate3d(0,  0,  0);
   transform: translate3d(0,  0,  0);
   opacity: 0;
+  -webkit-transition: all 300ms ease;
   transition: all 300ms ease;
   pointer-events: none;
 }
@@ -18353,6 +18705,7 @@ ion-searchbar {
   line-height: 3rem;
   color: #141414;
   background-color: #fff;
+  -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
 }
 
@@ -18391,6 +18744,7 @@ ion-searchbar {
 }
 
 .searchbar-md.searchbar-has-focus.searchbar-show-cancel .searchbar-md-cancel {
+  display: -webkit-inline-box;
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
   display: inline-flex;
@@ -18515,15 +18869,19 @@ ion-searchbar {
 }
 
 ion-segment {
+  display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-flex: 1;
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
+  -webkit-box-align: center;
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
+  -webkit-box-pack: center;
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
@@ -18543,6 +18901,7 @@ ion-segment {
 }
 
 .segment-ios .segment-button {
+  -webkit-box-flex: 1;
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
@@ -18566,16 +18925,19 @@ ion-segment {
   color: #fff;
   background-color: #c1272d;
   opacity: 1;
+  -webkit-transition: 100ms all linear;
   transition: 100ms all linear;
 }
 
 .segment-ios .segment-button:hover:not(.segment-activated) {
   background-color: rgba(193, 39, 45, 0.1);
+  -webkit-transition: 100ms all linear;
   transition: 100ms all linear;
 }
 
 .segment-ios .segment-button:active:not(.segment-activated) {
   background-color: rgba(193, 39, 45, 0.16);
+  -webkit-transition: 100ms all linear;
   transition: 100ms all linear;
 }
 
@@ -18769,6 +19131,7 @@ ion-segment {
 }
 
 .segment-md .segment-button {
+  -webkit-box-flex: 1;
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
@@ -18784,6 +19147,7 @@ ion-segment {
   color: #c1272d;
   background-color: transparent;
   opacity: 0.7;
+  -webkit-transition: 100ms all linear;
   transition: 100ms all linear;
   padding: 0 6px;
 }
@@ -18864,6 +19228,7 @@ ion-segment {
 }
 
 .segment-wp {
+  -webkit-box-pack: start;
   -webkit-justify-content: flex-start;
   -ms-flex-pack: start;
   justify-content: flex-start;
@@ -18951,6 +19316,7 @@ ion-segment {
 }
 
 ion-select {
+  display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
@@ -18960,6 +19326,7 @@ ion-select {
 
 .select-text {
   overflow: hidden;
+  -webkit-box-flex: 1;
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
@@ -19046,6 +19413,7 @@ ion-select {
 .select-wp {
   margin: 13px 8px;
   padding: 0 8px;
+  -webkit-box-flex: 1;
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
@@ -19066,7 +19434,6 @@ ion-select {
   position: relative;
   -webkit-align-self: center;
   -ms-flex-item-align: center;
-  -ms-grid-row-align: center;
   align-self: center;
   width: 18px;
   height: 18px;
@@ -19104,6 +19471,7 @@ ion-select {
   padding: 0;
   position: relative;
   z-index: 1;
+  display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
@@ -19117,6 +19485,8 @@ ion-select {
 }
 
 .swiper-container-vertical > .swiper-wrapper {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
@@ -19126,14 +19496,17 @@ ion-select {
   padding: 0;
   position: relative;
   z-index: 1;
+  display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
   width: 100%;
   height: 100%;
+  -webkit-transition-property: -webkit-transform;
   transition-property: -webkit-transform;
   transition-property: transform;
   transition-property: transform, -webkit-transform;
+  -webkit-box-sizing: content-box;
   box-sizing: content-box;
 }
 
@@ -19151,27 +19524,32 @@ ion-select {
 
 .swiper-container-free-mode > .swiper-wrapper {
   margin: 0 auto;
+  -webkit-transition-timing-function: ease-out;
   transition-timing-function: ease-out;
 }
 
 .swiper-slide {
   text-align: center;
   position: relative;
+  display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
+  -webkit-box-align: center;
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
+  -webkit-box-pack: center;
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
   width: 100%;
   height: 100%;
   font-size: 18px;
+  -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
 
@@ -19181,9 +19559,11 @@ ion-select {
 }
 
 .swiper-container-autoheight .swiper-wrapper {
+  -webkit-box-align: start;
   -webkit-align-items: flex-start;
   -ms-flex-align: start;
   align-items: flex-start;
+  -webkit-transition-property: height, -webkit-transform;
   transition-property: height, -webkit-transform;
   transition-property: transform, height;
   transition-property: transform, height, -webkit-transform;
@@ -19269,6 +19649,7 @@ ion-select {
   transform: translate3d(0,  0,  0);
   position: absolute;
   z-index: 10;
+  -webkit-transition: 300ms;
   transition: 300ms;
   pointer-events: none;
 }
@@ -19303,6 +19684,7 @@ button.swiper-pagination-bullet {
   -webkit-appearance: none;
   appearance: none;
   border: 0;
+  -webkit-box-shadow: none;
   box-shadow: none;
 }
 
@@ -19422,18 +19804,22 @@ button.swiper-pagination-bullet {
 }
 
 .swiper-container-3d .swiper-slide-shadow-left {
+  background-image: -webkit-gradient(linear, right top, left top, from(rgba(0, 0, 0, 0.5)), to(transparent));
   background-image: linear-gradient(to left, rgba(0, 0, 0, 0.5), transparent);
 }
 
 .swiper-container-3d .swiper-slide-shadow-right {
+  background-image: -webkit-gradient(linear, left top, right top, from(rgba(0, 0, 0, 0.5)), to(transparent));
   background-image: linear-gradient(to right, rgba(0, 0, 0, 0.5), transparent);
 }
 
 .swiper-container-3d .swiper-slide-shadow-top {
+  background-image: -webkit-gradient(linear, left bottom, left top, from(rgba(0, 0, 0, 0.5)), to(transparent));
   background-image: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent);
 }
 
 .swiper-container-3d .swiper-slide-shadow-bottom {
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.5)), to(transparent));
   background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), transparent);
 }
 
@@ -19516,10 +19902,12 @@ button.swiper-pagination-bullet {
 }
 
 .swiper-container-fade.swiper-container-free-mode .swiper-slide {
+  -webkit-transition-timing-function: ease-out;
   transition-timing-function: ease-out;
 }
 
 .swiper-container-fade .swiper-slide {
+  -webkit-transition-property: opacity;
   transition-property: opacity;
   pointer-events: none;
 }
@@ -19535,12 +19923,15 @@ button.swiper-pagination-bullet {
 
 .swiper-zoom-container {
   text-align: center;
+  display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
+  -webkit-box-pack: center;
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
@@ -19553,6 +19944,7 @@ button.swiper-pagination-bullet {
 .swiper-zoom-container > canvas {
   max-width: 100%;
   max-height: 100%;
+  -o-object-fit: contain;
   object-fit: contain;
 }
 
@@ -20073,9 +20465,12 @@ ion-spinner.spinner-paused svg {
   top: 0;
   bottom: 0;
   position: absolute;
+  display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
   -webkit-flex-direction: row;
   -ms-flex-direction: row;
   flex-direction: row;
@@ -20097,9 +20492,11 @@ ion-spinner.spinner-paused svg {
   bottom: 0;
   position: relative;
   z-index: 0;
+  -webkit-box-flex: 1;
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
+  -webkit-box-shadow: none !important;
   box-shadow: none !important;
 }
 
@@ -20107,6 +20504,7 @@ ion-spinner.spinner-paused svg {
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
+  -webkit-box-ordinal-group: 0;
   -webkit-order: -1;
   -ms-flex-order: -1;
   order: -1;
@@ -20121,6 +20519,7 @@ ion-spinner.spinner-paused svg {
 
 .split-pane-visible > ion-split-pane.split-pane-side,
 .split-pane-visible > ion-split-pane.split-pane-main {
+  display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
@@ -20130,6 +20529,7 @@ ion-spinner.spinner-paused svg {
   left: 0;
   right: 0;
   width: auto;
+  -webkit-box-shadow: none !important;
   box-shadow: none !important;
   -webkit-transform: none !important;
   transform: none !important;
@@ -20140,24 +20540,28 @@ ion-spinner.spinner-paused svg {
 }
 
 .split-pane-visible > .split-pane-side[side=start] {
+  -webkit-box-ordinal-group: 0;
   -webkit-order: -1;
   -ms-flex-order: -1;
   order: -1;
 }
 
 .split-pane-visible > .split-pane-side[side=end] {
+  -webkit-box-ordinal-group: 2;
   -webkit-order: 1;
   -ms-flex-order: 1;
   order: 1;
 }
 
 .split-pane-visible > .split-pane-side[side=left] {
+  -webkit-box-ordinal-group: 0;
   -webkit-order: -1;
   -ms-flex-order: -1;
   order: -1;
 }
 
 .split-pane-visible > .split-pane-side[side=right] {
+  -webkit-box-ordinal-group: 2;
   -webkit-order: 1;
   -ms-flex-order: 1;
   order: 1;
@@ -20204,6 +20608,7 @@ ion-spinner.spinner-paused svg {
   bottom: 0;
   position: absolute;
   z-index: 10;
+  display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
@@ -20230,22 +20635,28 @@ ion-spinner.spinner-paused svg {
   border-radius: 0;
   position: relative;
   z-index: 0;
+  display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
   overflow: hidden;
+  -webkit-box-flex: 1;
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
+  -webkit-box-align: center;
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
   -webkit-align-self: center;
   -ms-flex-item-align: center;
   align-self: center;
+  -webkit-box-pack: center;
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
@@ -20280,7 +20691,6 @@ ion-spinner.spinner-paused svg {
   overflow: hidden;
   -webkit-align-self: center;
   -ms-flex-item-align: center;
-  -ms-grid-row-align: center;
   align-self: center;
   min-width: 26px;
   max-width: 100%;
@@ -20298,6 +20708,7 @@ ion-spinner.spinner-paused svg {
 }
 
 [tabsLayout=icon-bottom] .tab-button .tab-button-icon {
+  -webkit-box-ordinal-group: 11;
   -webkit-order: 10;
   -ms-flex-order: 10;
   order: 10;
@@ -20307,6 +20718,8 @@ ion-spinner.spinner-paused svg {
 [tabsLayout=icon-right] .tab-button,
 [tabsLayout=icon-start] .tab-button,
 [tabsLayout=icon-end] .tab-button {
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
   -webkit-flex-direction: row;
   -ms-flex-direction: row;
   flex-direction: row;
@@ -20324,6 +20737,7 @@ ion-spinner.spinner-paused svg {
   padding-left: 8px;
   text-align: left;
   text-align: start;
+  -webkit-box-ordinal-group: 11;
   -webkit-order: 10;
   -ms-flex-order: 10;
   order: 10;
@@ -20360,6 +20774,7 @@ ion-spinner.spinner-paused svg {
 }
 
 .tabs-ios .tabbar {
+  -webkit-box-pack: center;
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
@@ -20551,6 +20966,7 @@ ion-spinner.spinner-paused svg {
 .tabs-md .tab-button-text {
   font-size: 1.2rem;
   text-transform: none;
+  -webkit-transition: -webkit-transform 0.3s ease-in-out;
   transition: -webkit-transform 0.3s ease-in-out;
   transition: transform 0.3s ease-in-out;
   transition: transform 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
@@ -20562,6 +20978,7 @@ ion-spinner.spinner-paused svg {
 .tabs-md .tab-button[aria-selected=true] .tab-button-text {
   -webkit-transform: scale3d(1.16667, 1.16667, 1);
   transform: scale3d(1.16667, 1.16667, 1);
+  -webkit-transition: -webkit-transform 0.3s ease-in-out;
   transition: -webkit-transform 0.3s ease-in-out;
   transition: transform 0.3s ease-in-out;
   transition: transform 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
@@ -20581,6 +20998,7 @@ ion-spinner.spinner-paused svg {
   min-width: 2.4rem;
   font-size: 2.4rem;
   color: rgba(60, 60, 60, 0.7);
+  -webkit-transition: -webkit-transform 0.3s ease-in-out;
   transition: -webkit-transform 0.3s ease-in-out;
   transition: transform 0.3s ease-in-out;
   transition: transform 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
@@ -20633,6 +21051,7 @@ ion-spinner.spinner-paused svg {
 }
 
 .tabs-md[tabsHighlight=true] .tab-highlight.animate {
+  -webkit-transition-duration: 300ms;
   transition-duration: 300ms;
 }
 
@@ -20746,6 +21165,7 @@ ion-spinner.spinner-paused svg {
   font-size: 1.2rem;
   font-weight: normal;
   color: rgba(140, 140, 140, 0.7);
+  -webkit-box-shadow: none;
   box-shadow: none;
   padding: 12px 10px 5px;
 }
@@ -20907,9 +21327,11 @@ ion-toast {
 }
 
 .toast-container {
+  display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
@@ -20923,6 +21345,7 @@ ion-toast {
 }
 
 .toast-message {
+  -webkit-box-flex: 1;
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
@@ -21041,6 +21464,7 @@ ion-toast {
   display: block;
   width: 51px;
   height: 32px;
+  -webkit-box-sizing: content-box;
   box-sizing: content-box;
   contain: strict;
 }
@@ -21052,6 +21476,7 @@ ion-toast {
   width: 100%;
   height: 100%;
   background-color: #e6e6e6;
+  -webkit-transition: background-color 300ms;
   transition: background-color 300ms;
   pointer-events: none;
 }
@@ -21067,6 +21492,7 @@ ion-toast {
   content: "";
   -webkit-transform: scale3d(1, 1, 1);
   transform: scale3d(1, 1, 1);
+  -webkit-transition: -webkit-transform 300ms;
   transition: -webkit-transform 300ms;
   transition: transform 300ms;
   transition: transform 300ms, -webkit-transform 300ms;
@@ -21080,7 +21506,9 @@ ion-toast {
   width: 28px;
   height: 28px;
   background-color: #fff;
+  -webkit-box-shadow: 0 3px 12px rgba(0, 0, 0, 0.16), 0 3px 1px rgba(0, 0, 0, 0.1);
   box-shadow: 0 3px 12px rgba(0, 0, 0, 0.16), 0 3px 1px rgba(0, 0, 0, 0.1);
+  -webkit-transition: width 120ms ease-in-out 80ms, left 110ms ease-in-out 80ms, right 110ms ease-in-out 80ms, -webkit-transform 300ms;
   transition: width 120ms ease-in-out 80ms, left 110ms ease-in-out 80ms, right 110ms ease-in-out 80ms, -webkit-transform 300ms;
   transition: transform 300ms, width 120ms ease-in-out 80ms, left 110ms ease-in-out 80ms, right 110ms ease-in-out 80ms;
   transition: transform 300ms, width 120ms ease-in-out 80ms, left 110ms ease-in-out 80ms, right 110ms ease-in-out 80ms, -webkit-transform 300ms;
@@ -21157,6 +21585,7 @@ ion-toast {
   display: block;
   width: 36px;
   height: 14px;
+  -webkit-box-sizing: content-box;
   box-sizing: content-box;
   contain: strict;
   padding: 12px;
@@ -21169,6 +21598,7 @@ ion-toast {
   width: 100%;
   height: 100%;
   background-color: #dedede;
+  -webkit-transition: background-color 300ms;
   transition: background-color 300ms;
   pointer-events: none;
 }
@@ -21181,8 +21611,11 @@ ion-toast {
   width: 20px;
   height: 20px;
   background-color: #fff;
+  -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+  -webkit-transition-duration: 300ms;
   transition-duration: 300ms;
+  -webkit-transition-property: background-color, -webkit-transform;
   transition-property: background-color, -webkit-transform;
   transition-property: transform, background-color;
   transition-property: transform, background-color, -webkit-transform;
@@ -21270,6 +21703,7 @@ ion-toast {
   display: block;
   width: 40px;
   height: 18px;
+  -webkit-box-sizing: content-box;
   box-sizing: content-box;
   contain: strict;
 }
@@ -21294,7 +21728,9 @@ ion-toast {
   width: 10px;
   height: 10px;
   background-color: #323232;
+  -webkit-transition-duration: 300ms;
   transition-duration: 300ms;
+  -webkit-transition-property: background-color, -webkit-transform;
   transition-property: background-color, -webkit-transform;
   transition-property: transform, background-color;
   transition-property: transform, background-color, -webkit-transform;
@@ -21388,16 +21824,21 @@ ion-toolbar {
 }
 
 .toolbar {
+  display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
   overflow: hidden;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
   -webkit-flex-direction: row;
   -ms-flex-direction: row;
   flex-direction: row;
+  -webkit-box-align: center;
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
+  -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
   justify-content: space-between;
@@ -21420,12 +21861,15 @@ ion-toolbar {
 }
 
 ion-title {
+  display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-flex: 1;
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
+  -webkit-box-align: center;
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
@@ -21470,6 +21914,7 @@ ion-buttons,
 }
 
 ion-navbar.toolbar {
+  display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
@@ -21510,9 +21955,11 @@ ion-navbar.toolbar {
 }
 
 .bar-button-menutoggle {
+  display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
@@ -21527,9 +21974,11 @@ ion-navbar.toolbar {
 }
 
 .back-button-text {
+  display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
@@ -21578,9 +22027,11 @@ ion-navbar.toolbar {
 }
 
 .toolbar-content-ios {
+  -webkit-box-flex: 1;
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
+  -webkit-box-ordinal-group: 5;
   -webkit-order: 4;
   -ms-flex-order: 4;
   order: 4;
@@ -21608,6 +22059,7 @@ ion-navbar.toolbar {
 }
 
 .bar-buttons-ios {
+  -webkit-box-ordinal-group: 4;
   -webkit-order: 3;
   -ms-flex-order: 3;
   order: 3;
@@ -21616,6 +22068,7 @@ ion-navbar.toolbar {
 }
 
 .bar-buttons-ios[left] {
+  -webkit-box-ordinal-group: 3;
   -webkit-order: 2;
   -ms-flex-order: 2;
   order: 2;
@@ -21624,6 +22077,7 @@ ion-navbar.toolbar {
 .bar-buttons-ios[end] {
   text-align: right;
   text-align: end;
+  -webkit-box-ordinal-group: 6;
   -webkit-order: 5;
   -ms-flex-order: 5;
   order: 5;
@@ -21631,6 +22085,7 @@ ion-navbar.toolbar {
 
 .bar-buttons-ios[right] {
   text-align: right;
+  -webkit-box-ordinal-group: 7;
   -webkit-order: 6;
   -ms-flex-order: 6;
   order: 6;
@@ -21707,6 +22162,7 @@ ion-navbar.toolbar {
   margin: 0;
   z-index: 99;
   overflow: visible;
+  -webkit-box-ordinal-group: 1;
   -webkit-order: 0;
   -ms-flex-order: 0;
   order: 0;
@@ -21730,6 +22186,7 @@ ion-navbar.toolbar {
 .bar-button-menutoggle-ios {
   margin: 0 6px;
   padding: 0;
+  -webkit-box-ordinal-group: 2;
   -webkit-order: 1;
   -ms-flex-order: 1;
   order: 1;
@@ -21743,6 +22200,7 @@ ion-navbar.toolbar {
 
 .bar-button-menutoggle-ios[end],
 .bar-button-menutoggle-ios[right] {
+  -webkit-box-ordinal-group: 8;
   -webkit-order: 7;
   -ms-flex-order: 7;
   order: 7;
@@ -23081,9 +23539,11 @@ ion-navbar.toolbar {
 }
 
 .toolbar-content-md {
+  -webkit-box-flex: 1;
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
+  -webkit-box-ordinal-group: 4;
   -webkit-order: 3;
   -ms-flex-order: 3;
   order: 3;
@@ -23099,6 +23559,7 @@ ion-navbar.toolbar {
 }
 
 .bar-buttons-md {
+  -webkit-box-ordinal-group: 5;
   -webkit-order: 4;
   -ms-flex-order: 4;
   order: 4;
@@ -23107,6 +23568,7 @@ ion-navbar.toolbar {
 }
 
 .bar-buttons-md[left] {
+  -webkit-box-ordinal-group: 3;
   -webkit-order: 2;
   -ms-flex-order: 2;
   order: 2;
@@ -23119,6 +23581,7 @@ ion-navbar.toolbar {
 .bar-buttons-md[end] {
   text-align: right;
   text-align: end;
+  -webkit-box-ordinal-group: 6;
   -webkit-order: 5;
   -ms-flex-order: 5;
   order: 5;
@@ -23126,6 +23589,7 @@ ion-navbar.toolbar {
 
 .bar-buttons-md[right] {
   text-align: right;
+  -webkit-box-ordinal-group: 7;
   -webkit-order: 6;
   -ms-flex-order: 6;
   order: 6;
@@ -23210,6 +23674,7 @@ ion-navbar.toolbar {
 .back-button-md {
   margin: 0 6px;
   min-width: 44px;
+  -webkit-box-shadow: none;
   box-shadow: none;
 }
 
@@ -23225,6 +23690,7 @@ ion-navbar.toolbar {
 .bar-button-menutoggle-md {
   margin: 0 6px;
   padding: 0 2px;
+  -webkit-box-ordinal-group: 2;
   -webkit-order: 1;
   -ms-flex-order: 1;
   order: 1;
@@ -23239,6 +23705,7 @@ ion-navbar.toolbar {
 .bar-button-menutoggle-md[end],
 .bar-button-menutoggle-md[right] {
   margin: 0 2px;
+  -webkit-box-ordinal-group: 8;
   -webkit-order: 7;
   -ms-flex-order: 7;
   order: 7;
@@ -24501,9 +24968,11 @@ ion-navbar.toolbar {
 }
 
 .toolbar-content-wp {
+  -webkit-box-flex: 1;
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
+  -webkit-box-ordinal-group: 4;
   -webkit-order: 3;
   -ms-flex-order: 3;
   order: 3;
@@ -24520,6 +24989,7 @@ ion-navbar.toolbar {
 }
 
 .bar-buttons-wp {
+  -webkit-box-ordinal-group: 5;
   -webkit-order: 4;
   -ms-flex-order: 4;
   order: 4;
@@ -24528,6 +24998,7 @@ ion-navbar.toolbar {
 }
 
 .bar-buttons-wp[left] {
+  -webkit-box-ordinal-group: 3;
   -webkit-order: 2;
   -ms-flex-order: 2;
   order: 2;
@@ -24540,6 +25011,7 @@ ion-navbar.toolbar {
 .bar-buttons-wp[end] {
   text-align: right;
   text-align: end;
+  -webkit-box-ordinal-group: 6;
   -webkit-order: 5;
   -ms-flex-order: 5;
   order: 5;
@@ -24547,6 +25019,7 @@ ion-navbar.toolbar {
 
 .bar-buttons-wp[right] {
   text-align: right;
+  -webkit-box-ordinal-group: 7;
   -webkit-order: 6;
   -ms-flex-order: 6;
   order: 6;
@@ -24628,6 +25101,7 @@ ion-navbar.toolbar {
 .back-button-wp {
   margin: 0 6px;
   min-width: 44px;
+  -webkit-box-shadow: none;
   box-shadow: none;
 }
 
@@ -24643,6 +25117,7 @@ ion-navbar.toolbar {
 .bar-button-menutoggle-wp {
   margin: 0 6px;
   padding: 0 2px;
+  -webkit-box-ordinal-group: 2;
   -webkit-order: 1;
   -ms-flex-order: 1;
   order: 1;
@@ -24657,6 +25132,7 @@ ion-navbar.toolbar {
 .bar-button-menutoggle-wp[end],
 .bar-button-menutoggle-wp[right] {
   margin: 0 2px;
+  -webkit-box-ordinal-group: 8;
   -webkit-order: 7;
   -ms-flex-order: 7;
   order: 7;
@@ -25862,6 +26338,7 @@ ion-navbar.toolbar {
   left: 0;
   top: 0;
   position: absolute;
+  -webkit-transition-duration: 0ms;
   transition-duration: 0ms;
   contain: content;
 }
@@ -26186,6 +26663,7 @@ image-uploader .uploaded-image-holder .uploaded-image {
   max-width: 80%;
   border: 10px solid white;
   border-radius: 3px;
+  -webkit-box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.3);
   box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.3);
   margin-top: 5px;
 }

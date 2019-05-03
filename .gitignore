@@ -37,3 +37,5 @@ setup/ansible/inventory\.yml
 setup/ansible/config\.yml
 
 setup/ansible/piox\.retry
+/app/.sourcemaps
+/app/www/build/vendor.js.map
