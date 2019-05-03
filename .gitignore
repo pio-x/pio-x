@@ -9,7 +9,6 @@ api/uploaded_images/*
 !api/uploaded_images/.gitkeep
 api/statistics
 # Composer
-composer.phar
 .composer/
 # PHP
 error_log
