@@ -3,6 +3,8 @@
         "slim/slim": "^3.7",
         "doctrine/dbal": "^2.5",
         "doctrine/migrations": "^2.0",
-        "ext-json": "*"
+        "ext-json": "*",
+        "ext-mbstring": "*",
+        "ext-curl": "*"
     }
 }

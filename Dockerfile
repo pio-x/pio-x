@@ -1,11 +1,11 @@
 FROM nginx:1.16
 
 RUN apt-get update -qqy \
-    && apt-get install -qqy --no-install-recommends curl apt-transport-https lsb-release ca-certificates \
+    && apt-get install -qqy --no-install-recommends git unzip curl apt-transport-https lsb-release ca-certificates \
     && curl -Lo /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg \
     && sh -c 'echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/php.list' \
     && apt-get update -qqy \
-    && apt-get -qqy install php7.3-fpm php7.3-mysql php7.3-gd mysql-client  \
+    && apt-get -qqy install php7.3-fpm php7.3-mysql php7.3-gd php7.3-curl php7.3-mbstring mysql-client  \
     && rm -rf /var/lib/apt/lists/* \
     && apt-get autoclean \
     && apt-get autoremove -y
