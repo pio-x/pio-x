@@ -28,27 +28,6 @@
 
 </ion-content>
 
-<ion-content *ngIf="platform.is('android') && platform.is('mobileweb') && !androidWarningDismissed">
-  <ion-card>
-    <ion-card-header>
-      Android App
-    </ion-card-header>
-    <ion-card-content>
-      <b>Du solltest die <a href="https://play.google.com/store/apps/details?id=com.ionicframework.app580766" target="_blank">Android App herunterladen</a>! Sie ist schneller und genauer.</b>
-      <br><br>
-      Im Android Webbrowser kann der Standort leider nicht so genau bestimmt werden, dass es für das Spiel nützlich ist. Darum empfehlen wir die App herunterzuladen.
-      <br><br>
-      <p>
-        <button ion-button full color="secondary" (click)="openAppLink()">Download App</button>
-      </p>
-      <br><br><br><br><br><br><br><br><br><br><br>
-      <div style="opacity: 0.3;">
-        <a (click)="androidWarningDismissed = true;">Trotzdem die Web-App benutzen</a>
-      </div>
-    </ion-card-content>
-  </ion-card>
-</ion-content>
-
 <ion-content *ngIf="!isLoggedIn">
   <ion-card>
     <ion-card-header>
@@ -72,4 +51,23 @@
   </ion-card>
 </ion-content>
 
-
+<ion-content *ngIf="platform.is('android') && platform.is('mobileweb') && !androidWarningDismissed">
+  <ion-card>
+    <ion-card-header>
+      Android App
+    </ion-card-header>
+    <ion-card-content>
+      <b>Du solltest die <a href="https://play.google.com/store/apps/details?id=com.ionicframework.app580766" target="_blank">Android App herunterladen</a>! Sie ist schneller und genauer.</b>
+      <br><br>
+      Im Android Webbrowser kann der Standort leider nicht so genau bestimmt werden, dass es für das Spiel nützlich ist. Darum empfehlen wir die App herunterzuladen.
+      <br><br>
+      <p>
+        <button ion-button full color="secondary" (click)="openAppLink()">Download App</button>
+      </p>
+      <br><br><br><br><br><br><br><br><br><br><br>
+      <div style="opacity: 0.3;">
+        <a (click)="androidWarningDismissed = true;">Trotzdem die Web-App benutzen</a>
+      </div>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
