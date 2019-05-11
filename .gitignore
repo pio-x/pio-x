@@ -10,6 +10,9 @@ api/uploaded_images/*
 api/statistics
 # Composer
 .composer/
+api/.cache/
+api/.config/
+api/.local/
 # PHP
 error_log
 /docs/administration/*
