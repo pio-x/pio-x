@@ -60,6 +60,16 @@ backendApp.controller('mapCtrl', function($scope, NgMap, apiService, riddleServi
         $scope.showEditStation = false;
     };
 
+    // Station löschen
+    $scope.deleteStation = function(id) {
+        if (confirm("Station wirklich löschen?")) {
+            apiService.delete('/station/' + id).then(function(response) {
+                stationService.update();
+            });
+            $scope.map.hideInfoWindow('infoWindow');
+        }
+    };
+
     //Erfasst eine neue Station
     $scope.createNewStation = function() {
         var data = {
