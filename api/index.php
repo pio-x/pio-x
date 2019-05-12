@@ -627,6 +627,7 @@ $app->post('/riddle/{id}/unlock',function (Request $request, Response $response,
 	$riddle = $DB->fetchAssoc("SELECT * FROM riddle WHERE r_ID = ?", array($riddleId));
 
 	try {
+		// TODO: check if already solved
 		$updated = $DB->update('r_team_riddle', $data, array('r_ID' => $riddleId, 't_ID' => $teamId));
 		if (!$updated) {
 			$DB->insert('r_team_riddle', $data);
