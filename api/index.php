@@ -33,7 +33,11 @@ $score = new ScoreHelper($DB);
 $configHelper = new ConfigHelper($DB);
 $config = $configHelper->getConfig();
 
-$app = new \Slim\App(['settings' => ['displayErrorDetails' => true]]);
+$app = new \Slim\App([
+	'settings' => [
+		'displayErrorDetails' => (defined('DISPLAY_ERROR_DETAILS') && DISPLAY_ERROR_DETAILS) ? true : false
+	]
+]);
 
 
 // 3. log team location

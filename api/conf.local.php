@@ -12,3 +12,5 @@ $SQL_CREDENTIALS = array(
 	)
 );
 date_default_timezone_set('Europe/Zurich');
+
+define('DISPLAY_ERROR_DETAILS', true);
