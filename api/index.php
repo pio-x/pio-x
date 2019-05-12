@@ -518,6 +518,13 @@ $app->post('/riddle',function (Request $request, Response $response) use (&$DB) 
 	}
 
 	$body = json_decode($request->getBody(), true);
+
+	if (isset($body['answer_options_enabled']) && $body['answer_options_enabled']) {
+		$answer_options_enabled = 1;
+	} else {
+		$answer_options_enabled = 0;
+	}
+
 	$data = array('pos_lat' => $body['pos_lat'],
 				'pos_long' => $body['pos_long'],
 				'question' => $body['question'],
@@ -527,9 +534,9 @@ $app->post('/riddle',function (Request $request, Response $response) use (&$DB) 
 				'points' => $body['points'],
 				'answer_required' => $body['answer_required'],
 				'answer_options' => isset($body['answer_options']) ? json_encode($body['answer_options']) : null,
-				'answer_options_enabled' => (isset($body['answer_options_enabled']) ? 1 : 0),
+				'answer_options_enabled' => $answer_options_enabled,
 				'image_required' => $body['image_required'],
-				'dep_ID' => isset($body['dep_ID']) ? intval($body['dep_ID']) : NULL);
+				'dep_ID' => $body['dep_ID'] ? intval($body['dep_ID']) : NULL);
 
 	$DB->insert('riddle', $data);
 
