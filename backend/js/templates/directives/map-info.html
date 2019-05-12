@@ -1,10 +1,13 @@
 <info-window id="infoWindow">
 	<div ng-non-bindable=""><!-- Für jeden Typ ein schönes Window designen -->
 		<b ng-if="shown.infotype">{{shown.infotype}}<br /></b>
-		<b ng-if="shown.question">{{shown.question}}<br /></b>
 		<b ng-if="shown.timestamp">{{ key }}: {{shown.timestamp | moment:'HH:mm:ss'}}<br /></b>
-		<span ng-if="shown.lat">{{shown.lat}} / {{shown.lng}}<br /></span>
-		<span ng-if="shown.mrx_ID">
+		<div ng-if="shown.question">
+			<h3>{{shown.title}}</h3>
+			<div ng-bind-html="shown.question"></div>
+		</div>
+		<div ng-if="shown.lat">{{shown.lat}} / {{shown.lng}}<br /></div>
+		<div ng-if="shown.mrx_ID">
 			<table>
 				<tr>
 					<td>Name: </td><td>{{ shown.mrx_ID }} ({{ shown.name }})</td>
@@ -13,8 +16,8 @@
 					<td>Hash: </td><td>{{ shown.hash }}</td>
 				</tr>
 			</table>
-		</span>
-		<span ng-if="shown.s_ID">
+		</div>
+		<div ng-if="shown.s_ID">
 			<h3>{{ shown.name }} ({{ shown.s_ID }})</h3>
 			<div ng-if="shown.description">
 				<i>{{ shown.description }}</i>
@@ -36,6 +39,6 @@
 				<button ng-click="editStation(shown.s_ID)" class="btn btn-default">Bearbeiten</button>
 				<button ng-click="deleteStation(shown.s_ID)" class="btn btn-default">Löschen</button>
 			</div>
-		</span>
+		</div>
 	</div>
 </info-window>

@@ -9,9 +9,7 @@
 <ion-content padding>
 
   <h3>Rätsel "{{riddles[riddleId].title}}" lösen</h3>
-  <p>
-    {{riddles[riddleId].question}}
-  </p>
+  <p [innerHTML]="riddles[riddleId].question"></p>
 
   <span *ngIf="!answered">
     <div *ngIf="riddles[riddleId].answer_required">
