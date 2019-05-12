@@ -5,6 +5,7 @@
         "doctrine/migrations": "^2.0",
         "ext-json": "*",
         "ext-mbstring": "*",
-        "ext-curl": "*"
+        "ext-curl": "*",
+        "ext-gd": "*"
     }
 }
