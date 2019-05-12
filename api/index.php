@@ -634,7 +634,7 @@ $app->post('/riddle/{id}/unlock',function (Request $request, Response $response,
 		$log->riddle('Team '.$request->getAttribute('team_name').' hat das Rätsel "'.$riddle['title'].'" freigeschaltet', $request->getAttribute('team_id'), $riddleId);
 		return $response->withJson("success");
 	} catch (Doctrine\DBAL\Exception\UniqueConstraintViolationException $e) {
-		return $response->withStatus(403)->withJson("Already unlocked");
+		return $response->withStatus(200)->withJson("Already unlocked");
 	}
 });
 
