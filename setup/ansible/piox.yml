@@ -31,6 +31,7 @@
           - git
           - certbot
           - python3-certbot-nginx
+          - docker-compose
 
     - name: Set mysql root password
       mysql_user:
