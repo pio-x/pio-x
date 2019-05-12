@@ -1,0 +1,8 @@
+<div ng-controller="fotostoryCtrl">
+    <div ng-repeat="team in storyData track by $index">
+        <h2>{{team[0].name}}</h2>
+        <span ng-repeat="foto in team track by $index">
+            <img ng-src="{{baseUrl + foto.img_ID + '.jpg?hash=' + hash}}" class="fotostory_image"/>
+        </span>
+    </div>
+</div>

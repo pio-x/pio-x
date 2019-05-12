@@ -1009,6 +1009,17 @@ $app->get('/diashow', function (Request $request, Response $response) use (&$DB)
 	return $response->withJson($data);
 });
 
+// FOTO STORYS
+$app->get('/fotostory', function (Request $request, Response $response, $args) use (&$DB) {
+	// returns all infos to make a foto story
+	if ($request->getAttribute('is_admin') == false) {
+		return $response->withStatus(403)->withJson("Error: not sent by admin");
+	}
+
+	$data = $DB->fetchAll("select log.*, team.name from log left join team USING(t_ID) where log.img_ID != '' AND type = 'RIDDLE' ORDER BY t_ID ASC, timestamp ASC");
+	return $response->withJson($data);
+});
+
 // CONFIG
 $app->get('/config', function (Request $request, Response $response) use (&$DB, $config) {
 	return $response->withJson($config, 200, JSON_NUMERIC_CHECK);
