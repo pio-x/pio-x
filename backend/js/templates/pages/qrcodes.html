@@ -40,7 +40,7 @@
         </table>
         </td><td class="col-md-4">
             <div ng-if="qrUrl.team">
-                <a href="{{ qrUrl.link }}">Login Link für Team {{ qrUrl.team }}</a> <br/>
+                <a href="{{ qrUrl.link }}" target="_blank">Login Link für Team {{ qrUrl.team }}</a> <br/>
                 <qrcode version="8" error-correction-level="M" size="200" data="{{ qrUrl.link }}" href="{{ qrUrl.link }}"></qrcode>
             </div>
         </td></tr>
