@@ -2,6 +2,8 @@
 use \Slim\Http\Request as Request;
 use \Slim\Http\Response as Response;
 use Doctrine\DBAL\DriverManager;
+use League\Csv\Reader;
+use League\Csv\Writer;
 
 
 require 'vendor/autoload.php';
@@ -46,6 +48,63 @@ $app->add(new Authentication($DB));
 $app->add(new AddHeaders());
 
 // STATION
+$app->get('/station/export', function(Request $request, Response $response, $args) use (&$DB) {
+	if ($request->getAttribute('is_admin') == false) {
+		return $response->withStatus(403)->withJson("Error: not sent by admin");
+	}
+
+	$csv = Writer::createFromString('');
+
+	$header = ['pos_lat', 'pos_long', 'points', 'name', 'description','enabled'];
+	$csv->insertOne($header);
+
+	$data = $DB->fetchAll("select pos_lat,pos_long,points,name,description,enabled from station");
+	$csv->insertAll($data);
+
+	$response = $response->withHeader('Content-Type', 'text/csv');
+	$response = $response->withHeader('Content-Disposition', 'attachment; filename="stations.csv"');
+
+	$body = $response->getBody();
+	$body->write($csv->getContent());
+
+	return $response;
+});
+
+// STATION
+$app->post('/station/import', function(Request $request, Response $response, $args) use (&$DB) {
+	if ($request->getAttribute('is_admin') == false) {
+		return $response->withStatus(403)->withJson("Error: not sent by admin");
+	}
+
+	$files = $request->getUploadedFiles();
+
+	if (empty($files['stations'])) {
+		throw new Exception('Expected a stations file');
+	}
+
+	$stationsFile = $files['stations'];
+
+	if ($stationsFile->getError() !== UPLOAD_ERR_OK) {
+		throw new Exception('stations file upload failed');
+	}
+
+	//var_dump($stationsFile->file, $stationsFile->getClientFilename(), $stationsFile->getStream());
+	//die();
+
+	$DB->exec('DELETE FROM station');
+
+	$csv = Reader::createFromPath($stationsFile->file, 'r');
+	$csv->setHeaderOffset(0);
+
+	$records = $csv->getRecords();
+
+	foreach ($records as $record) {
+		$DB->insert('station', $record);
+	}
+
+	return $response->withJson("success");
+});
+
 $app->get('/station',function (Request $request, Response $response) use (&$DB, $config) {
 	if (!$request->getAttribute('is_admin') && !$config['game_is_running']) {
 		return $response->withJson([]);
@@ -1020,7 +1079,6 @@ $app->put('/config', function (Request $request, Response $response, $args) use 
 
 	return $response->withJson("success");
 });
-
 
 $app->get('/', function (Request $request, Response $response) {
 	echo "PIO-X";
