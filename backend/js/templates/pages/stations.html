@@ -1,6 +1,7 @@
 <div ng-controller="stationCtrl">
     <div>
         <button ng-click="stationService.update()" class="btn btn-default">Aktualisieren</button>
+        <a href="{{apiURL + '/station/export?hash=' + hash}}" class="btn btn-default" target="_blank">CSV exportieren</a>
     </div>
     <br>
     <div class="input-group">

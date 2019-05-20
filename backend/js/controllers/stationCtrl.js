@@ -1,4 +1,7 @@
 backendApp.controller('stationCtrl', function($scope, apiService, stationService, teamService){
+    $scope.apiURL = localStorage.getItem('api');
+    $scope.hash = localStorage.getItem('hash')
+
     $scope.stations = [];
     $scope.stationService = stationService;
     $scope.stationService.subscribe(function(stations) {

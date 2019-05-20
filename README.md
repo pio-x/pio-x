@@ -15,7 +15,7 @@ Backend starten:
 
  * Konfigurationsfiles anlegen: `cp api/conf.local.php api/conf.php`
  * Docker Compose [installieren](https://docs.docker.com/compose/install/), falls nicht vorhanden
- * `docker-compose -f docker-compose-dev.yml up` um die Container im Development Modus zu starten
+ * `docker-compose up` um die Container zu starten
  * Das Backend ist nun unter [http://localhost:8082](http://localhost:8082) erreichbar. Auf dem Default-DB-Dump lautet das Passwort `Adressen5Ostafrikas`
  
 App Abhängigkeiten installieren:
