@@ -36,6 +36,7 @@ echo -e "\n HEAD is now at: \n"
 git log -1
 
 # Run DB migrations
+echo -e "\n\nRunning Migrations ...\n"
 vendor/bin/doctrine-migrations migrate -n
 
 echo -e "\n ======= Installation Done ========\n"
