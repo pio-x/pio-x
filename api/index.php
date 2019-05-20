@@ -8,9 +8,9 @@ use League\Csv\Writer;
 
 require 'vendor/autoload.php';
 if (file_exists('conf.php')) {
-    require 'conf.php';
+    require_once 'conf.php';
 } else {
-    require 'conf.local.php';
+    require_once 'conf.local.php';
 }
 
 require 'helpers/APIHelper.php';

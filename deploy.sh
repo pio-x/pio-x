@@ -3,7 +3,6 @@
 # Config
 PROJECT_DIR=/var/www/piox/
 CONFIG_FILE=/var/piox/_config.piox.php
-# HTACCESS_FILE=/home/dienerli/.htaccess_piox
 
 echo -e "Working with Directory $PROJECT_DIR\n"
 
@@ -25,7 +24,6 @@ fi
 
 # Install Config
 cp $CONFIG_FILE $PROJECT_DIR/api/conf.php
-#cp $HTACCESS_FILE $PROJECT_DIR/.htaccess
 
 # Composer Install
 cd $PROJECT_DIR/
@@ -36,5 +34,8 @@ php composer.phar install
 
 echo -e "\n HEAD is now at: \n"
 git log -1
+
+# Run DB migrations
+vendor/bin/doctrine-migrations migrate -n
 
 echo -e "\n ======= Installation Done ========\n"
