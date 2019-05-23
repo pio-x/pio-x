@@ -92,21 +92,27 @@ $app->post('/station/import', function(Request $request, Response $response, $ar
 		throw new Exception('stations file upload failed');
 	}
 
-	//var_dump($stationsFile->file, $stationsFile->getClientFilename(), $stationsFile->getStream());
-	//die();
-
-	$DB->exec('DELETE FROM station');
-
 	$csv = Reader::createFromPath($stationsFile->file, 'r');
 	$csv->setHeaderOffset(0);
 
 	$records = $csv->getRecords();
 
-	foreach ($records as $record) {
-		$DB->insert('station', $record);
+	try {
+		$DB->beginTransaction();
+		$DB->exec('DELETE FROM station');
+
+		$count = 0;
+		foreach ($records as $record) {
+			$DB->insert('station', $record);
+			$count++;
+		}
+		$DB->commit();
+	} catch (Exception $e) {
+		$DB->rollBack();
+		throw $e;
 	}
 
-	return $response->withJson("success");
+	return $response->withJson("success! imported " . $count . " stations.");
 });
 
 $app->get('/station',function (Request $request, Response $response) use (&$DB, $config) {

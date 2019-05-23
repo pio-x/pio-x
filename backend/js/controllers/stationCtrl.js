@@ -1,6 +1,9 @@
-backendApp.controller('stationCtrl', function($scope, apiService, stationService, teamService){
+backendApp.controller('stationCtrl', function($scope, apiService, stationService, teamService, $sce){
     $scope.apiURL = localStorage.getItem('api');
-    $scope.hash = localStorage.getItem('hash')
+    $scope.hash = localStorage.getItem('hash');
+
+    $scope.importUrl = $sce.trustAsResourceUrl($scope.apiURL + '/station/import?hash=' + $scope.hash);
+    $scope.showImporter = false;
 
     $scope.stations = [];
     $scope.stationService = stationService;
