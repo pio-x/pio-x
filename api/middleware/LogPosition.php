@@ -30,7 +30,14 @@ class LogPosition
 					'team_long' => $location['lng'],
 					'player' => urldecode($player)
 				];
-				$this->DB->insert('teamposition', $data);
+				try {
+					$this->DB->insert('teamposition', $data);
+				} catch (Exception $e) {
+					// catch "1366 Incorrect string value: '\xE4' for column 'player'" errors
+					// and insert a default name
+					$data['player'] = '__unknown__';
+					$this->DB->insert('teamposition', $data);
+				}
 			}
 		}
 
