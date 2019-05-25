@@ -7,11 +7,11 @@
 				on-click="showTooltip($index, stations)" 
 				ng-repeat="station in stations track by $index" 
 				icon="{
-					path: 'M -5,-5 L -5,5 L 5,5 L 5,-5 L -5,-5',
-					fillColor: '{{ !stationColors[station.team]?'gold':stationColors[station.team] }}',
-					fillOpacity: 0.8,
-					scale: 1,
-					strokeColor: 'darkgrey',
+					path: 0,
+					fillColor: '{{ station.team ? distinctColor(station.team) : 'grey' }}',
+					fillOpacity: {{ station.team ? '0.9' : '0.1' }},
+					scale: 7,
+					strokeColor: '{{ station.team ? distinctColor(station.team) : 'darkgrey' }}',
 					strokeWeight: 1,
 					label: 'S'
 					}" 
@@ -35,10 +35,10 @@
 					on-click="showTooltip($index, mrx, mrxIndex)"
 					ng-repeat="(key, location) in mrx.locations track by $index"
 					icon="{
-						url:'img/font/icomoon_46_icons/PNG/hipster2.png',
-						scaledSize:[18,16],
+						url:'img/mrx.png',
+						scaledSize:[27,30],
 						origin: [0,0],
-						anchor: [9,8]
+						anchor: [13,15]
 					}"
 					ng-if="showMrxs && $index == 0">
 				</marker>
