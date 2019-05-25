@@ -27,4 +27,15 @@ backendApp.controller('configCtrl', function($scope, apiService, configService){
             }
         }
     };
+
+    $scope.resetData = function () {
+        if (!$scope.config_original.game_is_running) {
+            if (window.confirm('Wirklich alle Spielstände zurücksetzen?')) {
+                apiService.post('/reset', {})
+                    .then(function(){
+                        $scope.messages.push('Spieldaten zurückgesetzt!');
+                    });
+            }
+        }
+    }
 });

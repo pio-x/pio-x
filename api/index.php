@@ -1064,6 +1064,25 @@ $app->get('/statistics/metrics', function (Request $request, Response $response)
 	return $response->getBody()->write($metrics->get());
 });
 
+$app->post('/reset', function (Request $request, Response $response) use (&$DB, $config) {
+	if ($request->getAttribute('is_admin') == false) {
+		return $response->withStatus(403)->withJson("Error: not sent by admin");
+	}
+	if ($config['game_is_running']) {
+		return $response->withStatus(403)->withJson("Error: game is running.");
+	}
+
+	$DB->query('TRUNCATE log');
+	$DB->query('TRUNCATE teamposition');
+	$DB->query('TRUNCATE mrx_position');
+	$DB->query('TRUNCATE r_team_station');
+	$DB->query('TRUNCATE r_team_riddle');
+	$DB->query('TRUNCATE r_team_points');
+	$DB->query('TRUNCATE r_team_mrx');
+
+	return $response->withJson("game state resetted.");
+});
+
 // DIASHOW
 $app->get('/diashow', function (Request $request, Response $response) use (&$DB) {
 	// returns all image file names to make a diashow

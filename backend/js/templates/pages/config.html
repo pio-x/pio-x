@@ -32,4 +32,11 @@
     </table>
     <button ng-click="configService.update()" class="btn btn-default">Aktualisieren</button>
     <button ng-click="saveConfigAll()" class="btn btn-primary">Speichern</button>
+
+    <br><br>
+    <h4>Spielstand zurücksetzen</h4>
+    Log, Punkte, gelöste Rätsel, gefangene Mr.X, Team Positionen und Mr.X Positionen löschen.<br>
+    Funktioniert nur, wenn das Spiel nicht läuft.<br><br>
+    <button ng-click="resetData()" class="btn btn-danger" ng-disabled="config_original.game_is_running">Daten zurücksetzen</button>
+
 </div>
