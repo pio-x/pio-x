@@ -1,4 +1,10 @@
-backendApp.controller('riddleCtrl', function($scope, apiService, riddleService){
+backendApp.controller('riddleCtrl', function($scope, apiService, riddleService, $sce){
+    $scope.apiURL = localStorage.getItem('api');
+    $scope.hash = localStorage.getItem('hash');
+
+    $scope.importUrl = $sce.trustAsResourceUrl($scope.apiURL + '/riddle/import?hash=' + $scope.hash);
+    $scope.showImporter = false;
+
     $scope.riddles = [];
     $scope.riddleService = riddleService;
     $scope.riddleService.subscribe(function(riddles) {

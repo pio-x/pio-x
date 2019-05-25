@@ -528,8 +528,76 @@ $app->post('/mrx/{id}/location', function (Request $request, Response $response,
 	return $response->withJson($data, 200, JSON_NUMERIC_CHECK);
 });
 
+// RIDDLE
+$app->get('/riddle/export', function(Request $request, Response $response, $args) use (&$DB) {
+	if ($request->getAttribute('is_admin') == false) {
+		return $response->withStatus(403)->withJson("Error: not sent by admin");
+	}
 
-// TOM RIDDLE
+	$csv = Writer::createFromString('');
+
+	$header = ['r_ID', 'pos_lat', 'pos_long', 'title', 'question', 'dep_ID', 'answer', 'type', 'points', 'answer_required', 'image_required'];
+	$csv->insertOne($header);
+
+	$data = $DB->fetchAll("select r_ID, pos_lat, pos_long, title, question, dep_ID, answer, type, points, answer_required, image_required from riddle");
+	foreach ($data as $record) {
+		if ($record['dep_ID'] == NULL) {
+			$record['dep_ID'] = 0;
+		}
+		$csv->insertOne($record);
+	}
+
+
+	$response = $response->withHeader('Content-Type', 'text/csv');
+	$response = $response->withHeader('Content-Disposition', 'attachment; filename="riddles.csv"');
+
+	$body = $response->getBody();
+	$body->write($csv->getContent());
+
+	return $response;
+});
+
+$app->post('/riddle/import', function(Request $request, Response $response, $args) use (&$DB) {
+	if ($request->getAttribute('is_admin') == false) {
+		return $response->withStatus(403)->withJson("Error: not sent by admin");
+	}
+
+	$files = $request->getUploadedFiles();
+
+	if (empty($files['riddles'])) {
+		throw new Exception('Expected a riddles file');
+	}
+
+	$riddlesFile = $files['riddles'];
+
+	if ($riddlesFile->getError() !== UPLOAD_ERR_OK) {
+		throw new Exception('riddles file upload failed');
+	}
+
+	$csv = Reader::createFromPath($riddlesFile->file, 'r');
+	$csv->setHeaderOffset(0);
+
+	$records = $csv->getRecords();
+
+	try {
+		$DB->beginTransaction();
+		$DB->exec('DELETE FROM riddle');
+		$DB->exec('ALTER TABLE riddle AUTO_INCREMENT = 1');
+
+		$count = 0;
+		foreach ($records as $record) {
+			$DB->insert('riddle', $record);
+			$count++;
+		}
+		$DB->commit();
+	} catch (Exception $e) {
+		$DB->rollBack();
+		throw $e;
+	}
+
+	return $response->withJson("success! imported " . $count . " riddles.");
+});
+
 $app->get('/riddle', function (Request $request, Response $response) use (&$DB, $config) {
 	if (!$request->getAttribute('is_admin') && !$config['game_is_running']) {
 		return $response->withJson([]);

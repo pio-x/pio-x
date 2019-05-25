@@ -1,6 +1,21 @@
 <div id="riddlelist" ng-controller="riddleCtrl">
     <div>
         <button ng-click="riddleService.update()" class="btn btn-default">Aktualisieren</button>
+        <a href="{{apiURL + '/riddle/export?hash=' + hash}}" class="btn btn-default" target="_blank">CSV exportieren</a>
+
+        <button ng-click="showImporter = !showImporter" class="btn btn-default">CSV importieren</button>
+
+        <div ng-if="showImporter">
+            <br>
+            <div class="well">
+                <form action="{{importUrl}}" target="_blank" method="post" enctype="multipart/form-data">
+                    <h4>Rätsel als CSV importieren</h4>
+                    <input type="file" accept=".csv" name="riddles">
+                    <br>
+                    <button type="submit" class="btn btn-danger">Importieren und bestehende Stationen überschreiben</button>
+                </form>
+            </div>
+        </div>
     </div>
     <br>
     <div class="input-group">
