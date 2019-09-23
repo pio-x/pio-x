@@ -78,7 +78,6 @@ class MapScreen extends React.Component {
       .then((response) => response.json())
       .then((responseJson) => {
 
-        console.log(responseJson)
         this.setState({
           isLoading: false,
           stations: responseJson,
