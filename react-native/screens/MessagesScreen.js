@@ -1,12 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import {
-  Image,
-  Platform,
   ScrollView,
   StyleSheet,
   Text,
-  TouchableOpacity,
-  FlatList,
   RefreshControl,
   ActivityIndicator,
   View,
@@ -49,7 +46,7 @@ class MessageBox extends React.Component {
   }
 }
 
-export default class MessagesScreen extends React.Component {
+class MessagesScreen extends React.Component {
 
   constructor(props){
     super(props);
@@ -61,7 +58,7 @@ export default class MessagesScreen extends React.Component {
   }
 
   loadData() {
-    return fetch('http://localhost:8083/notification?hash=verewigtesendetabgemilderter')
+    return fetch(this.props.auth.api_url + '/notification?hash=' + this.props.auth.hash)
       .then((response) => response.json())
       .then((responseJson) => {
 
@@ -127,3 +124,11 @@ const styles = StyleSheet.create({
     paddingTop: 20,
   },
 });
+
+const mapStateToProps = function(state) {
+  return {
+    auth: state.auth
+  }
+}
+
+export default connect(mapStateToProps)(MessagesScreen);
