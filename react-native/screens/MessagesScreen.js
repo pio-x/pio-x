@@ -15,6 +15,7 @@ const MessageContainer=styled.View`
     padding: 20px;
     background-color:#fff;
     box-shadow: 0px 2px 2px #00000055;
+    elevation: 2;
     border-radius: 5px;
 `;
 
@@ -30,6 +31,15 @@ const MessageTime=styled.Text`
 
 class MessageBox extends React.Component {
   render() {
+    var date = new Date(this.props.message.timestamp*1000);
+    // Hours part from the timestamp
+    var hours = "0" + date.getHours();
+    // Minutes part from the timestamp
+    var minutes = "0" + date.getMinutes();
+
+    // Will display time in 10:30 format
+    var formattedTime = hours.substr(-2) + ':' + minutes.substr(-2);
+
     return <MessageContainer>
         <View>
           <MessageTitle>
@@ -39,7 +49,7 @@ class MessageBox extends React.Component {
             {this.props.message.text}
           </Text>
           <MessageTime>
-            {this.props.message.timestamp}
+            {formattedTime}
           </MessageTime>
         </View>
       </MessageContainer>;
