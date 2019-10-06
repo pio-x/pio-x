@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "pio-x",
-    "slug": "react-native",
+    "name": "Pio-X R",
+    "slug": "pio-x-react-native",
     "privacy": "public",
     "sdkVersion": "34.0.0",
     "platforms": [
@@ -24,7 +24,19 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "bundleIdentifier": "ch.piox.reactnativeapp",
+      "supportsTablet": true,
+      "config": {
+        "googleMapsApiKey": "AIzaSyC__XvhsViRvxBOfCbC5KAU3uw7FdrQUec"
+      }
+    },
+    "android": {
+      "package": "ch.piox.reactnativeapp",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyC__XvhsViRvxBOfCbC5KAU3uw7FdrQUec"
+        }
+      }
     }
   }
 }
