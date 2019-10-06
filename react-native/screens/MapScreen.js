@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  StyleSheet,
+  Button,
   Text,
   View,
 } from 'react-native';
@@ -45,6 +45,7 @@ class StationMarker extends React.Component {
       title={this.props.station.name}
       description={this.props.station.description}
       key={this.props.station.s_ID}
+      tracksViewChanges={this.props.tracksViewChanges}
     >
       <StationMarkerView
         color={distinctColor(this.props.station.team)}
@@ -69,6 +70,7 @@ class MapScreen extends React.Component {
     this.state ={
       isLoading: true,
       stations: [],
+      tracksViewChanges: true,
     }
     this.loadData();
   }
@@ -90,21 +92,41 @@ class MapScreen extends React.Component {
   }
 
   render() {
-    return <MapView style={{flex: 1}}
-                    initialRegion={{
-                      latitude: 47.4974253,
-                      longitude: 8.72199282,
-                      latitudeDelta: 0.0922,
-                      longitudeDelta: 0.0421,
-                    }}
-    >
-      {this.state.stations.map(station => (
-        <StationMarker
-          station={station}
-          key={station.s_ID}
-        />
-      ))}
-    </MapView>;
+    return <View style={{ flex: 1 }}>
+        <MapView style={{flex: 1}}
+                      initialRegion={{
+                        latitude: 47.4974253,
+                        longitude: 8.72199282,
+                        latitudeDelta: 0.0922,
+                        longitudeDelta: 0.0421,
+                      }}
+      >
+        {this.state.stations.map(station => (
+          <StationMarker
+            station={station}
+            key={station.s_ID}
+            tracksViewChanges={this.state.tracksViewChanges}
+          />
+        ))}
+      </MapView>
+      <View
+          style={{
+              position: 'absolute',//use absolute position to show button on top of the map
+              top: '50%', //for center align
+              alignSelf: 'flex-end' //for align to right
+          }}
+      >
+          <Button
+              title="Toggle Tracking"
+              onPress={() => this.setState((state) => {
+                return {
+                  ...state,
+                  tracksViewChanges: !state.tracksViewChanges
+                }
+              })}
+          />
+      </View>
+    </View>;
   }
 }
 
