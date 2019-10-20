@@ -3,15 +3,16 @@ import {
   StyleSheet,
   Text,
   View,
+  WebView
 } from 'react-native';
 import styled from 'styled-components'
 
 export default function InfosScreen() {
-  /**
-   * Go ahead and delete ExpoConfigView and replace it with your content;
-   * we just wanted to give you a quick view of your config.
-   */
-  return <Text>Infos</Text>;
+  return <WebView
+    style={{ flex: 1 }}
+    originWhitelist={['*']}
+    source={{html: '<h1>Hello world</h1><br><br>hallooo'}}
+  />
 }
 
 InfosScreen.navigationOptions = {
