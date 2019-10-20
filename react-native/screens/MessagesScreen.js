@@ -63,11 +63,15 @@ class MessagesScreen extends React.Component {
     this.state ={
       isLoading: true,
       dataSource: [],
-    }
+    };
     this.onRefresh = this.onRefresh.bind(this);
   }
 
   loadData() {
+    this.setState({
+      isLoading: true,
+      dataSource: [],
+    });
     return fetch(this.props.auth.api_url + '/notification?hash=' + this.props.auth.hash)
       .then((response) => response.json())
       .then((responseJson) => {
@@ -88,10 +92,6 @@ class MessagesScreen extends React.Component {
   }
 
   onRefresh() {
-    this.setState({
-      isLoading: true,
-      dataSource: [],
-    });
     this.loadData();
   }
 
