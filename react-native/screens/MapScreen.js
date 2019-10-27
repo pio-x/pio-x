@@ -65,6 +65,19 @@ class StationMarker extends React.Component {
 
 class MapScreen extends React.Component {
 
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: 'Karte',
+      headerRight: (
+        <Button
+          onPress={navigation.getParam('refresh')}
+          title="Aktualisieren"
+          color="#888"
+        />
+      ),
+    };
+  };
+
   constructor(props){
     super(props);
     this.state ={
@@ -72,6 +85,10 @@ class MapScreen extends React.Component {
       stations: [],
       tracksViewChanges: true,
     }
+  }
+
+  componentDidMount(){
+    this.props.navigation.setParams({ refresh: this.loadData.bind(this) });
     this.loadData();
   }
 
@@ -82,7 +99,7 @@ class MapScreen extends React.Component {
 
         this.setState({
           isLoading: false,
-          stations: responseJson,
+          stations: responseJson.slice(0,10),
         });
 
       })
@@ -129,10 +146,6 @@ class MapScreen extends React.Component {
     </View>;
   }
 }
-
-MapScreen.navigationOptions = {
-  title: 'Karte',
-};
 
 const mapStateToProps = function(state) {
   return {

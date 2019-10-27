@@ -58,6 +58,12 @@ class MessageBox extends React.Component {
 
 class MessagesScreen extends React.Component {
 
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: 'Nachrichten'
+    };
+  };
+
   constructor(props){
     super(props);
     this.state ={
@@ -121,10 +127,6 @@ class MessagesScreen extends React.Component {
   }
 }
 
-MessagesScreen.navigationOptions = {
-  title: 'Nachrichten',
-};
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -139,6 +141,6 @@ const mapStateToProps = function(state) {
   return {
     auth: state.auth
   }
-}
+};
 
 export default connect(mapStateToProps)(MessagesScreen);
