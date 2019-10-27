@@ -128,13 +128,13 @@ class MapScreen extends React.Component {
       </MapView>
       <View
           style={{
-              position: 'absolute',//use absolute position to show button on top of the map
-              top: '50%', //for center align
-              alignSelf: 'flex-end' //for align to right
+              position: 'absolute', // use absolute position to show button on top of the map
+              top: '0%',
+              alignSelf: 'flex-end' // for align to right
           }}
       >
           <Button
-              title="Toggle Tracking"
+              title={'Tracking ' + (this.state.tracksViewChanges ? 'ON' : 'OFF')}
               onPress={() => this.setState((state) => {
                 return {
                   ...state,
