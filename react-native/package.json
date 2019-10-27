@@ -12,6 +12,7 @@
     "preset": "jest-expo"
   },
   "dependencies": {
+    "@expo/react-native-action-sheet": "^3.3.0",
     "@expo/samples": "~3.0.3",
     "@expo/vector-icons": "^10.0.0",
     "@react-navigation/web": "^1.0.0-alpha.9",

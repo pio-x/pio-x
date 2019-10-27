@@ -3,10 +3,15 @@ import {
 	Button,
 	Text,
 	View,
+	AsyncStorage,
+	TouchableWithoutFeedback,
+	Platform
 } from 'react-native';
 import styled from 'styled-components'
 import MapView, {Marker, Callout} from 'react-native-maps';
+import { connectActionSheet } from '@expo/react-native-action-sheet'
 import {connect} from "react-redux";
+import { Ionicons } from '@expo/vector-icons';
 
 function distinctColor(id) {
 	if (id === null) {
@@ -69,11 +74,11 @@ class MapScreen extends React.Component {
 		return {
 			title: 'Karte',
 			headerRight: (
-				<Button
-					onPress={navigation.getParam('refresh')}
-					title="Aktualisieren"
-					color="#888"
-				/>
+				<TouchableWithoutFeedback onPress={navigation.getParam('showmenu')}>
+					<View style={{paddingRight: 20}}>
+						<Ionicons name={Platform.OS === 'ios' ? 'ios-more' : 'md-more'} size={26} color="#888"/>
+					</View>
+				</TouchableWithoutFeedback>
 			),
 		};
 	};
@@ -88,8 +93,28 @@ class MapScreen extends React.Component {
 	}
 
 	componentDidMount() {
-		this.props.navigation.setParams({refresh: this.loadData.bind(this)});
+		this.props.navigation.setParams({
+			showmenu: this.showActionSheet.bind(this)
+		});
 		this.loadData();
+	}
+
+	showActionSheet() {
+		this.props.showActionSheetWithOptions(
+			{
+				options: ['Abbrechen', 'Aktualisieren', 'Abmelden'],
+				destructiveButtonIndex: 2,
+				cancelButtonIndex: 0,
+			},
+			(buttonIndex) => {
+				if (buttonIndex === 1) {
+					this.loadData();
+				}
+				if (buttonIndex === 2) {
+					this.signOutAsync();
+				}
+			}
+		);
 	}
 
 	loadData() {
@@ -107,6 +132,11 @@ class MapScreen extends React.Component {
 				console.error(error);
 			});
 	}
+
+	signOutAsync = async () => {
+		await AsyncStorage.clear();
+		this.props.navigation.navigate('Auth');
+	};
 
 	render() {
 		return <View style={{flex: 1}}>
@@ -147,10 +177,12 @@ class MapScreen extends React.Component {
 	}
 }
 
+const ConnectedMapScreen = connectActionSheet(MapScreen);
+
 const mapStateToProps = function (state) {
 	return {
 		auth: state.auth
 	}
 };
 
-export default connect(mapStateToProps)(MapScreen);
+export default connect(mapStateToProps)(ConnectedMapScreen);
