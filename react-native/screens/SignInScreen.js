@@ -17,6 +17,12 @@ const LoginInput = styled.TextInput`
 	border: 1px solid #ddd;
 `;
 
+const LoginFailedText = styled.Text`
+	margin: 5px 20px;
+	color: red;
+	text-align: center;
+`;
+
 class SignInScreen extends React.Component {
 	static navigationOptions = {
 		title: 'Login',
@@ -28,6 +34,7 @@ class SignInScreen extends React.Component {
 			team: '5',
 			hash: 'DreiradJustizirrtumentdecken',
 			api_url: 'https://api.pio-x.ch',
+			show_login_error_message: false
 		};
 	}
 
@@ -49,24 +56,51 @@ class SignInScreen extends React.Component {
 					value={this.state.api_url}
 					placeholder="API URL"
 				/>
-				<Button title="Login" onPress={this.signInAsync}/>
+				<Button title="Login" onPress={() => {this.signInAsync()}}/>
+				{this.state.show_login_error_message ? <LoginFailedText>Login fehlgeschlagen</LoginFailedText> : null}
 			</View>
 		);
 	}
 
-	signInAsync = async () => {
-		await AsyncStorage.setItem('team', this.state.team);
-		await AsyncStorage.setItem('hash', this.state.hash);
-		await AsyncStorage.setItem('api_url', this.state.api_url);
-		this.props.dispatch({
-			type: 'SET_AUTH',
-			team: this.state.team,
-			hash: this.state.hash,
-			api_url: this.state.api_url,
+	async signInAsync() {
+		this.setState({
+			show_login_error_message: false
 		});
-		this.props.navigation.navigate('App');
+		try {
+			await this.verifyCredentials();
+			await AsyncStorage.setItem('team', this.state.team);
+			await AsyncStorage.setItem('hash', this.state.hash);
+			await AsyncStorage.setItem('api_url', this.state.api_url);
+			this.props.dispatch({
+				type: 'SET_AUTH',
+				team: this.state.team,
+				hash: this.state.hash,
+				api_url: this.state.api_url,
+			});
+			this.props.navigation.navigate('App');
+		} catch (e) {
+			this.setState({
+				show_login_error_message: true
+			});
+		}
 	};
 
+	async verifyCredentials() {
+		return new Promise((resolve, reject) => {
+			fetch(this.state.api_url + '/config?hash=' + this.state.hash)
+				.then((response) => {
+					console.log(response.status);
+					if (response.status === 200) {
+						resolve()
+					} else {
+						reject();
+					}
+				})
+				.catch((error) => {
+					reject()
+				});
+		})
+	}
 
 }
 

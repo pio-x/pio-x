@@ -6,8 +6,9 @@ import {
 	StyleSheet,
 	View,
 } from 'react-native';
+import { connect } from 'react-redux';
 
-export default class AuthLoadingScreen extends React.Component {
+class AuthLoadingScreen extends React.Component {
 	componentDidMount() {
 		this._bootstrapAsync();
 	}
@@ -41,3 +42,11 @@ export default class AuthLoadingScreen extends React.Component {
 		);
 	}
 }
+
+const mapStateToProps = function (state) {
+	return {
+		auth: state.auth
+	}
+};
+
+export default connect(mapStateToProps)(AuthLoadingScreen);
