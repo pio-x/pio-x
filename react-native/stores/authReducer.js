@@ -2,16 +2,21 @@ import { combineReducers } from 'redux';
 
 // we don't have a login yet
 const INITIAL_STATE = {
-	team: '5',
-	hash: 'DreiradJustizirrtumentdecken',
-	api_url: 'https://api.pio-x.ch',
-	loggedIn: true
+	team: null,
+	hash: null,
+	api_url: null,
 };
 
 const authReducer = (state = INITIAL_STATE, action) => {
 	switch (action.type) {
-	default:
-		return state
+		case 'SET_AUTH':
+			return Object.assign({}, state, {
+				team: action.team,
+				hash: action.hash,
+				api_url: action.api_url,
+			});
+		default:
+			return state
 	}
 };
 
