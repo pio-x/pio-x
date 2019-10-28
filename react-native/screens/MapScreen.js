@@ -124,7 +124,8 @@ class MapScreen extends React.Component {
 
 				this.setState({
 					isLoading: false,
-					stations: responseJson.slice(0, 10),
+					stations: responseJson,
+					//stations: responseJson.slice(0, 10),
 				});
 
 			})
