@@ -8,7 +8,7 @@ import {
 	Platform
 } from 'react-native';
 import styled from 'styled-components'
-import MapView, {Marker, Callout} from 'react-native-maps';
+import MapView, {Marker, Polyline, Callout} from 'react-native-maps';
 import { connectActionSheet } from '@expo/react-native-action-sheet'
 import {connect} from "react-redux";
 import { Ionicons } from '@expo/vector-icons';
@@ -35,7 +35,7 @@ const StationMarkerView = styled.View`
 	width: 20px;
 	height: 20px;
 	background-color: ${props => props.color + '55'};
-	border: 1px solid ${props => props.color};
+	border: 1px solid #000;
 	border-radius: 20px;
 `;
 
@@ -68,6 +68,55 @@ class StationMarker extends React.Component {
 	}
 }
 
+class MrxMarker extends React.Component {
+	formatTimestamp(timestamp) {
+		let date = new Date(timestamp);
+		let hours = date.getHours();
+		let minutes = ("0" + date.getMinutes()).substr(-2);
+		return hours + ':' + minutes;
+	}
+
+	render() {
+		if (this.props.mrx.locations && this.props.mrx.locations.length > 0) {
+			let trace = this.props.mrx.locations.map(loc => {
+				return { latitude: loc.xpos_lat, longitude: loc.xpos_long }
+			});
+
+			return <React.Fragment>
+				<Polyline
+					coordinates={trace}
+					strokeColor="#c1272dee"
+					strokeColors={["#c1272dff","#c1272dcc","#c1272d33"]}
+					strokeWidth={2}
+				/>
+				<Marker
+					coordinate={{
+						latitude: this.props.mrx.locations[0].xpos_lat,
+						longitude: this.props.mrx.locations[0].xpos_long,
+					}}
+					title={this.props.mrx.name}
+					key={this.props.mrx.x_ID}
+					image={require('../assets/mrx.png')}
+					tracksViewChanges={this.props.tracksViewChanges}
+				>
+					<Callout>
+						<CalloutView>
+							<CalloutTitle>{this.props.mrx.name}</CalloutTitle>
+							{this.props.mrx.locations.map(loc => (
+								<View key={loc.timestamp}>
+									<Text>{this.formatTimestamp(loc.timestamp)} - {loc.description}</Text>
+								</View>
+							))}
+						</CalloutView>
+					</Callout>
+				</Marker>
+			</React.Fragment>
+		} else {
+			return null;
+		}
+	}
+}
+
 class MapScreen extends React.Component {
 
 	static navigationOptions = ({navigation}) => {
@@ -86,8 +135,8 @@ class MapScreen extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			isLoading: true,
 			stations: [],
+			mrx: [],
 			tracksViewChanges: true,
 		}
 	}
@@ -118,14 +167,33 @@ class MapScreen extends React.Component {
 	}
 
 	loadData() {
+		this.loadStations();
+		this.loadMrx();
+	}
+
+	loadStations() {
 		return fetch(this.props.auth.api_url + '/station?hash=' + this.props.auth.hash)
 			.then((response) => response.json())
 			.then((responseJson) => {
-
 				this.setState({
-					isLoading: false,
+					...this.state,
 					stations: responseJson,
 					//stations: responseJson.slice(0, 10),
+				});
+
+			})
+			.catch((error) => {
+				console.error(error);
+			});
+	}
+
+	loadMrx() {
+		return fetch(this.props.auth.api_url + '/mrx?hash=' + this.props.auth.hash)
+			.then((response) => response.json())
+			.then((responseJson) => {
+				this.setState({
+					...this.state,
+					mrx: responseJson,
 				});
 
 			})
@@ -145,14 +213,21 @@ class MapScreen extends React.Component {
 					 initialRegion={{
 						 latitude: 47.4974253,
 						 longitude: 8.72199282,
-						 latitudeDelta: 0.0922,
-						 longitudeDelta: 0.0421,
+						 latitudeDelta: 0.03,
+						 longitudeDelta: 0.02,
 					 }}
 			>
 				{this.state.stations.map(station => (
 					<StationMarker
 						station={station}
 						key={station.s_ID}
+						tracksViewChanges={this.state.tracksViewChanges}
+					/>
+				))}
+				{this.state.mrx.map(mrx => (
+					<MrxMarker
+						mrx={mrx}
+						key={mrx.x_ID}
 						tracksViewChanges={this.state.tracksViewChanges}
 					/>
 				))}
