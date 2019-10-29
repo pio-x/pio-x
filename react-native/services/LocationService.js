@@ -26,7 +26,6 @@ export default class LocationService {
 					timeInterval: 1000
 				};
 				Location.watchPositionAsync(watchOptions, (location) => {
-					console.log(location);
 					this._location = location;
 					store.dispatch({
 						type: 'SET_LOCATION',
