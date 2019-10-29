@@ -12,6 +12,7 @@ import MapView, {Marker, Polyline, Callout} from 'react-native-maps';
 import { connectActionSheet } from '@expo/react-native-action-sheet'
 import {connect} from "react-redux";
 import { Ionicons } from '@expo/vector-icons';
+import LocationService from "../services/LocationService";
 
 function distinctColor(id) {
 	if (id === null) {
@@ -37,6 +38,14 @@ const StationMarkerView = styled.View`
 	background-color: ${props => props.color + '55'};
 	border: 1px solid #000;
 	border-radius: 20px;
+`;
+
+const CurrentPositionMarkerView = styled.View`
+	width: 15px;
+	height: 15px;
+	background-color: #4385f4;
+	border: 2px solid #fff;
+	border-radius: 15px;
 `;
 
 class StationMarker extends React.Component {
@@ -146,6 +155,9 @@ class MapScreen extends React.Component {
 			showmenu: this.showActionSheet.bind(this)
 		});
 		this.loadData();
+
+		// make sure location service is started
+		LocationService.getInstance()
 	}
 
 	showActionSheet() {
@@ -231,6 +243,16 @@ class MapScreen extends React.Component {
 						tracksViewChanges={this.state.tracksViewChanges}
 					/>
 				))}
+				{this.props.location.lat ? <Marker
+					coordinate={{
+						latitude: this.props.location.lat,
+						longitude: this.props.location.long,
+					}}
+					tracksViewChanges={this.props.tracksViewChanges}
+					>
+					<CurrentPositionMarkerView/>
+					</Marker>
+				: null}
 			</MapView>
 			<View
 				style={{
@@ -257,7 +279,8 @@ const ConnectedMapScreen = connectActionSheet(MapScreen);
 
 const mapStateToProps = function (state) {
 	return {
-		auth: state.auth
+		auth: state.auth,
+		location: state.location
 	}
 };
 

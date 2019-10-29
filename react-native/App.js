@@ -6,12 +6,9 @@ import {Platform, StatusBar, StyleSheet, View} from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
 import { ActionSheetProvider } from '@expo/react-native-action-sheet'
 import {Provider} from 'react-redux';
-import {createStore} from 'redux';
 
 import AppNavigator from './navigation/AppNavigator';
-import authReducer from "./stores/authReducer";
-
-const store = createStore(authReducer);
+import store from './stores/store';
 
 export default function App(props) {
 	const [isLoadingComplete, setLoadingComplete] = useState(false);
