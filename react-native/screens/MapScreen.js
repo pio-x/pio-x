@@ -41,11 +41,19 @@ const StationMarkerView = styled.View`
 `;
 
 const CurrentPositionMarkerView = styled.View`
-	width: 15px;
-	height: 15px;
+	width: 20px;
+	height: 20px;
 	background-color: #4385f4;
 	border: 2px solid #fff;
-	border-radius: 15px;
+	border-radius: 20px;
+`;
+
+const CurrentPositionMarkerGlowView = styled.View`
+	width: 40px;
+	height: 40px;
+	padding: 10px;
+	background-color: #4385f433;
+	border-radius: 40px;
 `;
 
 class StationMarker extends React.Component {
@@ -106,6 +114,7 @@ class MrxMarker extends React.Component {
 					title={this.props.mrx.name}
 					key={this.props.mrx.x_ID}
 					image={require('../assets/mrx.png')}
+					zIndex={5}
 					tracksViewChanges={this.props.tracksViewChanges}
 				>
 					<Callout>
@@ -146,7 +155,7 @@ class MapScreen extends React.Component {
 		this.state = {
 			stations: [],
 			mrx: [],
-			tracksViewChanges: true,
+			tracksViewChanges: false,
 		}
 	}
 
@@ -248,9 +257,12 @@ class MapScreen extends React.Component {
 						latitude: this.props.location.lat,
 						longitude: this.props.location.long,
 					}}
+					zIndex={10}
 					tracksViewChanges={this.props.tracksViewChanges}
 					>
-					<CurrentPositionMarkerView/>
+						<CurrentPositionMarkerGlowView>
+							<CurrentPositionMarkerView/>
+						</CurrentPositionMarkerGlowView>
 					</Marker>
 				: null}
 			</MapView>
