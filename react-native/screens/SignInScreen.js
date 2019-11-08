@@ -18,10 +18,6 @@ const LoginInput = styled.TextInput`
 	border: 1px solid #ddd;
 `;
 
-const LoginButton = styled.Button`
-	margin: 5px 20px;
-`;
-
 const LoginFailedText = styled.Text`
 	margin: 5px 20px;
 	color: red;
@@ -62,7 +58,9 @@ export default class SignInScreen extends React.Component {
 					value={this.state.api_url}
 					placeholder="API URL"
 				/>
-				<LoginButton title="Login" onPress={() => {this.signInAsync()}}/>
+				<View style={{padding: 20}}>
+					<Button title="Login" onPress={() => {this.signInAsync()}}/>
+				</View>
 				{this.state.show_login_error_message ? <LoginFailedText>Login fehlgeschlagen</LoginFailedText> : null}
 			</View>
 		);
