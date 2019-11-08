@@ -14,11 +14,6 @@ export default class RiddlesScreen extends React.Component {
 		title: 'Rätsel',
 	};
 
-	signOutAsync = async () => {
-		await AsyncStorage.clear();
-		this.props.navigation.navigate('Auth');
-	};
-
 	render() {
 		let position = JSON.stringify(locationStore);
 
@@ -26,7 +21,6 @@ export default class RiddlesScreen extends React.Component {
 			<Text>Rätsel</Text>
 			<Text>Dev Mode: {__DEV__ ? 'ON' : 'OFF'}</Text>
 			<Text>{position}</Text>
-			<Button title="Abmelden" onPress={this.signOutAsync}/>
 		</View>;
 	}
 }
