@@ -6,9 +6,12 @@ import {
 	StyleSheet,
 	View,
 } from 'react-native';
-import { connect } from 'react-redux';
+import {observer} from "mobx-react";
 
-class AuthLoadingScreen extends React.Component {
+import authStore from "../stores/authStore";
+
+@observer
+export default class AuthLoadingScreen extends React.Component {
 	componentDidMount() {
 		this._bootstrapAsync();
 	}
@@ -20,12 +23,7 @@ class AuthLoadingScreen extends React.Component {
 		const api_url = await AsyncStorage.getItem('api_url');
 
 		if (team && hash && api_url) {
-			this.props.dispatch({
-				type: 'SET_AUTH',
-				team: team,
-				hash: hash,
-				api_url: api_url,
-			});
+			authStore.authenticate(team, hash, api_url);
 			this.props.navigation.navigate('App');
 		} else {
 			this.props.navigation.navigate('Auth');
@@ -42,11 +40,3 @@ class AuthLoadingScreen extends React.Component {
 		);
 	}
 }
-
-const mapStateToProps = function (state) {
-	return {
-		auth: state.auth
-	}
-};
-
-export default connect(mapStateToProps)(AuthLoadingScreen);

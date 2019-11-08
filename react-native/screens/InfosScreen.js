@@ -3,12 +3,13 @@ import {
 	Text,
 	View,
 } from 'react-native';
-import {connect} from 'react-redux';
 import {WebView} from 'react-native-webview';
 
-import styled from 'styled-components'
+import authStore from "../stores/authStore";
+import {observer} from "mobx-react";
 
-class InfosScreen extends React.Component {
+@observer
+export default class InfosScreen extends React.Component {
 
 	constructor(props) {
 		super(props);
@@ -47,7 +48,7 @@ class InfosScreen extends React.Component {
 		this.setState({
 			htmlInfos: 'Infos werden geladen...'
 		});
-		return fetch(this.props.auth.api_url + '/config?hash=' + this.props.auth.hash)
+		return fetch(authStore.api_url + '/config?hash=' + authStore.hash)
 			.then((response) => response.json())
 			.then((responseJson) => {
 
@@ -81,11 +82,3 @@ class InfosScreen extends React.Component {
 		</View>
 	}
 }
-
-const mapStateToProps = function (state) {
-	return {
-		auth: state.auth
-	}
-};
-
-export default connect(mapStateToProps)(InfosScreen);

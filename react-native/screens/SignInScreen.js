@@ -6,9 +6,10 @@ import {
 	AsyncStorage,
 	TextInput,
 } from 'react-native';
-import { connect } from 'react-redux';
+import authStore from "../stores/authStore";
 
 import styled from 'styled-components'
+import {observer} from "mobx-react";
 
 const LoginInput = styled.TextInput`
 	margin: 5px 20px;
@@ -27,7 +28,8 @@ const LoginFailedText = styled.Text`
 	text-align: center;
 `;
 
-class SignInScreen extends React.Component {
+@observer
+export default class SignInScreen extends React.Component {
 	static navigationOptions = {
 		title: 'Login',
 	};
@@ -75,12 +77,7 @@ class SignInScreen extends React.Component {
 			await AsyncStorage.setItem('team', this.state.team);
 			await AsyncStorage.setItem('hash', this.state.hash);
 			await AsyncStorage.setItem('api_url', this.state.api_url);
-			this.props.dispatch({
-				type: 'SET_AUTH',
-				team: this.state.team,
-				hash: this.state.hash,
-				api_url: this.state.api_url,
-			});
+			authStore.authenticate(this.state.team, this.state.hash, this.state.api_url);
 			this.props.navigation.navigate('App');
 		} catch (e) {
 			this.setState({
@@ -107,11 +104,3 @@ class SignInScreen extends React.Component {
 	}
 
 }
-
-const mapStateToProps = function (state) {
-	return {
-		auth: state.auth
-	}
-};
-
-export default connect(mapStateToProps)(SignInScreen);

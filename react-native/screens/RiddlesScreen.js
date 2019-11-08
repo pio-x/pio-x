@@ -5,9 +5,11 @@ import {
 	Button,
 	AsyncStorage,
 } from 'react-native';
-import {connect} from "react-redux";
+import locationStore from "../stores/locationStore";
+import {observer} from "mobx-react";
 
-class RiddlesScreen extends React.Component {
+@observer
+export default class RiddlesScreen extends React.Component {
 	static navigationOptions = {
 		title: 'Rätsel',
 	};
@@ -18,7 +20,7 @@ class RiddlesScreen extends React.Component {
 	};
 
 	render() {
-		let position = JSON.stringify(this.props.location);
+		let position = JSON.stringify(locationStore);
 
 		return <View>
 			<Text>Rätsel</Text>
@@ -28,11 +30,3 @@ class RiddlesScreen extends React.Component {
 		</View>;
 	}
 }
-
-const mapStateToProps = function (state) {
-	return {
-		location: state.location
-	}
-};
-
-export default connect(mapStateToProps)(RiddlesScreen);

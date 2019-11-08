@@ -1,5 +1,4 @@
 import React from 'react';
-import {connect} from 'react-redux';
 import {
 	ScrollView,
 	StyleSheet,
@@ -9,6 +8,8 @@ import {
 	View,
 } from 'react-native';
 import styled from 'styled-components'
+import {observer} from "mobx-react";
+import authStore from "../stores/authStore";
 
 const MessageContainer = styled.View`
 	margin: 0 10px 10px 10px;
@@ -56,7 +57,8 @@ class MessageBox extends React.Component {
 	}
 }
 
-class MessagesScreen extends React.Component {
+@observer
+export default class MessagesScreen extends React.Component {
 
 	static navigationOptions = ({navigation}) => {
 		return {
@@ -78,7 +80,7 @@ class MessagesScreen extends React.Component {
 			isLoading: true,
 			dataSource: [],
 		});
-		return fetch(this.props.auth.api_url + '/notification?hash=' + this.props.auth.hash)
+		return fetch(authStore.api_url + '/notification?hash=' + authStore.hash)
 			.then((response) => response.json())
 			.then((responseJson) => {
 
@@ -136,11 +138,3 @@ const styles = StyleSheet.create({
 		paddingTop: 20,
 	},
 });
-
-const mapStateToProps = function (state) {
-	return {
-		auth: state.auth
-	}
-};
-
-export default connect(mapStateToProps)(MessagesScreen);

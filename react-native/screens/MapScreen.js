@@ -10,9 +10,11 @@ import {
 import styled from 'styled-components'
 import MapView, {Marker, Polyline, Callout} from 'react-native-maps';
 import { connectActionSheet } from '@expo/react-native-action-sheet'
-import {connect} from "react-redux";
 import { Ionicons } from '@expo/vector-icons';
 import LocationService from "../services/LocationService";
+import {observer} from "mobx-react";
+import authStore from "../stores/authStore";
+import locationStore from "../stores/locationStore";
 
 function distinctColor(id) {
 	if (id === null) {
@@ -135,6 +137,7 @@ class MrxMarker extends React.Component {
 	}
 }
 
+@observer
 class MapScreen extends React.Component {
 
 	static navigationOptions = ({navigation}) => {
@@ -193,7 +196,7 @@ class MapScreen extends React.Component {
 	}
 
 	loadStations() {
-		return fetch(this.props.auth.api_url + '/station?hash=' + this.props.auth.hash)
+		return fetch(authStore.api_url + '/station?hash=' + authStore.hash)
 			.then((response) => response.json())
 			.then((responseJson) => {
 				this.setState({
@@ -209,7 +212,7 @@ class MapScreen extends React.Component {
 	}
 
 	loadMrx() {
-		return fetch(this.props.auth.api_url + '/mrx?hash=' + this.props.auth.hash)
+		return fetch(authStore.api_url + '/mrx?hash=' + authStore.hash)
 			.then((response) => response.json())
 			.then((responseJson) => {
 				this.setState({
@@ -252,10 +255,10 @@ class MapScreen extends React.Component {
 						tracksViewChanges={this.state.tracksViewChanges}
 					/>
 				))}
-				{this.props.location.lat ? <Marker
+				{locationStore.lat ? <Marker
 					coordinate={{
-						latitude: this.props.location.lat,
-						longitude: this.props.location.long,
+						latitude: locationStore.lat,
+						longitude: locationStore.long,
 					}}
 					zIndex={10}
 					tracksViewChanges={this.props.tracksViewChanges}
@@ -289,11 +292,4 @@ class MapScreen extends React.Component {
 
 const ConnectedMapScreen = connectActionSheet(MapScreen);
 
-const mapStateToProps = function (state) {
-	return {
-		auth: state.auth,
-		location: state.location
-	}
-};
-
-export default connect(mapStateToProps)(ConnectedMapScreen);
+export default ConnectedMapScreen;

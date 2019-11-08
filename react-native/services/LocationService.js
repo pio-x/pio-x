@@ -3,7 +3,7 @@ import {Platform} from 'react-native';
 import Constants from 'expo-constants';
 import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
-import store from '../stores/store'
+import locationStore from "../stores/locationStore";
 
 export default class LocationService {
 
@@ -27,10 +27,7 @@ export default class LocationService {
 				};
 				Location.watchPositionAsync(watchOptions, (location) => {
 					this._location = location;
-					store.dispatch({
-						type: 'SET_LOCATION',
-						location: location
-					})
+					locationStore.setLocation(location)
 				});
 			});
 		}

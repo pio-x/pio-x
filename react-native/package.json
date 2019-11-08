@@ -12,6 +12,7 @@
     "preset": "jest-expo"
   },
   "dependencies": {
+    "@babel/plugin-proposal-decorators": "^7.7.0",
     "@expo/react-native-action-sheet": "^3.3.0",
     "@expo/samples": "~3.0.3",
     "@expo/vector-icons": "^10.0.0",
@@ -22,6 +23,8 @@
     "expo-font": "~7.0.0",
     "expo-location": "~7.0.0",
     "expo-web-browser": "~7.0.0",
+    "mobx": "^5.15.0",
+    "mobx-react": "^6.1.4",
     "react": "16.8.3",
     "react-dom": "16.8.3",
     "react-moment": "^0.9.2",
@@ -31,8 +34,6 @@
     "react-native-web": "^0.11.7",
     "react-native-webview": "7.0.5",
     "react-navigation": "^3.11.0",
-    "react-redux": "^7.1.1",
-    "redux": "^4.0.4",
     "styled-components": "^4.3.2"
   },
   "devDependencies": {
