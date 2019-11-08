@@ -15,6 +15,7 @@ import LocationService from "../services/LocationService";
 import {observer} from "mobx-react";
 import authStore from "../stores/authStore";
 import locationStore from "../stores/locationStore";
+import distanceTo from "../helpers/distanceTo";
 
 function distinctColor(id) {
 	if (id === null) {
@@ -51,16 +52,16 @@ const CurrentPositionMarkerView = styled.View`
 `;
 
 const CurrentPositionMarkerGlowView = styled.View`
-	width: 40px;
-	height: 40px;
-	padding: 10px;
-	background-color: #4385f433;
-	border-radius: 40px;
+	width: 32px;
+	height: 32px;
+	padding: 6px;
+	background-color: #4385f455;
+	border-radius: 32px;
 `;
 
+@observer
 class StationMarker extends React.Component {
 	render() {
-
 		return <Marker
 			coordinate={{
 				latitude: this.props.station.pos_lat,
@@ -81,6 +82,7 @@ class StationMarker extends React.Component {
 						? <Text>Diese Station gehört Team {this.props.station.team}</Text>
 						: <Text>Diese Station gehört keinem Team</Text>
 					}
+					<Text>{distanceTo(locationStore.lat, locationStore.long, this.props.station.pos_lat, this.props.station.pos_long) + 'm entfernt'}</Text>
 				</CalloutView>
 			</Callout>
 		</Marker>
@@ -116,6 +118,7 @@ class MrxMarker extends React.Component {
 					title={this.props.mrx.name}
 					key={this.props.mrx.x_ID}
 					image={require('../assets/mrx.png')}
+					anchor={{x: 0.5, y: 0.5}}
 					zIndex={5}
 					tracksViewChanges={this.props.tracksViewChanges}
 				>
