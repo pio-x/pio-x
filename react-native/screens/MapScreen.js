@@ -13,7 +13,7 @@ import { connectActionSheet } from '@expo/react-native-action-sheet'
 import { Ionicons } from '@expo/vector-icons';
 import LocationService from "../services/LocationService";
 import {observer} from "mobx-react";
-import authStore from "../stores/authStore";
+import mapStore from "../stores/mapStore";
 import locationStore from "../stores/locationStore";
 import distanceTo from "../helpers/distanceTo";
 
@@ -159,8 +159,6 @@ class MapScreen extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			stations: [],
-			mrx: [],
 			tracksViewChanges: false,
 		}
 	}
@@ -169,7 +167,7 @@ class MapScreen extends React.Component {
 		this.props.navigation.setParams({
 			showmenu: this.showActionSheet.bind(this)
 		});
-		this.loadData();
+		mapStore.reload();
 
 		// make sure location service is started
 		LocationService.getInstance()
@@ -184,49 +182,13 @@ class MapScreen extends React.Component {
 			},
 			(buttonIndex) => {
 				if (buttonIndex === 1) {
-					this.loadData();
+					mapStore.reload();
 				}
 				if (buttonIndex === 2) {
 					this.signOutAsync();
 				}
 			}
 		);
-	}
-
-	loadData() {
-		this.loadStations();
-		this.loadMrx();
-	}
-
-	loadStations() {
-		return fetch(authStore.api_url + '/station?hash=' + authStore.hash)
-			.then((response) => response.json())
-			.then((responseJson) => {
-				this.setState({
-					...this.state,
-					stations: responseJson,
-					//stations: responseJson.slice(0, 10),
-				});
-
-			})
-			.catch((error) => {
-				console.error(error);
-			});
-	}
-
-	loadMrx() {
-		return fetch(authStore.api_url + '/mrx?hash=' + authStore.hash)
-			.then((response) => response.json())
-			.then((responseJson) => {
-				this.setState({
-					...this.state,
-					mrx: responseJson,
-				});
-
-			})
-			.catch((error) => {
-				console.error(error);
-			});
 	}
 
 	signOutAsync = async () => {
@@ -244,14 +206,14 @@ class MapScreen extends React.Component {
 						 longitudeDelta: 0.02,
 					 }}
 			>
-				{this.state.stations.map(station => (
+				{mapStore.stations.map(station => (
 					<StationMarker
 						station={station}
 						key={station.s_ID}
 						tracksViewChanges={this.state.tracksViewChanges}
 					/>
 				))}
-				{this.state.mrx.map(mrx => (
+				{mapStore.mrx.map(mrx => (
 					<MrxMarker
 						mrx={mrx}
 						key={mrx.x_ID}
