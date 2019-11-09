@@ -10,6 +10,7 @@ import authStore from "../stores/authStore";
 
 import styled from 'styled-components'
 import {observer} from "mobx-react";
+import QRCodeScanner from "../components/QRCodeScanner";
 
 const LoginInput = styled.TextInput`
 	margin: 5px 20px;
@@ -18,7 +19,7 @@ const LoginInput = styled.TextInput`
 	border: 1px solid #ddd;
 `;
 
-const LoginFailedText = styled.Text`
+const ErrorMessageText = styled.Text`
 	margin: 5px 20px;
 	color: red;
 	text-align: center;
@@ -36,34 +37,69 @@ export default class SignInScreen extends React.Component {
 			team: '25',
 			hash: 'schnupperndDrohenBuerohochhaeuser',
 			api_url: 'https://api.pio-x.ch',
-			show_login_error_message: false
+			show_login_error_message: false,
+			show_invalid_qr_message: false,
+			show_scanner: false
 		};
 	}
 
 	render() {
 		return (
-			<View style={{paddingTop: 10}}>
-				<LoginInput
-					onChangeText={(team) => this.setState({team})}
-					value={this.state.team}
-					placeholder="Team ID"
-				/>
-				<LoginInput
-					onChangeText={(hash) => this.setState({hash})}
-					value={this.state.hash}
-					placeholder="Team Passwort"
-				/>
-				<LoginInput
-					onChangeText={(api_url) => this.setState({api_url})}
-					value={this.state.api_url}
-					placeholder="API URL"
-				/>
-				<View style={{padding: 20}}>
-					<Button title="Login" onPress={() => {this.signInAsync()}}/>
+			this.state.show_scanner
+				?
+				<View style={{alignSelf: "stretch", height: 600}}>
+					<QRCodeScanner onScan={(data) => {this.handleScan(data)}}></QRCodeScanner>
+					<View style={{padding: 20}}>
+						<Button title="Abbrechen" onPress={() => {this.setState({show_scanner: false})}}/>
+					</View>
 				</View>
-				{this.state.show_login_error_message ? <LoginFailedText>Login fehlgeschlagen</LoginFailedText> : null}
-			</View>
+				:
+					<View style={{paddingTop: 10}}>
+						<LoginInput
+							onChangeText={(team) => this.setState({team})}
+							value={this.state.team}
+							placeholder="Team ID"
+						/>
+						<LoginInput
+							onChangeText={(hash) => this.setState({hash})}
+							value={this.state.hash}
+							placeholder="Team Passwort"
+						/>
+						<LoginInput
+							onChangeText={(api_url) => this.setState({api_url})}
+							value={this.state.api_url}
+							placeholder="API URL"
+						/>
+						<View style={{padding: 20}}>
+							<Button title="Login" onPress={() => {this.signInAsync()}}/>
+						</View>
+						<View style={{padding: 20}}>
+							<Button title="Scan QR Code" onPress={() => {this.setState({show_scanner: true, show_invalid_qr_message: false})}}/>
+						</View>
+						{this.state.show_login_error_message ? <ErrorMessageText>Login fehlgeschlagen</ErrorMessageText> : null}
+						{this.state.show_invalid_qr_message ? <ErrorMessageText>Ungültiger QR Code</ErrorMessageText> : null}
+					</View>
 		);
+	}
+
+	handleScan(url) {
+		let regex = /[?&]([^=#]+)=([^&#]*)/g;
+		let params = {};
+		let match;
+		while ((match = regex.exec(url))) {
+			params[match[1]] = match[2];
+		}
+		if (params['team'] && params['hash'] && params['api']) {
+			this.setState({
+				team: params['team'],
+				hash: params['hash'],
+				api_url: params['api'],
+			});
+			this.signInAsync();
+		} else {
+			this.setState({show_invalid_qr_message: true});
+		}
+		this.setState({show_scanner: false});
 	}
 
 	async signInAsync() {
@@ -88,7 +124,6 @@ export default class SignInScreen extends React.Component {
 		return new Promise((resolve, reject) => {
 			fetch(this.state.api_url + '/config?hash=' + this.state.hash)
 				.then((response) => {
-					console.log(response.status);
 					if (response.status === 200) {
 						resolve()
 					} else {

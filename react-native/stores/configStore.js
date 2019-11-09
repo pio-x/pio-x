@@ -16,7 +16,6 @@ class ConfigStore extends SyncableStoreBase {
 
 	@action
 	loadConfig() {
-		console.log('load config');
 		this.isLoading = true;
 		return fetch(authStore.api_url + '/config?hash=' + authStore.hash)
 			.then((response) => response.json())

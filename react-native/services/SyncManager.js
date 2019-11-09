@@ -11,7 +11,6 @@ class SyncManager {
 	}
 
 	_handleAppStateChange(nextAppState) {
-		console.log(nextAppState);
 		if (nextAppState === 'active') {
 			this.startSync();
 		} else {
