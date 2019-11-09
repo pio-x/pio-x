@@ -12,6 +12,7 @@ import {observer} from "mobx-react";
 import teamStore from "../stores/teamStore";
 import distinctColor from "../helpers/distinctColor";
 import authStore from "../stores/authStore";
+import configStore from "../stores/configStore";
 
 const LeaderboardContainer = styled.View`
 	background-color:#fff;
@@ -66,6 +67,11 @@ const TeamScoreText = styled.Text`
 	border-radius: 10px;
 	font-weight: ${props => props.tid == authStore.team ? 'bold' : 'normal'};
 `;
+const LeaderboardDeactivatedTitle = styled.Text`
+	font-size: 20px;
+	font-weight: bold;
+	margin-bottom: 20px;
+`;
 
 @observer
 export default class LeaderboardScreen extends React.Component {
@@ -100,31 +106,40 @@ export default class LeaderboardScreen extends React.Component {
 
 		return (
 			<LeaderboardContainer>
-				<ScrollView
-					refreshControl={
-						<RefreshControl refreshing={this.isLoading} onRefresh={this.onRefresh}/>
-					}>
-					{teamStore.teams.map((team, i) => {
-						return (
-							<TeamRow key={team.t_ID} tid={team.t_ID}>
-								<View style={{flex: 1}}>
-									<TeamImage
-										source={{uri: authStore.api_url + '/uploaded_images/' + team.img_ID + '.jpg'}}
-									/>
-								</View>
-								<View style={{flex: 6}}>
-									<TeamName>
-										<TeamColor color={distinctColor(team.t_ID)}/>
-										<TeamNameText tid={team.t_ID}>{team.name}</TeamNameText>
-									</TeamName>
-								</View>
-								<View style={{flex: 2}}>
-									<TeamScoreText tid={team.t_ID}>{team.score}</TeamScoreText>
-								</View>
-							</TeamRow>
-						);
-					})}
-				</ScrollView>
+				{
+					configStore.config.show_team_points
+				?
+						<ScrollView
+							refreshControl={
+								<RefreshControl refreshing={this.isLoading} onRefresh={this.onRefresh}/>
+							}>
+							{teamStore.teams.map((team, i) => {
+								return (
+									<TeamRow key={team.t_ID} tid={team.t_ID}>
+										<View style={{flex: 1}}>
+											<TeamImage
+												source={{uri: authStore.api_url + '/uploaded_images/' + team.img_ID + '.jpg'}}
+											/>
+										</View>
+										<View style={{flex: 6}}>
+											<TeamName>
+												<TeamColor color={distinctColor(team.t_ID)}/>
+												<TeamNameText tid={team.t_ID}>{team.name}</TeamNameText>
+											</TeamName>
+										</View>
+										<View style={{flex: 2}}>
+											<TeamScoreText tid={team.t_ID}>{team.score}</TeamScoreText>
+										</View>
+									</TeamRow>
+								);
+							})}
+						</ScrollView>
+				:
+						<View style={{padding: 20}}>
+							<LeaderboardDeactivatedTitle>Die Rangliste ist deaktiviert</LeaderboardDeactivatedTitle>
+							<Text>Das Schlussresultat erfahrt ihr bei der Rangverkündigung.</Text>
+						</View>
+				}
 			</LeaderboardContainer>
 		);
 	}
