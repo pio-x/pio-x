@@ -84,6 +84,9 @@ export default class LeaderboardScreen extends React.Component {
 
 	constructor(props) {
 		super(props);
+		this.state = {
+			isLoading: false,
+		};
 		this.onRefresh = this.onRefresh.bind(this);
 	}
 
@@ -93,19 +96,13 @@ export default class LeaderboardScreen extends React.Component {
 	}
 
 	onRefresh() {
-		teamStore.reload();
+		teamStore.reload().then(() => {
+			this.setState({ isLoading: false })
+		});
 		configStore.reload();
 	}
 
 	render() {
-		if (teamStore.isLoading) {
-			return (
-				<View style={{flex: 1, padding: 20}}>
-					<ActivityIndicator/>
-				</View>
-			)
-		}
-
 		return (
 			<LeaderboardContainer>
 				{
@@ -113,7 +110,7 @@ export default class LeaderboardScreen extends React.Component {
 				?
 						<ScrollView
 							refreshControl={
-								<RefreshControl refreshing={this.isLoading} onRefresh={this.onRefresh}/>
+								<RefreshControl refreshing={this.state.isLoading} onRefresh={this.onRefresh}/>
 							}>
 							{teamStore.teams.map((team, i) => {
 								return (

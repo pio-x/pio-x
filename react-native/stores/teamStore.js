@@ -11,23 +11,31 @@ class TeamStore extends SyncableStoreBase {
 
 	@action
 	reload() {
-		this.loadTeams();
+		return new Promise((resolve, reject) => {
+			this.loadTeams()
+				.then(resolve)
+				.catch(reject)
+		});
 	}
 
 	@action
 	loadTeams() {
-		this.isLoading = true;
-		return fetch(authStore.api_url + '/team?hash=' + authStore.hash)
-			.then((response) => response.json())
-			.then((responseJson) => {
-				runInAction(() => {
-					this.teams = responseJson.sort((a, b) => { return a.score < b.score });
-					this.isLoading = false;
+		return new Promise((resolve, reject) => {
+			this.isLoading = true;
+			return fetch(authStore.api_url + '/team?hash=' + authStore.hash)
+				.then((response) => response.json())
+				.then((responseJson) => {
+					runInAction(() => {
+						this.teams = responseJson.sort((a, b) => { return a.score < b.score });
+						this.isLoading = false;
+						resolve();
+					})
 				})
-			})
-			.catch((error) => {
-				//console.error(error);
-			});
+				.catch((error) => {
+					//console.error(error);
+					reject();
+				});
+		});
 	}
 
 	@computed
