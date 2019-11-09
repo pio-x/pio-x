@@ -19,16 +19,18 @@ export default class AuthLoadingScreen extends React.Component {
 	// Fetch the token from storage then navigate to our appropriate place
 	_bootstrapAsync = async () => {
 		let team = null;
+		let mrx = null;
 		let hash = null;
 		let api_url = null;
 		try {
 			team = await AsyncStorage.getItem('team');
+			mrx = await AsyncStorage.getItem('mrx');
 			hash = await AsyncStorage.getItem('hash');
 			api_url = await AsyncStorage.getItem('api_url');
 		} catch (e) {}
 
-		if (team && hash && api_url) {
-			authStore.authenticate(team, hash, api_url);
+		if ((team || mrx) && hash && api_url) {
+			authStore.authenticate(team, mrx, hash, api_url);
 			this.props.navigation.navigate('App');
 		} else {
 			this.props.navigation.navigate('Auth');

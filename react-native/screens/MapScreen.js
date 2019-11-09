@@ -33,8 +33,8 @@ const CalloutTitle = styled.Text`
 const StationMarkerView = styled.View`
 	width: 20px;
 	height: 20px;
-	background-color: ${props => props.tid == authStore.team ? '#00BD00aa' : props.color + '55'};
-	border: ${props => props.tid == authStore.team ? '2px solid #007100' : '1px solid #000'};
+	background-color: ${props => authStore.isTeam && props.tid == authStore.team ? '#00BD00aa' : props.color + '55'};
+	border: ${props => authStore.isTeam && props.tid == authStore.team ? '2px solid #007100' : '1px solid #000'};
 	border-radius: 20px;
 `;
 

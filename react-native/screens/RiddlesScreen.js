@@ -8,6 +8,7 @@ import {
 import locationStore from "../stores/locationStore";
 import configStore from "../stores/configStore";
 import {observer} from "mobx-react";
+import authStore from "../stores/authStore";
 
 @observer
 export default class RiddlesScreen extends React.Component {
@@ -21,6 +22,8 @@ export default class RiddlesScreen extends React.Component {
 		return <View>
 			<Text>Rätsel</Text>
 			<Text>Dev Mode: {__DEV__ ? 'ON' : 'OFF'}</Text>
+			<Text>Team: {authStore.team ? authStore.team : '-'}</Text>
+			<Text>Mr.X: {authStore.mrx ? authStore.mrx : '-'}</Text>
 			<Text>Game Is Running: {configStore.config && configStore.config.game_is_running ? configStore.config.game_is_running : ''}</Text>
 			<Text>{position}</Text>
 		</View>;

@@ -34,9 +34,10 @@ export default class SignInScreen extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			team: '25',
-			hash: 'schnupperndDrohenBuerohochhaeuser',
-			api_url: 'https://api.pio-x.ch',
+			team: null,
+			mrx: null,
+			hash: null,
+			api_url: null,
 			show_login_error_message: false,
 			show_invalid_qr_message: false,
 			show_scanner: false
@@ -55,26 +56,15 @@ export default class SignInScreen extends React.Component {
 				</View>
 				:
 					<View style={{paddingTop: 10}}>
-						<LoginInput
-							onChangeText={(team) => this.setState({team})}
-							value={this.state.team}
-							placeholder="Team ID"
-						/>
-						<LoginInput
-							onChangeText={(hash) => this.setState({hash})}
-							value={this.state.hash}
-							placeholder="Team Passwort"
-						/>
-						<LoginInput
-							onChangeText={(api_url) => this.setState({api_url})}
-							value={this.state.api_url}
-							placeholder="API URL"
-						/>
 						<View style={{padding: 20}}>
-							<Button title="Login" onPress={() => {this.signInAsync()}}/>
+							<Button title="QR Code scannen" onPress={() => {this.setState({show_scanner: true, show_invalid_qr_message: false})}}/>
+						</View>
+						<Text style={{textAlign: 'center', marginTop: 50, color: '#aaa'}}>Oder zum Testen:</Text>
+						<View style={{padding: 20}}>
+							<Button title="Login als Team" onPress={() => {this.signInAsExampleTeam()}}/>
 						</View>
 						<View style={{padding: 20}}>
-							<Button title="Scan QR Code" onPress={() => {this.setState({show_scanner: true, show_invalid_qr_message: false})}}/>
+							<Button title="Login als Mr.X" onPress={() => {this.signInAsExampleMrx()}}/>
 						</View>
 						{this.state.show_login_error_message ? <ErrorMessageText>Login fehlgeschlagen</ErrorMessageText> : null}
 						{this.state.show_invalid_qr_message ? <ErrorMessageText>Ungültiger QR Code</ErrorMessageText> : null}
@@ -89,17 +79,41 @@ export default class SignInScreen extends React.Component {
 		while ((match = regex.exec(url))) {
 			params[match[1]] = match[2];
 		}
-		if (params['team'] && params['hash'] && params['api']) {
+		if ((params['team'] || params['mrx']) && params['hash'] && params['api']) {
 			this.setState({
-				team: params['team'],
+				team: params['team'] || null,
+				mrx: params['mrx'] || null,
 				hash: params['hash'],
 				api_url: params['api'],
+			}, () => {
+				this.signInAsync();
 			});
-			this.signInAsync();
 		} else {
 			this.setState({show_invalid_qr_message: true});
 		}
 		this.setState({show_scanner: false});
+	}
+
+	signInAsExampleTeam() {
+		this.setState({
+			team: '25',
+			mrx: null,
+			hash: 'schnupperndDrohenBuerohochhaeuser',
+			api_url: 'https://api.pio-x.ch',
+		}, () => {
+			this.signInAsync();
+		});
+	}
+
+	signInAsExampleMrx() {
+		this.setState({
+			team: null,
+			mrx: '1',
+			hash: 'versprecheGemeinschaft414geschweiften',
+			api_url: 'https://api.pio-x.ch',
+		}, () => {
+			this.signInAsync();
+		});
 	}
 
 	async signInAsync() {
@@ -108,10 +122,11 @@ export default class SignInScreen extends React.Component {
 		});
 		try {
 			await this.verifyCredentials();
-			await AsyncStorage.setItem('team', this.state.team);
+			await AsyncStorage.setItem('team', this.state.team || '');
+			await AsyncStorage.setItem('mrx', this.state.mrx || '');
 			await AsyncStorage.setItem('hash', this.state.hash);
 			await AsyncStorage.setItem('api_url', this.state.api_url);
-			authStore.authenticate(this.state.team, this.state.hash, this.state.api_url);
+			authStore.authenticate(this.state.team, this.state.mrx, this.state.hash, this.state.api_url);
 			this.props.navigation.navigate('App');
 		} catch (e) {
 			this.setState({
