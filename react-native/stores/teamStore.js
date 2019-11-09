@@ -26,7 +26,7 @@ class TeamStore extends SyncableStoreBase {
 				.then((response) => response.json())
 				.then((responseJson) => {
 					runInAction(() => {
-						this.teams = responseJson.sort((a, b) => { return a.score < b.score });
+						this.teams = responseJson.sort((a, b) => { return b.score - a.score });
 						this.isLoading = false;
 						resolve();
 					})
