@@ -26,7 +26,7 @@ class TeamStore extends SyncableStoreBase {
 				})
 			})
 			.catch((error) => {
-				console.error(error);
+				//console.error(error);
 			});
 	}
 

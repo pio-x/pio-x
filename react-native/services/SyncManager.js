@@ -21,7 +21,8 @@ class SyncManager {
 
 
 	startSync() {
-		configStore.startSync(60 * 2);
+		// max 60s allowed
+		configStore.startSync(60);
 		mapStore.startSync(15);
 		teamStore.startSync(60);
 	}

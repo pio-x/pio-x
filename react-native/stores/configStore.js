@@ -27,7 +27,7 @@ class ConfigStore extends SyncableStoreBase {
 				})
 			})
 			.catch((error) => {
-				console.error(error);
+				//console.error(error);
 			});
 	}
 }

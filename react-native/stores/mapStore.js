@@ -25,7 +25,7 @@ class MapStore extends SyncableStoreBase{
 				})
 			})
 			.catch((error) => {
-				console.error(error);
+				//console.error(error);
 			});
 	}
 
@@ -39,7 +39,7 @@ class MapStore extends SyncableStoreBase{
 				})
 			})
 			.catch((error) => {
-				console.error(error);
+				//console.error(error);
 			});
 	}
 }
