@@ -46,7 +46,7 @@ const TeamName = styled.View`
 const TeamColor = styled.View`
 	width: 10px;
 	height: 10px;
-	background-color: ${props => props.color};
+	background-color: ${props => props.tid == authStore.team ? '#00BD00' : props.color};
 	border-radius: 10px;
 	margin-right: 5px;
 	margin-top: 15px;
@@ -125,7 +125,7 @@ export default class LeaderboardScreen extends React.Component {
 										</View>
 										<View style={{flex: 6}}>
 											<TeamName>
-												<TeamColor color={distinctColor(team.t_ID)}/>
+												<TeamColor color={distinctColor(team.t_ID)} tid={team.t_ID}/>
 												<TeamNameText tid={team.t_ID}>{team.name}</TeamNameText>
 											</TeamName>
 										</View>
