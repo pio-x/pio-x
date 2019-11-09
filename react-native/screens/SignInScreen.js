@@ -33,8 +33,8 @@ export default class SignInScreen extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			team: '5',
-			hash: 'DreiradJustizirrtumentdecken',
+			team: '25',
+			hash: 'schnupperndDrohenBuerohochhaeuser',
 			api_url: 'https://api.pio-x.ch',
 			show_login_error_message: false
 		};

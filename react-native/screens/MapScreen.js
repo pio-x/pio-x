@@ -20,6 +20,7 @@ import distanceTo from "../helpers/distanceTo";
 import distinctColor from "../helpers/distinctColor";
 import syncManager from "../services/SyncManager";
 import configStore from "../stores/configStore";
+import authStore from "../stores/authStore";
 
 const CalloutView = styled.View`
 	width: 300px;
@@ -32,8 +33,8 @@ const CalloutTitle = styled.Text`
 const StationMarkerView = styled.View`
 	width: 20px;
 	height: 20px;
-	background-color: ${props => props.color + '55'};
-	border: 1px solid #000;
+	background-color: ${props => props.tid == authStore.team ? '#00BD00aa' : props.color + '55'};
+	border: ${props => props.tid == authStore.team ? '2px solid #007100' : '1px solid #000'};
 	border-radius: 20px;
 `;
 
@@ -68,12 +69,16 @@ class StationMarker extends React.Component {
 		>
 			<StationMarkerView
 				color={distinctColor(this.props.station.team)}
+				tid={this.props.station.team}
 			/>
 			<Callout>
 				<CalloutView>
 					<CalloutTitle>{this.props.station.name}</CalloutTitle>
 					{this.props.station.team !== null && teamStore.teamsById[this.props.station.team]
-						? <Text>Diese Station gehört Team {this.props.station.team} {teamStore.teamsById[this.props.station.team].name}</Text>
+						?
+						this.props.station.team == authStore.team
+							? <Text>Diese Station gehört deinem Team.</Text>
+							: <Text>Diese Station gehört Team {this.props.station.team} {teamStore.teamsById[this.props.station.team].name}</Text>
 						: <Text>Diese Station gehört keinem Team</Text>
 					}
 					<Text>{distanceTo(locationStore.lat, locationStore.long, this.props.station.pos_lat, this.props.station.pos_long) + 'm entfernt'}</Text>
