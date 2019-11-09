@@ -15,8 +15,11 @@ import LocationService from "../services/LocationService";
 import {observer} from "mobx-react";
 import mapStore from "../stores/mapStore";
 import locationStore from "../stores/locationStore";
+import teamStore from "../stores/teamStore";
 import distanceTo from "../helpers/distanceTo";
 import distinctColor from "../helpers/distinctColor";
+import syncManager from "../services/SyncManager";
+import configStore from "../stores/configStore";
 
 const CalloutView = styled.View`
 	width: 300px;
@@ -69,8 +72,8 @@ class StationMarker extends React.Component {
 			<Callout>
 				<CalloutView>
 					<CalloutTitle>{this.props.station.name}</CalloutTitle>
-					{this.props.station.team !== null
-						? <Text>Diese Station gehört Team {this.props.station.team}</Text>
+					{this.props.station.team !== null && teamStore.teamsById[this.props.station.team]
+						? <Text>Diese Station gehört Team {this.props.station.team} {teamStore.teamsById[this.props.station.team].name}</Text>
 						: <Text>Diese Station gehört keinem Team</Text>
 					}
 					<Text>{distanceTo(locationStore.lat, locationStore.long, this.props.station.pos_lat, this.props.station.pos_long) + 'm entfernt'}</Text>
@@ -158,10 +161,12 @@ class MapScreen extends React.Component {
 		this.props.navigation.setParams({
 			showmenu: this.showActionSheet.bind(this)
 		});
-		mapStore.reload();
 
 		// make sure location service is started
-		LocationService.getInstance()
+		LocationService.getInstance();
+
+		// start sync
+		syncManager.startSync();
 	}
 
 	showActionSheet() {
@@ -174,6 +179,8 @@ class MapScreen extends React.Component {
 			(buttonIndex) => {
 				if (buttonIndex === 1) {
 					mapStore.reload();
+					teamStore.reload();
+					configStore.reload();
 				}
 				if (buttonIndex === 2) {
 					this.signOutAsync();
@@ -225,6 +232,7 @@ class MapScreen extends React.Component {
 					</Marker>
 				: null}
 			</MapView>
+			{/*
 			<View
 				style={{
 					position: 'absolute', // use absolute position to show button on top of the map
@@ -242,6 +250,7 @@ class MapScreen extends React.Component {
 					})}
 				/>
 			</View>
+			*/}
 		</View>;
 	}
 }

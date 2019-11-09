@@ -2,26 +2,27 @@ import {observable, action, runInAction, computed} from 'mobx';
 import authStore from "./authStore";
 import SyncableStoreBase from "./SyncableStoreBase";
 
-class TeamStore extends SyncableStoreBase {
+class ConfigStore extends SyncableStoreBase {
 	@observable
-	teams = [];
+	config = {};
 
 	@observable
 	isLoading = false;
 
 	@action
 	reload() {
-		this.loadTeams();
+		this.loadConfig();
 	}
 
 	@action
-	loadTeams() {
+	loadConfig() {
+		console.log('load config');
 		this.isLoading = true;
-		return fetch(authStore.api_url + '/team?hash=' + authStore.hash)
+		return fetch(authStore.api_url + '/config?hash=' + authStore.hash)
 			.then((response) => response.json())
 			.then((responseJson) => {
 				runInAction(() => {
-					this.teams = responseJson.sort((a, b) => { return a.score < b.score });
+					this.config = responseJson;
 					this.isLoading = false;
 				})
 			})
@@ -29,16 +30,7 @@ class TeamStore extends SyncableStoreBase {
 				console.error(error);
 			});
 	}
-
-	@computed
-	get teamsById() {
-		let teams = {};
-		this.teams.forEach((team) => {
-			teams[team.t_ID] = team;
-		});
-		return teams;
-	}
 }
 
-const teamStore = new TeamStore();
-export default teamStore;
+const configStore = new ConfigStore();
+export default configStore;

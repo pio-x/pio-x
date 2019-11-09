@@ -51,7 +51,7 @@ const TeamColor = styled.View`
 	width: 20px;
 	height: 20px;
 	background-color: ${props => props.color + '55'};
-	border: 1px solid #000;
+	border: 1px solid ${props => props.color};
 	border-radius: 20px;
 `;
 

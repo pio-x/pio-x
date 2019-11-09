@@ -1,7 +1,8 @@
 import {observable, action, runInAction} from 'mobx';
 import authStore from "./authStore";
+import SyncableStoreBase from "./SyncableStoreBase";
 
-class MapStore {
+class MapStore extends SyncableStoreBase{
 	@observable
 	stations = [];
 

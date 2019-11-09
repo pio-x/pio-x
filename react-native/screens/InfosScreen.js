@@ -5,7 +5,7 @@ import {
 } from 'react-native';
 import {WebView} from 'react-native-webview';
 
-import authStore from "../stores/authStore";
+import configStore from "../stores/configStore";
 import {observer} from "mobx-react";
 
 @observer
@@ -44,32 +44,8 @@ export default class InfosScreen extends React.Component {
 		return page;
 	}
 
-	loadData() {
-		this.setState({
-			htmlInfos: 'Infos werden geladen...'
-		});
-		return fetch(authStore.api_url + '/config?hash=' + authStore.hash)
-			.then((response) => response.json())
-			.then((responseJson) => {
-
-				if (responseJson && responseJson.info_text) {
-					this.setState({
-						htmlInfos: responseJson.info_text
-					});
-				} else {
-					this.setState({
-						htmlInfos: 'Infos konnten nicht geladen werden :('
-					});
-				}
-
-			})
-			.catch((error) => {
-				console.error(error);
-			});
-	}
-
 	componentDidMount() {
-		this.loadData();
+		configStore.reload();
 	}
 
 	render() {
@@ -77,7 +53,7 @@ export default class InfosScreen extends React.Component {
 			<WebView
 				style={{flex: 1}}
 				originWhitelist={['*']}
-				source={{html: this.wrapHtml(this.state.htmlInfos)}}
+				source={{html: this.wrapHtml(configStore.config && configStore.config.info_text ? configStore.config.info_text : 'Infos werden geladen...')}}
 			/>
 		</View>
 	}
