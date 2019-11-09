@@ -89,10 +89,12 @@ export default class LeaderboardScreen extends React.Component {
 
 	componentDidMount() {
 		teamStore.reload();
+		configStore.reload();
 	}
 
 	onRefresh() {
 		teamStore.reload();
+		configStore.reload();
 	}
 
 	render() {
