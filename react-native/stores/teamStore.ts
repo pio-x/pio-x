@@ -1,10 +1,11 @@
 import {observable, action, runInAction, computed} from 'mobx';
 import authStore from "./authStore";
 import SyncableStoreBase from "./SyncableStoreBase";
+import {ITeam} from "../interfaces/ITeam";
 
 class TeamStore extends SyncableStoreBase {
 	@observable
-	teams = [];
+	teams: ITeam[] = [];
 
 	@observable
 	isLoading = false;
@@ -24,7 +25,7 @@ class TeamStore extends SyncableStoreBase {
 			this.isLoading = true;
 			return fetch(authStore.api_url + '/team?hash=' + authStore.hash)
 				.then((response) => response.json())
-				.then((responseJson) => {
+				.then((responseJson: ITeam[]) => {
 					runInAction(() => {
 						this.teams = responseJson.sort((a, b) => { return b.score - a.score });
 						this.isLoading = false;
@@ -39,8 +40,8 @@ class TeamStore extends SyncableStoreBase {
 	}
 
 	@computed
-	get teamsById() {
-		let teams = {};
+	get teamsById(): { [teamId: number]: ITeam } {
+		let teams: { [teamId: number]: ITeam } = {};
 		this.teams.forEach((team) => {
 			teams[team.t_ID] = team;
 		});

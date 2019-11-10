@@ -1,15 +1,9 @@
-import {AppState} from 'react-native';
 
-export default class SyncableStoreBase {
+export default abstract class SyncableStoreBase {
 
-	_interval = null;
+	_interval: number|null = null;
 
-	constructor() {
-		if (typeof this.reload !== "function") {
-			// or maybe test typeof this.method === "function"
-			throw new TypeError("A SyncableStore must implement a reload() method");
-		}
-	}
+	abstract reload(): any;
 
 	startSync(seconds = 60) {
 		// autoupdate every x seconds

@@ -3,15 +3,19 @@ import {
 	ActivityIndicator,
 	AsyncStorage,
 	StatusBar,
-	StyleSheet,
 	View,
 } from 'react-native';
 import {observer} from "mobx-react";
 
 import authStore from "../stores/authStore";
+import {NavigationParams, NavigationScreenProp, NavigationState} from "react-navigation";
+
+interface IAuthLoadingScreenProps {
+	navigation: NavigationScreenProp<NavigationState, NavigationParams>;
+}
 
 @observer
-export default class AuthLoadingScreen extends React.Component {
+export default class AuthLoadingScreen extends React.Component<IAuthLoadingScreenProps> {
 	componentDidMount() {
 		this._bootstrapAsync();
 	}

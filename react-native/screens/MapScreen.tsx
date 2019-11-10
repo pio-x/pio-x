@@ -1,13 +1,12 @@
 import React from 'react';
 import {
-	Button,
 	Text,
 	View,
 	AsyncStorage,
 	TouchableWithoutFeedback,
 	Platform
 } from 'react-native';
-import styled from 'styled-components'
+import styled from 'styled-components/native';
 import MapView, {Marker, Polyline, Callout} from 'react-native-maps';
 import { connectActionSheet } from '@expo/react-native-action-sheet'
 import { Ionicons } from '@expo/vector-icons';
@@ -21,6 +20,10 @@ import distinctColor from "../helpers/distinctColor";
 import syncManager from "../services/SyncManager";
 import configStore from "../stores/configStore";
 import authStore from "../stores/authStore";
+import {IMrx} from "../interfaces/IMrx";
+import {IStation} from "../interfaces/IStation";
+import {Context} from "@expo/react-native-action-sheet/lib/typescript/context";
+import {NavigationParams, NavigationScreenProp, NavigationState} from "react-navigation";
 
 const CalloutView = styled.View`
 	width: 300px;
@@ -30,11 +33,16 @@ const CalloutTitle = styled.Text`
 	font-size: 18px;
 `;
 
+interface IStationMarkerViewProps {
+	tid: number;
+	color: string;
+}
+
 const StationMarkerView = styled.View`
 	width: 20px;
 	height: 20px;
-	background-color: ${props => authStore.isTeam && props.tid == authStore.team ? '#00BD00aa' : props.color + '88'};
-	border: ${props => authStore.isTeam && props.tid == authStore.team ? '2px solid #007100' : '1px solid #000'};
+	background-color: ${(props: IStationMarkerViewProps) => authStore.isTeam && props.tid == authStore.team ? '#00BD00aa' : props.color + '88'};
+	border: ${(props: IStationMarkerViewProps) => authStore.isTeam && props.tid == authStore.team ? '2px solid #007100' : '1px solid #000'};
 	border-radius: 20px;
 `;
 
@@ -54,8 +62,13 @@ const CurrentPositionMarkerGlowView = styled.View`
 	border-radius: 32px;
 `;
 
+interface IStationMarkerProps {
+	tracksViewChanges: boolean;
+	station: IStation;
+}
+
 @observer
-class StationMarker extends React.Component {
+class StationMarker extends React.Component<IStationMarkerProps> {
 	render() {
 		return <Marker
 			coordinate={{
@@ -76,7 +89,7 @@ class StationMarker extends React.Component {
 					<CalloutTitle>{this.props.station.name}</CalloutTitle>
 					{this.props.station.team !== null && teamStore.teamsById[this.props.station.team]
 						?
-						this.props.station.team == authStore.team
+						authStore.team && this.props.station.team == authStore.team
 							? <Text>Diese Station gehört deinem Team.</Text>
 							: <Text>Diese Station gehört Team {this.props.station.team} {teamStore.teamsById[this.props.station.team].name}</Text>
 						: <Text>Diese Station gehört keinem Team</Text>
@@ -88,8 +101,13 @@ class StationMarker extends React.Component {
 	}
 }
 
-class MrxMarker extends React.Component {
-	formatTimestamp(timestamp) {
+interface IMrxMarkerProps {
+	tracksViewChanges: boolean;
+	mrx: IMrx;
+}
+
+class MrxMarker extends React.Component<IMrxMarkerProps> {
+	formatTimestamp(timestamp: string) {
 		let date = new Date(timestamp);
 		let hours = date.getHours();
 		let minutes = ("0" + date.getMinutes()).substr(-2);
@@ -139,10 +157,15 @@ class MrxMarker extends React.Component {
 	}
 }
 
-@observer
-class MapScreen extends React.Component {
 
-	static navigationOptions = ({navigation}) => {
+interface IMapScreenProps extends Context {
+	navigation: NavigationScreenProp<NavigationState, NavigationParams>;
+}
+
+@observer
+class MapScreen extends React.Component<IMapScreenProps> {
+
+	static navigationOptions = ({navigation}: any) => {
 		return {
 			title: 'Karte',
 			headerRight: (
@@ -155,12 +178,11 @@ class MapScreen extends React.Component {
 		};
 	};
 
-	constructor(props) {
-		super(props);
-		this.state = {
-			tracksViewChanges: false,
-		}
-	}
+	readonly state: {
+		tracksViewChanges: boolean;
+	} = {
+		tracksViewChanges: false
+	};
 
 	componentDidMount() {
 		this.props.navigation.setParams({
@@ -181,7 +203,7 @@ class MapScreen extends React.Component {
 				destructiveButtonIndex: 2,
 				cancelButtonIndex: 0,
 			},
-			(buttonIndex) => {
+			(buttonIndex: number) => {
 				if (buttonIndex === 1) {
 					mapStore.reload();
 					teamStore.reload();
@@ -223,13 +245,13 @@ class MapScreen extends React.Component {
 						tracksViewChanges={this.state.tracksViewChanges}
 					/>
 				))}
-				{locationStore.lat ? <Marker
+				{locationStore.lat && locationStore.long ? <Marker
 					coordinate={{
 						latitude: locationStore.lat,
 						longitude: locationStore.long,
 					}}
 					zIndex={10}
-					tracksViewChanges={this.props.tracksViewChanges}
+					tracksViewChanges={this.state.tracksViewChanges}
 					>
 						<CurrentPositionMarkerGlowView>
 							<CurrentPositionMarkerView/>

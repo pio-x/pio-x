@@ -3,16 +3,15 @@ import {
 	ScrollView,
 	Text,
 	RefreshControl,
-	ActivityIndicator,
 	View,
-	Image,
 } from 'react-native';
-import styled from 'styled-components'
+import styled from 'styled-components/native';
 import {observer} from "mobx-react";
 import teamStore from "../stores/teamStore";
 import distinctColor from "../helpers/distinctColor";
 import authStore from "../stores/authStore";
 import configStore from "../stores/configStore";
+import {NavigationParams, NavigationScreenProp, NavigationState} from "react-navigation";
 
 const LeaderboardContainer = styled.View`
 	background-color:#fff;
@@ -27,7 +26,7 @@ const TeamRow = styled.View`
 	align-items: flex-start;
 	border-bottom-color: #eee;
 	border-bottom-width: 1px;
-	background-color: ${props => props.tid == authStore.team ? '#eee' : '#fff'};
+	background-color: ${(props: {tid: number}) => props.tid == authStore.team ? '#eee' : '#fff'};
 `;
 
 const TeamImage = styled.Image`
@@ -46,7 +45,7 @@ const TeamName = styled.View`
 const TeamColor = styled.View`
 	width: 10px;
 	height: 10px;
-	background-color: ${props => props.tid == authStore.team ? '#00BD00' : props.color};
+	background-color: ${(props: {tid: number, color: string}) => props.tid == authStore.team ? '#00BD00' : props.color};
 	border-radius: 10px;
 	margin-right: 5px;
 	margin-top: 15px;
@@ -56,7 +55,7 @@ const TeamNameText = styled.Text`
 	line-height: 20px;
 	padding: 10px 0;
 	font-size: 16px;
-	font-weight: ${props => props.tid == authStore.team ? 'bold' : 'normal'};
+	font-weight: ${(props: {tid: number}) => props.tid == authStore.team ? 'bold' : 'normal'};
 `;
 
 const TeamScoreText = styled.Text`
@@ -65,7 +64,7 @@ const TeamScoreText = styled.Text`
 	font-size: 16px;
 	align-self: flex-end;
 	border-radius: 10px;
-	font-weight: ${props => props.tid == authStore.team ? 'bold' : 'normal'};
+	font-weight: ${(props: {tid: number}) => props.tid == authStore.team ? 'bold' : 'normal'};
 `;
 const LeaderboardDeactivatedTitle = styled.Text`
 	font-size: 20px;
@@ -73,20 +72,27 @@ const LeaderboardDeactivatedTitle = styled.Text`
 	margin-bottom: 20px;
 `;
 
-@observer
-export default class LeaderboardScreen extends React.Component {
+interface ILeaderboardScreenProps {
+	navigation: NavigationScreenProp<NavigationState, NavigationParams>;
+}
 
-	static navigationOptions = ({navigation}) => {
+@observer
+export default class LeaderboardScreen extends React.Component<ILeaderboardScreenProps> {
+
+	static navigationOptions = ({navigation}: any) => {
 		return {
 			title: 'Rangliste'
 		};
 	};
 
-	constructor(props) {
+	readonly state: {
+		isLoading: boolean;
+	} = {
+		isLoading: false,
+	};
+
+	constructor(props: ILeaderboardScreenProps) {
 		super(props);
-		this.state = {
-			isLoading: false,
-		};
 		this.onRefresh = this.onRefresh.bind(this);
 	}
 

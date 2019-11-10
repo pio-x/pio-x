@@ -1,4 +1,3 @@
-import React from 'react';
 import {Platform} from 'react-native';
 import Constants from 'expo-constants';
 import * as Location from 'expo-location';
@@ -7,10 +6,10 @@ import locationStore from "../stores/locationStore";
 
 export default class LocationService {
 
-	static myInstance = null;
+	static myInstance: LocationService | null = null;
 
-	_errorMessage = "";
-	_location = null;
+	private _errorMessage: string = "";
+	private _location: Location.LocationData | null = null;
 
 	constructor() {
 		if (Platform.OS === 'android' && !Constants.isDevice) {
@@ -37,19 +36,19 @@ export default class LocationService {
 	/**
 	 * @returns {LocationService}
 	 */
-	static getInstance() {
+	static getInstance(): LocationService {
 		if (LocationService.myInstance == null) {
 			LocationService.myInstance = new LocationService();
 		}
 
-		return this.myInstance;
+		return <LocationService>this.myInstance;
 	}
 
-	get errorMessage() {
+	get errorMessage(): string {
 		return this._errorMessage;
 	}
 
-	get location() {
+	get location(): Location.LocationData | null {
 		return this._location;
 	}
 }

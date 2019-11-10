@@ -1,16 +1,17 @@
 import {observable, action, runInAction, computed} from 'mobx';
 import authStore from "./authStore";
 import SyncableStoreBase from "./SyncableStoreBase";
+import {IConfig} from "../interfaces/IConfig";
 
 class ConfigStore extends SyncableStoreBase {
 	@observable
-	config = {};
+	config: IConfig = {};
 
 	@observable
-	isLoading = false;
+	isLoading: boolean = false;
 
 	@action
-	reload() {
+	reload(): void {
 		this.loadConfig();
 	}
 

@@ -1,4 +1,3 @@
-import React from 'react';
 import {AppState} from 'react-native';
 import configStore from "../stores/configStore";
 import mapStore from "../stores/mapStore";
@@ -10,7 +9,7 @@ class SyncManager {
 		AppState.addEventListener('change', (nextAppState) => { this._handleAppStateChange(nextAppState) });
 	}
 
-	_handleAppStateChange(nextAppState) {
+	_handleAppStateChange(nextAppState: string) {
 		if (nextAppState === 'active') {
 			this.startSync();
 		} else {
@@ -19,14 +18,14 @@ class SyncManager {
 	};
 
 
-	startSync() {
+	startSync(): void {
 		// max 60s allowed
 		configStore.startSync(60);
 		mapStore.startSync(15);
 		teamStore.startSync(60);
 	}
 
-	stopSync() {
+	stopSync(): void {
 		configStore.stopSync();
 		mapStore.stopSync();
 		teamStore.stopSync();

@@ -1,30 +1,27 @@
 import React from 'react';
 import {
-	Text,
 	View,
 } from 'react-native';
 import {WebView} from 'react-native-webview';
 
 import configStore from "../stores/configStore";
 import {observer} from "mobx-react";
+import {NavigationParams, NavigationScreenProp, NavigationState} from "react-navigation";
+
+interface IInfosScreenProps {
+	navigation: NavigationScreenProp<NavigationState, NavigationParams>;
+}
 
 @observer
-export default class InfosScreen extends React.Component {
+export default class InfosScreen extends React.Component<IInfosScreenProps> {
 
-	constructor(props) {
-		super(props);
-		this.state = {
-			htmlInfos: 'Infos werden geladen...'
-		};
-	}
-
-	static navigationOptions = ({navigation}) => {
+	static navigationOptions = ({navigation}: any) => {
 		return {
 			title: 'Infos'
 		};
 	};
 
-	wrapHtml(content) {
+	wrapHtml(content: string) {
 		let page = '';
 		page += `<!doctype html>
 				<html lang="en">

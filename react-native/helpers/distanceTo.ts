@@ -1,6 +1,10 @@
-export default function distanceTo(lat1, lon1, lat2, lon2) {
+
+export default function distanceTo(lat1: number|null, lon1: number|null, lat2: number|null, lon2: number|null): number {
 	if ((lat1 == lat2) && (lon1 == lon2)) {
 		return 0;
+	}
+	if (lat1 == null || lat2 == null || lon1 == null || lon2 == null) {
+		return 999999;
 	}
 	else {
 		let radlat1 = Math.PI * lat1/180;

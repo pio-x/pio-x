@@ -1,13 +1,15 @@
 import {observable, action, runInAction} from 'mobx';
 import authStore from "./authStore";
 import SyncableStoreBase from "./SyncableStoreBase";
+import {IStation} from "../interfaces/IStation";
+import {IMrx} from "../interfaces/IMrx";
 
-class MapStore extends SyncableStoreBase{
+class MapStore extends SyncableStoreBase {
 	@observable
-	stations = [];
+	stations: IStation[] = [];
 
 	@observable
-	mrx = [];
+	mrx: IMrx[] = [];
 
 	@action
 	reload() {

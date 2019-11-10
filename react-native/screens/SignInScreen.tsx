@@ -4,20 +4,13 @@ import {
 	View,
 	Button,
 	AsyncStorage,
-	TextInput,
 } from 'react-native';
 import authStore from "../stores/authStore";
 
-import styled from 'styled-components'
+import styled from 'styled-components/native';
 import {observer} from "mobx-react";
 import QRCodeScanner from "../components/QRCodeScanner";
-
-const LoginInput = styled.TextInput`
-	margin: 5px 20px;
-	padding: 10px;
-	border-radius: 5px;
-	border: 1px solid #ddd;
-`;
+import {NavigationParams, NavigationScreenProp, NavigationState} from "react-navigation";
 
 const ErrorMessageText = styled.Text`
 	margin: 5px 20px;
@@ -25,31 +18,40 @@ const ErrorMessageText = styled.Text`
 	text-align: center;
 `;
 
+interface ISignInScreenProps {
+	navigation: NavigationScreenProp<NavigationState, NavigationParams>;
+}
+
 @observer
-export default class SignInScreen extends React.Component {
+export default class SignInScreen extends React.Component<ISignInScreenProps> {
 	static navigationOptions = {
 		title: 'Login',
 	};
 
-	constructor(props) {
-		super(props);
-		this.state = {
-			team: null,
-			mrx: null,
-			hash: null,
-			api_url: null,
-			show_login_error_message: false,
-			show_invalid_qr_message: false,
-			show_scanner: false
-		};
-	}
+	readonly state: {
+		team: string|null;
+		mrx: string|null;
+		hash: string|null;
+		api_url: string|null;
+		show_login_error_message: boolean;
+		show_invalid_qr_message: boolean;
+		show_scanner: boolean;
+	} = {
+		team: null,
+		mrx: null,
+		hash: null,
+		api_url: null,
+		show_login_error_message: false,
+		show_invalid_qr_message: false,
+		show_scanner: false
+	};
 
 	render() {
 		return (
 			this.state.show_scanner
 				?
 				<View style={{alignSelf: "stretch", height: 600}}>
-					<QRCodeScanner onScan={(data) => {this.handleScan(data)}}></QRCodeScanner>
+					<QRCodeScanner onScan={(data: string) => {this.handleScan(data)}}></QRCodeScanner>
 					<View style={{padding: 20}}>
 						<Button title="Abbrechen" onPress={() => {this.setState({show_scanner: false})}}/>
 					</View>
@@ -72,9 +74,9 @@ export default class SignInScreen extends React.Component {
 		);
 	}
 
-	handleScan(url) {
+	handleScan(url: string) {
 		let regex = /[?&]([^=#]+)=([^&#]*)/g;
-		let params = {};
+		let params: { [key: string]: string } = {};
 		let match;
 		while ((match = regex.exec(url))) {
 			params[match[1]] = match[2];
@@ -124,8 +126,8 @@ export default class SignInScreen extends React.Component {
 			await this.verifyCredentials();
 			await AsyncStorage.setItem('team', this.state.team || '');
 			await AsyncStorage.setItem('mrx', this.state.mrx || '');
-			await AsyncStorage.setItem('hash', this.state.hash);
-			await AsyncStorage.setItem('api_url', this.state.api_url);
+			await AsyncStorage.setItem('hash', this.state.hash || '');
+			await AsyncStorage.setItem('api_url', this.state.api_url || '');
 			authStore.authenticate(this.state.team, this.state.mrx, this.state.hash, this.state.api_url);
 			this.props.navigation.navigate('App');
 		} catch (e) {

@@ -1,8 +1,7 @@
 import * as React from 'react';
-import {Text, View, StyleSheet, Button} from 'react-native';
-import Constants from 'expo-constants';
+import {View, StyleSheet, Button} from 'react-native';
 import * as Permissions from 'expo-permissions';
-import styled from 'styled-components'
+import styled from 'styled-components/native';
 import {BarCodeScanner} from 'expo-barcode-scanner';
 
 const MessageText = styled.Text`
@@ -11,7 +10,11 @@ const MessageText = styled.Text`
 	text-align: center;
 `;
 
-export default class QRCodeScanner extends React.Component {
+interface IQRCodeScannerProps {
+	onScan(data: string): void;
+}
+
+export default class QRCodeScanner extends React.Component<IQRCodeScannerProps> {
 	state = {
 		hasCameraPermission: null,
 		scanned: false,
@@ -54,7 +57,7 @@ export default class QRCodeScanner extends React.Component {
 		);
 	}
 
-	handleBarCodeScanned = ({type, data}) => {
+	handleBarCodeScanned = ({type, data}: {type: number, data: string}) => {
 		this.setState({scanned: true});
 		this.props.onScan(data);
 		//alert(`Bar code with type ${type} and data ${data} has been scanned!`);

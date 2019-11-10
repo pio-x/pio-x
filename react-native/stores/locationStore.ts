@@ -1,17 +1,18 @@
 import {observable, action} from 'mobx';
+import * as Location from 'expo-location';
 
 class LocationStore {
 	@observable
-	lat = null;
+	lat: number|null = null;
 
 	@observable
-	long = null;
+	long: number|null = null;
 
 	@observable
-	accuracy = null;
+	accuracy: number|null = null;
 
 	@action
-	setLocation(location) {
+	setLocation(location: Location.LocationData): void {
 		this.lat = location.coords.latitude;
 		this.long = location.coords.longitude;
 		this.accuracy = location.coords.accuracy;

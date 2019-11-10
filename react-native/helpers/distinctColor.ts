@@ -1,4 +1,5 @@
-export default function distinctColor(id) {
+
+export default function distinctColor(id: number|null): string {
 	if (id === null) {
 		// empty station
 		return '#bbbbbb';
