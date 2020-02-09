@@ -3,8 +3,8 @@ module.exports = function(api) {
   return {
     presets: ['babel-preset-expo'],
     plugins: [
+      "babel-plugin-styled-components",
       [
-        "babel-plugin-styled-components",
         "@babel/plugin-proposal-decorators",
         {
           "legacy": true
