@@ -11,7 +11,7 @@
     ],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/icon_beta.png",
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
@@ -32,6 +32,7 @@
     },
     "android": {
       "package": "ch.piox.reactnativeapp",
+      "icon": "./assets/images/icon_beta_android.png",
       "config": {
         "googleMaps": {
           "apiKey": "AIzaSyC__XvhsViRvxBOfCbC5KAU3uw7FdrQUec"
