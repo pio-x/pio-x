@@ -12,6 +12,7 @@ import distinctColor from "../helpers/distinctColor";
 import authStore from "../stores/authStore";
 import configStore from "../stores/configStore";
 import {NavigationParams, NavigationScreenProp, NavigationState} from "react-navigation";
+import Colors from "../constants/Colors";
 
 const LeaderboardContainer = styled.View`
 	background-color:#fff;
@@ -26,7 +27,7 @@ const TeamRow = styled.View`
 	align-items: flex-start;
 	border-bottom-color: #eee;
 	border-bottom-width: 1px;
-	background-color: ${(props: {tid: number}) => props.tid == authStore.team ? '#eee' : '#fff'};
+	background-color: ${(props: {tid: number}) => props.tid == authStore.team ? Colors.tintColor : '#fff'};
 `;
 
 const TeamImage = styled.Image`
@@ -52,6 +53,7 @@ const TeamColor = styled.View`
 `;
 
 const TeamNameText = styled.Text`
+	color: ${(props: {tid: number}) => props.tid == authStore.team ? '#fff' : '#000'};
 	line-height: 20px;
 	padding: 10px 0;
 	font-size: 16px;
@@ -59,6 +61,7 @@ const TeamNameText = styled.Text`
 `;
 
 const TeamScoreText = styled.Text`
+	color: ${(props: {tid: number}) => props.tid == authStore.team ? '#fff' : '#000'};
 	line-height: 20px;
 	padding: 10px 0;
 	font-size: 16px;

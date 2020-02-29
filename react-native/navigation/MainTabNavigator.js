@@ -8,6 +8,7 @@ import InfosScreen from "../screens/InfosScreen";
 import RiddlesScreen from "../screens/RiddlesScreen";
 import LeaderboardScreen from "../screens/LeaderboardScreen";
 import MapScreen from "../screens/MapScreen";
+import Colors from "../constants/Colors";
 
 const config = Platform.select({
 	web: {headerMode: 'screen'},
@@ -26,6 +27,10 @@ MapStack.navigationOptions = {
 	tabBarIcon: ({focused}) => (
 		<TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-map' : 'md-map'}/>
 	),
+	tabBarOptions: {
+		activeTintColor: Colors.tabIconSelected,
+		inactiveTintColor: Colors.tabIconDefault,
+	},
 };
 
 MapStack.path = '';
@@ -43,6 +48,10 @@ LeaderboardStack.navigationOptions = {
 	tabBarIcon: ({focused}) => (
 		<TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-trophy' : 'md-trophy'}/>
 	),
+	tabBarOptions: {
+		activeTintColor: Colors.tabIconSelected,
+		inactiveTintColor: Colors.tabIconDefault,
+	},
 };
 
 LeaderboardStack.path = '';
@@ -60,6 +69,10 @@ RiddlesStack.navigationOptions = {
 	tabBarIcon: ({focused}) => (
 		<TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-key' : 'md-key'}/>
 	),
+	tabBarOptions: {
+		activeTintColor: Colors.tabIconSelected,
+		inactiveTintColor: Colors.tabIconDefault,
+	},
 };
 
 RiddlesStack.path = '';
@@ -77,6 +90,10 @@ InfosStack.navigationOptions = {
 	tabBarIcon: ({focused}) => (
 		<TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-book' : 'md-book'}/>
 	),
+	tabBarOptions: {
+		activeTintColor: Colors.tabIconSelected,
+		inactiveTintColor: Colors.tabIconDefault,
+	},
 };
 
 InfosStack.path = '';
@@ -94,6 +111,10 @@ MessagesStack.navigationOptions = {
 	tabBarIcon: ({focused}) => (
 		<TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-megaphone' : 'md-megaphone'}/>
 	),
+	tabBarOptions: {
+		activeTintColor: Colors.tabIconSelected,
+		inactiveTintColor: Colors.tabIconDefault,
+	},
 };
 
 MessagesStack.path = '';
