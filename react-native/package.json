@@ -38,6 +38,7 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-36.0.1.tar.gz",
     "react-native-gesture-handler": "~1.5.0",
     "react-native-maps": "0.26.1",
+    "react-native-screens": "^2.2.0",
     "react-native-web": "^0.11.7",
     "react-native-webview": "7.4.3",
     "react-navigation": "^3.11.0",
