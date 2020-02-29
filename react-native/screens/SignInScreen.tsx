@@ -129,7 +129,11 @@ export default class SignInScreen extends React.Component<ISignInScreenProps> {
 			await AsyncStorage.setItem('hash', this.state.hash || '');
 			await AsyncStorage.setItem('api_url', this.state.api_url || '');
 			authStore.authenticate(this.state.team, this.state.mrx, this.state.hash, this.state.api_url);
-			this.props.navigation.navigate('App');
+			if (this.state.team) {
+				this.props.navigation.navigate('AppTeam');
+			} else {
+				this.props.navigation.navigate('AppMrx');
+			}
 		} catch (e) {
 			this.setState({
 				show_login_error_message: true

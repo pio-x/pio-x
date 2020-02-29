@@ -35,7 +35,11 @@ export default class AuthLoadingScreen extends React.Component<IAuthLoadingScree
 
 		if ((team || mrx) && hash && api_url) {
 			authStore.authenticate(team, mrx, hash, api_url);
-			this.props.navigation.navigate('App');
+			if (team) {
+				this.props.navigation.navigate('AppTeam');
+			} else {
+				this.props.navigation.navigate('AppMrx');
+			}
 		} else {
 			this.props.navigation.navigate('Auth');
 		}
