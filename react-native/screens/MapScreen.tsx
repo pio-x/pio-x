@@ -7,8 +7,8 @@ import {
 	Platform
 } from 'react-native';
 import styled from 'styled-components/native';
-import MapView, {Marker, Polyline, Callout} from 'react-native-maps';
-import { connectActionSheet } from '@expo/react-native-action-sheet'
+import MapView, {Marker, Callout} from 'react-native-maps';
+import {ActionSheetProps, connectActionSheet} from '@expo/react-native-action-sheet'
 import { Ionicons } from '@expo/vector-icons';
 import LocationService from "../services/LocationService";
 import {observer} from "mobx-react";
@@ -20,10 +20,9 @@ import distinctColor from "../helpers/distinctColor";
 import syncManager from "../services/SyncManager";
 import configStore from "../stores/configStore";
 import authStore from "../stores/authStore";
-import {IMrx} from "../interfaces/IMrx";
 import {IStation} from "../interfaces/IStation";
-import {Context} from "@expo/react-native-action-sheet/lib/typescript/context";
 import {NavigationParams, NavigationScreenProp, NavigationState} from "react-navigation";
+import MrxMarker from "../components/MrxMarker";
 
 const CalloutView = styled.View`
 	width: 300px;
@@ -44,22 +43,6 @@ const StationMarkerView = styled.View`
 	background-color: ${(props: IStationMarkerViewProps) => authStore.isTeam && props.tid == authStore.team ? '#00BD00aa' : props.color + '88'};
 	border: ${(props: IStationMarkerViewProps) => authStore.isTeam && props.tid == authStore.team ? '2px solid #007100' : '1px solid #000'};
 	border-radius: 20px;
-`;
-
-const CurrentPositionMarkerView = styled.View`
-	width: 20px;
-	height: 20px;
-	background-color: #4385f4;
-	border: 2px solid #fff;
-	border-radius: 20px;
-`;
-
-const CurrentPositionMarkerGlowView = styled.View`
-	width: 32px;
-	height: 32px;
-	padding: 6px;
-	background-color: #4385f455;
-	border-radius: 32px;
 `;
 
 interface IStationMarkerProps {
@@ -101,64 +84,7 @@ class StationMarker extends React.Component<IStationMarkerProps> {
 	}
 }
 
-interface IMrxMarkerProps {
-	tracksViewChanges: boolean;
-	mrx: IMrx;
-}
-
-class MrxMarker extends React.Component<IMrxMarkerProps> {
-	formatTimestamp(timestamp: string) {
-		let date = new Date(timestamp);
-		let hours = date.getHours();
-		let minutes = ("0" + date.getMinutes()).substr(-2);
-		return hours + ':' + minutes;
-	}
-
-	render() {
-		if (this.props.mrx.locations && this.props.mrx.locations.length > 0) {
-			let trace = this.props.mrx.locations.map(loc => {
-				return { latitude: loc.xpos_lat, longitude: loc.xpos_long }
-			});
-
-			return <React.Fragment>
-				<Polyline
-					coordinates={trace}
-					strokeColor="#c1272dee"
-					strokeColors={["#c1272dff","#c1272dcc","#c1272d33"]}
-					strokeWidth={2}
-				/>
-				<Marker
-					coordinate={{
-						latitude: this.props.mrx.locations[0].xpos_lat,
-						longitude: this.props.mrx.locations[0].xpos_long,
-					}}
-					title={this.props.mrx.name}
-					key={this.props.mrx.x_ID}
-					image={require('../assets/mrx.png')}
-					anchor={{x: 0.5, y: 0.5}}
-					zIndex={5}
-					tracksViewChanges={this.props.tracksViewChanges}
-				>
-					<Callout>
-						<CalloutView>
-							<CalloutTitle>{this.props.mrx.name}</CalloutTitle>
-							{this.props.mrx.locations.map(loc => (
-								<View key={loc.timestamp}>
-									<Text>{this.formatTimestamp(loc.timestamp)} - {loc.description}</Text>
-								</View>
-							))}
-						</CalloutView>
-					</Callout>
-				</Marker>
-			</React.Fragment>
-		} else {
-			return null;
-		}
-	}
-}
-
-
-interface IMapScreenProps extends Context {
+interface IMapScreenProps extends ActionSheetProps {
 	navigation: NavigationScreenProp<NavigationState, NavigationParams>;
 }
 
@@ -230,6 +156,7 @@ class MapScreen extends React.Component<IMapScreenProps> {
 						 latitudeDelta: 0.03,
 						 longitudeDelta: 0.02,
 					 }}
+					 showsUserLocation={true}
 			>
 				{mapStore.stations.map(station => (
 					<StationMarker
@@ -245,19 +172,6 @@ class MapScreen extends React.Component<IMapScreenProps> {
 						tracksViewChanges={this.state.tracksViewChanges}
 					/>
 				))}
-				{locationStore.lat && locationStore.long ? <Marker
-					coordinate={{
-						latitude: locationStore.lat,
-						longitude: locationStore.long,
-					}}
-					zIndex={10}
-					tracksViewChanges={this.state.tracksViewChanges}
-					>
-						<CurrentPositionMarkerGlowView>
-							<CurrentPositionMarkerView/>
-						</CurrentPositionMarkerGlowView>
-					</Marker>
-				: null}
 			</MapView>
 			{/*
 			<View
