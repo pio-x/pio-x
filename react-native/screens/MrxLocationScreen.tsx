@@ -2,7 +2,7 @@ import React from 'react';
 import {
 	Text,
 	View,
-	Button,
+	Button, TextInput, Keyboard, TouchableWithoutFeedback, ActivityIndicator,
 } from 'react-native';
 import locationStore from "../stores/locationStore";
 import {observer} from "mobx-react";
@@ -12,11 +12,8 @@ import MrxMarker from "../components/MrxMarker";
 import styled from "styled-components/native";
 import {NavigationParams, NavigationScreenProp, NavigationState} from "react-navigation";
 import authStore from "../stores/authStore";
+import Colors from "../constants/Colors";
 
-const FormTitle = styled.Text`
-	font-weight: bold;
-	font-size: 24px;
-`;
 const GpsLocationText = styled.Text`
 	color: #ccc;
 `;
@@ -33,6 +30,14 @@ export default class MrxLocationScreen extends React.Component<IMrxLocationScree
 
 	private map: React.RefObject<MapView>;
 
+	readonly state: {
+		description: string;
+		isSending: boolean;
+	} = {
+		description: '',
+		isSending: false
+	};
+
 	constructor(props: any) {
 		super(props);
 		this.map = React.createRef();
@@ -41,20 +46,27 @@ export default class MrxLocationScreen extends React.Component<IMrxLocationScree
 	componentDidMount() {
 		this.moveMapLocationToUser();
 		this.props.navigation.addListener('didFocus', () => {
-			this.moveMapLocationToUser()
+			this.moveMapLocationToUser();
+			this.setState({isSending: false, description: ''});
 		})
 	}
 
 	moveMapLocationToUser() {
 		// set view to current location
-		if (this.map && this.map.current) {
-			this.map.current.animateToRegion({
-				latitude: locationStore.lat || 47.4974253,
-				longitude: locationStore.long || 8.72199282,
-				latitudeDelta: 0.005,
-				longitudeDelta: 0.005,
-			}, 1000);
-		}
+		setTimeout(() => {
+			try {
+				if (this.map && this.map.current) {
+					this.map.current.animateToRegion({
+						latitude: locationStore.lat || 47.4974253,
+						longitude: locationStore.long || 8.72199282,
+						latitudeDelta: 0.005,
+						longitudeDelta: 0.005,
+					}, 1000);
+				}
+			} catch (e) {
+				// ignore
+			}
+		}, 100)
 	}
 
 	getMrxName(): string {
@@ -66,17 +78,65 @@ export default class MrxLocationScreen extends React.Component<IMrxLocationScree
 		return name;
 	}
 
+	sendLocation() {
+		Keyboard.dismiss();
+		this.setState({...this.state, isSending: true});
+		fetch(authStore.api_url + '/mrx/' + authStore.mrx + '/location?hash=' + authStore.hash, {
+			method: 'POST',
+			body: JSON.stringify({
+				description: this.state.description,
+				location: {
+					lat: locationStore.lat,
+					lng: locationStore.long
+				}
+			})
+		})
+			.then((response) => {
+				mapStore.loadMrx().then(() => {
+					this.setState({isSending: false, description: ''});
+				});
+			})
+			.catch((error) => {
+				//console.error(error);
+			});
+	}
+
 	render() {
 		return <View style={{flex: 1}}>
+			{ this.state.isSending
+				? <View style={{flex: 1, paddingTop: 40}}>
+					<ActivityIndicator size="large" color={Colors.tintColor} />
+				</View>
+				: <View style={{flex: 1, padding: 10}}>
+					<Text>Gib hier einen kurzen Hinweis an, was du vorhast:</Text>
+					<View style={{paddingTop: 10}}>
+						<TextInput
+						  style={{ height: 40, borderColor: '#ccc', borderWidth: 1, borderRadius: 3 }}
+						  onChangeText={text => this.setState({...this.state, description: text})}
+						  value={this.state.description}
+						/>
+					</View>
+					<View style={{paddingTop: 10}}>
+						<Button title="Aktuellen Standort senden" onPress={() => {this.sendLocation()}}/>
+					</View>
+					<View style={{paddingTop: 10}}>
+						<GpsLocationText>{locationStore.lat + ' / ' + locationStore.long}</GpsLocationText>
+					</View>
+					<View style={{paddingTop: 20}}>
+						<Text>Angemeldet als {this.getMrxName()}</Text>
+					</View>
+				</View>
+			}
 			<View style={{flex: 1}}>
 				<MapView style={{flex: 1}}
 						 initialRegion={{
-						 	latitude: 47.4974253,
+							latitude: 47.4974253,
 							longitude: 8.72199282,
 							latitudeDelta: 0.005,
 							longitudeDelta: 0.005,
 						 }}
 						 showsUserLocation={true}
+						 showsMyLocationButton={true}
 						 ref={this.map}
 				>
 					{mapStore.mrx.map(mrx => (
@@ -87,11 +147,6 @@ export default class MrxLocationScreen extends React.Component<IMrxLocationScree
 						/>
 					))}
 				</MapView>
-			</View>
-			<View style={{flex: 1, padding: 10}}>
-				<FormTitle>Standort senden</FormTitle>
-				<GpsLocationText>{locationStore.lat + ' / ' + locationStore.long}</GpsLocationText>
-				<Text>Angemeldet als {this.getMrxName()}</Text>
 			</View>
 		</View>;
 	}
