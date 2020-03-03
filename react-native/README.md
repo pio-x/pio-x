@@ -9,7 +9,7 @@ Start Expo Web UI:
     npm start
 
 
-Open Developer Menu in App with `Alt+D`
+Open Developer Menu in App with `Alt+D` or shake Device.
 
 
 Dev Tools installieren:
