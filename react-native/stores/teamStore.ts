@@ -33,8 +33,7 @@ class TeamStore extends SyncableStoreBase {
 					})
 				})
 				.catch((error) => {
-					//console.error(error);
-					reject();
+					console.error(error);
 				});
 		});
 	}
